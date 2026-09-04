@@ -214,3 +214,34 @@ export const getDemoResponse = (url: string): unknown | undefined => {
 
     return undefined;
 };
+
+/**
+ * Side menu shown in demo mode. The real menu is supplied by UIAM in the
+ * sign-in response, which is unavailable here, so this mirrors the Alberta.ca
+ * Account structure and points the Privacy Portal entries at the apps that are
+ * actually deployed alongside it.
+ *
+ * The entries above and below the Privacy Portal group belong to the wider
+ * Alberta.ca Account application, which is not part of this repository, so they
+ * are present for shape only and do not lead anywhere.
+ */
+export const DEMO_USER_MENU = {
+    top: null,
+    left: [
+        { type: 'group', heading: 'Personal', icon: 'person', items: [] },
+        { type: 'link', heading: 'My identification', icon: 'document-text', href: '#' },
+        { type: 'link', heading: 'Alberta Wallet', icon: 'wallet', href: '#' },
+        {
+            type: 'group',
+            heading: 'Privacy Portal',
+            icon: 'lock-closed',
+            items: [
+                { type: 'link', heading: 'New privacy features', href: '/complaints/features' },
+                { type: 'link', heading: 'Services accessed', href: '/account-history/' },
+                { type: 'link', heading: 'Privacy complaint', href: '/complaints/file-complaint' },
+            ],
+        },
+        { type: 'link', heading: 'Security settings', icon: 'settings', href: '#' },
+        { type: 'link', heading: 'Account activity', icon: 'time', href: '#' },
+    ],
+};

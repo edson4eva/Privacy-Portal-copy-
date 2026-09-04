@@ -6,6 +6,7 @@ import { getAsync, isSuccessResponse } from '../api/authService';
 import { User } from './auth-context-interfaces';
 import { Navigate } from 'react-router-dom';
 import { isDemoMode } from '../utils/demoMode';
+import { DEMO_USER_MENU } from '../api/demoData';
 
 interface AuthContextType {
     isLoading: boolean;
@@ -44,7 +45,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 email: 'demo.user@example.com',
                 profile: 'personal',
                 businessName: undefined,
-                userMenu: { top: null, left: null },
+                userMenu: DEMO_USER_MENU as User['userMenu'],
                 isVerified: true,
                 isAdmin: false,
                 isAuthenticated: true,
