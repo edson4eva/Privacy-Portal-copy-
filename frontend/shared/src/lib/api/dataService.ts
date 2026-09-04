@@ -1,10 +1,15 @@
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import { isDemoMode } from '../utils/demoMode';
+import { getDemoResponse } from './demoData';
 import { AxiosError } from 'axios';
 
 const apiClient = axios.create({
     baseURL: process.env.NX_PUBLIC_API_URL,
     timeout: 10000,
-    redirectOnError: true,
+    // In demo mode a failed call must not hijack the page: the interceptor
+    // below redirects to the error screen, which defeats the callers' own
+    // try/catch handling.
+    redirectOnError: !isDemoMode(),
 });
 
 apiClient.interceptors.request.use((config) => {
@@ -37,6 +42,13 @@ apiClient.interceptors.response.use(
 );
 
 export const get = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
+    if (isDemoMode()) {
+        const demoResponse = getDemoResponse(url);
+        if (demoResponse !== undefined) {
+            return demoResponse as T;
+        }
+    }
+
     const response = await apiClient.get<T>(url, config);
     return response.data;
 };
