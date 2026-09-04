@@ -147,6 +147,87 @@ const DEMO_ACCESSED_SERVICES: DemoAccessedService[] = [
     },
 ];
 
+/**
+ * Why each service needed the personal information it accessed. The first
+ * entries are specific to the service; the shared reasons below are appended to
+ * every list because they apply to any Government of Alberta service.
+ */
+const PRIVACY_REASONS_BY_ID: Record<string, string[]> = {
+    'alberta-energy-rebate': [
+        'To confirm the utility account and address the rebate should be applied to',
+        'To verify household eligibility against the program criteria',
+    ],
+    'drivers-licence-renewal': [
+        'To confirm your driving record and the class of licence held',
+        'To check that medical and vision requirements are met before renewal',
+    ],
+    'id-card-renewal': [
+        'To confirm your identity and Alberta residency before issuing a card',
+        'To match your record against the existing identification file',
+    ],
+    'vehicle-registration-renewal': [
+        'To confirm registered ownership of the vehicle',
+        'To verify that valid insurance is in place',
+    ],
+    'parking-fine-payment': [
+        'To locate the violation notice issued against your vehicle',
+        'To apply and receipt your payment against the correct file',
+    ],
+    'speeding-fine-payment': [
+        'To locate the traffic ticket issued under the Traffic Safety Act',
+        'To record the disposition of the ticket against your driving record',
+    ],
+    'development-permit-renewal': [
+        'To confirm you are the owner or authorized applicant for the property',
+        'To assess the application against land use and zoning requirements',
+    ],
+    'health-care-card-update': [
+        'To confirm your identity before amending your health record',
+        'To keep your coverage and correspondence details accurate',
+    ],
+    'birth-certificate-order': [
+        'To confirm your entitlement to receive the record requested',
+        'To locate the correct registration in the vital statistics register',
+    ],
+    'commercial-vehicle-permit': [
+        'To verify the carrier profile and safety fitness rating',
+        'To assess the load and route against permit conditions',
+    ],
+    'marriage-certificate-order': [
+        'To confirm your entitlement to receive the record requested',
+        'To locate the correct registration in the vital statistics register',
+    ],
+    'employment-standards-claim': [
+        'To identify the employer and employment period your claim concerns',
+        'To investigate the claim and contact the parties involved',
+    ],
+    'child-support-services': [
+        'To identify the support order and the parties named in it',
+        'To calculate and reconcile payments owed and received',
+    ],
+};
+
+const SHARED_PRIVACY_REASONS: string[] = [
+    'To verify your identity so information is released only to you',
+    'To keep a record of the transaction, as required for government recordkeeping',
+    'To detect and prevent fraud or misuse of the service',
+    'To contact you if there is a problem with your request',
+];
+
+const privacyDetailsContent = (service: DemoAccessedService): string => {
+    const reasons = [...(PRIVACY_REASONS_BY_ID[service.id] ?? []), ...SHARED_PRIVACY_REASONS];
+
+    return [
+        '<p>This service used your personal information for the following reasons:</p>',
+        '<ul>',
+        ...reasons.map((reason) => `<li>${reason}</li>`),
+        '</ul>',
+        '<p>Collection and use of this information is authorized under the Freedom of ',
+        'Information and Protection of Privacy Act. It is held by ',
+        `${service.dataOwnerTexts.join(' and ')}.</p>`,
+    ].join('');
+};
+
 /** Several visits per service, so the detail page has a history to show. */
 const accessedDatesFor = (service: DemoAccessedService): string[] => {
     const last = new Date(service.lastAccessedOn);
@@ -189,6 +270,7 @@ const detailResponse = (id: string) => {
                 description: service.description,
                 showMockInDev: true,
                 sections: [
+                    { title: 'Privacy Details', content: privacyDetailsContent(service) },
                     { title: 'What was accessed', content: service.description },
                     {
                         title: 'Why it was accessed',
