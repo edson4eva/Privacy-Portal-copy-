@@ -1,5 +1,6 @@
 import { CORRELATION_ID } from '../utils/constants';
 import { post } from './dataService';
+import { isDemoMode } from '../utils/demoMode';
 
 interface Personalisation {
     Department: string;
@@ -27,6 +28,14 @@ interface EmailResponse {
 }
 
 export const sendNewComplaintEmail = async (payload: Payload, correlationId:string): Promise<EmailResponse> => {
+    if (isDemoMode()) {
+        // No notification service to reach, and no address that should receive mail.
+        return {
+            success: true,
+            message: `Email suppressed (demo mode).`,
+        };
+    }
+
     try {
         await post('v1/send-email', payload,{headers:{[CORRELATION_ID]:correlationId}});
         return {

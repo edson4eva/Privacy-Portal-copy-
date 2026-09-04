@@ -5,6 +5,7 @@ import { API_ROUTES } from '../authentication/auth-routes';
 import { getAsync, isSuccessResponse } from '../api/authService';
 import { User } from './auth-context-interfaces';
 import { Navigate } from 'react-router-dom';
+import { isDemoMode } from '../utils/demoMode';
 
 interface AuthContextType {
     isLoading: boolean;
@@ -34,6 +35,24 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [hasLoaded, setHasLoaded] = useState(false);
 
     useEffect(() => {
+        const signInDemoUser = () => {
+            setIsAuthenticated(true);
+            setUser({
+                name: 'Demo User',
+                firstName: 'Demo',
+                lastName: 'User',
+                email: 'demo.user@example.com',
+                profile: 'personal',
+                businessName: undefined,
+                userMenu: { top: null, left: null },
+                isVerified: true,
+                isAdmin: false,
+                isAuthenticated: true,
+            });
+            setIsLoading(false);
+            setHasLoaded(true);
+        };
+
         const validateToken = async () => {
             const response = await getAsync<GetSiginStatusQuery.Response>(API_ROUTES.access.isAuthenticated, null, {
                 stopAutoRedirect: false,
@@ -73,6 +92,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         };
 
         if (!hasLoaded) {
+            if (isDemoMode()) {
+                // No UIAM to call, so stand in a signed-in user rather than
+                // redirecting to a sign-in endpoint that cannot be reached.
+                signInDemoUser();
+                return;
+            }
+
             setIsLoading(true);
             validateToken();
         }

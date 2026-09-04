@@ -1,6 +1,7 @@
 import { BlobServiceClient } from '@azure/storage-blob';
 import { post } from './dataService';
 import { CORRELATION_ID } from '../utils/constants';
+import { isDemoMode } from '../utils/demoMode';
 
 interface UploadFileResponse {
     success: boolean;
@@ -15,6 +16,10 @@ export let storedSasToken: string;
 export let downloadSasToken: string;
 
 export const getSasToken = async (correlationId:string): Promise<string> => {
+    if (isDemoMode()) {
+        return '';
+    }
+
     try {
         const response: SasTokenResponse = await post('v1/sas-token', {},{headers: { [CORRELATION_ID]: correlationId }});
 
@@ -31,6 +36,10 @@ export const getSasToken = async (correlationId:string): Promise<string> => {
 };
 
 export const getDownloadSasToken = async (blobName: string, correlationId: string): Promise<string> => {
+    if (isDemoMode()) {
+        return '';
+    }
+
     try {
         const response: SasTokenResponse = await post('v1/sas-token/download', { blobName },{headers: { [CORRELATION_ID]: correlationId }});
 
@@ -56,6 +65,16 @@ export const getStoredSasToken = (): string => {
 };
 
 export const uploadFile = async (file: File): Promise<UploadFileResponse> => {
+    if (isDemoMode()) {
+        // No storage account to write to; report success so an attachment does
+        // not block the flow. The file is not uploaded anywhere.
+        return {
+            success: true,
+            message: `File accepted (demo mode - not uploaded).`,
+            url: `#demo/${file.name}`,
+        };
+    }
+
     try {
         const containerName = process.env.NX_PUBLIC_AZURE_CONTAINER_NAME || '';
         const sasToken = getStoredSasToken();
