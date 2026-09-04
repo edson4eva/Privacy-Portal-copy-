@@ -1,0 +1,8 @@
+.pp-container {
+    max-width: 45rem;
+    min-height: var(--container-height);
+    border: var(--goa-border-width-s) solid;
+    border-radius: 15px;
+    padding: var(--container-padding);
+    background-color: var(--container-background-color, #ffffff);
+}

@@ -1,0 +1,13 @@
+.input-error-div{
+    padding-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+}
+.heading {
+    font: var(--goa-typography-heading-s);
+    color: var(--goa-color-interactive-error);
+}
+.content {
+    font: var(--goa-typography-body-m);
+    color: var(--goa-color-interactive-error);
+}

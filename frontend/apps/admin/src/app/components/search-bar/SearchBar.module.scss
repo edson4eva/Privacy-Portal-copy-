@@ -1,0 +1,8 @@
+.search-filter-container {
+    margin-top: 0.5rem;
+    display: flex;
+    .search-box-container {
+        flex-grow: 1;
+        --goa-border-radius-m: 0.875rem;
+    }
+}

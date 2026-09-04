@@ -1,0 +1,34 @@
+.service-propery-container {
+    .header {
+        display: flex;
+        flex-direction: row;
+        .icon-container {
+            width: 1.5rem;
+        }
+        .title {
+            padding-left: 0.5rem;
+            font: var(--goa-typography-heading-s);
+        }
+    }
+    .badge-container{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        margin-top: 0.5rem;
+    }
+    .badge {
+        display: inline-block;
+        background-color: var(--Color-Brand-Default, #0081a2);
+        font: var(--goa-typography-body-xs);
+        padding: 0 var(--goa-space-xs) 0.125rem var(--goa-space-xs);
+        border-radius: 6.1875rem;
+        color: var(--goa-color-greyscale-100);
+        white-space: nowrap;
+        &.light {
+            background-color: #c8eefa;
+            color: #333333;
+        }
+    }
+}

@@ -1,0 +1,39 @@
+[
+    {
+        "accessedServiceDetails": {
+            "accessedDates": [
+                "2024-10-13T17:31:51.5173867+00:00",
+                "2024-09-21T22:29:01.1193827+00:00",
+                "2024-08-09T18:29:45.4482234+00:00",
+                "2024-07-11T18:26:21.4301097+00:00",
+                "2024-06-19T15:26:11.4301097+00:00"
+            ],
+            "serviceDetails": {
+                "id": "child-care-subsidy",
+                "serviceName": "Child Care Subsidy",
+                "isAvailable": true,
+                "categoryId": "family-and-social-support",
+                "categoryText": "Family and Social Support",
+                "accessServiceUrl": "https://applychildcaresubsidy.alberta.ca/",
+                "description": "<p>This online service can be used to apply for subsidies to offset the cost of child care for <a href=\"https://www.alberta.ca/child-care-subsidy\" target=\"_blank\" rel=\"noopener\">eligible families</a>.</p>",
+                "dataOwnerId": "jobs-economy-and-trade",
+                "dataOwnerText": "Jobs, Economy and Trade",
+                "sections": [
+                    {
+                        "title": "Personal information",
+                        "content": "<div>Personal information the service may maintain for you includes:</div><ul><li>Name</li><li>Date of birth</li><li>Citizenship status</li><li>Social insurance number</li><li>Telephone number</li><li>Mailing address</li><li>Physical address</li><li>Indigenous status</li><li>Employer name</li><li>Employer phone number</li><li>Co-applicant (other parent's) information</li><li>Household income and finances</li><li>Children's information</li><li>Child care program information</li></ul>"
+                    },
+                    {
+                        "title": "How is personal data being used",
+                        "content": "The information is used to determine eligibility and subsidy rates for providing subsidized childcare to Albertans who need it."
+                    },
+
+                    {
+                        "title": "Legislation",
+                        "content": "<div>The following are the legal authorities that authorize this service to collect your personal information:</div><div><a href=\"https://kings-printer.alberta.ca/1266.cfm?page=F25.cfm&leg_type=Acts&isbncln=9780779848393&display=html\" target=\"_blank\">Section 33 (c) of the Freedom of Information and Protection of Privacy Act</a></div>"
+                    }
+                ]
+            }
+        }
+    }
+]

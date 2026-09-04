@@ -1,0 +1,28 @@
+.read-more-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.read-more-text.expanded {
+    -webkit-line-clamp: unset;
+    overflow: visible;
+}
+
+.toggle-button {
+    background: none;
+    color: #0070c4;
+    border: none;
+    cursor: pointer;
+    padding: 5px 0px;
+    font: 1.125rem;
+    font-weight: bold;
+    font-size: var(--goa-font-size-4);
+    text-decoration: underline;
+}
+
+.toggle-button:hover {
+    text-decoration: underline;
+}

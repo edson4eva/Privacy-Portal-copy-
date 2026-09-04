@@ -1,0 +1,23 @@
+.heading {
+    margin: 0.75rem 0;
+}
+
+.no-access {
+    height: 100%;
+    padding: 20px;
+
+    .details {
+        margin-bottom: 60px;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    @media (min-width: 1023px) {
+        padding: 20px;
+        img {
+            max-width: 600px;
+        }
+    }
+}

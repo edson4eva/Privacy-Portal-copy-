@@ -1,0 +1,23 @@
+.modal-header {
+    display: table;
+    .header-icon-yellow-circle {
+        float: left;
+        margin-top: 5px;
+        display: flex;
+        background: #f9ce2d;
+        border-radius: 12px;
+        text-align: center;
+    }
+    .header-icon-green-circle {
+        float: left;
+        margin-top: 5px;
+        display: flex;
+        background: #006f4c;
+        border-radius: 12px;
+        text-align: center;
+    }
+    .header-text {
+        float: left;
+        margin-left: 10px;
+    }
+}

@@ -1,0 +1,126 @@
+.heading {
+    margin: 0.75rem 0;
+}
+.container {
+    max-width: 45rem;
+    margin-top: 2rem;
+    margin-bottom: 1.75rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+.search-export-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+
+    > :first-child {
+        flex: 1;
+        margin-top: 0;
+    }
+}
+.filter-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+
+    .filter-span {
+        font-weight: bold;
+    }
+}
+.chip-wrapper {
+    display: inline-flex;
+}
+.chip-active {
+    goa-filter-chip {
+        --goa-color-greyscale-700: #0070C4;    
+        --goa-color-interactive-focus: #0070C4;
+        --goa-typography-body-s: var(--goa-font-weight-bold) var(--goa-font-size-3)/var(--goa-line-height-2) var(--goa-font-family-sans);
+    }
+}
+.service-accessed-availability-alert {
+    display: flex;
+    div:nth-child(1) {
+        background-color: #f9ce2d;
+        border-radius: 1.5rem;
+        height: 1.5rem;
+    }
+    div:nth-child(2) {
+        margin-left: 0.5rem;
+        margin-top: -0.1875rem;
+        max-width: 41rem;
+    }
+}
+.disabledLink {
+    text-decoration: underline;
+    color: #9fc8e8;
+}
+.table-container {
+    max-width: 45rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+table:has(> thead.tbl-thead) {
+    .th-service-accessed {
+        display: flex;
+        justify-content: space-between;
+        .services-count {
+            border-radius: 0.25rem;
+            background-color: #0070c4;
+            padding: 0 0.5rem;
+            font-size: 0.875rem;
+            color: #fff;
+            font-weight: 400;
+            line-height: 1.25rem;
+            height: 1.375rem;
+            margin-top: 0.25rem;
+        }
+    }
+}
+
+.pagination-container {
+    max-width: 45rem;
+    goa-pagination {
+        --goa-button-text: var(--goa-font-weight-regular) 1.25rem / var(--goa-line-height-2) var(--goa-font-family-sans);
+    }
+}
+@media (max-width: 623px) {
+    .container {
+        padding: 2.25rem 0 3.25rem 1rem;
+    }
+    table:has(> thead.tbl-thead) {
+        .th-service-accessed {
+            .services-count {
+                background-color: #0081a2;
+                margin-right: 1rem;
+            }
+        }
+        th,
+        td {
+            padding: 0.75rem 0 0.75rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5rem;
+        }
+        tr th:nth-child(2),
+        tr td:nth-child(2) {
+            min-width: 7.5rem;
+            width: 7.5rem;
+        }
+        tr th:nth-child(4),
+        tr td:nth-child(4) {
+            min-width: 5.3125rem;
+            width: 5.3125rem;
+        }
+        tr th:not(:first-child),
+        tr td:not(:first-child) {
+            background-color: #fff;
+        }
+        .col-time {
+            display: none;
+        }
+    }
+}

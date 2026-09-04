@@ -1,0 +1,17 @@
+global using Azure;
+global using Azure.Storage.Blobs;
+global using Complaints.Complaints.Dtos;
+global using Complaints.Complaints.Features.CreatingComplaints.V1;
+global using Complaints.Complaints.Features.GettingComplaints.V1;
+global using Complaints.Complaints.Features.GettingSasToken.V1;
+global using Complaints.Complaints.Features.SendingEmails.V1;
+global using Complaints.Complaints.Models;
+global using Complaints.Data;
+global using Libs.Notification;
+global using Libs.Web;
+global using MapsterMapper;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.Azure.Cosmos;
+global using Microsoft.Extensions.Configuration;
+global using Moq;
+global using Xunit;

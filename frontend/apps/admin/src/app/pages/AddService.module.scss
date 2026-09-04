@@ -1,0 +1,103 @@
+.top-div{
+    padding: 2rem 0 1rem 0;
+    max-width: 55rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+.bottom-div{
+    padding: 1rem 0 1rem 0;
+    max-width: 55rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+.service-available-container {
+    max-width: 55rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1rem 0 1rem 0;
+    .service-available-label {
+        line-height: var(--goa-line-height-6);
+        font-size: var(--goa-font-size-7);
+    }
+    .service-available-desc {
+        font-size: var(--goa-font-size-3);
+    }
+    
+}
+.req-question-header{
+    font-weight: var(--goa-font-weight-bold);;
+    font-size: var(--goa-font-size-4);
+}
+.req-question-header:after {
+    content: ' *';
+    color: var(--goa-color-interactive-error);
+}
+.modal-header {
+    display: table;
+    .header-icon-yellow-circle {
+        float: left;
+        margin-top: 5px;
+        display: flex;
+        background: #f9ce2d;
+        border-radius: 12px;
+        text-align: center;
+    }
+    .header-icon-green-circle {
+        float: left;
+        margin-top: 5px;
+        display: flex;
+        background: #006f4c;
+        border-radius: 12px;
+        text-align: center;
+    }
+    .header-text {
+        float: left;
+        margin-left: 10px;
+    }
+}
+
+.container {
+    padding: 15px;
+    border: 1px solid var(--goa-color-greyscale-50);
+    border-radius: 15px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25);
+    max-width: 55rem;
+    margin-left: auto;
+    margin-right: auto;
+
+    [role="internal"] {
+        background-color: var(--goa-color-greyscale-50);
+    }
+
+    .section-header {
+        display: inline-block;
+        width: 100%;
+    }
+    .section-header-name {
+        float: left;
+        line-height: var(--goa-line-height-6);
+        font-size: var(--goa-font-size-7);
+    }
+    
+}
+
+.sidebyside {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px; 
+
+    @media (max-width: 600px) {
+        flex-direction: column; // Stacks items vertically on small screens
+    }
+}
+
+.error{
+    color: red;
+}
+.response {
+    color: blue;
+}
+.desc-div {
+    width: 100%;
+}
+

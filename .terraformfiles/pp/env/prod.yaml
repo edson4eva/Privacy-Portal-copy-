@@ -1,0 +1,66 @@
+subscription_name: 'goa-platforms_prod'
+subscription_id: '1882eded-ee4c-4876-bb87-ac3d04ea2967'
+tenant_id: '2bb51c06-af9b-42c5-8bf5-3c3b7b10850b'
+
+env_resourcegroup: 'rg-privacy-portal-prod'
+fileupload_storage_account_name: 'privacyportalstorageprod'
+keyvault_name: 'pp-key-vault-prod'
+redis_cache_name: 'priv-portal-accessed-services-prod'
+
+cosmosdb_list:
+    - pp-prod-complaints-table
+    - pp-prod-services-table
+
+log_analytics_workspace_name: 'workspacergprivacyportalprod'
+application_insights_name: 'pp-applicationinsight-prod'
+container_app_environment_name: 'pp-prod-release-container-app-env'
+container_registry_name: 'privacyportalcontainerregistryprod'
+container_registry_url: 'privacyportalcontainerregistryprod.azurecr.io'
+
+container-apps:
+    pp-prod-complaints:
+        container_image_name: 'privacyportalcontainerregistryprod.azurecr.io/complaints-app:latest'
+        password_secret_name: 'reg-pswd-f5f645fa-9562'
+        supports_workload_profiles: true
+        max_inactive_revisions: 100
+        max_replicas: 75
+        min_replicas: 5
+        http_scale_rules:
+            concurrent_requests: 35
+            name: 'http-scaler'
+        ingress:
+            external_enabled: true
+            target_port: 8080
+            transport: 'auto'
+            traffic_weight:
+                - latest_revision: true
+                  percentage: 100
+        environment_variables:
+            PrivacyPortalOrigin: 'https://privacyportalstorageprod.z9.web.core.windows.net'
+
+    pp-prod-services:
+        container_image_name: 'privacyportalcontainerregistryprod.azurecr.io/accessedservices-app:latest'
+        password_secret_name: 'reg-pswd-5a51cf9d-be4d'
+        max_replicas: 75
+        min_replicas: 5
+        supports_workload_profiles: true
+        max_inactive_revisions: 100
+        cpu : "0.25"
+        memory : 0.5Gi
+        http_scale_rules:
+            concurrent_requests: 35
+            name: 'http-scaler'
+        dapr_config:
+            app_id: 'prod-services'
+            app_port: 8080
+            app_protocol: 'http'
+        ingress:
+            external_enabled: true
+            target_port: 8080
+            transport: 'auto'
+            traffic_weight:
+                - latest_revision: true
+                  percentage: 100
+        environment_variables:
+            AzureMonitorOptions__ConnectionString: 'InstrumentationKey=bff19220-12d0-4ae7-b2fa-20391fd95606'
+            PrivacyPortalOrigin: 'https://privacyportalstorageprod.z9.web.core.windows.net'

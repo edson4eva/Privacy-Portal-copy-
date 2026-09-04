@@ -1,0 +1,40 @@
+[
+    {
+        "userId": "pp_integrationpersonalverified2@testing.com",
+        "accessedServices": [
+            {
+                "name": "Driver's licence renewal",
+                "sku": "AB-RSG-DL-Renewals",
+                "accessLogs": [
+                    "2024-11-13T16:39:32Z",
+                    "2024-10-11T15:59:22Z",
+                    "2024-08-10T11:29:52Z",
+                    "2023-06-09T13:29:52Z",
+                    "2023-04-08T15:39:52Z"
+                ]
+            },
+            {
+                "name": "Passenger vehicle registration renewal",
+                "sku": "AB-RSG-OTP-OVR-Renew-Vehicle",
+                "accessLogs": [
+                    "2024-11-09T16:39:32Z",
+                    "2024-09-08T15:59:22Z",
+                    "2024-07-07T11:29:52Z",
+                    "2023-05-06T13:29:52Z",
+                    "2023-03-05T15:39:52Z"
+                ]
+            },
+            {
+                "name": "Fine payments",
+                "sku": "AB-Justice-Fine-Payments",
+                "accessLogs": [
+                    "2024-09-07T16:09:32Z",
+                    "2024-08-04T13:39:22Z",
+                    "2024-07-03T10:19:52Z",
+                    "2023-06-02T12:29:52Z",
+                    "2023-05-01T14:39:52Z"
+                ]
+            }
+        ]
+    }
+]

@@ -1,0 +1,16 @@
+
+.decide-alert {
+    display: flex;
+    div:nth-child(1) {
+        background-color: #f9ce2d;
+        border-radius: 1.5rem;
+        height: 1.5rem;
+    }
+    div:nth-child(2) {
+        margin-left: 0.5rem;
+        margin-top: -0.1875rem;
+        width: auto;
+        max-width: 45rem;
+        min-height: 3rem;
+    }
+}

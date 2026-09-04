@@ -1,0 +1,149 @@
+.page-heading {
+  font: var(--goa-typography-heading-l);
+}
+
+.container {
+  width: 100%;
+  max-width: 720px;
+  padding-left: 64px;
+  padding-right: 72px;
+  background-color: var(--pp-background-color-landing);
+}
+
+.title-spacing {
+  padding-top: var(--goa-space-2xl);
+}
+
+p.spacing {
+  padding-bottom: var(--goa-space-l);
+}
+
+.complaint-box {
+  //max-width: 31.25rem;
+  padding-bottom: 1rem;
+  background-color: var(--pp-background-color-landing);
+}
+
+.left-column {
+  font-weight: bold;
+  background-color: var(--pp-background-color-landing);
+  width: 15.62rem;
+}
+
+.right-column {
+  width: 15.62rem;
+}
+
+.no-complaints-alert {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid #f9ce2d;
+  border-radius: 15px;
+  padding: 1.5rem;
+  max-width: 720px;
+}
+
+.alert-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.alert-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background-color: #f9ce2d;
+  border-radius: 50%;
+}
+
+.alert-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.alert-content {
+  margin-top: 1rem;
+}
+
+.alert-content p {
+  margin: 0;
+  font-size: 1.12rem;
+}
+
+.alert-content a {
+  color: #0070C4;
+  text-decoration: underline;
+}
+
+.no-complaint-img img {
+  width: auto;
+  height: 180px;
+  overflow: hidden;
+}
+
+@media (max-width: 1023px) {
+  .container {
+    padding-left: 36px;
+    padding-right: 36px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 623px) {
+  .container {
+    flex-direction: column;
+    background-color: var(--pp-background-color-internal);
+    padding-left: 16px;
+    padding-right: 15px;
+    max-width: 100%;
+  }
+
+  .title-spacing {
+    padding-top: var(--goa-space-xl);
+  }
+
+   .left-column {
+    font-weight: bold;
+    max-width: 10.62rem;
+  }
+
+  .right-column {
+    max-width: 10.88rem;
+  }
+
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .no-complaints-alert {
+      display: flex;
+      max-width: 21.5rem;
+  }  
+
+  .alert-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+  }
+
+  .alert-icon {
+      margin-bottom: 1.5rem;
+  }
+
+  .alert-title {
+      font-size: 1.5rem;
+      word-wrap: break-word;
+  }
+
+  .complaint-box {
+    background-color: var(--pp-background-color-internal);
+    padding-bottom: var(--goa-space-s);
+  }
+}
+

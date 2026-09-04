@@ -1,0 +1,18 @@
+.user-info {
+    display: block;
+    pointer-events: none;
+    padding: 10px 16px 8px;
+    line-height: 24px;
+    background-color: var(--goa-color-greyscale-100);
+}
+
+.email {
+    font-size: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.sign-in-button {
+    color: #0070C4 !important;
+}

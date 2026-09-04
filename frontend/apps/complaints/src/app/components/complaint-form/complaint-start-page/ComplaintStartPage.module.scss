@@ -1,0 +1,81 @@
+.square-bullet-list {
+    list-style-type: square;
+    margin-top: -8px;
+    margin-bottom: -8px;
+}
+
+.square-bullet-list li::marker {
+    font-size: 8px;
+    color: black;
+}
+
+.bullet-list-title {
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.bullet-list-description {
+    margin-top: 0.5rem;
+}
+
+ul {
+    padding-left: 1.5rem;
+}
+
+.line {
+    display: none;
+}
+
+.span-text {
+    display: none;
+}
+
+.button-container {
+    display: none;
+}
+
+.button-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.only-desktop-button {
+    display: block;
+}
+
+.start-page-container {
+    p {
+        max-width: 624px;
+    }
+}
+
+@media (max-width: 623px) {
+    ul {
+        padding-left: 1.5rem;
+    }
+
+    .line-container {
+        display: flex;
+    }
+
+    .line {
+        display: flex;
+        border: 0.1em solid var(--Greyscale-200, #dcdcdc);
+        margin: 16px 6px 16px 6px;
+        width: 50%;
+    }
+
+    .span-text {
+        display: flex;
+    }
+
+    .button-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .only-desktop-button {
+        display: none;
+    }
+}

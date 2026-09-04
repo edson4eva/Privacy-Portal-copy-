@@ -1,0 +1,80 @@
+name: Reusable Build and Deploy Backend Service
+
+on:
+    workflow_call:
+        inputs:
+            service_path:
+                description: 'The relative path to the service'
+                required: true
+                type: string
+            dockerfile_path:
+                description: 'The path to the Dockerfile'
+                required: true
+                type: string
+            environment:
+                description: 'The environment to get secrets'
+                required: true
+                type: string
+        secrets:
+            AZURE_CREDENTIALS:
+                required: true
+            AZURE_CONTAINER_REGISTRY_USERNAME:
+                required: true
+            AZURE_CONTAINER_REGISTRY_PASSWORD:
+                required: true
+            PP_NUGET_PAT:
+                required: true 
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        environment: ${{ inputs.environment }}
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Log in to Azure
+              uses: azure/login@v1
+              with:
+                  creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+            - name: Test Azure Access
+              uses: azure/CLI@v1
+              with:
+                  inlineScript: |
+                      az account show
+
+            - name: Log in to Azure Container Registry
+              uses: azure/docker-login@v1
+              with:
+                  login-server: ${{ secrets.AZURE_CONTAINER_REGISTRY_USERNAME }}.azurecr.io
+                  username: ${{ secrets.AZURE_CONTAINER_REGISTRY_USERNAME }}
+                  password: ${{ secrets.AZURE_CONTAINER_REGISTRY_PASSWORD }}
+
+            - name: Build Docker image
+              run: |
+                  docker build -f ${{ inputs.dockerfile_path }} --build-arg build_configuration=${{ inputs.environment }} --build-arg username=${{ github.actor }} --build-arg secret=${{ secrets.PP_NUGET_PAT }} -t ${{ secrets.AZURE_CONTAINER_REGISTRY_USERNAME }}.azurecr.io/${{ inputs.service_path }}-app:${{ github.sha }} .
+
+            - name: Push Docker image to Container registry
+              if: (inputs.environment == 'dev' && github.ref == 'refs/heads/develop') || (inputs.environment == 'uat' && github.ref == 'refs/heads/main') || (inputs.environment == 'prod') || (inputs.environment == 'syst') || (inputs.environment == 'prod-release')
+              run: |
+                  docker push ${{ secrets.AZURE_CONTAINER_REGISTRY_USERNAME }}.azurecr.io/${{ inputs.service_path }}-app:${{ github.sha }}
+
+            - name: Deploy to Azure Container Apps (dev/ uat/ prod/  prod-release)
+              if:  (inputs.environment == 'dev' && github.ref == 'refs/heads/develop') || (inputs.environment == 'uat' && github.ref == 'refs/heads/main') ||  (inputs.environment == 'prod-release') ||  (inputs.environment == 'prod')
+              uses: azure/CLI@v1
+              with:
+                  inlineScript: |
+                      az containerapp update --name pp-${{ inputs.environment }}-${{ inputs.service_path }} \
+                      --resource-group rg-privacy-portal-${{ inputs.environment }} \
+                      --image ${{ secrets.AZURE_CONTAINER_REGISTRY_USERNAME }}.azurecr.io/${{ inputs.service_path }}-app:${{ github.sha }}
+
+            - name: Deploy to Azure Container Apps (syst)
+              if:  (inputs.environment == 'syst')
+              uses: azure/CLI@v1
+              with:
+                  inlineScript: |
+                      az containerapp update --name pp-${{ inputs.environment }}-${{ inputs.service_path }}-service \
+                      --resource-group rg-privacy-portal-${{ inputs.environment }} \
+                      --image ${{ secrets.AZURE_CONTAINER_REGISTRY_USERNAME }}.azurecr.io/${{ inputs.service_path }}-app:${{ github.sha }}

@@ -1,0 +1,54 @@
+{
+    "isAuthenticated": true,
+    "claims": {
+        "email": "pp_integrationPersonalBasic@testing.com",
+        "firstName": "fname",
+        "lastName": "lname",
+        "identityLoa": "http://cyber-auth.gc.ca/assurance/loa1",
+        "credentialLoa": "http://cyber-auth.gc.ca/assurance/loa2",
+        "profileType": "personal",
+        "businessName": null
+    },
+    "userMenu": {
+        "top": null,
+        "left": [
+            {
+                "type": "group",
+                "href": null,
+                "icon": "person",
+                "heading": "Personal",
+                "items": [
+                    {
+                        "type": "link",
+                        "href": "https://sit.account.alberta.ca/ui-syst/account/personal",
+                        "icon": null,
+                        "heading": "Personal information",
+                        "items": null
+                    },
+                    {
+                        "type": "link",
+                        "href": "https://sit.account.alberta.ca/ui-syst/privacy/account-history",
+                        "icon": null,
+                        "heading": "Account history",
+                        "items": null
+                    },
+                    {
+                        "type": "link",
+                        "href": "https://sit.account.alberta.ca/ui-syst/privacy/complaints",
+                        "icon": null,
+                        "heading": "Privacy complaint",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "type": "link",
+                "href": "https://sit.account.alberta.ca/ui-syst/account/security-settings",
+                "icon": "settings",
+                "heading": "Security settings",
+                "items": null
+            }
+        ]
+    },
+    "isVerified": false
+}

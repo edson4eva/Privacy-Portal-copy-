@@ -1,0 +1,19 @@
+.documentation-description {
+    min-height: 130px;
+}
+
+.step3 {
+    min-width: 45rem;
+}
+
+.step-container {
+    p {
+        max-width: 624px;
+    }
+}
+
+@media (max-width: 623px) {
+    .step3 {
+        min-width: auto;
+    }
+}

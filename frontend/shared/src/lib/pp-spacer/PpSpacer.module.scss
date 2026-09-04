@@ -1,0 +1,49 @@
+.spacer {
+    &--3xs {
+        margin-top: 0.125rem;
+        margin-bottom: 0.125rem;
+    }
+    &--2xs {
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+    }
+    &--xs {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    &--s {
+        margin-top: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    &--m {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    &--l {
+        margin-top: 1.5rem;
+        margin-bottom: --goa-space-l;
+    }
+
+    &--xl {
+        margin-top: 2rem;
+        margin-bottom: --goa-space-xl;
+    }
+
+    &--2xl {
+        margin-top: 3rem;
+        margin-bottom: --goa-space-2xl;
+    }
+
+    &--3xl {
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+    }
+
+    &--4xl {
+        margin-top: 5rem;
+        margin-bottom: 5rem;
+    }
+}

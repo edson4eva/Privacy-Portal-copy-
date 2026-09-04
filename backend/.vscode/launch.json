@@ -1,0 +1,46 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET Core Attach",
+      "type": "coreclr",
+      "request": "attach"
+    },
+    {
+      "type": "coreclr",
+      "request": "launch",
+      "name": "C# Launch Complaints Api",
+      "cwd": "${workspaceFolder}/src/Services/Complaints/src/Complaints.API",
+      "program": "dotnet",
+      "args": [
+        "run",
+        "--launch-profile",
+        "${input:launchProfile}",
+        "--project",
+        ".",
+        "--configuration",
+        "${input:buildConfiguration}"
+      ],
+      "preLaunchTask": "dotnet: clean Complaints.Api",
+    }
+  ],
+  "inputs": [
+    {
+      "id": "buildConfiguration",
+      "type": "pickString",
+      "description": "Select a build configuration",
+      "options": ["Debug", "Release"],
+      "default": "Debug"
+    },
+    {
+      "id": "launchProfile",
+      "type": "pickString",
+      "description": "Select a profile",
+      "options": ["http", "https", "Container (Dockerfile)"],
+      "default": "https"
+    }
+  ]
+}

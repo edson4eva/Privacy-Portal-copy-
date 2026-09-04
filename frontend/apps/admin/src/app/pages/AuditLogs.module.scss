@@ -1,0 +1,180 @@
+div.update-action{
+    text-align: center;
+    padding: 0.3rem;
+    border-radius: 20px;
+    background-color: #fce796;
+}
+div.add-action{
+    text-align: center;
+    padding: 0.3rem;
+    border-radius: 20px;
+    background-color: #bbfcb4;
+}
+div.rollback-action{
+    text-align: center;
+    padding: 0.3rem;
+    border-radius: 20px;
+    background-color: #ffc76d;
+}
+div.publish-action{
+    text-align: center;
+    padding: 0.3rem;
+    border-radius: 20px;
+    background-color: var(--goa-color-brand-light);
+}
+.modal-div{
+    display: grid;
+}
+.modal-heading{
+    font-size: var(--goa-font-size-5);
+}
+.modal-row{
+    display: flex;
+}
+.modal-label{
+    font-weight: var(--goa-font-weight-bold);
+    font-size: var(--goa-font-size-3);
+    float: left;
+}
+.model-value{
+    float: left;
+    font-size: var(--goa-font-size-3);
+    margin-left: 1rem;
+}
+.raw-section-content {
+    margin-block-start: 0;
+    text-decoration: none;
+    ol,ul{
+        margin-block-start: 0.5em;
+    }
+    li {
+        margin-left: 1rem;
+        &::marker {
+            font-size: 0.5rem;
+        }
+    }
+    a[href^="https://"]::after,a[href^="http://"]::after
+    {        
+        content: '';
+        vertical-align: middle;
+        width: 24px;
+        height: 24px;
+        margin-left: 0.5rem;        
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%230070c4' stroke-width='29' fill-rule='nonzero' viewBox='0 0 512 512'%3E%3Cpath d='M384 224v184a40 40 0 01-40 40H104a40 40 0 01-40-40V168a40 40 0 0140-40h167.48M336 64h112v112M224 288L440 72' stroke-linecap='round' stroke-linejoin='round' %3E%3C/path%3E%3C/svg%3E");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        display: inline-block;
+    }
+}
+.heading {
+    margin: 0.75rem 0;
+}
+.container {
+    padding: 3.5rem 0 3rem 2rem;
+    max-width: 55rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+.link-btn:hover{
+    color: var(--goa-color-interactive-hover);
+}
+.link-btn {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    color: var(--goa-color-interactive-default);
+    font-size: var(--goa-font-size-3);
+    text-decoration: underline;
+    cursor: pointer;
+}
+.service-accessed-availability-alert {
+    display: flex;
+    div:nth-child(1) {
+        background-color: #f9ce2d;
+        border-radius: 1.5rem;
+        height: 1.5rem;
+    }
+    div:nth-child(2) {
+        margin-left: 0.5rem;
+        margin-top: -0.1875rem;
+        max-width: 41rem;
+    }
+}
+
+.table-container {
+    margin: 2rem 0 2rem 0;
+    table{
+        th,
+        td {
+            padding: 0.75rem 0 0.75rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5rem;
+        }
+        tr th:first-child,
+        tr td:first-child{
+            width: 4rem;
+            word-wrap:break-word;
+        }
+        tr td:nth-child(2),
+        tr td:nth-child(2) {
+            width: 5rem;
+        }
+        tr td:nth-child(3),
+        tr td:nth-child(3) {
+            width: 10rem;
+            word-wrap:normal;
+        }
+        tr th:nth-child(4),
+        tr td:nth-child(4) {
+            width: 5rem;
+            word-wrap:normal;
+        }
+        tr th:nth-child(5),
+        tr td:nth-child(5) {
+            width: 3rem;
+            word-wrap:normal;
+        }
+        tr th:not(:first-child),
+        tr td:not(:first-child) {
+            background-color: #fff;
+        }
+    }
+}
+
+.pagination-container {
+    max-width: 55rem;
+    goa-pagination {
+        --goa-button-text: var(--goa-font-weight-regular) 1.25rem / var(--goa-line-height-2) var(--goa-font-family-sans);
+    }
+}
+@media (max-width: 623px) {
+    .container {
+        padding: 2.25rem 0 3.25rem 1rem;
+    }
+    table:has(> thead.tbl-thead) {
+        th,
+        td {
+            padding: 0.75rem 0 0.75rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5rem;
+        }
+        tr td:nth-child(2),
+        tr td:nth-child(2) {
+            min-width: 7.5rem;
+            width: 7.5rem;
+        }
+        tr th:nth-child(4),
+        tr td:nth-child(4) {
+            min-width: 5.3125rem;
+            width: 5.3125rem;
+        }
+        tr th:not(:first-child),
+        tr td:not(:first-child) {
+            background-color: #fff;
+        }
+        .col-time {
+            display: none;
+        }
+    }
+}

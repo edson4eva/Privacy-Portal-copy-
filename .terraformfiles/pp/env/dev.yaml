@@ -1,0 +1,136 @@
+subscription_name: 'goa-platforms_dev'
+subscription_id: '4b8ee168-917d-4a2e-b640-13ec7d98c7e3'
+tenant_id: '2bb51c06-af9b-42c5-8bf5-3c3b7b10850b'
+
+env_resourcegroup: 'rg-privacy-portal-dev'
+fileupload_storage_account_name: 'privacyportalstoragedev'
+keyvault_name: 'pp-key-vault-dev'
+redis_cache_name: 'priv-portal-accessed-services-dev'
+
+cosmosdb_list:
+    - pp-dev-complaints-table
+    - pp-dev-services-table
+    - pp-dev-logingestion-table
+
+log_analytics_workspace_name: 'workspacergprivacyportaldevb155'
+application_insights_name: 'pp-applicationinsight-dev'
+container_app_environment_name: 'pp-dev-container-app-env'
+container_registry_name: 'privacyportalcontainerregistrydev'
+container_registry_url: 'privacyportalcontainerregistrydev.azurecr.io'
+
+container-apps:
+    pp-dev-complaints:
+        container_image_name: 'privacyportalcontainerregistrydev.azurecr.io/complaints-app:latest'
+        password_secret_name: 'reg-pswd-ca1ff8a9-857c'
+        max_inactive_revisions: 100
+        max_replicas: 10
+        min_replicas: 1
+        http_scale_rules: null
+        supports_workload_profiles: true
+        ingress:
+            external_enabled: true
+            target_port: 8080
+            transport: 'auto'
+            traffic_weight:
+                - latest_revision: true
+                  percentage: 100
+        environment_variables:
+            AzureMonitorOptions__ConnectionString: '@Microsoft.Keyvault(SecretUri=https://pp-key-vault-dev.vault.azure.net/secrets/AzureMonitorOptionsInstrumentationKey/25a21f49d67646c9b74fed634fb0b9c5)'
+            AzureMonitorOptions__InstrumentationKey: '@Microsoft.KeyVault(SecretUri=https://pp-key-vault-dev.vault.azure.net/secrets/AzureMonitorOptionsInstrumentationKey/25a21f49d67646c9b74fed634fb0b9c5)'
+            CosmosOptions__ConnectionString: '@Microsoft.Keyvault(SecretUri=https://pp-key-vault-dev.vault.azure.net/secrets/CosmosOptionsConnectionString/30f07a66c34048d6967d6d2bf6f7f102)'
+            AzureBlobStorage__StorageAccountKey: '@Microsoft.KeyVault(SecretUri=https://pp-key-vault-dev.vault.azure.net/secrets/AzureBlobStorageStorageAccountKey/72de14dbb4be44f19f74325ba5879dd4)' 
+            AuditLogOptions__ConnectionString: '@Microsoft.Keyvault(SecretUri=https://pp-key-vault-dev.vault.azure.net/secrets/AuditLogOptionsConnectionString/3d8a271ffcd8478e978781d09572ce85)'
+            ASPNETCORE_ENVIRONMENT: 'sit'
+
+    pp-dev-services:
+        container_image_name: 'privacyportalcontainerregistrydev.azurecr.io/accessedservices-app:latest'
+        password_secret_name: 'reg-pswd-118d152a-af1b'
+        max_inactive_revisions: 100
+        min_replicas: 1
+        max_replicas: 10
+        http_scale_rules: null
+        supports_workload_profiles: true
+        dapr_config:
+            app_id: 'dev-services'
+            app_port: 8080
+            app_protocol: 'http'
+        ingress:
+            external_enabled: true
+            target_port: 8080
+            transport: 'auto'
+            traffic_weight:
+                - latest_revision: true
+                  percentage: 100
+        environment_variables:
+            AzureMonitorOptions__ConnectionString: '@Microsoft.Keyvault(SecretUri=https://pp-key-vault-dev.vault.azure.net/secrets/AzureMonitorOptionsConnectionString/6e3abf575b3c4e7a84a8d7039f0d5248)'
+            AccessedServicesOptions__EServiceOptions__Password:  '@Microsoft.Keyvault(SecretUri=https://pp-key-vault-dev.vault.azure.net/secrets/AccessedServicesOptionsEServiceOptionsPassword/be649a1d5f5d4790b1350cbc8bbd6403)'
+            CosmosOptions__ConnectionString: '@Microsoft.Keyvault(SecretUri=https://pp-key-vault-dev.vault.azure.net/secrets/CosmosOptionsConnectionStringAccessed/4c01d8352cc74becaa43c940a727ba8d)'
+            AuditLogOptions__ConnectionString: '@Microsoft.Keyvault(SecretUri=https://pp-key-vault-dev.vault.azure.net/secrets/AuditLogOptionsConnectionString/3d8a271ffcd8478e978781d09572ce85)'
+            PublishSettings__DevAccountKey: '@Microsoft.Keyvault(SecretUri=https://pp-key-vault-dev.vault.azure.net/secrets/DevKey/06481be21a274524aa2dfd5286ee498f)'
+            PublishSettings__UatAccountKey: '@Microsoft.Keyvault(SecretUri=https://pp-key-vault-dev.vault.azure.net/secrets/DevKey/06481be21a274524aa2dfd5286ee498f)'
+            PublishSettings__ProdAccountKey: '@Microsoft.Keyvault(SecretUri=https://pp-key-vault-dev.vault.azure.net/secrets/DevKey/06481be21a274524aa2dfd5286ee498f)'
+            ASPNETCORE_ENVIRONMENT: 'sit'
+
+        identity_type: 'UserAssigned'
+        identity_ids: '/subscriptions/4b8ee168-917d-4a2e-b640-13ec7d98c7e3/resourceGroups/rg-privacy-portal-dev/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pp-managed-identity-dev'
+
+    pp-dev-logingestion-service:
+        container_image_name: 'privacyportalcontainerregistrydev.azurecr.io/logingestion-app:e544cb0f1a7f4d4b93e16df7c27dcb1a054134bf'
+        password_secret_name: 'reg-pswd-74979648-b2a4'
+        max_inactive_revisions: 0
+        supports_workload_profiles: true
+        http_scale_rules: null
+        dapr_config:
+            app_id: 'logingestion-service'
+            app_port: 8080
+            app_protocol: 'http'
+        ingress:
+            external_enabled: true
+            target_port: 8080
+            transport: 'auto'
+            traffic_weight:
+                - latest_revision: true
+                  percentage: 100
+        environment_variables:
+            AzureMonitorOptions__InstrumentationKey: '@Microsoft.Keyvault(SecretUri=https://pp-key-vault-dev.vault.azure.net/secrets/AzureMonitorOptionsConnectionString/6e3abf575b3c4e7a84a8d7039f0d5248)'
+            AzureMonitorOptions__ConnectionString: '@Microsoft.KeyVault(SecretUri=https://pp-key-vault-dev.vault.azure.net/secrets/AzureMonitorOptionsConnectionString/6e3abf575b3c4e7a84a8d7039f0d5248'     
+            CosmosOptions__ConnectionString: '@Microsoft.KeyVault(SecretUri=https://pp-key-vault-dev.vault.azure.net/secrets/CosmosOptionsConnectionStringLogIngestion/84a671622f0c46a8aa9b9958b0e203a9)'
+        identity_type: 'UserAssigned'
+        identity_ids: '/subscriptions/4b8ee168-917d-4a2e-b640-13ec7d98c7e3/resourceGroups/rg-privacy-portal-dev/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pp-managed-identity-dev'
+
+    # pp-dev-eservicesdata-service:
+    #     container_image_name: 'privacyportalcontainerregistrydev.azurecr.io/eservicesdata-app:latest'
+    #     password_secret_name: 'reg-pswd-36bfae0e-85b9'
+    #     supports_workload_profiles: true
+    #     dapr_config:
+    #         app_id: 'eservicesdata-services'
+    #         app_port: 8080
+    #         app_protocol: 'http'
+    #     ingress:
+    #         external_enabled: true
+    #         target_port: 8080
+    #         transport: 'auto'
+    #         traffic_weight:
+    #             - latest_revision: false
+    #               revision_suffix: '0000001'
+    #               percentage: 100
+    #     environment_variables:
+    #         PrivacyPortalOrigin: 'https://privacyportalstoragedev.z9.web.core.windows.net'
+
+    # pp-dev-uiamdata-service:
+    #     container_image_name: 'privacyportalcontainerregistrydev.azurecr.io/uiamdata-app:latest'
+    #     password_secret_name: 'reg-pswd-76e331f9-acb3'
+    #     supports_workload_profiles: true
+    #     dapr_config:
+    #         app_id: 'uiam-data-services'
+    #         app_port: 8080
+    #         app_protocol: 'http'
+    #     ingress:
+    #         external_enabled: true
+    #         target_port: 8080
+    #         transport: 'auto'
+    #         traffic_weight:
+    #             - latest_revision: true
+    #               percentage: 100
+    #     environment_variables:
+    #         PrivacyPortalOrigin: 'https://privacyportalstoragedev.z9.web.core.windows.net'

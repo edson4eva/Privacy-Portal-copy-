@@ -1,0 +1,40 @@
+.non-mobile-back-button {
+    --goa-button-height: 2rem;
+    line-height: 1.5rem;
+}
+.mobile-back-button {
+    display: none;
+}
+@media (max-width: 623px) {
+    .non-mobile-back-button {
+        display: none;
+    }
+    .mobile-back-button {
+        display: flex;
+        height: 3.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        background-color: #fff;
+        width: 100vw;
+        margin-left: -1rem;
+        margin-bottom: 2rem;
+        border-top: 1px solid var(--goa-color-greyscale-200);
+        border-bottom: 2px solid var(--goa-color-greyscale-200);
+        cursor: pointer;
+        .icon {
+            position: absolute;
+            left: 0;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+        }
+
+        .text {
+            text-align: center;
+            color: #0070c4;
+            font-weight: 700;
+        }
+    }
+}

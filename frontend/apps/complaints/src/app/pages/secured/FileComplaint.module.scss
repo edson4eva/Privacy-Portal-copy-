@@ -1,0 +1,39 @@
+.container {
+    background-color: var(--pp-background-color-landing);
+    padding-left: 64px;
+    padding-right: 72px;
+    padding-top: 3rem;
+    width: calc(720px + 64px + 72px); // 720px content + left/right padding = 856px total
+    flex-shrink: 0; // Prevent shrinking
+    box-sizing: border-box; // Padding is included in the total width
+}
+
+@media (max-width: 1023px) {
+    img {
+        padding-left: 0rem;
+    }
+
+    .container {
+        background-color: var(--pp-background-color-internal);
+        padding-top: 0rem;
+        padding-left: 36px;
+        padding-right: 36px;
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 623px) {
+    img {
+        padding-left: 0rem;
+    }
+
+    .container {
+        background-color: var(--pp-background-color-internal);
+        padding-top: 0rem;
+        padding-left: 16px;
+        padding-right: 16px;
+        width: 100%;
+        max-width: 100%;
+    }
+}

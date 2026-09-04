@@ -1,0 +1,132 @@
+.container {
+    padding-left: var(--goa-space-l);
+    max-width: 45rem;
+}
+.section-header{
+    width: 100%;
+    overflow:hidden
+}
+.section-header-text{
+    font: var(--goa-typography-heading-m);
+    color: var(--goa-accordion-color-heading);
+    float: left;
+}
+.section-header-btn{
+    float: right;
+    margin-right: 1rem
+}
+.section-bottom-btn-panel{
+    margin-top: 5px;
+}
+.service-name-badge-container {
+    margin-bottom: 3rem;
+    .service-name {
+        line-height: var(--goa-line-height-6);
+        font-size: var(--goa-font-size-9);
+    }
+    .badge {
+        display: inline-block;
+        background-color: var(--Color-Brand-Default, #0081a2);
+        font: var(--goa-typography-body-xs);
+        padding: 0 var(--goa-space-xs) 0.125rem var(--goa-space-xs);
+        border-radius: 6.1875rem;
+        color: var(--goa-color-greyscale-100);
+    }
+}
+.service-access-history {
+    font: var(--goa-typography-heading-m);
+}
+.log-description {
+    font: var(--goa-typography-body-m);
+    max-width: 45rem;
+}
+
+.table-container {
+    margin: 1rem 0 2rem 0;
+    goa-table table {
+        width: unset !important;
+        tr th:first-child,
+        tr td:first-child {
+            background-color: #fff;
+            width: 13.125rem;
+        }
+        tr th:nth-child(2),
+        tr td:nth-child(2) {
+            width: 10.625rem;
+        }
+    }
+}
+.button-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    padding: 2rem 0 3rem 0;
+    goa-button:nth-child(2) {
+        --goa-button-padding-lr: 3.865rem;
+    }
+}
+.mobile-back-button {
+    display: none;
+}
+@media (max-width: 623px) {
+    .log-description {
+        font: var(--goa-typography-body-s);
+    }
+    .button-container {
+        flex-direction: column;
+        padding: 1.5rem 0 3rem 0;
+        goa-button:nth-child(2) {
+            --goa-button-padding-lr: 0.75rem;
+        }
+    }
+    .non-mobile-back-button {
+        display: none;
+    }
+    .mobile-back-button {
+        display: flex;
+        height: 3.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        width: 100%;
+        background-color: #fff;
+        width: calc(100% + 3rem);
+        margin-left: -1.5rem;
+        margin-bottom: 2rem;
+        border-top: 1px solid var(--goa-color-greyscale-200);
+        border-bottom: 2px solid var(--goa-color-greyscale-200);
+        cursor: pointer;
+        .icon {
+            position: absolute;
+            left: 0;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+        }
+
+        .text {
+            text-align: center;
+            color: #0070c4;
+            font-weight: 700;
+        }
+    }
+    .service-name-badge-container {
+        margin-bottom: 1.5rem;
+    }
+    .table-container {
+        margin-bottom: 1.5rem;
+        goa-table table {
+            width: unset !important;
+            tr th:first-child,
+            tr td:first-child {
+                width: 13.125rem;
+            }
+            tr th:nth-child(2),
+            tr td:nth-child(2) {
+                background-color: #fff;
+                width: 8.3125rem;
+            }
+        }
+    }
+}

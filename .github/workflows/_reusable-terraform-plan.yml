@@ -1,0 +1,65 @@
+name: Reusable Terraform Plan / Apply
+
+on:
+    workflow_call:
+        inputs:
+            CONFIG_DIRECTORY:
+                required: true
+                type: string
+                default: './.terraformfiles/pp/'
+            TF_CLOUD_ORGANIZATION:
+                required: true
+                type: string
+                default: 'GovAlta'
+            TF_PLAN_ONLY:
+                required: true
+                type: boolean
+                default: true
+            ENVIRONMENT:
+                required: true
+                type: string
+
+env:
+    TF_CLOUD_ORGANIZATION: '${{inputs.TF_CLOUD_ORGANIZATION}}'
+    TF_API_TOKEN: '${{ secrets.TF_API_TOKEN }}'
+    TF_WORKSPACE: '${{ vars.TF_WORKSPACE }}'
+jobs:
+    terraform-plan:
+        name: Plan changes using Terraform
+        runs-on: ubuntu-latest
+        environment: ${{ inputs.ENVIRONMENT }}
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Display Environment Values
+              shell: bash
+              run: |
+                  echo "Workspace: ${{ env.TF_WORKSPACE}}"
+                  echo "Config Directory: ${{ inputs.CONFIG_DIRECTORY}}"
+
+            - name: Upload Configuration
+              uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
+              id: plan-upload
+              with:
+                  workspace: ${{ env.TF_WORKSPACE }}
+                  directory: ${{ inputs.CONFIG_DIRECTORY }}
+                  speculative: ${{inputs.TF_PLAN_ONLY}}
+
+            - name: Create Plan
+              uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
+              id: plan-run
+              with:
+                  workspace: ${{ env.TF_WORKSPACE }}
+                  configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
+                  plan_only: ${{inputs.TF_PLAN_ONLY}}
+
+            - name: Get Plan Output
+              uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
+              id: plan-output
+              with:
+                  plan: ${{ fromJSON(steps.plan-run.outputs.payload).data.relationships.plan.data.id }}
+
+            - name: Write to summary
+              shell: bash
+              run: echo 'Terraform Cloud Plan (${{ steps.plan-run.outputs.run_link }})' >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,87 @@
+name: Frontend CI/CD Pipeline for UAT
+
+on:
+    pull_request:
+        branches: [main]
+        paths:
+            - 'frontend/**'
+            - '.github/workflows/ci-frontend-dev.yml'
+    push:
+        branches: [main]
+        paths:
+            - 'frontend/**'
+            - '.github/workflows/ci-frontend-dev.yml'
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        environment: uat
+        defaults:
+            run:
+                working-directory: frontend/
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '20'
+
+            - name: Install Dependencies
+              run: npm ci
+
+            - name: Set up environment variables
+              env:
+                  RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
+                  GOOGLE_ANALYTICS_KEY_COMPLAINTS: ${{ secrets.GOOGLE_ANALYTICS_KEY_COMPLAINTS }}
+                  GOOGLE_ANALYTICS_KEY_ACCOUNT_HISTORY: ${{ secrets.GOOGLE_ANALYTICS_KEY_ACCOUNT_HISTORY }}
+                  AZURE_APP_INSIGHTS_CONNECTION_STRING: ${{ secrets.AZURE_APP_INSIGHTS_CONNECTION_STRING }}
+              run: |
+                  cp apps/account-history/.env.uat apps/account-history/.env &&
+                  cp apps/complaints/.env.uat apps/complaints/.env &&
+                  cp apps/admin/.env.uat apps/admin/.env &&
+                  cp .env.uat .env &&
+                  echo "Environment files copied successfully."
+
+                  sed -i "s/REPLACE_RECAPTCHA_SITE_KEY/${RECAPTCHA_SITE_KEY}/g" apps/complaints/.env &&
+                  sed -i "s/REPLACE_GOOGLE_ANALYTICS_KEY/${GOOGLE_ANALYTICS_KEY_COMPLAINTS}/g" apps/complaints/.env &&
+                  sed -i "s/REPLACE_GOOGLE_ANALYTICS_KEY/${GOOGLE_ANALYTICS_KEY_ACCOUNT_HISTORY}/g" apps/account-history/.env &&
+                  sed -i "s/REPLACE_APP_INSIGHTS_CONNECTION_STRING/${AZURE_APP_INSIGHTS_CONNECTION_STRING}/g" apps/account-history/.env &&
+                  sed -i "s/REPLACE_APP_INSIGHTS_CONNECTION_STRING/${AZURE_APP_INSIGHTS_CONNECTION_STRING}/g" apps/admin/.env &&
+                  sed -i "s/REPLACE_APP_INSIGHTS_CONNECTION_STRING/${AZURE_APP_INSIGHTS_CONNECTION_STRING}/g" apps/complaints/.env &&
+                  echo "Environment settings updated from GitHub Secrets."
+
+            - name: Run Unit Tests
+              run: npx nx affected --target=test --parallel --base=origin/main
+
+            - name: Build Complaints App
+              run: npx nx build complaints --skip-nx-cache=false
+
+            - name: Build Admin App
+              run: npx nx build admin --skip-nx-cache=false
+
+            - name: Build Account History App
+              run: npx nx build account-history --skip-nx-cache=false
+
+            - name: Log in to Azure
+              if: github.ref == 'refs/heads/main'
+              uses: azure/login@v1
+              with:
+                  creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+            - name: Upload files to Azure Storage Account
+              if: github.ref == 'refs/heads/main'
+              uses: azure/CLI@v1
+              with:
+                  inlineScript: |
+                      az storage blob upload-batch \
+                          --destination '$web' \
+                          --account-name privacyportalstorageuat \
+                          --source frontend/dist/apps \
+                          --pattern "*" \
+                          --overwrite \
+                          --account-key ${{ secrets.AZURE_STORAGE_KEY }}

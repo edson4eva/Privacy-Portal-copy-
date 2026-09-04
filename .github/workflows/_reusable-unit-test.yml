@@ -1,0 +1,44 @@
+name: Unit Test Workflow
+
+on:
+    workflow_call:
+        inputs:
+            unit_test_project_path:
+                description: 'Path to unit test project'
+                required: true
+                type: string
+            environment:
+                description: 'The environment to get secrets'
+                required: true
+                type: string
+        secrets:
+            PP_NUGET_PAT:
+                required: true
+jobs:
+    unit-test:
+        runs-on: ubuntu-latest
+        environment: ${{ inputs.environment }}
+        outputs:
+            test_status: ${{ steps.test.outputs.test_status }}
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Set up .NET
+              uses: actions/setup-dotnet@v3
+              with:
+                  dotnet-version: '9.0'
+
+            - name: Restore dependencies
+              run: |
+                  dotnet nuget update source github --username ${{ github.actor }} --password "${{ secrets.PP_NUGET_PAT }}" --store-password-in-clear-text --configfile nuget.config
+                  dotnet restore ${{ inputs.unit_test_project_path }}
+
+            - name: Build project
+              run: dotnet build ${{ inputs.unit_test_project_path }} --configuration ${{ inputs.environment }}
+
+            - name: Run unit tests
+              id: test
+              run: |
+                  dotnet test ${{ inputs.unit_test_project_path }} --configuration ${{ inputs.environment }} --no-build --verbosity normal
+                  echo "test_status=$?" >> $GITHUB_OUTPUT

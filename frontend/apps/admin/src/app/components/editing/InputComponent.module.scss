@@ -1,0 +1,19 @@
+.input-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    .input {
+        border: 0;
+    }
+    .input-error {
+        border: 1px solid var(--goa-color-interactive-error);
+        border-radius: 5px;
+    }
+    .input-error-text {
+        color: var(--goa-color-interactive-error);
+        margin-left: 0.25rem;
+    }
+    .input-error-div {
+        display: flex;
+    }
+}

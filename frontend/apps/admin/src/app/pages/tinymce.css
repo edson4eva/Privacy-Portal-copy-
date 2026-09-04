@@ -1,0 +1,7 @@
+.tox.tox-tinymce-aux {
+  z-index: 99999!important;
+}
+
+.mce-toolbar .tox-icon {
+	color: rgb(0,112,196);
+}

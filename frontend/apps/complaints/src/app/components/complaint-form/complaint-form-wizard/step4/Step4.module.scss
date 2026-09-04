@@ -1,0 +1,141 @@
+.info-container {
+    width: 100%;
+    max-width: 672px;
+    height: auto;
+    min-height: 132px;
+}
+.header {
+    max-width: 672px;
+    min-height: 42px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.success-callout {
+    max-width: 720px;
+    min-height: 224px;
+    --container-padding: 1.5rem;
+}
+
+.success-container-heading {
+    max-width: 672px;
+    min-height: 32px;
+}
+
+.success-internal-container {
+    max-width: 672px;
+    min-height: 56px;
+}
+
+.step-container {
+    p {
+        max-width: 624px;
+    }
+}
+
+.internal-container {
+    max-width: 672px;
+    min-height: 56px;
+}
+
+.section-heading-label {
+    font: var(--goa-typography-heading-m);
+    font-weight: 700;
+    line-height: 32px;
+}
+.section-heading-value {
+    font: var(--goa-typography-heading-m);
+    font-weight: 400;
+    line-height: 32px;
+}
+
+.heading-label {
+    font: var(--goa-typography-heading-s);
+    font-weight: 700;
+    line-height: 28px;
+}
+
+.heading-value {
+    font-weight: 400;
+    line-height: 28px;
+    word-wrap: break-word;
+}
+
+.dept-department {
+    width: 100%;
+    height: auto;
+    max-width: 672px;
+    min-height: 56px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.details-department {
+    width: 100%;
+    height: auto;
+    max-width: 672px;
+    min-height: 56px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.custom-pp-container-1 {
+    --container-height: auto;
+    --container-padding: 1.5rem;
+}
+
+.custom-pp-container-2 {
+    --container-height: 442px;
+    --container-padding: 1.5rem;
+}
+
+.custom-pp-container-3 {
+    --container-height: auto;
+    --container-padding: 1.5rem;
+}
+
+.custom-pp-container-success {
+    --container-height: 224px;
+    --container-padding: 1.5rem;
+    border-color: var(---goa-color-success-default);
+}
+
+.step4 {
+    min-width: 45rem;
+}
+
+.button-container {
+    display: none;
+}
+
+.information-callout {
+    margin-top: 1rem;
+    --container-height: 76px;
+    --container-padding: 1.5rem;
+    max-width: 550px;
+}
+
+.heading-label-value {
+    font: var(--goa-typography-heading-s);
+    font-weight: 400;
+    line-height: 28px;
+}
+
+@media (max-width: 623px) {
+    .form-item-container {
+        width: 100%;
+    }
+
+    .step4 {
+        min-width: auto;
+    }
+
+    .button-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

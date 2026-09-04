@@ -1,0 +1,132 @@
+name: Frontend CI/CD Pipeline for DEV
+
+on:
+    pull_request:
+        branches: [develop]
+        paths:
+            - 'frontend/**'
+            - '.github/workflows/ci-frontend-dev.yml'
+    push:
+        branches: [develop]
+        paths:
+            - 'frontend/**'
+            - '.github/workflows/ci-frontend-dev.yml'
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        environment: dev
+        defaults:
+            run:
+                working-directory: frontend/
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '20'
+
+            - name: Install Dependencies
+              run: npm ci
+
+            - name: Set up environment variables
+              env:
+                  RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
+                  GOOGLE_ANALYTICS_KEY_COMPLAINTS: ${{ secrets.GOOGLE_ANALYTICS_KEY_COMPLAINTS }}
+                  GOOGLE_ANALYTICS_KEY_ACCOUNT_HISTORY: ${{ secrets.GOOGLE_ANALYTICS_KEY_ACCOUNT_HISTORY }}
+                  AZURE_APP_INSIGHTS_CONNECTION_STRING: ${{ secrets.AZURE_APP_INSIGHTS_CONNECTION_STRING }}
+              run: |
+                  cp apps/account-history/.env.dev apps/account-history/.env &&
+                  cp apps/complaints/.env.dev apps/complaints/.env &&
+                  cp apps/admin/.env.dev apps/admin/.env &&
+                  cp .env.dev .env &&
+                  echo "Environment files copied successfully."
+
+                  sed -i "s/REPLACE_RECAPTCHA_SITE_KEY/${RECAPTCHA_SITE_KEY}/g" apps/complaints/.env &&
+                  sed -i "s/REPLACE_GOOGLE_ANALYTICS_KEY/${GOOGLE_ANALYTICS_KEY_COMPLAINTS}/g" apps/complaints/.env &&
+                  sed -i "s/REPLACE_GOOGLE_ANALYTICS_KEY/${GOOGLE_ANALYTICS_KEY_ACCOUNT_HISTORY}/g" apps/account-history/.env &&
+                  sed -i "s/REPLACE_APP_INSIGHTS_CONNECTION_STRING/${AZURE_APP_INSIGHTS_CONNECTION_STRING}/g" apps/account-history/.env &&
+                  sed -i "s/REPLACE_APP_INSIGHTS_CONNECTION_STRING/${AZURE_APP_INSIGHTS_CONNECTION_STRING}/g" apps/admin/.env &&
+                  sed -i "s/REPLACE_APP_INSIGHTS_CONNECTION_STRING/${AZURE_APP_INSIGHTS_CONNECTION_STRING}/g" apps/complaints/.env &&
+                  echo "Environment settings updated from GitHub Secrets."
+
+            # - name: Run nx reset
+            #   run: npx nx reset
+
+            # - name: Run Lint
+            #   run: npx nx affected --target=lint --parallel --base=origin/develop --verbose
+
+            # - name: Run Unit Tests
+            #  run: npx nx affected --target=test --parallel --base=origin/develop --verbose
+
+            # - name: E2E Prep - Extract environment variables from .env files and write to cypress.env.json files
+            #   run: |
+            #       # Extract environment variables from the .env files of both apps
+            #       extract_var() {
+            #         local app=$1
+            #         local var_name=$2
+            #         echo $(grep -oP "^$var_name=\K.*" "apps/$app/.env")
+            #       }
+
+            #       # Account History app
+            #       account_history_api_url=$(extract_var "account-history" "NX_PUBLIC_API_URL")
+            #       account_history_base_href=$(extract_var "account-history" "NX_PUBLIC_BASE_HREF")
+
+            #       # Complaints app
+            #       complaints_api_url=$(extract_var "complaints" "NX_PUBLIC_API_URL")
+            #       complaints_base_href=$(extract_var "complaints" "NX_PUBLIC_BASE_HREF")
+
+            #       # Check if the variables were extracted successfully
+            #       if [ -z "$account_history_api_url" ] || [ -z "$account_history_base_href" ] || \
+            #         [ -z "$complaints_api_url" ] || [ -z "$complaints_base_href" ]; then
+            #         echo "Error: One or more required environment variables are missing."
+            #         exit 1
+            #       fi
+
+            #       # Create cypress.env.json for the Account History E2E tests
+            #       echo '{
+            #         "NX_PUBLIC_API_URL": "'"$account_history_api_url"'",
+            #         "NX_PUBLIC_BASE_HREF": "'"$account_history_base_href"'"
+            #       }' > apps/account-history-e2e/cypress.env.json
+
+            #       # Create cypress.env.json for the Complaints E2E tests
+            #       echo '{
+            #         "NX_PUBLIC_API_URL": "'"$complaints_api_url"'",
+            #         "NX_PUBLIC_BASE_HREF": "'"$complaints_base_href"'"
+            #       }' > apps/complaints-e2e/cypress.env.json
+
+            # - name: Run E2E Tests
+            #   run: npx nx affected --target=e2e --parallel --base=origin/develop --browser=chrome --verbose
+
+            - name: Build Complaints App
+              run: npx nx build complaints --skip-nx-cache=false
+
+            - name: Build Admin App
+              run: npx nx build admin --skip-nx-cache=false
+
+            - name: Build Account History App
+              run: npx nx build account-history --skip-nx-cache=false
+
+            - name: Log in to Azure
+              if: github.ref == 'refs/heads/develop'
+              uses: azure/login@v1
+              with:
+                  creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+            - name: Upload files to Azure Storage Account
+              if: github.ref == 'refs/heads/develop'
+              uses: azure/CLI@v1
+              with:
+                  inlineScript: |
+                      az storage blob upload-batch \
+                          --destination '$web' \
+                          --account-name privacyportalstoragedev \
+                          --source frontend/dist/apps \
+                          --pattern "*" \
+                          --overwrite \
+                          --account-key ${{ secrets.AZURE_STORAGE_KEY }}

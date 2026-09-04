@@ -1,0 +1,368 @@
+{
+    "levelone": {
+        "number": 1.2,
+        "date": "2024-10-03T15:37:05.482Z",
+        "boolean": true,
+        "string": "string",
+        "array": [
+            1,
+            2,
+            3
+        ],
+        "object": {
+            "number": 1.2,
+            "date": "2024-10-03T15:37:05.482Z",
+            "boolean": true,
+            "string": "string",
+            "array": [
+                1,
+                2,
+                3
+            ]
+        },
+        "null": null,
+        "arrayOfObjects": [
+            {
+                "number": 1.0,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "{{DateTime.UtcNow.ToString(\"o\")}}",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 1.1,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "{{Guid.NewGuid().ToString()}}",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 1.2,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "{{3+5}}",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 1.3,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 1.4,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 1.5,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 1.6,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 1.7,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 1.8,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 1.9,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 2.0,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 2.1,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 2.2,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 2.3,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 2.4,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 2.5,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 2.6,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 2.7,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 2.8,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 2.9,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 3.0,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 3.1,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 3.2,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 3.3,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 3.4,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 3.5,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 3.6,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 3.7,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 3.8,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 3.9,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                "number": 4.0,
+                "date": "2024-10-03T15:37:05.482Z",
+                "boolean": true,
+                "string": "string",
+                "array": [
+                    1,
+                    2,
+                    3
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,107 @@
+.services-section {
+    margin-top: 2rem;
+}
+
+.custom-pp-container-step2 {
+    --container-height: auto;
+    --container-padding: 1rem;
+    --container-background-color: #eff8ff;
+}
+
+.form-item-container {
+    max-width: 45rem;
+}
+
+.step-container {
+    p {
+        max-width: 624px;
+    }
+}
+
+.decide-alert {
+    display: flex;
+    div:nth-child(1) {
+        background-color: #f9ce2d;
+        border-radius: 1.5rem;
+        height: 1.5rem;
+    }
+    div:nth-child(2) {
+        margin-left: 0.5rem;
+        margin-top: -0.1875rem;
+        width: auto;
+        max-width: 45rem;
+        min-height: 3rem;
+    }
+}
+.heading {
+    font-weight: bold;
+}
+.info-container {
+    max-width: 672px;
+    height: auto;
+}
+
+.department {
+    height: auto;
+    max-width: 672px;
+    min-height: 56px;
+    display: flex;
+    justify-content: space-between;
+}
+.service {
+    margin-top: 16px;
+    width: 100%;
+    height: auto;
+    max-width: 672px;
+    min-height: 56px;
+}
+
+.supporting-details {
+    font: var(--goa-typography-body-l);
+}
+
+.contact-container {
+    display: flex;
+    width: 67ch;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.names,
+.emails {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+//below 3 classes are used to only for tablet (ipad/android)
+.tablet-background {
+    background-color: white;
+    border: 1px solid gray;
+}
+
+.spacer {
+    margin-bottom: 1.25rem;
+}
+
+.name-outline{
+    border: 1px solid gray
+}
+
+@media (max-width: 623px) {
+    .form-item-container {
+        width: 100%;
+    }
+
+    .names,
+    .emails {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .custom-pp-container-step2 {
+        --container-height: auto;
+        --container-padding: 1.5rem;
+    }
+}

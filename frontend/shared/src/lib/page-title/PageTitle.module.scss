@@ -1,0 +1,9 @@
+.page-title {
+    font: var(--goa-typography-heading-xs);
+}
+
+@media (max-width: 623px) {
+    .page-title {
+        font: var(--goa-typography-heading-xs);
+    }
+}

@@ -1,0 +1,61 @@
+:root {
+    --pp-background-color-landing: white;
+    --pp-background-color-internal: #f3f3f3;
+    --goa-container-border-color: var(--goa-color-greyscale-200);
+}
+
+.main-container {
+    display: flex;
+    flex-direction: row;
+    max-width: calc(286px + 856px + 4rem); // 286px menu + 856px FileComplaint (includes its padding) + 64px container padding
+    min-height: calc(100vh - 12rem);
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.main-container-center-positioned {
+    display: flex;
+    flex-direction: row;
+    min-height: 43rem;
+}
+
+.leftNav {
+    justify-content: center;
+    border-right: 0.0625rem solid #dcdcdc;
+    min-height: fit-content;
+    width: 286px; // Fixed width for side menu
+    flex-shrink: 0; // Prevent shrinking
+}
+
+// Mobile breakpoint
+@media (max-width: 623px) {
+    .main-container {
+        flex-direction: column;
+        min-height: 41.62rem;
+        background-color: var(--pp-background-color-internal);
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    .main-container-center-positioned {
+        flex-direction: column;
+        min-height: 41.62rem;
+        background-color: var(--pp-background-color-internal);
+    }
+
+    .leftNav {
+        display: none;
+    }
+}
+
+@media (max-width: 1023px) {
+    .main-container {
+        background-color: var(--pp-background-color-landing);
+        min-height: calc(100vh - 15.875rem);
+    }
+
+    .main-container-center-positioned {
+        background-color: var(--pp-background-color-landing);
+        min-height: calc(100vh);
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "allowJs": false,
+        "esModuleInterop": false,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "paths": {
+            "@complaints/interfaces/*": ["apps/complaints/src/app/interfaces/*"],
+            "@models/*": ["apps/complaints/src/models/*"]
+        },
+        "declaration": true,
+        "composite": true
+    },
+    "files": [],
+    "include": [],
+    "references": [
+        {
+            "path": "./tsconfig.app.json"
+        },
+        {
+            "path": "./tsconfig.spec.json"
+        }
+    ],
+    "extends": "../../tsconfig.base.json"
+}

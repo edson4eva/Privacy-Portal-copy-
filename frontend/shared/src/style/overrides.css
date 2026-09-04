@@ -1,0 +1,150 @@
+/** Demo for 2162 **/
+:root {
+    /** App Header*/
+    --goa-app-header-color-bg-nav-item-in-menu-current: unset;
+    --goa-app-header-color-bg-nav-item-in-menu-current-hover: unset;
+    /** Button **/
+    --goa-button-border-radius: 14px;
+    --goa-button-text: var(--goa-typography-heading-s);
+    --goa-button-height: 55px;
+    --goa-button-padding-lr: var(--goa-space-s);
+    --goa-button-padding-lr-compact: var(--goa-space-xs);
+
+    /*Accordion*/
+    --goa-accordion-divider: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
+    --goa-accordion-color-bg-heading: var(--goa-color-greyscale-white);
+    --goa-accordion-color-bg-content: var(--goa-color-greyscale-white);
+    --goa-accordion-color-heading: var(--goa-color-interactive-default);
+    --goa-accordion-border: none;
+    --goa-accordion-border-radius: 15px;
+    --goa-accordion-padding-heading: var(--goa-space-m) 4px var(--goa-space-m) 20px;
+    --goa-accordion-heading-s: var(--goa-typography-heading-s);
+    --goa-accordion-heading-m: var(--goa-typography-heading-m);
+    --goa-accordion-padding-content-wide: 20px;
+    --goa-accordion-padding-content-narrow: 20px;
+    --goa-accordion-color-bg-heading-hover: #eff8ff;
+    --goa-accordion-color-heading-hover: var(--goa-color-interactive-default);
+    --goa-accordion-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.25);
+
+    /*Callout*/
+    --goa-callout-l-text-size: var(--goa-typography-body-m);
+    --goa-callout-l-border-width: var(--goa-border-width-s);
+    --goa-callout-border-radius: 15px;
+    --goa-callout-l-heading-size: var(--goa-typography-heading-m);
+    --goa-callout-l-content-gap: var(--goa-space-m);
+    --goa-callout-info-color-bg-statusbar: none;
+    --goa-callout-info-icon-color: var(--goa-color-information-default);
+    --goa-callout-warning-icon-color: var(--goa-color-warning-dark);
+    --goa-callout-success-icon-color: var(--goa-color-success-default);
+    --goa-callout-emergency-icon-color: var(--goa-color-emergency-default);
+    --goa-callout-warning-color-bg-statusbar: none;
+    --goa-callout-success-color-bg-statusbar: none;
+    --goa-callout-emergency-color-bg-statusbar: none;
+    --goa-callout-l-statusbar-padding: 29px var(--goa-space-xs) 0px var(--goa-space-l);
+    --goa-callout-info-color-bg-content: none;
+    --goa-callout-warning-color-bg-content: none;
+    --goa-callout-success-color-bg-content: none;
+    --goa-callout-emergency-color-bg-content: none;
+    --goa-callout-l-content-padding: var(--goa-space-l) var(--goa-space-l) var(--goa-space-l) 0px;
+    --goa-callout-info-border-color: var(--goa-color-information-default);
+    --goa-callout-warning-border-color: var(--goa-color-warning-dark);
+    --goa-callout-success-border-color: var(--goa-color-success-default);
+    --goa-callout-emergency-border-color: var(--goa-color-emergency-default);
+    --goa-callout-m-text-size: var(--goa-typography-body-m);
+    --goa-callout-m-border-width: 0px;
+    --goa-callout-m-heading-size: var(--goa-typography-heading-xs);
+    --goa-callout-m-content-gap: var(--goa-space-xs);
+    --goa-callout-m-content-padding: 0px;
+    --goa-callout-m-statusbar-padding: 0px 10px 0px 0px;
+
+    /*Container*/
+    --goa-container-border-radius: 15px;
+    --goa-container-border: var(--goa-border-width-s) solid var(--goa-color-brand-default);
+    --goa-container-padding: var(--goa-space-l);
+
+    /*Table*/
+    --goa-table-color-heading: var(--goa-color-text-default);
+    --goa-table-color-border-heading: var(--goa-color-brand-default);
+
+    /** Side Menu Group **/
+    --goa-side-menu-group-padding: 0;
+    --goa-side-menu-group-color-bg: #fff;
+    --goa-side-menu-child-border-width: 0px;
+    --goa-side-menu-child-color-bg-hover: #eff8ff;
+    --goa-side-menu-child-color-text-selected: var(--goa-color-interactive-default);
+    --goa-side-menu-parent-padding: 16px 12px 16px 32px;
+    --goa-side-menu-parent-text-active: var(--goa-typography-heading-s);
+    --goa-side-menu-group-border-radius: 15px;
+    --goa-side-menu-parent-color-bg-hover: #eff8ff;
+    --goa-side-menu-sub-group-padding: var(--goa-space-none) var(--goa-space-none) var(--goa-space-none)
+        var(--goa-space-xl);
+    --goa-side-menu-child-color-bg-selected: #f8f8f8;
+    --goa-side-menu-parent-color-bg-selected: #fff;
+    --goa-opacity-background-drawer: rgba(0, 0, 0, 0.7);
+    --goa-side-menu-color-bg-menu-item-hover: #eff8ff;
+    --goa-side-menu-child-border-left: unset;
+    --goa-side-menu-child-border-left-hover: unset;
+    --goa-side-menu-child-border-left-selected: unset;
+}
+
+@media screen and (max-width: 1024px) {
+    :root {
+        --goa-side-menu-group-border-radius: 15px;
+        --goa-side-menu-sub-group-padding: 8px 0 0 16px;
+        --goa-accordion-shadow: none;
+        --goa-side-menu-parent-padding: 0px;
+        --goa-side-menu-group-padding: 10px 16px;
+    }
+}
+
+goa-table table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--goa-color-greyscale-50);
+}
+
+goa-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+goa-table tbody tr td:first-child,
+goa-table thead tr th:first-child {
+    background-color: var(--goa-color-greyscale-50);
+}
+
+/*==================
+  Side Menu
+==================*/
+
+/*==================
+  Side Menu
+==================*/
+.uiam--side-menu {
+    width: 286px;
+    flex: 0 0 286px;
+    border-right: 1px solid var(--goa-color-greyscale-200);
+    padding-right: var(--goa-space-l);
+    margin-left: 32px;
+}
+
+.uiam--side-menu.no-user {
+    border-right: 1px solid transparent;
+}
+
+/*Mobile & Tablet*/
+@media screen and (max-width: 1023px) {
+    .uiam--container {
+        flex-wrap: wrap;
+    }
+
+    .uiam--side-menu {
+        display: none;
+    }
+
+    .uiam--side-menu {
+        padding-bottom: 1.5rem;
+    }
+}

@@ -1,0 +1,35 @@
+{ 
+    "compilerOptions": {
+        "allowJs": true,
+        "outDir": "../../dist/out-tsc",
+        "module": "commonjs",
+        "types": ["cypress", "node"],
+        "sourceMap": false,
+        "skipLibCheck": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "esModuleInterop": true,
+        
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "preserveValueImports": false,
+        "target": "es5" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+        "lib": ["es5", "DOM"],
+        "paths": {
+            "@badeball/cypress-cucumber-preprocessor/*": [
+                "./node_modules/@badeball/cypress-cucumber-preprocessor/dist/subpath-entrypoints/*"
+            ]
+        }
+    },
+    "include": [
+        "**/*.ts",
+        "**/*.js",
+        "cypress.config.ts",
+        "**/*.cy.ts",
+        "**/*.cy.tsx",
+        "**/*.cy.js",
+        "**/*.cy.jsx",
+        "**/*.d.ts",
+        "node_modules/@badeball/cypress-cucumber-preprocessor/**/*.ts"
+    ]
+}

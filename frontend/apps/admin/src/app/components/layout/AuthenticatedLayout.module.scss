@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    background-color: #fff;
+    .content {
+        flex-grow: 1;
+    }
+}
+@media (max-width: 623px) {
+    .container {
+        display: block;
+        padding-right: 1rem;
+        background-color: #f3f3f3;
+    }
+    .leftNav {
+        display: none;
+    }
+}
+
+/*==================
+  Side Menu
+==================*/
+.side-menu {
+    width: 286px;
+    border-right: 1px solid var(--goa-color-greyscale-200);
+    padding-right: 24px;
+    display: block;
+}
+
+@media (max-width: 1023px) {
+    .side-menu {
+        display: none;
+    }
+}

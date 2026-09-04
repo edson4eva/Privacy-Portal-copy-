@@ -1,0 +1,14 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "nx",
+            "project": "",
+            "command": "run",
+            "positional": "complaints:serve",
+            "flags": [],
+            "problemMatcher": ["$webpack-builder"],
+            "label": "nx: nx run complaints:serve"
+        }
+    ]
+}

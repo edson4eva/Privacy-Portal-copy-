@@ -1,0 +1,14 @@
+.services-filter-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    .services-filter-btn {
+        width: 10.625rem;
+    }
+}
+@media (max-width: 623px) {
+    .services-filter-btn-container {
+        .services-filter-btn {
+            width: 100%;
+        }
+    }
+}

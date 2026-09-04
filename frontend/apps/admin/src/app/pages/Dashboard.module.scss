@@ -1,0 +1,46 @@
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    padding: 3.5rem 0 0rem 2rem;
+}
+.heading {
+    margin: 0.75rem 0;
+}
+.landing-page-img {
+    margin: 0 0 1rem 0;
+    width: 15.625rem;
+    img {
+        width: 250px;
+    }
+}
+.dashboard-list {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+    line-height: var(--goa-line-height-3);
+    li {
+        margin-left: 0.5rem;
+        &::marker {
+            font-size: 0.5rem;
+        }
+    }
+}
+
+@media (max-width: 623px) {
+    .container {
+        padding: 2.25rem 0 3.25rem 1rem;
+    }
+    .dashboard-list {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+    .landing-page-img {
+        display: flex;
+        margin: 2rem auto;
+        img {
+            margin: auto;
+            width: 15.625rem;
+        }
+    }
+}

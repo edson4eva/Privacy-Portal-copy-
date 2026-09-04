@@ -1,0 +1,40 @@
+.user-info {
+    display: block;
+    pointer-events: none;
+    padding: 10px 16px 8px;
+    line-height: 24px;
+    background-color: var(--goa-color-greyscale-100);
+}
+
+.email {
+    font-size: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.business-name {
+    padding-top: 10px;
+}
+
+[role="tab"] {
+    padding: var(--goa-space-s) var(--goa-space-m);
+    border-top: 4px solid transparent;
+}
+[role="tab"][aria-selected="true"] {
+    border-color: var(--goa-color-interactive-default);
+}
+
+@media (max-width: 623px) {
+    [role="tab"] {
+        width: 100%;
+        padding: var(--goa-space-xs) 0;
+        padding-left: 12px;
+        border-left: 4px solid transparent;
+        border-top: 0px;
+    }
+    [role="tab"][aria-selected="true"] {
+        border-color: var(--goa-color-interactive-default);
+        background: var(--goa-color-info-background);
+    }
+}

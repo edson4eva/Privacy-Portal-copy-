@@ -1,0 +1,28 @@
+name: 'Terraform Plan'
+run-name: 'Run Terraform on ${{ inputs.ENVIRONMENT }}'
+on:
+    workflow_dispatch:
+        inputs:
+            ENVIRONMENT:
+                type: choice
+                description: The target environment to run the plan against
+                options:
+                    - dev
+                    - uat
+                    - prod
+                    - syst
+                required: true
+                default: dev
+            TF_PLAN_ONLY:
+                type: boolean
+                description: Run the terraform script in plan only mode, no changes made
+                default: true
+jobs:
+    terraform-plan:
+        uses: ./.github/workflows/_reusable-terraform-plan.yml
+        with:
+            TF_CLOUD_ORGANIZATION: 'GovAlta'
+            CONFIG_DIRECTORY: './.terraformfiles/pp/'
+            TF_PLAN_ONLY: ${{inputs.TF_PLAN_ONLY}}
+            ENVIRONMENT: ${{inputs.ENVIRONMENT}}
+        secrets: inherit

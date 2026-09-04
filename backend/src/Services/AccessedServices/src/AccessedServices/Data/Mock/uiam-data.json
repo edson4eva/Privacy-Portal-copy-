@@ -1,0 +1,57 @@
+[
+  {
+    "userId": "verified-user-with-service",
+    "claimAttributes": [
+      {
+        "id": 1,
+        "attributes": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/stateorprovince,http://schemas.xmlsoap.org/ws/2005/05/identity/claims/streetaddress,http://schemas.xmlsoap.org/ws/2005/05/identity/claims/streetaddress2,http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname,https://filter.com/filteredclaimlist,https://null.com/nullifiedclaimlist"
+      },
+      {
+        "id": 3,
+        "attributes": "http://identity.alberta.ca/credentialloa,http://identity.alberta.ca/identityloa,http://identity.alberta.ca/ivsstatus,http://identity.alberta.ca/middlename,http://identity.alberta.ca/othermiddlenames,http://identity.alberta.ca/sessionloa,http://schemas.xmlsoap.org/ws/2005/05/identity/claims/country,http://schemas.xmlsoap.org/ws/2005/05/identity/claims/dateofbirth,http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress,http://schemas.xmlsoap.org/ws/2005/05/identity/claims/gender,http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname,http://schemas.xmlsoap.org/ws/2005/05/identity/claims/homephone,http://schemas.xmlsoap.org/ws/2005/05/identity/claims/locality,http://schemas.xmlsoap.org/ws/2005/05/identity/claims/mobilephone,http://schemas.xmlsoap.org/ws/2005/05/identity/claims/postalcode,http://schemas.xmlsoap.org/ws/2005/05/identity/claims/stateorprovince,http://schemas.xmlsoap.org/ws/2005/05/identity/claims/streetaddress,http://schemas.xmlsoap.org/ws/2005/05/identity/claims/streetaddress2,http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname,https://filter.com/filteredclaimlist,https://null.com/nullifiedclaimlist"
+      }
+    ],
+    "relyingParties": [
+      {
+        "id": "child-care-subsidy",
+        "accessLogs": [
+          {
+            "loginTime": "2024-08-09T12:29:45.4482234-06:00",
+            "claimAttributeId": 1
+          },
+          {
+            "loginTime": "2024-07-11T12:26:21.4301097-06:00",
+            "claimAttributeId": 1
+          },
+          {
+            "loginTime": "2024-09-21T16:29:01.1193827-06:00",
+            "claimAttributeId": 1
+          },
+          {
+            "loginTime": "2024-10-13T11:31:51.5173867-06:00",
+            "claimAttributeId": 1
+          }
+        ]
+      },
+      {
+        "id": "e-services",
+        "accessLogs": [
+
+          {
+            "loginTime": "2024-08-11T09:18:38.6894991-06:00",
+            "claimAttributeId": 3
+          },
+          {
+            "loginTime": "2024-08-13T09:11:55.8934381-06:00",
+            "claimAttributeId": 3
+          },
+          {
+            "loginTime": "2024-09-12T16:52:13.9642226-06:00",
+            "claimAttributeId": 3
+          }
+        ]
+      }
+    ]
+
+  }
+]

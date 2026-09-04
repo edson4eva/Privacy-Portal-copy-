@@ -1,0 +1,20 @@
+.reporting-direction-container {
+    --goa-details-text-decoration: none;
+    --goa-color-greyscale-100: transparent;
+    --goa-space-s: 2rem;
+    margin-bottom: 1.5rem;
+    .reporting-direction {
+        padding: 0 1rem;
+        .reporting-link {
+            display: block;
+            margin-top: 0.5rem;
+        }
+        max-width: 39rem;
+    }
+}
+@media (max-width: 623px) {
+    .reporting-direction-container {
+        --goa-space-s: 1.5rem;
+        margin-bottom: 1rem;
+    }
+}

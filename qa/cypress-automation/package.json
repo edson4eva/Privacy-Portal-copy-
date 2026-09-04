@@ -1,0 +1,27 @@
+{
+  "name": "privacy-portal_cypress_automation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "runner": "cypress open",
+    "html-report": "cypress run --spec cypress/e2e/newprivacypage/newprivacypage/newprivacypage.ts --browser chrome --headless --reporter mochawesome"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cypress/webpack-preprocessor": "^6.0.2",
+    "@types/node": "^22.10.5",
+    "tsconfig-paths": "^4.2.0"
+  },
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^22.0.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.5",
+    "@types/cypress": "^0.1.6",
+    "cypress": "^14.4.1",
+    "cypress-file-upload": "^5.0.8",
+    "cypress-shadow-dom": "^1.4.1",
+    "typescript": "^5.8.3"
+  }
+}

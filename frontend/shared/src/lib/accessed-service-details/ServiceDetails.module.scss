@@ -1,0 +1,22 @@
+.container {
+    padding: 0;
+}
+.service-name {
+    line-height: var(--goa-line-height-6);
+    font-size: var(--goa-font-size-9);
+}
+.service-description {
+    font: var(--goa-typography-body-m);
+    max-width: 39rem;
+}
+
+@media (max-width: 623px) {
+    .container {
+        padding: 0;
+    }
+
+    .button-container {
+        flex-direction: column;
+        padding: 1.5rem 0 3rem 0;
+    }
+}

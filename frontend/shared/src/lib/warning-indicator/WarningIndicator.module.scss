@@ -1,0 +1,19 @@
+.warning-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.message {
+    color: var(--goa-color-interactive-error);
+}
+
+@media (max-width: 623px) {
+    .warning-indicator {
+        display: flex;
+        align-items: center;
+    }
+    .message {
+        gap: 0.5rem;
+        color: var(--goa-color-interactive-error);
+    }
+}

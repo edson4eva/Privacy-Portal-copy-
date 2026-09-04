@@ -1,0 +1,15 @@
+.required {
+    color: var(--goa-color-interactive-error);
+}
+
+.label {
+    margin-bottom: 4px;
+}
+@media (max-width: 623px) {
+    .required {
+        color: var(--goa-color-interactive-error);
+    }
+    .label {
+        margin-bottom: 4px;
+    }
+}
