@@ -25,6 +25,7 @@ const ServiceTable = ({
                         <th>Date accessed</th>
                         <th className={styles['col-time']}>Time</th>
                         <th>Details</th>
+                        <th>Privacy Details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,19 @@ const ServiceTable = ({
                                     >
                                         View
                                     </Link>
+                                </td>
+                                <td>
+                                    {/* The complaints app is a separate deployment, so this is a
+                                        plain anchor driven by the same env var the unauthorized
+                                        access notice uses - a router link would resolve inside
+                                        this app's basename. */}
+                                    <a
+                                        href={process.env.NX_PUBLIC_COMPLAINTS_BASE_HREF + 'file-complaint'}
+                                        target="_self"
+                                        data-testid={`file-complaint-${service.id}`}
+                                    >
+                                        File a privacy complaint
+                                    </a>
                                 </td>
                             </tr>
                         );
