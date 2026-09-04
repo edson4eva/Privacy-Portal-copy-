@@ -27,6 +27,16 @@ const daysAgo = (days: number, hour: number, minute: number): string => {
 
 const DEMO_ACCESSED_SERVICES: DemoAccessedService[] = [
     {
+        id: 'alberta-energy-rebate',
+        serviceName: 'Alberta Energy Rebate',
+        categoryId: 'family-and-social-support',
+        lastAccessedOn: daysAgo(1, 10, 26),
+        isAvailable: true,
+        description:
+            'Checked eligibility for the Alberta Energy Rebate and reviewed the credits applied to a household utility account.',
+        dataOwnerTexts: ['Energy and Minerals', 'Service Alberta and Red Tape Reduction'],
+    },
+    {
         id: 'drivers-licence-renewal',
         serviceName: "Driver's licence renewal",
         categoryId: 'driving-and-vehicles',
