@@ -15,6 +15,8 @@ interface DemoAccessedService {
     isAvailable: boolean;
     description: string;
     dataOwnerTexts: string[];
+    /** Overrides the default FOIP statement where a different authority applies. */
+    privacyAuthority?: string;
 }
 
 /** Days back from now, so the list always looks recently active. */
@@ -26,6 +28,18 @@ const daysAgo = (days: number, hour: number, minute: number): string => {
 };
 
 const DEMO_ACCESSED_SERVICES: DemoAccessedService[] = [
+    {
+        id: 'canada-revenue-agency',
+        serviceName: 'Canada Revenue Agency',
+        categoryId: 'family-and-social-support',
+        lastAccessedOn: daysAgo(1, 8, 14),
+        isAvailable: true,
+        description:
+            'Confirmed income and residency information held by the Canada Revenue Agency to assess eligibility for an income-tested Alberta benefit.',
+        dataOwnerTexts: ['Canada Revenue Agency', 'Treasury Board and Finance'],
+        privacyAuthority:
+            'This information is held by the Canada Revenue Agency and was shared with the Government of Alberta under an information-sharing agreement, as permitted by the Income Tax Act and the Freedom of Information and Protection of Privacy Act.',
+    },
     {
         id: 'alberta-energy-rebate',
         serviceName: 'Alberta Energy Rebate',
@@ -153,6 +167,10 @@ const DEMO_ACCESSED_SERVICES: DemoAccessedService[] = [
  * every list because they apply to any Government of Alberta service.
  */
 const PRIVACY_REASONS_BY_ID: Record<string, string[]> = {
+    'canada-revenue-agency': [
+        'To confirm the income reported for the relevant tax year',
+        'To verify residency for the period the benefit covers',
+    ],
     'alberta-energy-rebate': [
         'To confirm the utility account and address the rebate should be applied to',
         'To verify household eligibility against the program criteria',
@@ -222,9 +240,11 @@ const privacyDetailsContent = (service: DemoAccessedService): string => {
         '<ul>',
         ...reasons.map((reason) => `<li>${reason}</li>`),
         '</ul>',
-        '<p>Collection and use of this information is authorized under the Freedom of ',
-        'Information and Protection of Privacy Act. It is held by ',
-        `${service.dataOwnerTexts.join(' and ')}.</p>`,
+        `<p>${
+            service.privacyAuthority ??
+            'Collection and use of this information is authorized under the Freedom of Information and ' +
+                `Protection of Privacy Act. It is held by ${service.dataOwnerTexts.join(' and ')}.`
+        }</p>`,
     ].join('');
 };
 
