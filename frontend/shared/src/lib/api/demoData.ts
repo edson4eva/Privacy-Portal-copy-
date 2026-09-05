@@ -29,6 +29,16 @@ const daysAgo = (days: number, hour: number, minute: number): string => {
 
 const DEMO_ACCESSED_SERVICES: DemoAccessedService[] = [
     {
+        id: 'alberta-wallet',
+        serviceName: 'Alberta Wallet',
+        categoryId: 'permits-Records-government-services',
+        lastAccessedOn: daysAgo(1, 15, 30),
+        isAvailable: true,
+        description:
+            'Added a government-issued digital credential to the Alberta Wallet and reviewed the credentials already held.',
+        dataOwnerTexts: ['Service Alberta and Red Tape Reduction', 'Technology and Innovation'],
+    },
+    {
         id: 'canada-revenue-agency',
         serviceName: 'Canada Revenue Agency',
         categoryId: 'family-and-social-support',
@@ -167,6 +177,10 @@ const DEMO_ACCESSED_SERVICES: DemoAccessedService[] = [
  * every list because they apply to any Government of Alberta service.
  */
 const PRIVACY_REASONS_BY_ID: Record<string, string[]> = {
+    'alberta-wallet': [
+        'To confirm your identity to the level of assurance a digital credential requires',
+        'To bind the credential to your verified account and the device holding it',
+    ],
     'canada-revenue-agency': [
         'To confirm the income reported for the relevant tax year',
         'To verify residency for the period the benefit covers',
@@ -260,13 +274,17 @@ const accessedDatesFor = (service: DemoAccessedService): string[] => {
 
 const listResponse = () => ({
     isStale: false,
-    accessedServices: DEMO_ACCESSED_SERVICES.map(({ id, serviceName, categoryId, lastAccessedOn, isAvailable }) => ({
-        id,
-        serviceName,
-        categoryId,
-        lastAccessedOn,
-        isAvailable,
-    })),
+    // The table leaves rows in the order the API returned them until a sort is
+    // chosen, so return them most recently accessed first.
+    accessedServices: [...DEMO_ACCESSED_SERVICES]
+        .sort((a, b) => new Date(b.lastAccessedOn).getTime() - new Date(a.lastAccessedOn).getTime())
+        .map(({ id, serviceName, categoryId, lastAccessedOn, isAvailable }) => ({
+            id,
+            serviceName,
+            categoryId,
+            lastAccessedOn,
+            isAvailable,
+        })),
 });
 
 const detailResponse = (id: string) => {
