@@ -58,7 +58,7 @@ const DEMO_ACCESSED_SERVICES: DemoAccessedService[] = [
         isAvailable: true,
         description:
             'Checked eligibility for the Alberta Energy Rebate and reviewed the credits applied to a household utility account.',
-        dataOwnerTexts: ['Energy and Minerals', 'Service Alberta and Red Tape Reduction'],
+        dataOwnerTexts: ['Treasury Board and Finance'],
     },
     {
         id: 'drivers-licence-renewal',
