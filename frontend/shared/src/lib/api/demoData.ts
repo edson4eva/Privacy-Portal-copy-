@@ -36,7 +36,7 @@ const DEMO_ACCESSED_SERVICES: DemoAccessedService[] = [
         isAvailable: true,
         description:
             'Added a government-issued digital credential to the Alberta Wallet and reviewed the credentials already held.',
-        dataOwnerTexts: ['Service Alberta and Red Tape Reduction', 'Technology and Innovation'],
+        dataOwnerTexts: ['Technology and Innovation'],
     },
     {
         id: 'canada-revenue-agency',
