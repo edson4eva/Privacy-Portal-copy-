@@ -221,18 +221,6 @@ export class AccessedServiceDetails {
             .find('goa-icon')
             .and('be.visible');
     }
-    assertAccessServiceButton() {
-        cy.get('[data-testid="button-container"]').as('buttonContainer');
-
-        cy.get('@buttonContainer')
-            .find('goa-button')
-            .eq(1)
-            .and('have.text', 'Access service')
-            .shadow()
-            .find('button')
-            .and('have.class', 'primary')
-            .and('be.visible');
-    }
 }
 
 export class AccessedServiceDetailsDesktop {
@@ -350,12 +338,6 @@ export class AccessedServiceDetailsDesktop {
             .then((width) => {
                 expect(width).to.be.gte(253);
                 expect(width).to.be.lte(254);
-            });
-        cy.get('[testid="btn-access-service"]')
-            .invoke('width')
-            .then((width) => {
-                expect(width).to.be.gte(250);
-                expect(width).to.be.lte(251);
             });
     }
 
@@ -483,12 +465,6 @@ export class AccessedServiceDetailsMobile {
             .should('have.css', 'row-gap', '16px')
             .should('have.css', 'padding-top', '24px');
         cy.get('[testid="btn-back-to-account-history"]')
-            .invoke('width')
-            .then((width) => {
-                expect(width).to.be.gte(318);
-                expect(width).to.be.lte(320);
-            });
-        cy.get('[testid="btn-access-service"]')
             .invoke('width')
             .then((width) => {
                 expect(width).to.be.gte(318);

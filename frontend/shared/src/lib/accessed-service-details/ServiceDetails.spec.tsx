@@ -97,19 +97,16 @@ jest.mock('./service-details-section/ServiceDetailsSection', () => {
 });
 
 jest.mock('./action-buttons/ActionButtons', () => {
-    return function MockActionButtons({ 
-        isAdminPanel, 
-        onBack, 
-        onAccessService 
-    }: { 
-        isAdminPanel: boolean; 
-        onBack: () => void; 
-        onAccessService: () => void;
+    return function MockActionButtons({
+        isAdminPanel,
+        onBack,
+    }: {
+        isAdminPanel: boolean;
+        onBack: () => void;
     }) {
         return (
             <div data-testid="action-buttons" data-is-admin-panel={isAdminPanel}>
                 <button data-testid="action-back-button" onClick={onBack}>Back Action</button>
-                <button data-testid="action-access-service-button" onClick={onAccessService}>Access Service</button>
             </div>
         );
     };
@@ -318,86 +315,6 @@ describe('ServiceDetails', () => {
 
             fireEvent.click(screen.getByTestId('action-back-button'));
             expect(mockNavigateFunction).toHaveBeenCalledWith('/accessed-services');
-        });
-    });
-
-    describe('Service access functionality', () => {
-        it('opens service URL in new window when access service is clicked', () => {
-            const mockWindowOpen = jest.fn();
-            Object.defineProperty(window, 'open', {
-                writable: true,
-                value: mockWindowOpen,
-            });
-
-            renderWithRouter(
-                <ServiceDetails
-                    isPreview={false}
-                    accessedDates={mockAccessedDates}
-                    serviceDetails={mockServiceDetails}
-                    isAdminPanel={false}
-                />
-            );
-
-            fireEvent.click(screen.getByTestId('action-access-service-button'));
-            expect(mockWindowOpen).toHaveBeenCalledWith(
-                'https://example.com/health-records',
-                '_blank',
-                'noopener,noreferrer'
-            );
-        });
-
-        it('does not open window when service URL is missing', () => {
-            const mockWindowOpen = jest.fn();
-            Object.defineProperty(window, 'open', {
-                writable: true,
-                value: mockWindowOpen,
-            });
-
-            const serviceWithoutUrl = { ...mockServiceDetails, accessServiceUrl: undefined };
-
-            renderWithRouter(
-                <ServiceDetails
-                    isPreview={false}
-                    accessedDates={mockAccessedDates}
-                    serviceDetails={serviceWithoutUrl}
-                    isAdminPanel={false}
-                />
-            );
-
-            fireEvent.click(screen.getByTestId('action-access-service-button'));
-            expect(mockWindowOpen).not.toHaveBeenCalled();
-        });
-
-        it('navigates to services accessed when service URL is missing', () => {
-            const serviceWithoutUrl = { ...mockServiceDetails, accessServiceUrl: undefined };
-
-            renderWithRouter(
-                <ServiceDetails
-                    isPreview={false}
-                    accessedDates={mockAccessedDates}
-                    serviceDetails={serviceWithoutUrl}
-                    isAdminPanel={false}
-                />
-            );
-
-            fireEvent.click(screen.getByTestId('action-access-service-button'));
-            expect(mockNavigateFunction).toHaveBeenCalledWith('/accessed-services');
-        });
-
-        it('navigates to the preview list when service URL is missing in preview', () => {
-            const serviceWithoutUrl = { ...mockServiceDetails, accessServiceUrl: undefined };
-
-            renderWithRouter(
-                <ServiceDetails
-                    isPreview={true}
-                    accessedDates={mockAccessedDates}
-                    serviceDetails={serviceWithoutUrl}
-                    isAdminPanel={false}
-                />
-            );
-
-            fireEvent.click(screen.getByTestId('action-access-service-button'));
-            expect(mockNavigateFunction).toHaveBeenCalledWith('/preview/accessed-services');
         });
     });
 

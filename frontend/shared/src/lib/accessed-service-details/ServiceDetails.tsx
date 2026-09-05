@@ -35,17 +35,6 @@ const ServiceDetails: React.FC<ServiceDetailProperties> = ({
         navigate(`/services/${serviceDetails.id}`);
     };
 
-    const handleAccessServiceClick = () => {
-        if (serviceDetails.accessServiceUrl) {
-            window.open(serviceDetails.accessServiceUrl, '_blank', 'noopener,noreferrer');
-            return;
-        }
-
-        // Without a service URL the button previously did nothing at all, which
-        // reads as broken. Send the user back to the list instead.
-        handleBack();
-    };
-
     const backButtonConfiguration = isAdminPanel
         ? { buttonText: 'Back to edit service', onClick: handleBackToAdmin }
         : { buttonText: 'Back to services accessed', onClick: handleBack };
@@ -76,7 +65,7 @@ const ServiceDetails: React.FC<ServiceDetailProperties> = ({
             <AccessHistoryTable accessedDates={accessedDates} />
             <ReportUnauthorizedAccess />
             <ServiceDetailsSection serviceDetails={serviceDetails} />
-            <ActionButtons isAdminPanel={isAdminPanel} onBack={handleBack} onAccessService={handleAccessServiceClick} />
+            <ActionButtons isAdminPanel={isAdminPanel} onBack={handleBack} />
             {isAdminPanel && <BackButton buttonText="Back to edit service" onClick={handleBackToAdmin} />}
         </div>
     );

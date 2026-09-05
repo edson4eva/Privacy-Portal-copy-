@@ -24,7 +24,6 @@ describe('UI Element Visibility Tests', () => {
         accessedServiceDetails.assertAccessLogHeading();
         accessedServiceDetails.assertAccessLogTableDesktop();
         accessedServiceDetails.assertBackToAccountHistoryButton();
-        accessedServiceDetails.assertAccessServiceButton();
     });
 
     it('should display all essential page elements for Mobile', () => {
@@ -38,7 +37,6 @@ describe('UI Element Visibility Tests', () => {
         accessedServiceDetails.assertAccessLogHeading();
         accessedServiceDetails.assertAccessLogTableMobile();
         accessedServiceDetails.assertBackToAccountHistoryButton();
-        accessedServiceDetails.assertAccessServiceButton();
     });
 });
 
@@ -194,15 +192,5 @@ describe('Functionality Tests', () => {
         cy.interceptAccessedServices(true);
         cy.get('[data-testid="button-container"] goa-button').eq(0).shadow().find('[data-testid="btn-back-to-account-history"]').click({ force: true });
         cy.url().should('match', /\/accessed-services$/);
-    });
-
-    it('should go to the service page when clicking on the Access service button', () => {
-        cy.interceptAccessedServices(true);
-        cy.window().then((win) => {
-            cy.stub(win, 'open').as('windowOpen');
-        });
-        cy.wait(1000);
-        cy.get('[data-testid="button-container"] goa-button').eq(1).shadow().find('[data-testid="btn-access-service"]').click({ force: true });
-        cy.get('@windowOpen').should('have.been.calledWith', 'https://applychildcaresubsidy.alberta.ca/');
     });
 });
