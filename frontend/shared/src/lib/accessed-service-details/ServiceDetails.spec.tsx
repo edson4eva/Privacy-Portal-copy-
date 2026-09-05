@@ -367,6 +367,38 @@ describe('ServiceDetails', () => {
             fireEvent.click(screen.getByTestId('action-access-service-button'));
             expect(mockWindowOpen).not.toHaveBeenCalled();
         });
+
+        it('navigates to services accessed when service URL is missing', () => {
+            const serviceWithoutUrl = { ...mockServiceDetails, accessServiceUrl: undefined };
+
+            renderWithRouter(
+                <ServiceDetails
+                    isPreview={false}
+                    accessedDates={mockAccessedDates}
+                    serviceDetails={serviceWithoutUrl}
+                    isAdminPanel={false}
+                />
+            );
+
+            fireEvent.click(screen.getByTestId('action-access-service-button'));
+            expect(mockNavigateFunction).toHaveBeenCalledWith('/accessed-services');
+        });
+
+        it('navigates to the preview list when service URL is missing in preview', () => {
+            const serviceWithoutUrl = { ...mockServiceDetails, accessServiceUrl: undefined };
+
+            renderWithRouter(
+                <ServiceDetails
+                    isPreview={true}
+                    accessedDates={mockAccessedDates}
+                    serviceDetails={serviceWithoutUrl}
+                    isAdminPanel={false}
+                />
+            );
+
+            fireEvent.click(screen.getByTestId('action-access-service-button'));
+            expect(mockNavigateFunction).toHaveBeenCalledWith('/preview/accessed-services');
+        });
     });
 
     describe('Admin panel behavior', () => {
