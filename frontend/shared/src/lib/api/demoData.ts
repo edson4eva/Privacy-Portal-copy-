@@ -46,7 +46,7 @@ const DEMO_ACCESSED_SERVICES: DemoAccessedService[] = [
         isAvailable: true,
         description:
             'Confirmed income and residency information held by the Canada Revenue Agency to assess eligibility for an income-tested Alberta benefit.',
-        dataOwnerTexts: ['Canada Revenue Agency', 'Treasury Board and Finance'],
+        dataOwnerTexts: ['Treasury Board and Finance'],
         privacyAuthority:
             'This information is held by the Canada Revenue Agency and was shared with the Government of Alberta under an information-sharing agreement, as permitted by the Income Tax Act and the Freedom of Information and Protection of Privacy Act.',
     },
