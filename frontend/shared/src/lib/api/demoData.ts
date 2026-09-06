@@ -363,6 +363,10 @@ export const getDemoResponse = (url: string): unknown | undefined => {
         return { accountActivity: { events: buildDemoActivity() } };
     }
 
+    if (path === 'inbox') {
+        return { inbox: { programs: DEMO_INBOX_PROGRAMS, messages: DEMO_INBOX_MESSAGES } };
+    }
+
     const detailMatch = /^accessed-services\/(.+)$/.exec(path);
     if (detailMatch) {
         return detailResponse(decodeURIComponent(detailMatch[1]));
@@ -550,6 +554,124 @@ const buildDemoActivity = (): DemoActivityEvent[] => {
 };
 
 /**
+ * Secure messages shown on the Inbox page. These would come from the
+ * Alberta.ca Account messaging service, which is not part of this repository,
+ * so demo mode answers with a representative inbox. Programs carry their own
+ * colour so a reader can pick one out of the list at a glance.
+ */
+const DEMO_INBOX_PROGRAMS = [
+    { id: 'upcoming-renewals', name: 'Upcoming Renewals', colour: '#b4550a' },
+    { id: 'alberta-student-aid', name: 'Alberta Student Aid', colour: '#2e5ca8' },
+    { id: 'child-care-subsidy', name: 'Child Care Subsidy', colour: '#087272' },
+    { id: 'alberta-rebates', name: 'Alberta Rebates', colour: '#6b4e9e' },
+    { id: 'alberta-ca-account', name: 'Alberta.ca Account', colour: '#4a5568' },
+    { id: 'alberta-wallet', name: 'Alberta Wallet', colour: '#0f7b3f' },
+    { id: 'alberta-health-care', name: 'Alberta Health Care', colour: '#a8326e' },
+];
+
+const DEMO_INBOX_MESSAGES = [
+    {
+        id: 'msg-1',
+        programId: 'upcoming-renewals',
+        subject: "Your driver's licence expires October 5, 2026",
+        preview: 'Renew online in about 10 minutes, or book a registry visit.',
+        tag: 'Action required',
+        isUnread: true,
+        receivedAt: '2026-09-05T21:30:00.000Z',
+    },
+    {
+        id: 'msg-2',
+        programId: 'child-care-subsidy',
+        subject: 'Renew your child care subsidy by September 30, 2026',
+        preview: 'Your current approval period ends October 31, 2026.',
+        tag: 'Action required',
+        isUnread: true,
+        receivedAt: '2026-09-04T14:02:00.000Z',
+    },
+    {
+        id: 'msg-3',
+        programId: 'alberta-student-aid',
+        subject: 'Your 2026 to 2027 student aid application is approved',
+        preview: 'Funding summary and disbursement dates are attached.',
+        isUnread: true,
+        receivedAt: '2026-09-03T17:47:00.000Z',
+    },
+    {
+        id: 'msg-4',
+        programId: 'alberta-rebates',
+        subject: 'Alberta Energy Rebate: your August statement is available',
+        preview: 'A credit of $37.14 was applied to your August utility bill.',
+        isUnread: true,
+        receivedAt: '2026-09-02T12:15:00.000Z',
+    },
+    {
+        id: 'msg-5',
+        programId: 'alberta-ca-account',
+        subject: 'New sign-in from a new device',
+        preview: 'Chrome on Windows, Calgary AB. If this was not you, secure your account.',
+        receivedAt: '2026-09-01T03:21:00.000Z',
+    },
+    {
+        id: 'msg-6',
+        programId: 'alberta-health-care',
+        subject: 'Your Alberta Health Care Insurance Plan card has been mailed',
+        preview: 'Allow 10 business days for delivery to your address on file.',
+        receivedAt: '2026-08-28T19:08:00.000Z',
+    },
+    {
+        id: 'msg-7',
+        programId: 'alberta-wallet',
+        subject: "Your digital driver's licence is ready to add to Alberta Wallet",
+        preview: 'Add it once and use it on your phone at participating locations.',
+        tag: 'New feature',
+        receivedAt: '2026-08-26T16:33:00.000Z',
+    },
+    {
+        id: 'msg-8',
+        programId: 'alberta-student-aid',
+        subject: 'Loan repayment resumes November 1, 2026',
+        preview: 'Your first payment of $184.00 is due November 30, 2026.',
+        receivedAt: '2026-08-21T13:55:00.000Z',
+    },
+    {
+        id: 'msg-9',
+        programId: 'upcoming-renewals',
+        subject: 'Vehicle registration expires December 14, 2026',
+        preview: 'You can renew up to 3 months before the expiry date.',
+        receivedAt: '2026-08-18T22:40:00.000Z',
+    },
+    {
+        id: 'msg-10',
+        programId: 'child-care-subsidy',
+        subject: 'August subsidy payment sent',
+        preview: '$612.00 was sent to Riverbend Early Learning Centre on your behalf.',
+        tag: 'Payment',
+        receivedAt: '2026-08-14T11:00:00.000Z',
+    },
+    {
+        id: 'msg-11',
+        programId: 'alberta-ca-account',
+        subject: 'Verify your email address to keep getting notifications',
+        preview: 'Verification link expires 7 days after it is sent.',
+        receivedAt: '2026-08-11T20:12:00.000Z',
+    },
+    {
+        id: 'msg-12',
+        programId: 'alberta-rebates',
+        subject: 'You may be eligible for the Alberta Child and Family Benefit',
+        preview: 'Eligibility is based on your family income reported to the CRA.',
+        receivedAt: '2026-08-06T14:30:00.000Z',
+    },
+    {
+        id: 'msg-13',
+        programId: 'alberta-wallet',
+        subject: 'Alberta Wallet terms of use have been updated',
+        preview: 'Changes take effect September 15, 2026.',
+        receivedAt: '2026-07-30T18:04:00.000Z',
+    },
+];
+
+/**
  * Side menu shown in demo mode. The real menu is supplied by UIAM in the
  * sign-in response, which is unavailable here, so this mirrors the Alberta.ca
  * Account structure and points the Privacy Portal entries at the apps that are
@@ -585,6 +707,6 @@ export const DEMO_USER_MENU = {
         },
         { type: 'link', heading: 'Security settings', icon: 'settings', href: '/complaints/security-settings' },
         { type: 'link', heading: 'Account activity', icon: 'time', href: '/complaints/account-activity' },
-        { type: 'link', heading: 'Inbox', iconSrc: inboxEnvelope, href: '#' },
+        { type: 'link', heading: 'Inbox', iconSrc: inboxEnvelope, href: '/complaints/inbox' },
     ],
 };

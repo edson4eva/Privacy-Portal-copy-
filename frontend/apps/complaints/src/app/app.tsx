@@ -28,6 +28,7 @@ import AlbertaWalletPage from './pages/secured/AlbertaWalletPage';
 import PaymentPreferencesPage from './pages/secured/PaymentPreferencesPage';
 import SecuritySettingsPage from './pages/secured/SecuritySettingsPage';
 import AccountActivityPage from './pages/secured/AccountActivityPage';
+import InboxPage from './pages/secured/InboxPage';
 import { ErrorBoundary } from 'react-error-boundary';
 import FallbackUI from './pages/public/FallbackPage';
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
@@ -242,6 +243,16 @@ export function App(): React.ReactElement {
                                                 <ErrorBoundary fallbackRender={FallbackUI} onError={logError}>
                                                     <SignedInOnly>
                                                         <AccountActivityPage />
+                                                    </SignedInOnly>
+                                                </ErrorBoundary>
+                                            }
+                                        ></Route>
+                                        <Route
+                                            path={'/inbox'}
+                                            element={
+                                                <ErrorBoundary fallbackRender={FallbackUI} onError={logError}>
+                                                    <SignedInOnly>
+                                                        <InboxPage />
                                                     </SignedInOnly>
                                                 </ErrorBoundary>
                                             }
