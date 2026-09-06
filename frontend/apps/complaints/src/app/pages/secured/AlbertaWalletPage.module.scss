@@ -34,17 +34,28 @@
 
 /* ---- Digital document card ---- */
 
-.card {
+/* Both cards share these dimensions, so a wallet holds one size of card
+   whatever the document is. Contents are sized in container units against the
+   card's own width, so each scales as a single piece. */
+.card,
+.licence {
     position: relative;
     width: 100%;
-    max-width: 21rem;
+    max-width: 33rem;
+    aspect-ratio: 1.585;
+    border-radius: 10px;
+    padding: 0.7rem 0.9rem;
     text-align: left;
-    padding: var(--goa-space-m);
-    border: 1px solid var(--goa-color-greyscale-200);
-    border-radius: 6px;
-    background: linear-gradient(160deg, #eaf3f8 0%, #dceaf3 55%, #cfe2ef 100%);
-    cursor: pointer;
     font: inherit;
+    cursor: pointer;
+    container-type: inline-size;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--goa-color-greyscale-200);
+    background: linear-gradient(160deg, #eaf3f8 0%, #dceaf3 55%, #cfe2ef 100%);
     color: var(--goa-color-text-default);
 }
 
@@ -69,7 +80,7 @@
     align-items: center;
     gap: var(--goa-space-xs);
     font-weight: 700;
-    font-size: 0.875rem;
+    font-size: 3.6cqw;
 }
 
 .card-icon {
@@ -81,7 +92,7 @@
 .wordmark {
     font-family: Georgia, 'Times New Roman', serif;
     font-style: italic;
-    font-size: 1.15rem;
+    font-size: 6.6cqw;
     letter-spacing: 0.01em;
 }
 
@@ -95,7 +106,7 @@
 }
 
 .field-label {
-    font-size: 0.6875rem;
+    font-size: 2.6cqw;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: #3d5f70;
@@ -103,7 +114,7 @@
 
 .phn {
     display: inline-block;
-    font-size: 1.35rem;
+    font-size: 5.4cqw;
     font-weight: 700;
     padding: 0.15rem 0.5rem;
     background-color: #f4f9fc;
@@ -112,6 +123,7 @@
 .field-value {
     display: block;
     font-weight: 700;
+    font-size: 3.6cqw;
     background-color: #dfeaf2;
     padding: 0.1rem 0.35rem;
 }
@@ -124,6 +136,7 @@
 /* Fields on the left, crest bottom-right, as the printed card is laid out. */
 .card-body {
     display: flex;
+    flex: 1 1 auto;
     align-items: flex-end;
     gap: var(--goa-space-m);
 }
@@ -135,7 +148,7 @@
 
 .crest {
     flex: 0 0 auto;
-    width: 3.5rem;
+    width: 11cqw;
     height: auto;
     align-self: flex-end;
 }
@@ -151,7 +164,7 @@
 /* ---- Presentation panel, shown when a card is activated ---- */
 
 .present {
-    max-width: 21rem;
+    max-width: 33rem;
     border: 1px solid var(--goa-color-greyscale-200);
     border-radius: 6px;
     padding: var(--goa-space-l);
@@ -261,24 +274,14 @@
    the sample it is drawn from does. */
 
 .licence {
-    position: relative;
-    width: 100%;
-    max-width: 33rem;
-    aspect-ratio: 1.585;
     border: 1px solid #a9bcc9;
-    border-radius: 10px;
     overflow: hidden;
-    padding: 0.7rem 0.9rem;
-    text-align: left;
-    font: inherit;
-    cursor: pointer;
     color: #1a2733;
     background:
         radial-gradient(circle at 22% 62%, rgba(255, 255, 255, 0.85) 0 28%, rgba(255, 255, 255, 0) 60%),
         repeating-linear-gradient(115deg, rgba(120, 165, 190, 0.14) 0 2px, rgba(255, 255, 255, 0) 2px 9px),
         repeating-linear-gradient(65deg, rgba(120, 165, 190, 0.12) 0 2px, rgba(255, 255, 255, 0) 2px 11px),
         linear-gradient(150deg, #eef5f9 0%, #dfeaf2 55%, #cfe0ec 100%);
-    container-type: inline-size;
 }
 
 .licence:hover {
