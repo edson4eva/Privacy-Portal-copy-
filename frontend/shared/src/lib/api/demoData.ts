@@ -353,6 +353,10 @@ export const getDemoResponse = (url: string): unknown | undefined => {
         return { paymentPreferences: DEMO_PAYMENT_PREFERENCES };
     }
 
+    if (path === 'security-settings') {
+        return { securitySettings: DEMO_SECURITY_SETTINGS };
+    }
+
     const detailMatch = /^accessed-services\/(.+)$/.exec(path);
     if (detailMatch) {
         return detailResponse(decodeURIComponent(detailMatch[1]));
@@ -455,6 +459,19 @@ const DEMO_PAYMENT_PREFERENCES = {
 };
 
 /**
+ * Sign-in and recovery details shown on the Security settings page. Real values
+ * come from the Alberta.ca Account, which is not part of this repository. No
+ * password is ever returned by an API - the page renders a fixed mask - so only
+ * its length is described here.
+ */
+const DEMO_SECURITY_SETTINGS = {
+    twoStepVerificationEnabled: false,
+    signInEmail: 'demo.user@example.com',
+    recoveryEmail: undefined as string | undefined,
+    expiryReminderEnabled: false,
+};
+
+/**
  * Side menu shown in demo mode. The real menu is supplied by UIAM in the
  * sign-in response, which is unavailable here, so this mirrors the Alberta.ca
  * Account structure and points the Privacy Portal entries at the apps that are
@@ -488,7 +505,7 @@ export const DEMO_USER_MENU = {
                 { type: 'link', heading: 'Privacy complaint', href: '/complaints/file-complaint' },
             ],
         },
-        { type: 'link', heading: 'Security settings', icon: 'settings', href: '#' },
+        { type: 'link', heading: 'Security settings', icon: 'settings', href: '/complaints/security-settings' },
         { type: 'link', heading: 'Account activity', icon: 'time', href: '#' },
     ],
 };
