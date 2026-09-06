@@ -1,0 +1,154 @@
+.container {
+    box-sizing: border-box;
+    padding-left: var(--goa-space-3xl);
+    margin-top: var(--goa-space-2xl);
+    max-width: 780px;
+
+    p {
+        margin-bottom: 0;
+        max-width: 660px;
+    }
+}
+
+@media (max-width: 624px) {
+    .container {
+        background-color: var(--pp-background-color-internal);
+        padding-left: var(--goa-space-m);
+        padding-right: var(--goa-space-m);
+    }
+}
+
+.page-heading {
+    font: var(--goa-typography-heading-xl);
+    color: var(--goa-color-text-default);
+    margin: 0;
+}
+
+.intro {
+    color: var(--goa-color-text-default);
+}
+
+.card {
+    border: 1px solid var(--goa-color-greyscale-200);
+    border-radius: 8px;
+    padding: var(--goa-space-xl);
+}
+
+/* ---- Interac Verified mark ---- */
+
+/* Stands in for the Interac Verified logo, which is not available as an asset
+   here and is trademarked, so it is not reproduced. */
+.interac {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--goa-space-s);
+}
+
+.interac-badge {
+    background-color: #f5a623;
+    color: #1c1c1c;
+    font-weight: 700;
+    font-size: 0.95rem;
+    font-style: italic;
+    padding: 0.55rem 0.5rem;
+    border-radius: 3px;
+}
+
+.interac-verified {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #1c1c1c;
+}
+
+.interac-tm {
+    font-size: 0.6rem;
+    vertical-align: super;
+}
+
+/* ---- Method heading row ---- */
+
+.method-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--goa-space-m);
+}
+
+.method-heading {
+    font: var(--goa-typography-heading-m);
+    font-weight: 400;
+    color: var(--goa-color-text-default);
+    margin: 0;
+}
+
+/* ---- Detail rows ---- */
+
+.rows {
+    display: grid;
+    grid-template-columns: 14rem 1fr;
+    row-gap: var(--goa-space-s);
+    column-gap: var(--goa-space-m);
+    align-items: center;
+}
+
+@media (max-width: 560px) {
+    .rows {
+        grid-template-columns: 1fr;
+        row-gap: var(--goa-space-2xs);
+    }
+
+    .value,
+    .value-plain {
+        margin-bottom: var(--goa-space-xs);
+    }
+}
+
+.label {
+    color: var(--goa-color-text-default);
+}
+
+/* Values read back from the bank sit on a tint, so it is clear they are held
+   values rather than something typed here. */
+.value {
+    justify-self: start;
+    font-weight: 700;
+    color: var(--goa-color-text-default);
+    background-color: var(--goa-color-greyscale-100, #ececec);
+    padding: 0.35rem 0.6rem;
+    overflow-wrap: break-word;
+}
+
+.value-plain {
+    font-weight: 700;
+    color: var(--goa-color-text-default);
+}
+
+.delete {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: var(--goa-color-emergency-default, #ec040b);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.delete:hover {
+    text-decoration: none;
+}
+
+.delete:focus-visible {
+    outline: 3px solid var(--goa-color-interactive-focus, #004f84);
+    outline-offset: 2px;
+}
+
+.account + .account {
+    margin-top: var(--goa-space-xl);
+    padding-top: var(--goa-space-xl);
+    border-top: 1px solid var(--goa-color-greyscale-200);
+}
+
+.empty {
+    color: var(--goa-color-text-secondary);
+}

@@ -25,6 +25,7 @@ import PrivacyFeaturesPage from './pages/public/PrivacyFeaturesPage';
 import PersonalInformationPage from './pages/secured/PersonalInformationPage';
 import MyIdentificationPage from './pages/secured/MyIdentificationPage';
 import AlbertaWalletPage from './pages/secured/AlbertaWalletPage';
+import PaymentPreferencesPage from './pages/secured/PaymentPreferencesPage';
 import { ErrorBoundary } from 'react-error-boundary';
 import FallbackUI from './pages/public/FallbackPage';
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
@@ -209,6 +210,16 @@ export function App(): React.ReactElement {
                                                 <ErrorBoundary fallbackRender={FallbackUI} onError={logError}>
                                                     <SignedInOnly>
                                                         <AlbertaWalletPage />
+                                                    </SignedInOnly>
+                                                </ErrorBoundary>
+                                            }
+                                        ></Route>
+                                        <Route
+                                            path={'/payment-preferences'}
+                                            element={
+                                                <ErrorBoundary fallbackRender={FallbackUI} onError={logError}>
+                                                    <SignedInOnly>
+                                                        <PaymentPreferencesPage />
                                                     </SignedInOnly>
                                                 </ErrorBoundary>
                                             }

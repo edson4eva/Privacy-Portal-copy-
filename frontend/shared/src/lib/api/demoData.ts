@@ -349,6 +349,10 @@ export const getDemoResponse = (url: string): unknown | undefined => {
         return { wallet: DEMO_WALLET };
     }
 
+    if (path === 'payment-preferences') {
+        return { paymentPreferences: DEMO_PAYMENT_PREFERENCES };
+    }
+
     const detailMatch = /^accessed-services\/(.+)$/.exec(path);
     if (detailMatch) {
         return detailResponse(decodeURIComponent(detailMatch[1]));
@@ -430,6 +434,27 @@ const DEMO_WALLET = {
 };
 
 /**
+ * Direct deposit details shown on the Payment preferences page. Real values
+ * would come from the payment service, which is not part of this repository,
+ * so demo mode answers with a fictional account - never real banking details.
+ * Only the last four digits of an account number are ever held here.
+ */
+const DEMO_PAYMENT_PREFERENCES = {
+    accounts: [
+        {
+            id: 'direct-deposit-1',
+            method: 'Direct deposit',
+            isInteracVerified: true,
+            accountHolder: 'USER, Demo Alexander',
+            bankInstitution: '000 ABC Bank of Canada',
+            branchTransit: '52369',
+            accountNumberLast4: '8563',
+            retrievedOn: '2026-07-02T14:33:00.000Z',
+        },
+    ],
+};
+
+/**
  * Side menu shown in demo mode. The real menu is supplied by UIAM in the
  * sign-in response, which is unavailable here, so this mirrors the Alberta.ca
  * Account structure and points the Privacy Portal entries at the apps that are
@@ -448,7 +473,7 @@ export const DEMO_USER_MENU = {
             icon: 'person',
             items: [
                 { type: 'link', heading: 'Personal information', href: '/complaints/personal-information' },
-                { type: 'link', heading: 'Payment preferences', href: '#' },
+                { type: 'link', heading: 'Payment preferences', href: '/complaints/payment-preferences' },
             ],
         },
         { type: 'link', heading: 'My identification', icon: 'document-text', href: '/complaints/my-identification' },
