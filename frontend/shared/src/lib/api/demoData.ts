@@ -578,6 +578,7 @@ const DEMO_INBOX_MESSAGES = [
         tag: 'Action required',
         isUnread: true,
         receivedAt: '2026-09-05T21:30:00.000Z',
+        from: 'Alberta Transportation and Economic Corridors',
     },
     {
         id: 'msg-2',
@@ -587,6 +588,49 @@ const DEMO_INBOX_MESSAGES = [
         tag: 'Action required',
         isUnread: true,
         receivedAt: '2026-09-04T14:02:00.000Z',
+        from: 'Children and Family Services',
+        referenceNumber: 'CCS-2026-448193',
+        respondBy: '2026-09-30',
+        greeting: 'Hello Demo,',
+        paragraphs: [
+            'Your child care subsidy approval period ends on October 31, 2026. To keep receiving the subsidy without a gap in payments, renew your application by September 30, 2026.',
+        ],
+        callout: {
+            title: '24 days left to renew',
+            text: 'If you renew after September 30, your October payment may be delayed and you may be responsible for the full child care fee until your renewal is approved.',
+        },
+        sections: [
+            {
+                heading: 'What you will need',
+                bullets: [
+                    'Your 2025 Notice of Assessment from the Canada Revenue Agency',
+                    "Your current child care arrangement, including your provider's licence number",
+                    'Employment, education or training details for each parent in the household',
+                ],
+            },
+            {
+                heading: 'What happens next',
+                paragraphs: [
+                    'Most renewals are reviewed within 10 business days. We will send a message to this inbox when a decision is made, and your updated approval letter will appear under My documents.',
+                    'If your household income, custody arrangement or child care provider has changed, report the change in the same form so your subsidy amount is calculated correctly.',
+                ],
+            },
+        ],
+        actions: [
+            { label: 'Renew subsidy', kind: 'primary' },
+            { label: 'Report a change', kind: 'secondary' },
+        ],
+        attachment: { name: 'Current approval letter (PDF)', meta: 'PDF, 184 KB - issued November 1, 2025' },
+        relatedLinks: [
+            'Child care subsidy eligibility and rates',
+            'Find a licensed child care provider',
+            'Alberta Child and Family Benefit',
+        ],
+        help: {
+            name: 'Child Care Connect',
+            lines: ['310-0000 toll free, then 780-644-9992', 'Monday to Friday, 8:15 am to 4:30 pm'],
+            contactLabel: 'Contact Children and Family Services',
+        },
     },
     {
         id: 'msg-3',
@@ -595,6 +639,7 @@ const DEMO_INBOX_MESSAGES = [
         preview: 'Funding summary and disbursement dates are attached.',
         isUnread: true,
         receivedAt: '2026-09-03T17:47:00.000Z',
+        from: 'Alberta Student Aid',
     },
     {
         id: 'msg-4',
@@ -603,6 +648,7 @@ const DEMO_INBOX_MESSAGES = [
         preview: 'A credit of $37.14 was applied to your August utility bill.',
         isUnread: true,
         receivedAt: '2026-09-02T12:15:00.000Z',
+        from: 'Energy and Minerals',
     },
     {
         id: 'msg-5',
@@ -610,6 +656,7 @@ const DEMO_INBOX_MESSAGES = [
         subject: 'New sign-in from a new device',
         preview: 'Chrome on Windows, Calgary AB. If this was not you, secure your account.',
         receivedAt: '2026-09-01T03:21:00.000Z',
+        from: 'Alberta.ca Account',
     },
     {
         id: 'msg-6',
@@ -617,6 +664,7 @@ const DEMO_INBOX_MESSAGES = [
         subject: 'Your Alberta Health Care Insurance Plan card has been mailed',
         preview: 'Allow 10 business days for delivery to your address on file.',
         receivedAt: '2026-08-28T19:08:00.000Z',
+        from: 'Alberta Health',
     },
     {
         id: 'msg-7',
@@ -625,6 +673,7 @@ const DEMO_INBOX_MESSAGES = [
         preview: 'Add it once and use it on your phone at participating locations.',
         tag: 'New feature',
         receivedAt: '2026-08-26T16:33:00.000Z',
+        from: 'Technology and Innovation',
     },
     {
         id: 'msg-8',
@@ -632,6 +681,7 @@ const DEMO_INBOX_MESSAGES = [
         subject: 'Loan repayment resumes November 1, 2026',
         preview: 'Your first payment of $184.00 is due November 30, 2026.',
         receivedAt: '2026-08-21T13:55:00.000Z',
+        from: 'Alberta Student Aid',
     },
     {
         id: 'msg-9',
@@ -639,6 +689,7 @@ const DEMO_INBOX_MESSAGES = [
         subject: 'Vehicle registration expires December 14, 2026',
         preview: 'You can renew up to 3 months before the expiry date.',
         receivedAt: '2026-08-18T22:40:00.000Z',
+        from: 'Alberta Transportation and Economic Corridors',
     },
     {
         id: 'msg-10',
@@ -647,6 +698,7 @@ const DEMO_INBOX_MESSAGES = [
         preview: '$612.00 was sent to Riverbend Early Learning Centre on your behalf.',
         tag: 'Payment',
         receivedAt: '2026-08-14T11:00:00.000Z',
+        from: 'Children and Family Services',
     },
     {
         id: 'msg-11',
@@ -654,6 +706,7 @@ const DEMO_INBOX_MESSAGES = [
         subject: 'Verify your email address to keep getting notifications',
         preview: 'Verification link expires 7 days after it is sent.',
         receivedAt: '2026-08-11T20:12:00.000Z',
+        from: 'Alberta.ca Account',
     },
     {
         id: 'msg-12',
@@ -661,6 +714,7 @@ const DEMO_INBOX_MESSAGES = [
         subject: 'You may be eligible for the Alberta Child and Family Benefit',
         preview: 'Eligibility is based on your family income reported to the CRA.',
         receivedAt: '2026-08-06T14:30:00.000Z',
+        from: 'Treasury Board and Finance',
     },
     {
         id: 'msg-13',
@@ -668,6 +722,7 @@ const DEMO_INBOX_MESSAGES = [
         subject: 'Alberta Wallet terms of use have been updated',
         preview: 'Changes take effect September 15, 2026.',
         receivedAt: '2026-07-30T18:04:00.000Z',
+        from: 'Technology and Innovation',
     },
 ];
 

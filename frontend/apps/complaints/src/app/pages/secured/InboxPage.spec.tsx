@@ -50,6 +50,25 @@ const messages = [
         subject: 'Alberta Wallet terms of use have been updated',
         preview: 'Changes take effect September 15, 2026.',
         receivedAt: '2026-07-30T18:04:00.000Z',
+        from: 'Technology and Innovation',
+    },
+    {
+        id: 'msg-3',
+        programId: 'alberta-wallet',
+        subject: 'Your digital licence is ready',
+        preview: 'Add it once and use it on your phone.',
+        receivedAt: '2026-08-26T16:33:00.000Z',
+        from: 'Technology and Innovation',
+        referenceNumber: 'AW-2026-0001',
+        respondBy: '2099-01-31',
+        greeting: 'Hello Demo,',
+        paragraphs: ['A digital licence is ready to add.'],
+        callout: { title: 'Respond soon', text: 'Add the licence before the date shown.' },
+        sections: [{ heading: 'What you will need', bullets: ['Your phone'] }],
+        actions: [{ label: 'Add to wallet', kind: 'primary' }],
+        attachment: { name: 'Licence summary (PDF)', meta: 'PDF, 12 KB' },
+        relatedLinks: ['About Alberta Wallet'],
+        help: { name: 'Wallet Support', lines: ['310-0000'], contactLabel: 'Contact support' },
     },
 ];
 
@@ -130,6 +149,84 @@ describe('InboxPage', () => {
         // It was the only unread message, so filtering by unread now finds none.
         fireEvent.click(screen.getByTestId('unread-only'));
         expect(screen.getByTestId('inbox-empty')).toBeInTheDocument();
+    });
+
+    it('shows the sender, respond-by date, attachment and program history', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('row-msg-3')).toBeInTheDocument());
+        fireEvent.click(screen.getByTestId('row-msg-3'));
+
+        expect(screen.getByTestId('detail-from')).toHaveTextContent('Technology and Innovation');
+        expect(screen.getByTestId('detail-respond-by')).toHaveTextContent('January 31, 2099');
+        expect(screen.getByTestId('detail-attachment')).toHaveTextContent('Licence summary (PDF)');
+        expect(screen.getByText('What you will need')).toBeInTheDocument();
+        // Same program, so the other Wallet message is offered.
+        expect(screen.getByTestId('history-msg-2')).toBeInTheDocument();
+    });
+
+    it('counts the days remaining rather than printing a fixed number', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('row-msg-3')).toBeInTheDocument());
+        fireEvent.click(screen.getByTestId('row-msg-3'));
+
+        expect(screen.getByTestId('detail-callout').textContent).toMatch(/\d+ days left to respond/);
+    });
+
+    it('marks a message unread again from the detail view', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('row-msg-2')).toBeInTheDocument());
+        fireEvent.click(screen.getByTestId('row-msg-2'));
+        fireEvent.click(screen.getByTestId('mark-unread'));
+
+        // Back on the list, and it now survives the unread filter.
+        fireEvent.click(screen.getByTestId('unread-only'));
+        expect(screen.getByTestId('row-msg-2')).toBeInTheDocument();
+    });
+
+    it('archives a message and shows it in the archived list', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('row-msg-2')).toBeInTheDocument());
+        fireEvent.click(screen.getByTestId('row-msg-2'));
+        fireEvent.click(screen.getByTestId('archive'));
+
+        expect(screen.queryByTestId('row-msg-2')).not.toBeInTheDocument();
+
+        fireEvent.click(screen.getByTestId('toggle-archived'));
+        expect(screen.getByText('Archived messages')).toBeInTheDocument();
+        expect(screen.getByTestId('row-msg-2')).toBeInTheDocument();
+    });
+
+    it('steps to the next message in the list being read', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('row-msg-1')).toBeInTheDocument());
+        fireEvent.click(screen.getByTestId('row-msg-1'));
+
+        // Newest first, so msg-1 is at the top and has no previous.
+        expect(screen.getByTestId('previous-message')).toBeDisabled();
+        fireEvent.click(screen.getByTestId('next-message'));
+        expect(screen.getByText('Your digital licence is ready')).toBeInTheDocument();
+    });
+
+    it('says where a program action is completed instead of pretending to do it', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('row-msg-3')).toBeInTheDocument());
+        fireEvent.click(screen.getByTestId('row-msg-3'));
+
+        expect(screen.queryByTestId('action-notice')).not.toBeInTheDocument();
+        fireEvent.click(screen.getByTestId('action-primary'));
+        expect(screen.getByTestId('action-notice')).toHaveTextContent(/not part of this application/);
     });
 
     it('explains when nothing matches', async () => {

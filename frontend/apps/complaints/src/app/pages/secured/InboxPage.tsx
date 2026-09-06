@@ -12,6 +12,12 @@ interface InboxProgram {
     colour: string;
 }
 
+interface MessageSection {
+    heading: string;
+    paragraphs?: string[];
+    bullets?: string[];
+}
+
 interface InboxMessage {
     id: string;
     programId: string;
@@ -20,6 +26,17 @@ interface InboxMessage {
     tag?: string;
     isUnread?: boolean;
     receivedAt: string;
+    from?: string;
+    referenceNumber?: string;
+    respondBy?: string;
+    greeting?: string;
+    paragraphs?: string[];
+    callout?: { title: string; text: string };
+    sections?: MessageSection[];
+    actions?: { label: string; kind: 'primary' | 'secondary' }[];
+    attachment?: { name: string; meta: string };
+    relatedLinks?: string[];
+    help?: { name: string; lines: string[]; contactLabel: string };
 }
 
 interface Inbox {
@@ -48,6 +65,37 @@ const formatReceived = (value: string): { day: string; time: string } => {
     };
 };
 
+/** Formats a plain date, for the respond-by row. */
+const formatDay = (value: string | undefined): string | undefined => {
+    if (!value) {
+        return undefined;
+    }
+
+    const date = new Date(value);
+    return Number.isNaN(date.getTime())
+        ? undefined
+        : date.toLocaleDateString('en-CA', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+};
+
+/**
+ * Days remaining until a deadline. Counted rather than written into the copy,
+ * so the callout stays true as the deadline approaches instead of freezing at
+ * whatever it read on the day the message was drafted.
+ */
+const daysUntil = (value: string | undefined): number | undefined => {
+    if (!value) {
+        return undefined;
+    }
+
+    const deadline = new Date(value);
+    if (Number.isNaN(deadline.getTime())) {
+        return undefined;
+    }
+
+    const millisecondsPerDay = 24 * 60 * 60 * 1000;
+    return Math.ceil((deadline.getTime() - Date.now()) / millisecondsPerDay);
+};
+
 export function InboxPage(): React.ReactElement {
     const windowWidth = useWindowWidth();
 
@@ -58,7 +106,11 @@ export function InboxPage(): React.ReactElement {
     const [sortBy, setSortBy] = useState('newest');
     const [programId, setProgramId] = useState(ALL_PROGRAMS);
     const [readIds, setReadIds] = useState<string[]>([]);
+    const [unreadIds, setUnreadIds] = useState<string[]>([]);
+    const [archivedIds, setArchivedIds] = useState<string[]>([]);
+    const [showArchived, setShowArchived] = useState(false);
     const [openMessageId, setOpenMessageId] = useState<string>();
+    const [actionNotice, setActionNotice] = useState<string>();
 
     useEffect(() => {
         async function fetchData() {
@@ -84,54 +136,97 @@ export function InboxPage(): React.ReactElement {
         [programs]
     );
 
-    /** Opened messages count as read for the rest of the session. */
-    const isUnread = (message: InboxMessage) => !!message.isUnread && !readIds.includes(message.id);
+    /**
+     * Opening a message reads it; Mark as unread puts it back. Both are held for
+     * the session only, since nothing here writes to the messaging service.
+     */
+    const isUnread = (message: InboxMessage) =>
+        unreadIds.includes(message.id) || (!!message.isUnread && !readIds.includes(message.id));
 
     const visibleMessages = useMemo(() => {
         const term = search.trim().toLowerCase();
 
         const filtered = messages.filter((message) => {
             const program = programsById.get(message.programId);
+            const matchesArchive = archivedIds.includes(message.id) === showArchived;
             const matchesProgram = programId === ALL_PROGRAMS || message.programId === programId;
-            const matchesUnread = !unreadOnly || (!!message.isUnread && !readIds.includes(message.id));
+            const matchesUnread =
+                !unreadOnly ||
+                unreadIds.includes(message.id) ||
+                (!!message.isUnread && !readIds.includes(message.id));
             const matchesTerm =
                 !term ||
                 message.subject.toLowerCase().includes(term) ||
                 message.preview.toLowerCase().includes(term) ||
                 (program?.name ?? '').toLowerCase().includes(term);
 
-            return matchesProgram && matchesUnread && matchesTerm;
+            return matchesArchive && matchesProgram && matchesUnread && matchesTerm;
         });
 
         return filtered.sort((a, b) => {
             const difference = new Date(a.receivedAt).getTime() - new Date(b.receivedAt).getTime();
             return sortBy === 'oldest' ? difference : -difference;
         });
-    }, [messages, programsById, programId, unreadOnly, readIds, search, sortBy]);
+    }, [messages, programsById, programId, unreadOnly, readIds, unreadIds, archivedIds, showArchived, search, sortBy]);
+
+    const inboxMessages = messages.filter((message) => archivedIds.includes(message.id) === showArchived);
 
     const countFor = (id: string) =>
-        id === ALL_PROGRAMS ? messages.length : messages.filter((message) => message.programId === id).length;
+        id === ALL_PROGRAMS
+            ? inboxMessages.length
+            : inboxMessages.filter((message) => message.programId === id).length;
 
-    const unreadCount = messages.filter((message) => isUnread(message)).length;
+    const unreadCount = inboxMessages.filter((message) => isUnread(message)).length;
 
     const openMessage = (message: InboxMessage) => {
         setOpenMessageId(message.id);
+        setActionNotice(undefined);
+        setUnreadIds((previous) => previous.filter((id) => id !== message.id));
         setReadIds((previous) => (previous.includes(message.id) ? previous : [...previous, message.id]));
+    };
+
+    /** Puts a message back to unread and returns to the list, as the design's tool does. */
+    const markUnread = (id: string) => {
+        setReadIds((previous) => previous.filter((entry) => entry !== id));
+        setUnreadIds((previous) => (previous.includes(id) ? previous : [...previous, id]));
+        setOpenMessageId(undefined);
+    };
+
+    const archiveMessage = (id: string) => {
+        setArchivedIds((previous) => (previous.includes(id) ? previous : [...previous, id]));
+        setOpenMessageId(undefined);
     };
 
     if (isLoading) {
         return <GoabCircularProgress variant="inline" size="small" visible={true}></GoabCircularProgress>;
     }
 
-    const openMessageDetails = messages.find((message) => message.id === openMessageId);
+    const openMessageDetails = visibleMessages.find((message) => message.id === openMessageId)
+        ?? messages.find((message) => message.id === openMessageId);
 
     if (openMessageDetails) {
-        const program = programsById.get(openMessageDetails.programId);
-        const received = formatReceived(openMessageDetails.receivedAt);
+        const message = openMessageDetails;
+        const program = programsById.get(message.programId);
+        const received = formatReceived(message.receivedAt);
+        const respondBy = formatDay(message.respondBy);
+        const remaining = daysUntil(message.respondBy);
+
+        // Previous and next walk the list the reader came from, not the raw data.
+        const position = visibleMessages.findIndex((entry) => entry.id === message.id);
+        const previousMessage = position > 0 ? visibleMessages[position - 1] : undefined;
+        const nextMessage =
+            position >= 0 && position < visibleMessages.length - 1 ? visibleMessages[position + 1] : undefined;
+
+        // Other messages from the same program, newest first.
+        const alsoFromProgram = messages
+            .filter((entry) => entry.programId === message.programId && entry.id !== message.id)
+            .sort((a, b) => new Date(b.receivedAt).getTime() - new Date(a.receivedAt).getTime())
+            .slice(0, 3);
 
         return (
             <div className={styles['container']}>
                 {windowWidth <= 623 && <PpSpacer vSpacing="xl" />}
+
                 <GoabButton
                     type="tertiary"
                     leadingIcon="arrow-back"
@@ -141,25 +236,232 @@ export function InboxPage(): React.ReactElement {
                     Back to inbox
                 </GoabButton>
                 <PpSpacer vSpacing="m" />
-                <div className={styles['detail']} data-testid="message-detail">
-                    <span className={styles['program']}>
-                        <span className={styles['dot']} style={{ backgroundColor: program?.colour }} />
-                        {program?.name}
-                    </span>
-                    <PpSpacer vSpacing="s" />
-                    <h1 className={styles['detail-subject']}>{openMessageDetails.subject}</h1>
-                    <PpSpacer vSpacing="s" />
-                    <p className={styles['detail-meta']}>
-                        Received {received.day} at {received.time}
-                    </p>
-                    <PpSpacer vSpacing="l" />
-                    <p>{openMessageDetails.preview}</p>
-                    <PpSpacer vSpacing="m" />
-                    <p>
-                        The full message body is held by the program that sent it. This copy shows the summary the
-                        inbox holds.
-                    </p>
+
+                <div className={styles['detail-layout']}>
+                    <section className={styles['card']} data-testid="message-detail">
+                        <div className={styles['msg-head']}>
+                            <div className={styles['badges']}>
+                                <span className={styles['prog-label']}>
+                                    <span className={styles['dot']} style={{ backgroundColor: program?.colour }} />
+                                    {program?.name}
+                                </span>
+                                {message.tag && (
+                                    <span className={`${styles['tag']} ${styles[TAG_CLASS[message.tag] ?? '']}`}>
+                                        {message.tag}
+                                    </span>
+                                )}
+                            </div>
+                            <PpSpacer vSpacing="s" />
+                            <h1 className={styles['msg-subject']}>{message.subject}</h1>
+                        </div>
+
+                        <dl className={styles['meta']}>
+                            <div>
+                                <dt className={styles['meta-term']}>From</dt>
+                                <dd className={styles['meta-value']} data-testid="detail-from">
+                                    {message.from ?? program?.name}
+                                </dd>
+                            </div>
+                            <div>
+                                <dt className={styles['meta-term']}>Received</dt>
+                                <dd className={styles['meta-value']} data-testid="detail-received">
+                                    {received.day} at {received.time}
+                                </dd>
+                            </div>
+                            {message.referenceNumber && (
+                                <div>
+                                    <dt className={styles['meta-term']}>Reference number</dt>
+                                    <dd className={styles['meta-value']}>{message.referenceNumber}</dd>
+                                </div>
+                            )}
+                            {respondBy && (
+                                <div>
+                                    <dt className={styles['meta-term']}>Respond by</dt>
+                                    <dd className={styles['meta-value']} data-testid="detail-respond-by">
+                                        {respondBy}
+                                    </dd>
+                                </div>
+                            )}
+                        </dl>
+
+                        <div className={styles['msg-body']}>
+                            {message.greeting && <p>{message.greeting}</p>}
+                            {(message.paragraphs ?? [message.preview]).map((paragraph) => (
+                                <p key={paragraph}>{paragraph}</p>
+                            ))}
+
+                            {message.callout && (
+                                <div className={styles['callout']} data-testid="detail-callout">
+                                    <GoabIcon type="time" size="medium" />
+                                    <div>
+                                        <strong className={styles['callout-title']}>
+                                            {remaining !== undefined && remaining > 0
+                                                ? `${remaining} ${remaining === 1 ? 'day' : 'days'} left to respond`
+                                                : message.callout.title}
+                                        </strong>
+                                        <p>{message.callout.text}</p>
+                                    </div>
+                                </div>
+                            )}
+
+                            {message.sections?.map((section) => (
+                                <div key={section.heading}>
+                                    <h2 className={styles['body-heading']}>{section.heading}</h2>
+                                    <PpSpacer vSpacing="s" />
+                                    {section.bullets && (
+                                        <ul className={styles['bullets']}>
+                                            {section.bullets.map((bullet) => (
+                                                <li key={bullet}>{bullet}</li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                    {section.paragraphs?.map((paragraph) => (
+                                        <p key={paragraph}>{paragraph}</p>
+                                    ))}
+                                </div>
+                            ))}
+
+                            {!message.sections && !message.paragraphs && (
+                                <p className={styles['panel-note']}>
+                                    The full message is held by the program that sent it. This copy shows the summary
+                                    the inbox holds.
+                                </p>
+                            )}
+                        </div>
+
+                        {message.actions && (
+                            <div className={styles['msg-actions']}>
+                                {message.actions.map((action) => (
+                                    <GoabButton
+                                        key={action.label}
+                                        type={action.kind === 'primary' ? 'primary' : 'secondary'}
+                                        onClick={() => setActionNotice(action.label)}
+                                        testId={`action-${action.kind}`}
+                                    >
+                                        {action.label}
+                                    </GoabButton>
+                                ))}
+                            </div>
+                        )}
+
+                        {actionNotice && (
+                            <div className={styles['msg-actions']} data-testid="action-notice">
+                                <p className={styles['panel-note']}>
+                                    {actionNotice} is completed in the program's own service, which is not part of this
+                                    application.
+                                </p>
+                            </div>
+                        )}
+
+                        {message.attachment && (
+                            <div className={styles['attach']} data-testid="detail-attachment">
+                                <GoabIcon type="document-text" size="large" />
+                                <span>
+                                    {message.attachment.name}
+                                    <span className={styles['attach-meta']}>{message.attachment.meta}</span>
+                                </span>
+                            </div>
+                        )}
+
+                        <div className={styles['msg-foot']}>
+                            <span className={styles['msg-tools']}>
+                                <button
+                                    type="button"
+                                    className={styles['tool']}
+                                    onClick={() => markUnread(message.id)}
+                                    data-testid="mark-unread"
+                                >
+                                    Mark as unread
+                                </button>
+                                <button
+                                    type="button"
+                                    className={styles['tool']}
+                                    onClick={() => archiveMessage(message.id)}
+                                    data-testid="archive"
+                                >
+                                    Archive
+                                </button>
+                            </span>
+                            <span className={styles['msg-tools']}>
+                                <button
+                                    type="button"
+                                    className={styles['tool']}
+                                    disabled={!previousMessage}
+                                    onClick={() => previousMessage && openMessage(previousMessage)}
+                                    data-testid="previous-message"
+                                >
+                                    Previous message
+                                </button>
+                                <button
+                                    type="button"
+                                    className={styles['tool']}
+                                    disabled={!nextMessage}
+                                    onClick={() => nextMessage && openMessage(nextMessage)}
+                                    data-testid="next-message"
+                                >
+                                    Next message
+                                </button>
+                            </span>
+                        </div>
+                    </section>
+
+                    <aside className={styles['aside']}>
+                        <div className={styles['secure']}>
+                            <GoabIcon type="shield-checkmark" size="medium" />
+                            <p>
+                                This message was sent through your Alberta.ca Account. Government of Alberta programs
+                                will never ask for your password, PIN or banking details in a message.
+                            </p>
+                        </div>
+
+                        {alsoFromProgram.length > 0 && (
+                            <div className={styles['panel']} data-testid="panel-program-history">
+                                <h2 className={styles['panel-heading']}>More from this program</h2>
+                                {alsoFromProgram.map((entry) => (
+                                    <button
+                                        type="button"
+                                        key={entry.id}
+                                        className={`${styles['tool']} ${styles['thread-item']}`}
+                                        onClick={() => openMessage(entry)}
+                                        data-testid={`history-${entry.id}`}
+                                    >
+                                        {entry.subject}
+                                        <span className={styles['thread-date']}>
+                                            {formatReceived(entry.receivedAt).day}
+                                        </span>
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+
+                        {message.relatedLinks && (
+                            <div className={styles['panel']}>
+                                <h2 className={styles['panel-heading']}>Related information</h2>
+                                <ul>
+                                    {message.relatedLinks.map((link) => (
+                                        <li key={link}>{link}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+
+                        {message.help && (
+                            <div className={styles['panel']}>
+                                <h2 className={styles['panel-heading']}>Need help?</h2>
+                                <p className={styles['panel-note']}>
+                                    {message.help.name}
+                                    {message.help.lines.map((line) => (
+                                        <span key={line} style={{ display: 'block' }}>
+                                            {line}
+                                        </span>
+                                    ))}
+                                </p>
+                                <p className={styles['panel-note']}>{message.help.contactLabel}</p>
+                            </div>
+                        )}
+                    </aside>
                 </div>
+
                 <PpSpacer vSpacing="2xl" />
             </div>
         );
@@ -169,7 +471,7 @@ export function InboxPage(): React.ReactElement {
         <div className={styles['container']}>
             {windowWidth <= 623 && <PpSpacer vSpacing="xl" />}
 
-            <h1 className={styles['page-heading']}>Inbox</h1>
+            <h1 className={styles['page-heading']}>{showArchived ? 'Archived messages' : 'Inbox'}</h1>
             <PpSpacer vSpacing="m" />
             <p className={styles['intro']}>
                 Secure messages from Government of Alberta programs and services. We will never ask for your password
@@ -304,9 +606,20 @@ export function InboxPage(): React.ReactElement {
 
                     <div className={styles['tfoot']}>
                         <span>
-                            Showing {visibleMessages.length} of {messages.length} messages. Messages stay in your inbox
-                            for 7 years.
+                            Showing {visibleMessages.length} of {inboxMessages.length}{' '}
+                            {showArchived ? 'archived messages' : 'messages'}. Messages stay in your inbox for 7 years.
                         </span>
+                        <button
+                            type="button"
+                            className={styles['tool']}
+                            onClick={() => {
+                                setShowArchived((previous) => !previous);
+                                setProgramId(ALL_PROGRAMS);
+                            }}
+                            data-testid="toggle-archived"
+                        >
+                            {showArchived ? 'Back to inbox' : `Go to archived messages (${archivedIds.length})`}
+                        </button>
                     </div>
                 </div>
             </section>
