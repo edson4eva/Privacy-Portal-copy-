@@ -1,6 +1,6 @@
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { MemoryRouter } from 'react-router-dom';
+import { Link, MemoryRouter, Route, Routes } from 'react-router-dom';
 import InboxPage from './InboxPage';
 
 jest.mock('@abgov/react-components', () => ({
@@ -73,7 +73,16 @@ const messages = [
 ];
 
 const payload = { inbox: { programs, messages } };
-const renderPage = () => render(<MemoryRouter><InboxPage /></MemoryRouter>);
+const renderPage = (entry = '/inbox') =>
+    render(
+        <MemoryRouter initialEntries={[entry]}>
+            {/* Stands in for the side menu entry, which is a router link to this page. */}
+            <Link to="/inbox" data-testid="nav-inbox">Inbox</Link>
+            <Routes>
+                <Route path="/inbox" element={<InboxPage />} />
+            </Routes>
+        </MemoryRouter>
+    );
 
 describe('InboxPage', () => {
     beforeEach(() => jest.clearAllMocks());
@@ -82,7 +91,7 @@ describe('InboxPage', () => {
         mockGet.mockResolvedValue(payload);
         renderPage();
 
-        await waitFor(() => expect(screen.getByText('Inbox')).toBeInTheDocument());
+        await waitFor(() => expect(screen.getByRole('heading', { name: 'Inbox' })).toBeInTheDocument());
         expect(screen.getByText(/never ask for your password/)).toBeInTheDocument();
         expect(screen.getByTestId('row-msg-1')).toBeInTheDocument();
         expect(screen.getByTestId('row-msg-2')).toBeInTheDocument();
@@ -239,13 +248,52 @@ describe('InboxPage', () => {
         expect(screen.getByTestId('inbox-empty')).toBeInTheDocument();
     });
 
+    it('opens a message straight from a link', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage('/inbox?message=msg-3');
+
+        await waitFor(() => expect(screen.getByTestId('message-detail')).toBeInTheDocument());
+        expect(screen.getByText('Your digital licence is ready')).toBeInTheDocument();
+    });
+
+    it('returns to the inbox when the side menu entry is chosen while reading', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage('/inbox?message=msg-3');
+
+        await waitFor(() => expect(screen.getByTestId('message-detail')).toBeInTheDocument());
+
+        // Choosing Inbox in the side menu navigates to this page with no query,
+        // which must close the open message rather than leave it showing.
+        fireEvent.click(screen.getByTestId('nav-inbox'));
+
+        await waitFor(() => expect(screen.queryByTestId('message-detail')).not.toBeInTheDocument());
+        expect(screen.getByTestId('row-msg-1')).toBeInTheDocument();
+    });
+
+    it('leaves the archived list when the side menu entry is chosen', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage('/inbox?view=archived');
+
+        await waitFor(() => expect(screen.getByText('Archived messages')).toBeInTheDocument());
+        fireEvent.click(screen.getByTestId('nav-inbox'));
+
+        await waitFor(() => expect(screen.getByRole('heading', { name: 'Inbox' })).toBeInTheDocument());
+    });
+
+    it('keeps the archived list in the address so it survives a reload', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage('/inbox?view=archived');
+
+        await waitFor(() => expect(screen.getByText('Archived messages')).toBeInTheDocument());
+    });
+
     it('still renders when the request fails', async () => {
         // Reject at call time; a promise rejected at setup time can surface as an
         // unhandled rejection before the component attaches its catch.
         mockGet.mockImplementation(() => Promise.reject(new Error('boom')));
         renderPage();
 
-        await waitFor(() => expect(screen.getByText('Inbox')).toBeInTheDocument());
+        await waitFor(() => expect(screen.getByRole('heading', { name: 'Inbox' })).toBeInTheDocument());
         expect(screen.getByTestId('inbox-empty')).toBeInTheDocument();
     });
 });

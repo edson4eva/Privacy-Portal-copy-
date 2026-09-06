@@ -1,5 +1,6 @@
 import { GoabButton, GoabCheckbox, GoabCircularProgress, GoabDropdown, GoabDropdownItem, GoabIcon, GoabInput } from '@abgov/react-components';
 import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { get } from 'shared/src/lib/api/dataService';
 import { PpSpacer } from 'shared/src/lib/pp-spacer/PpSpacer';
 import useWindowWidth from 'shared/src/lib/utils/useWindowWidth';
@@ -108,9 +109,32 @@ export function InboxPage(): React.ReactElement {
     const [readIds, setReadIds] = useState<string[]>([]);
     const [unreadIds, setUnreadIds] = useState<string[]>([]);
     const [archivedIds, setArchivedIds] = useState<string[]>([]);
-    const [showArchived, setShowArchived] = useState(false);
-    const [openMessageId, setOpenMessageId] = useState<string>();
     const [actionNotice, setActionNotice] = useState<string>();
+
+    /**
+     * Which message is open, and whether the archived list is showing, live in
+     * the address rather than in state. Choosing Inbox in the side menu is a
+     * navigation to this page with no query, which closes an open message and
+     * returns to the inbox - state alone would survive that, because the page
+     * is already mounted and never re-renders from scratch. It also makes a
+     * message a link somebody can return to.
+     */
+    const [searchParams, setSearchParams] = useSearchParams();
+    const openMessageId = searchParams.get('message') ?? undefined;
+    const showArchived = searchParams.get('view') === 'archived';
+
+    const showList = (options?: { archived?: boolean }) => {
+        const archived = options?.archived ?? showArchived;
+        setSearchParams(archived ? { view: 'archived' } : {});
+    };
+
+    const showMessage = (id: string) => {
+        const next: Record<string, string> = { message: id };
+        if (showArchived) {
+            next['view'] = 'archived';
+        }
+        setSearchParams(next);
+    };
 
     useEffect(() => {
         async function fetchData() {
@@ -179,7 +203,7 @@ export function InboxPage(): React.ReactElement {
     const unreadCount = inboxMessages.filter((message) => isUnread(message)).length;
 
     const openMessage = (message: InboxMessage) => {
-        setOpenMessageId(message.id);
+        showMessage(message.id);
         setActionNotice(undefined);
         setUnreadIds((previous) => previous.filter((id) => id !== message.id));
         setReadIds((previous) => (previous.includes(message.id) ? previous : [...previous, message.id]));
@@ -189,12 +213,12 @@ export function InboxPage(): React.ReactElement {
     const markUnread = (id: string) => {
         setReadIds((previous) => previous.filter((entry) => entry !== id));
         setUnreadIds((previous) => (previous.includes(id) ? previous : [...previous, id]));
-        setOpenMessageId(undefined);
+        showList();
     };
 
     const archiveMessage = (id: string) => {
         setArchivedIds((previous) => (previous.includes(id) ? previous : [...previous, id]));
-        setOpenMessageId(undefined);
+        showList();
     };
 
     if (isLoading) {
@@ -230,7 +254,7 @@ export function InboxPage(): React.ReactElement {
                 <GoabButton
                     type="tertiary"
                     leadingIcon="arrow-back"
-                    onClick={() => setOpenMessageId(undefined)}
+                    onClick={() => showList()}
                     testId="back-to-inbox"
                 >
                     Back to inbox
@@ -613,7 +637,7 @@ export function InboxPage(): React.ReactElement {
                             type="button"
                             className={styles['tool']}
                             onClick={() => {
-                                setShowArchived((previous) => !previous);
+                                showList({ archived: !showArchived });
                                 setProgramId(ALL_PROGRAMS);
                             }}
                             data-testid="toggle-archived"
