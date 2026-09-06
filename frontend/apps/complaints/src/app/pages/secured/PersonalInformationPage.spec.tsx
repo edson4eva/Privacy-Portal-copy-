@@ -43,7 +43,9 @@ describe('PersonalInformationPage', () => {
     });
 
     it('still renders when the request fails', async () => {
-        mockGet.mockRejectedValue(new Error('boom'));
+        // Reject at call time; a promise rejected at setup time can surface as an
+        // unhandled rejection before the component attaches its catch.
+        mockGet.mockImplementation(() => Promise.reject(new Error('boom')));
         render(<MemoryRouter><PersonalInformationPage /></MemoryRouter>);
         await waitFor(() => expect(screen.getByText('Name and date of birth')).toBeInTheDocument());
         expect(screen.getAllByText('Not provided').length).toBeGreaterThan(0);

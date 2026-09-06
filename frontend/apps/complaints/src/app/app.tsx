@@ -23,6 +23,7 @@ import ComplaintHistory from './pages/secured/ComplaintHistory';
 import FileComplaint from './pages/secured/FileComplaint';
 import PrivacyFeaturesPage from './pages/public/PrivacyFeaturesPage';
 import PersonalInformationPage from './pages/secured/PersonalInformationPage';
+import MyIdentificationPage from './pages/secured/MyIdentificationPage';
 import { ErrorBoundary } from 'react-error-boundary';
 import FallbackUI from './pages/public/FallbackPage';
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
@@ -187,6 +188,16 @@ export function App(): React.ReactElement {
                                                 <ErrorBoundary fallbackRender={FallbackUI} onError={logError}>
                                                     <SignedInOnly>
                                                         <PersonalInformationPage />
+                                                    </SignedInOnly>
+                                                </ErrorBoundary>
+                                            }
+                                        ></Route>
+                                        <Route
+                                            path={'/my-identification'}
+                                            element={
+                                                <ErrorBoundary fallbackRender={FallbackUI} onError={logError}>
+                                                    <SignedInOnly>
+                                                        <MyIdentificationPage />
                                                     </SignedInOnly>
                                                 </ErrorBoundary>
                                             }

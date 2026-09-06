@@ -341,6 +341,10 @@ export const getDemoResponse = (url: string): unknown | undefined => {
         return { personalInformation: DEMO_PERSONAL_INFORMATION };
     }
 
+    if (path === 'identification') {
+        return { identification: DEMO_IDENTIFICATION };
+    }
+
     const detailMatch = /^accessed-services\/(.+)$/.exec(path);
     if (detailMatch) {
         return detailResponse(decodeURIComponent(detailMatch[1]));
@@ -382,6 +386,27 @@ const DEMO_PERSONAL_INFORMATION = {
 };
 
 /**
+ * Identity card details shown on the My identification page. These come from
+ * the identification a holder verified their account with, so the real values
+ * would be supplied by the Alberta.ca Account identity service, which is not
+ * part of this repository. Demo mode answers with the same fictional profile
+ * used elsewhere - never a real person's name, address or licence number.
+ */
+const DEMO_IDENTIFICATION = {
+    isVerifiedAccount: true,
+    cardType: 'Alberta identification',
+    card: {
+        nameOnCard: 'Demo Alexander USER',
+        mailingAddressLines: ['123 Jasper Avenue NW', 'Edmonton, Alberta T5J 0R2'],
+        dateOfBirth: '1985-04-12',
+        sex: 'Male',
+        documentLabel: "Alberta driver's licence",
+        documentNumber: '412887-355',
+        expiryDate: '2030-04-12',
+    },
+};
+
+/**
  * Side menu shown in demo mode. The real menu is supplied by UIAM in the
  * sign-in response, which is unavailable here, so this mirrors the Alberta.ca
  * Account structure and points the Privacy Portal entries at the apps that are
@@ -400,7 +425,7 @@ export const DEMO_USER_MENU = {
             icon: 'person',
             items: [{ type: 'link', heading: 'Personal information', href: '/complaints/personal-information' }],
         },
-        { type: 'link', heading: 'My identification', icon: 'document-text', href: '#' },
+        { type: 'link', heading: 'My identification', icon: 'document-text', href: '/complaints/my-identification' },
         { type: 'link', heading: 'Alberta Wallet', icon: 'wallet', href: '#' },
         {
             type: 'group',

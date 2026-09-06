@@ -1,0 +1,91 @@
+.container {
+    box-sizing: border-box;
+    padding-left: var(--goa-space-3xl);
+    margin-top: var(--goa-space-2xl);
+    max-width: 720px;
+
+    p {
+        margin-bottom: 0;
+        max-width: 624px;
+    }
+}
+
+@media (max-width: 624px) {
+    .container {
+        background-color: var(--pp-background-color-internal);
+        padding-left: var(--goa-space-m);
+        padding-right: var(--goa-space-m);
+    }
+}
+
+.page-heading {
+    font: var(--goa-typography-heading-xl);
+    color: var(--goa-color-text-default);
+    margin: 0;
+}
+
+.card-type {
+    font: var(--goa-typography-heading-l);
+    font-weight: 400;
+    color: var(--goa-color-text-default);
+    margin: 0;
+}
+
+.intro {
+    color: var(--goa-color-text-default);
+}
+
+/* External links sit inline in the sentence, each followed by its own icon. */
+.intro a {
+    color: var(--goa-color-interactive-default);
+}
+
+.link-icon {
+    display: inline-block;
+    margin-left: 0.25rem;
+    vertical-align: -0.15em;
+}
+
+.card {
+    border: 1px solid var(--goa-color-greyscale-200);
+    border-radius: var(--goa-border-radius-m, 4px);
+    padding: var(--goa-space-l) var(--goa-space-xl);
+}
+
+.rows {
+    display: grid;
+    grid-template-columns: 12rem 1fr;
+    row-gap: var(--goa-space-m);
+    column-gap: var(--goa-space-l);
+}
+
+/* Stack label above value once there is no room for two columns. */
+@media (max-width: 560px) {
+    .rows {
+        grid-template-columns: 1fr;
+        row-gap: var(--goa-space-xs);
+    }
+
+    .value {
+        margin-bottom: var(--goa-space-s);
+    }
+}
+
+.label {
+    color: var(--goa-color-text-default);
+}
+
+.value {
+    font-weight: 700;
+    color: var(--goa-color-text-default);
+    overflow-wrap: break-word;
+}
+
+.value-empty {
+    font-weight: 400;
+    color: var(--goa-color-text-secondary);
+}
+
+.address-line {
+    display: block;
+}
