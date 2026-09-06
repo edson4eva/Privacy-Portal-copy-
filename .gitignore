@@ -112,3 +112,4 @@ backend/src/Services/Complaints/src/Complaints.API/appsettings.Uat.json
 /Utils/CopyCosmosDBTables/appsettings.Development.json
 /frontend/AGENTS.md
 /frontend/.github
+deploy/sandbox/.staging/
