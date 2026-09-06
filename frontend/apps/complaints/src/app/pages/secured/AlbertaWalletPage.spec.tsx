@@ -85,6 +85,15 @@ describe('AlbertaWalletPage', () => {
         expect(screen.getByText('Get the Alberta Wallet app')).toBeInTheDocument();
     });
 
+    it('shows the shield of arms on the card', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('crest-mobile-health-card')).toBeInTheDocument());
+        // Decorative, so it must not be announced.
+        expect(screen.getByTestId('crest-mobile-health-card')).toHaveAttribute('alt', '');
+    });
+
     it('explains the empty wallet', async () => {
         mockGet.mockResolvedValue({ wallet: { documents: [] } });
         renderPage();

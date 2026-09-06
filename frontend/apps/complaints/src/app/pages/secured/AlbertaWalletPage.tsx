@@ -4,6 +4,7 @@ import { get } from 'shared/src/lib/api/dataService';
 import { PpSpacer } from 'shared/src/lib/pp-spacer/PpSpacer';
 import useWindowWidth from 'shared/src/lib/utils/useWindowWidth';
 
+import albertaShield from '../../../assets/alberta-shield-of-arms.svg';
 import styles from './AlbertaWalletPage.module.scss';
 
 interface WalletDocument {
@@ -84,31 +85,43 @@ const DocumentCard = ({
         </div>
 
         <PpSpacer vSpacing="m" />
-        <div className={styles['field-label']}>Personal health number</div>
-        <div className={styles['phn']} data-testid={`phn-${document.id}`}>
-            {document.personalHealthNumber}
-        </div>
+        <div className={styles['card-body']}>
+            <div className={styles['card-fields']}>
+                <div className={styles['field-label']}>Personal health number</div>
+                <div className={styles['phn']} data-testid={`phn-${document.id}`}>
+                    {document.personalHealthNumber}
+                </div>
 
-        <PpSpacer vSpacing="s" />
-        <div className={styles['field-label']}>Name</div>
-        <span className={styles['field-value']} data-testid={`name-${document.id}`}>
-            {document.nameOnCard}
-        </span>
+                <PpSpacer vSpacing="s" />
+                <div className={styles['field-label']}>Name</div>
+                <span className={styles['field-value']} data-testid={`name-${document.id}`}>
+                    {document.nameOnCard}
+                </span>
 
-        <PpSpacer vSpacing="s" />
-        <div className={styles['card-dates']}>
-            <div>
-                <div className={styles['field-label']}>Birthdate</div>
-                <span className={styles['field-value']} data-testid={`birthdate-${document.id}`}>
-                    {formatCardDate(document.birthdate)}
-                </span>
+                <PpSpacer vSpacing="s" />
+                <div className={styles['card-dates']}>
+                    <div>
+                        <div className={styles['field-label']}>Birthdate</div>
+                        <span className={styles['field-value']} data-testid={`birthdate-${document.id}`}>
+                            {formatCardDate(document.birthdate)}
+                        </span>
+                    </div>
+                    <div>
+                        <div className={styles['field-label']}>Expiry date</div>
+                        <span className={styles['field-value']} data-testid={`expiry-${document.id}`}>
+                            {formatCardDate(document.expiryDate)}
+                        </span>
+                    </div>
+                </div>
             </div>
-            <div>
-                <div className={styles['field-label']}>Expiry date</div>
-                <span className={styles['field-value']} data-testid={`expiry-${document.id}`}>
-                    {formatCardDate(document.expiryDate)}
-                </span>
-            </div>
+
+            <img
+                className={styles['crest']}
+                src={albertaShield}
+                alt=""
+                aria-hidden
+                data-testid={`crest-${document.id}`}
+            />
         </div>
     </button>
 );

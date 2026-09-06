@@ -106,7 +106,6 @@
     font-size: 1.35rem;
     font-weight: 700;
     padding: 0.15rem 0.5rem;
-    border: 2px solid #1c1c1c;
     background-color: #f4f9fc;
 }
 
@@ -120,6 +119,25 @@
 .card-dates {
     display: flex;
     gap: var(--goa-space-l);
+}
+
+/* Fields on the left, crest bottom-right, as the printed card is laid out. */
+.card-body {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--goa-space-m);
+}
+
+.card-fields {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.crest {
+    flex: 0 0 auto;
+    width: 3.5rem;
+    height: auto;
+    align-self: flex-end;
 }
 
 .hint {

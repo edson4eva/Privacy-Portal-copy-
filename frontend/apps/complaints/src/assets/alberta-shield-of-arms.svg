@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" width="120" height="150" role="img" aria-label="Alberta shield of arms">
+    <title>Alberta shield of arms</title>
+    <defs>
+        <!-- Shield outline: straight sides and chief, tapering to a rounded point. -->
+        <path id="shield" d="M5 4 H115 V78 C115 111 89 136 60 146 C31 136 5 111 5 78 Z" />
+        <clipPath id="shieldClip">
+            <use href="#shield" />
+        </clipPath>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#bfe0f2" />
+            <stop offset="1" stop-color="#e6f2fa" />
+        </linearGradient>
+    </defs>
+
+    <g clip-path="url(#shieldClip)">
+        <!-- Base: sky above the landscape -->
+        <rect x="0" y="0" width="120" height="150" fill="url(#sky)" />
+
+        <!-- Snow-capped mountains -->
+        <path d="M5 96 L26 62 L41 82 L56 54 L78 88 L92 70 L115 96 Z" fill="#8fa6b5" />
+        <path d="M56 54 L64 64 L58 66 L52 63 Z" fill="#ffffff" />
+        <path d="M26 62 L32 70 L27 71 L21 69 Z" fill="#ffffff" />
+        <path d="M92 70 L97 77 L92 78 L87 76 Z" fill="#ffffff" />
+
+        <!-- Green hills -->
+        <path d="M5 96 C30 88 55 100 80 94 C95 90 106 94 115 92 V112 H5 Z" fill="#3f7d43" />
+
+        <!-- Wheat field -->
+        <rect x="5" y="112" width="110" height="38" fill="#e8b73f" />
+        <g stroke="#c2952c" stroke-width="2" stroke-linecap="round">
+            <path d="M22 148 V126" />
+            <path d="M40 148 V122" />
+            <path d="M58 148 V126" />
+            <path d="M76 148 V122" />
+            <path d="M94 148 V128" />
+        </g>
+
+        <!-- Chief: St George's Cross -->
+        <rect x="0" y="0" width="120" height="48" fill="#ffffff" />
+        <rect x="49" y="0" width="22" height="48" fill="#d3202f" />
+        <rect x="0" y="17" width="120" height="16" fill="#d3202f" />
+    </g>
+
+    <use href="#shield" fill="none" stroke="#4a5c68" stroke-width="3" />
+</svg>
