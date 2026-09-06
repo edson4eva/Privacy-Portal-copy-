@@ -18,8 +18,22 @@ const mockGet = get as jest.Mock;
 
 const licence = {
     id: 'mobile-drivers-licence',
-    documentType: "Mobile Driver's Licence",
+    documentType: "Driver's Licence",
+    layout: 'licence',
     icon: 'car',
+    licence: {
+        number: '412887-355',
+        class: '5',
+        dateOfBirth: '1985-04-12',
+        sex: 'M',
+        eyes: 'BRO',
+        hair: 'BRO',
+        height: '178 cm',
+        weight: '79 kg',
+        conditions: 'NONE',
+        issued: '2026-04-12',
+        expires: '2030-04-12',
+    },
     primaryLabel: 'Licence number',
     primaryValue: '412887-355',
     nameOnCard: 'USER, DEMO ALEXANDER',
@@ -75,36 +89,54 @@ describe('AlbertaWalletPage', () => {
         expect(screen.queryByTestId('address-mobile-health-card')).not.toBeInTheDocument();
     });
 
-    it('renders the driver licence with its own fields and address', async () => {
+    it('draws the licence as the printed card', async () => {
         mockGet.mockResolvedValue(payload);
         renderPage();
 
         await waitFor(() => expect(screen.getByTestId('primary-mobile-drivers-licence')).toBeInTheDocument());
-        expect(screen.getByText("Mobile Driver's Licence")).toBeInTheDocument();
+        expect(screen.getByText("Driver's Licence")).toBeInTheDocument();
+        expect(screen.getByText('CAN')).toBeInTheDocument();
         expect(screen.getByTestId('primary-mobile-drivers-licence')).toHaveTextContent('412887-355');
         expect(screen.getByTestId('name-mobile-drivers-licence')).toHaveTextContent('USER, DEMO ALEXANDER');
         expect(screen.getByTestId('address-mobile-drivers-licence')).toHaveTextContent('EDMONTON, AB');
-        expect(screen.getByTestId('field-mobile-drivers-licence-class')).toHaveTextContent('5');
-        expect(screen.getByTestId('field-mobile-drivers-licence-sex')).toHaveTextContent('M');
-        expect(screen.getByTestId('field-mobile-drivers-licence-cond-end')).toHaveTextContent('NONE');
+        expect(screen.getByText('NONE')).toBeInTheDocument();
+        expect(screen.getByText('79 kg')).toBeInTheDocument();
     });
 
-    it('formats date fields and leaves the rest verbatim', async () => {
+    it('prints licence dates the way the card does', async () => {
         mockGet.mockResolvedValue(payload);
         renderPage();
 
-        await waitFor(() => expect(screen.getByTestId('field-mobile-drivers-licence-dob')).toBeInTheDocument());
-        expect(screen.getByTestId('field-mobile-drivers-licence-dob')).toHaveTextContent('April 12, 1985');
-        // Not a date, so it must not be run through the date formatter.
-        expect(screen.getByTestId('field-mobile-drivers-licence-class')).toHaveTextContent('5');
+        await waitFor(() => expect(screen.getByTestId('dob-mobile-drivers-licence')).toBeInTheDocument());
+        expect(screen.getByTestId('dob-mobile-drivers-licence')).toHaveTextContent('12/04/1985');
+        expect(screen.getByTestId('exp-mobile-drivers-licence')).toHaveTextContent('12/04/2030');
+        // The large birth stamp the card carries for age checks.
+        expect(screen.getByTestId('birth-stamp-mobile-drivers-licence')).toHaveTextContent('APR 85');
     });
 
-    it('shows both documents, each with its own crest', async () => {
+    it('marks the licence as a specimen', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('specimen-mobile-drivers-licence')).toBeInTheDocument());
+        expect(screen.getByTestId('specimen-mobile-drivers-licence')).toHaveTextContent('SPECIMEN');
+    });
+
+    it('still uses the wallet summary layout for other documents', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('primary-mobile-health-card')).toBeInTheDocument());
+        // The health card keeps the label/value fields; the licence does not use them.
+        expect(screen.getByTestId('field-mobile-health-card-birthdate')).toBeInTheDocument();
+        expect(screen.queryByTestId('specimen-mobile-health-card')).not.toBeInTheDocument();
+    });
+
+    it('shows both documents', async () => {
         mockGet.mockResolvedValue(payload);
         renderPage();
 
         await waitFor(() => expect(screen.getAllByTestId(/^wallet-card-/)).toHaveLength(2));
-        expect(screen.getByTestId('crest-mobile-drivers-licence')).toBeInTheDocument();
         expect(screen.getByTestId('crest-mobile-health-card')).toBeInTheDocument();
     });
 

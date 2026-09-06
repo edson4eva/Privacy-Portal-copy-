@@ -438,12 +438,27 @@ const DEMO_WALLET = {
     documents: [
         {
             id: 'mobile-drivers-licence',
-            documentType: "Mobile Driver's Licence",
+            documentType: "Driver's Licence",
+            // Rendered as the physical card rather than a wallet summary.
+            layout: 'licence',
             icon: 'car',
             primaryLabel: 'Licence number',
             primaryValue: '412887-355',
             nameOnCard: 'USER, DEMO ALEXANDER',
             addressLines: ['123 JASPER AVENUE NW', 'EDMONTON, AB  T5J 0R2'],
+            licence: {
+                number: '412887-355',
+                class: '5',
+                dateOfBirth: '1985-04-12',
+                sex: 'M',
+                eyes: 'BRO',
+                hair: 'BRO',
+                height: '178 cm',
+                weight: '79 kg',
+                conditions: 'NONE',
+                issued: '2026-04-12',
+                expires: '2030-04-12',
+            },
             fields: [
                 { label: 'Class', value: '5' },
                 { label: 'DOB', value: '1985-04-12', isDate: true },
@@ -451,6 +466,7 @@ const DEMO_WALLET = {
                 { label: 'Eyes', value: 'BRO' },
                 { label: 'Hair', value: 'BRO' },
                 { label: 'Height', value: '178 cm' },
+                { label: 'Weight', value: '79 kg' },
                 { label: 'Cond/End', value: 'NONE' },
                 { label: 'Issued', value: '2026-04-12', isDate: true },
                 { label: 'Expiry date', value: '2030-04-12', isDate: true },

@@ -15,9 +15,26 @@ interface WalletField {
     isDate?: boolean;
 }
 
+interface LicenceDetails {
+    number: string;
+    class: string;
+    dateOfBirth: string;
+    sex: string;
+    eyes: string;
+    hair: string;
+    height: string;
+    weight: string;
+    conditions: string;
+    issued: string;
+    expires: string;
+}
+
 interface WalletDocument {
     id: string;
     documentType: string;
+    /** 'licence' draws the printed card; anything else uses the wallet summary. */
+    layout?: 'licence';
+    licence?: LicenceDetails;
     icon: GoabIconType;
     primaryLabel: string;
     primaryValue: string;
@@ -66,6 +83,178 @@ const StoreBadge = ({
         </span>
     </a>
 );
+
+/** The card prints dates as 12/04/1985. */
+const formatSlashDate = (value: string): string => {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+        return value;
+    }
+
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    return `${day}/${month}/${date.getUTCFullYear()}`;
+};
+
+/** The large birth month and year the card carries for age checks. */
+const birthStamp = (value: string): string => {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+        return '';
+    }
+
+    const month = date.toLocaleDateString('en-CA', { month: 'short', timeZone: 'UTC' }).toUpperCase();
+    return `${month} ${String(date.getUTCFullYear()).slice(-2)}`;
+};
+
+/** A placeholder figure, so no likeness is implied. */
+const PortraitPlaceholder = (): React.ReactElement => (
+    <svg viewBox="0 0 40 52" width="100%" height="100%" aria-hidden focusable="false">
+        <circle cx="20" cy="18" r="11" fill="#8ba4b6" />
+        <path d="M2 52 C2 36 10 31 20 31 C30 31 38 36 38 52 Z" fill="#8ba4b6" />
+    </svg>
+);
+
+/** Decorative bars only - deliberately not an encoding of anything. */
+const Barcode = (): React.ReactElement => (
+    <span className={styles['barcode']} aria-hidden>
+        {[3, 1, 2, 1, 1, 3, 1, 2, 2, 1, 1, 1, 3, 2, 1, 1, 2, 3, 1, 1, 2, 1, 3, 1, 1, 2, 2, 1, 3, 1, 1, 2, 1, 1, 3, 2,
+            1, 1, 2, 1, 3, 1, 2, 1, 1, 3, 1, 1, 2, 2].map((width, index) => (
+            <span key={`${index}-${width}`} style={{ width: `${width}px` }} />
+        ))}
+    </span>
+);
+
+const LicenceCard = ({
+    document,
+    onPresent,
+}: {
+    document: WalletDocument;
+    onPresent: () => void;
+}): React.ReactElement => {
+    const licence = document.licence;
+
+    return (
+        <button
+            type="button"
+            className={styles['licence']}
+            onClick={onPresent}
+            data-testid={`wallet-card-${document.id}`}
+            aria-label={`Present ${document.documentType}`}
+        >
+            <div className={styles['licence-top']}>
+                <span className={styles['licence-wordmark']} aria-hidden>
+                    Alberta
+                    <span className={styles['wordmark-dot']} />
+                </span>
+                <span className={styles['licence-title']}>{document.documentType}</span>
+                <span className={styles['licence-can']}>CAN</span>
+            </div>
+
+            <div className={styles['licence-body']}>
+                <div>
+                    <span className={styles['portrait']}>
+                        <PortraitPlaceholder />
+                    </span>
+                    <span className={styles['signature']} aria-hidden>
+                        {document.nameOnCard.split(',').reverse().join(' ').trim().toLowerCase()}
+                    </span>
+                    <span className={styles['birth-stamp']} data-testid={`birth-stamp-${document.id}`}>
+                        {licence ? birthStamp(licence.dateOfBirth) : ''}
+                    </span>
+                </div>
+
+                <div>
+                    <div className={styles['licence-no']}>
+                        <span>
+                            <span className={styles['licence-label']}>No.</span>{' '}
+                            <span className={styles['licence-no-value']} data-testid={`primary-${document.id}`}>
+                                {licence?.number ?? document.primaryValue}
+                            </span>
+                        </span>
+                        <span>
+                            <span className={styles['licence-label']}>Class</span>{' '}
+                            <span className={styles['licence-class-value']}>{licence?.class}</span>
+                        </span>
+                    </div>
+
+                    <div className={styles['licence-name']} data-testid={`name-${document.id}`}>
+                        {document.nameOnCard}
+                    </div>
+                    {document.addressLines && (
+                        <div className={styles['licence-address']} data-testid={`address-${document.id}`}>
+                            {document.addressLines.map((line) => (
+                                <span className={styles['address-line']} key={line}>
+                                    {line}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+
+                    {licence && (
+                        <>
+                            <div className={styles['licence-rows']}>
+                                <span>
+                                    <span className={styles['licence-label']}>DOB</span>
+                                    <span className={styles['licence-field-value']} data-testid={`dob-${document.id}`}>
+                                        {formatSlashDate(licence.dateOfBirth)}
+                                    </span>
+                                </span>
+                                <span>
+                                    <span className={styles['licence-label']}>Sex</span>
+                                    <span className={styles['licence-field-value']}>{licence.sex}</span>
+                                </span>
+                                <span>
+                                    <span className={styles['licence-label']}>Eyes</span>
+                                    <span className={styles['licence-field-value']}>{licence.eyes}</span>
+                                </span>
+                                <span>
+                                    <span className={styles['licence-label']}>Hair</span>
+                                    <span className={styles['licence-field-value']}>{licence.hair}</span>
+                                </span>
+                                <span>
+                                    <span className={styles['licence-label']}>Height</span>
+                                    <span className={styles['licence-field-value']}>{licence.height}</span>
+                                </span>
+                                <span>
+                                    <span className={styles['licence-label']}>Weight</span>
+                                    <span className={styles['licence-field-value']}>{licence.weight}</span>
+                                </span>
+                                <span>
+                                    <span className={styles['licence-label']}>Cond/End</span>
+                                    <span className={styles['licence-field-value']}>{licence.conditions}</span>
+                                </span>
+                                <span>
+                                    <span className={styles['licence-label']}>Iss</span>
+                                    <span className={styles['licence-field-value']}>
+                                        {formatSlashDate(licence.issued)}
+                                    </span>
+                                </span>
+                                <span>
+                                    <span className={styles['licence-label']}>Exp</span>
+                                    <span className={styles['licence-field-value']} data-testid={`exp-${document.id}`}>
+                                        {formatSlashDate(licence.expires)}
+                                    </span>
+                                </span>
+                            </div>
+                            <Barcode />
+                        </>
+                    )}
+                </div>
+
+                <div>
+                    <span className={styles['portrait-ghost']}>
+                        <PortraitPlaceholder />
+                    </span>
+                </div>
+            </div>
+
+            <span className={styles['specimen']} data-testid={`specimen-${document.id}`}>
+                SPECIMEN
+            </span>
+        </button>
+    );
+};
 
 const DocumentCard = ({
     document,
@@ -216,7 +405,11 @@ export function AlbertaWalletPage(): React.ReactElement {
             ) : (
                 documents.map((document) => (
                     <div key={document.id}>
-                        <DocumentCard document={document} onPresent={() => setPresentingId(document.id)} />
+                        {document.layout === 'licence' ? (
+                            <LicenceCard document={document} onPresent={() => setPresentingId(document.id)} />
+                        ) : (
+                            <DocumentCard document={document} onPresent={() => setPresentingId(document.id)} />
+                        )}
                         <PpSpacer vSpacing="s" />
                         <div className={styles['hint']}>
                             <GoabIcon type="information-circle" size="small" />
