@@ -1,3 +1,5 @@
+import inboxEnvelope from '../app-side-menu/icons/inbox-envelope.svg';
+
 /**
  * Canned API responses used only when NX_PUBLIC_DEMO_MODE is enabled, so the
  * account history screens can be walked through without the AccessedServices
@@ -583,5 +585,6 @@ export const DEMO_USER_MENU = {
         },
         { type: 'link', heading: 'Security settings', icon: 'settings', href: '/complaints/security-settings' },
         { type: 'link', heading: 'Account activity', icon: 'time', href: '/complaints/account-activity' },
+        { type: 'link', heading: 'Inbox', iconSrc: inboxEnvelope, href: '#' },
     ],
 };

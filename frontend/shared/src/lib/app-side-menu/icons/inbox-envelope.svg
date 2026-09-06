@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 84" width="120" height="84" role="img" aria-label="Inbox">
+    <title>Inbox</title>
+    <defs>
+        <clipPath id="inboxBody">
+            <rect x="0" y="0" width="120" height="84" rx="9" />
+        </clipPath>
+    </defs>
+
+    <g clip-path="url(#inboxBody)">
+        <!-- Envelope body -->
+        <rect x="0" y="0" width="120" height="84" fill="#4d80a8" />
+
+        <!-- Flap, folded down towards the middle -->
+        <path d="M0 0 H120 L60 46 Z" fill="#48a9cd" />
+
+        <!-- Folds picked out in white: the flap, then the two back seams -->
+        <g fill="none" stroke="#ffffff" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M-2 -2 L60 44 L122 -2" />
+            <path d="M-2 86 L46 40" />
+            <path d="M122 86 L74 40" />
+        </g>
+    </g>
+</svg>

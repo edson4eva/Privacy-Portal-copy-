@@ -27,6 +27,7 @@ const items: SideMenuItem[] = [
     },
     { type: 'link', heading: 'Alberta Wallet', href: '/complaints/alberta-wallet' },
     { type: 'link', heading: 'Services accessed', href: '/account-history/' },
+    { type: 'link', heading: 'Inbox', iconSrc: 'envelope.svg', href: '#' },
 ];
 
 const renderMenu = (path: string) =>
@@ -63,6 +64,17 @@ describe('AppSideMenu', () => {
         expect(screen.getByTestId('albertawalletlink')).toHaveAttribute('href', '/alberta-wallet');
         // Different app, so it is a plain anchor to the other path.
         expect(screen.getByTestId('servicesaccessedlink').getAttribute('href')).toContain('/account-history/');
+    });
+
+    it('renders an image icon where one is supplied, and the design system icon otherwise', () => {
+        renderMenu('/alberta-wallet');
+
+        const inbox = screen.getByTestId('inboxlink');
+        const image = inbox.querySelector('img');
+        expect(image).toHaveAttribute('src', 'envelope.svg');
+        // Decorative, since the entry names itself in text.
+        expect(image).toHaveAttribute('alt', '');
+        expect(inbox.querySelector('[data-testid^="icon-"]')).toBeNull();
     });
 
     it('renders every item from the menu model', () => {

@@ -10,6 +10,8 @@ interface SideMenuLink {
     href: string;
     heading: string;
     icon?: GoabIconType;
+    /** Image icon, for entries whose mark is not in the design system. */
+    iconSrc?: string;
     items?: undefined;
 }
 
@@ -40,6 +42,19 @@ const isCurrentPath = (linkPath: string, currentPath: string): boolean => {
 
     const normalized = linkPath.replace(/\/+$/, '');
     return currentPath === normalized || currentPath.startsWith(`${normalized}/`);
+};
+
+/**
+ * Renders whichever mark an entry carries: an image where one is supplied,
+ * otherwise the named design system icon. Decorative either way, since the
+ * entry states its own name in text.
+ */
+const MenuIcon = ({ item }: { item: SideMenuLink }): JSX.Element | null => {
+    if (item.iconSrc) {
+        return <img className={styles['uiam--side-menu--icon-image']} src={item.iconSrc} alt="" aria-hidden />;
+    }
+
+    return item.icon ? <GoabIcon type={item.icon} /> : null;
 };
 
 const AppSideMenu: React.FC<SideMenuProperties> = function ({ items, basePath }) {
@@ -115,7 +130,7 @@ const AppSideMenu: React.FC<SideMenuProperties> = function ({ items, basePath })
                             .filter(Boolean)
                             .join(' ')}
                     >
-                        {menuItem.icon && <GoabIcon type={menuItem.icon} />}
+                        <MenuIcon item={menuItem} />
                         {menuItem.heading}
                     </Link>
                 );
@@ -136,7 +151,7 @@ const AppSideMenu: React.FC<SideMenuProperties> = function ({ items, basePath })
                             .join(' ')}
                         data-testid={menuItem.heading.replace(/ /g, '').toLocaleLowerCase() + 'link'}
                     >
-                        {menuItem.icon && <GoabIcon type={menuItem.icon} />} {menuItem.heading}
+                        <MenuIcon item={menuItem} /> {menuItem.heading}
                     </a>
                 );
             }
