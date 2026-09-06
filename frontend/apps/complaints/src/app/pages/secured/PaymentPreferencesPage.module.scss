@@ -98,8 +98,7 @@
         row-gap: var(--goa-space-2xs);
     }
 
-    .value,
-    .value-plain {
+    .value {
         margin-bottom: var(--goa-space-xs);
     }
 }
@@ -108,20 +107,13 @@
     color: var(--goa-color-text-default);
 }
 
-/* Values read back from the bank sit on a tint, so it is clear they are held
-   values rather than something typed here. */
+/* Values sit directly on the card, distinguished by weight rather than a
+   tinted block, so the rows read as one surface. */
 .value {
     justify-self: start;
     font-weight: 700;
     color: var(--goa-color-text-default);
-    background-color: var(--goa-color-greyscale-100, #ececec);
-    padding: 0.35rem 0.6rem;
     overflow-wrap: break-word;
-}
-
-.value-plain {
-    font-weight: 700;
-    color: var(--goa-color-text-default);
 }
 
 .delete {

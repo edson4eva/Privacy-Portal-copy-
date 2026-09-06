@@ -69,17 +69,15 @@ const InteracVerified = (): React.ReactElement => (
 const Row = ({
     label,
     value,
-    plain,
     testId,
 }: {
     label: string;
     value?: string;
-    plain?: boolean;
     testId?: string;
 }): React.ReactElement => (
     <>
         <div className={styles['label']}>{label}</div>
-        <div className={plain ? styles['value-plain'] : styles['value']} data-testid={testId}>
+        <div className={styles['value']} data-testid={testId}>
             {value || 'Not provided'}
         </div>
     </>
@@ -214,7 +212,6 @@ export function PaymentPreferencesPage(): React.ReactElement {
                                 <Row
                                     label="Retrieved on"
                                     value={formatRetrievedOn(account.retrievedOn)}
-                                    plain
                                     testId={`retrieved-${account.id}`}
                                 />
                             </div>
