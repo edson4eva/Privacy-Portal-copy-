@@ -1,0 +1,224 @@
+.container {
+    box-sizing: border-box;
+    padding-left: var(--goa-space-3xl);
+    margin-top: var(--goa-space-2xl);
+    max-width: 940px;
+
+    p {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 624px) {
+    .container {
+        background-color: var(--pp-background-color-internal);
+        padding-left: var(--goa-space-m);
+        padding-right: var(--goa-space-m);
+    }
+}
+
+/* Title and the add button share a row until there is no room for both. */
+.header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--goa-space-m);
+}
+
+.page-heading {
+    font: var(--goa-typography-heading-xl);
+    color: var(--goa-color-text-default);
+    margin: 0;
+}
+
+/* ---- Digital document card ---- */
+
+.card {
+    position: relative;
+    width: 100%;
+    max-width: 21rem;
+    text-align: left;
+    padding: var(--goa-space-m);
+    border: 1px solid var(--goa-color-greyscale-200);
+    border-radius: 6px;
+    background: linear-gradient(160deg, #eaf3f8 0%, #dceaf3 55%, #cfe2ef 100%);
+    cursor: pointer;
+    font: inherit;
+    color: var(--goa-color-text-default);
+}
+
+.card:hover {
+    border-color: var(--goa-color-interactive-default);
+}
+
+.card:focus-visible {
+    outline: 3px solid var(--goa-color-interactive-focus, #004f84);
+    outline-offset: 2px;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--goa-space-s);
+}
+
+.card-type {
+    display: flex;
+    align-items: center;
+    gap: var(--goa-space-xs);
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+
+.card-icon {
+    color: #0081a2;
+    display: inline-flex;
+}
+
+/* Stands in for the Alberta wordmark, which is not available as an asset here. */
+.wordmark {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    letter-spacing: 0.01em;
+}
+
+.wordmark-dot {
+    display: inline-block;
+    width: 0.45rem;
+    height: 0.45rem;
+    background-color: #0081a2;
+    margin-left: 0.15rem;
+    vertical-align: 0.1em;
+}
+
+.field-label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #3d5f70;
+}
+
+.phn {
+    display: inline-block;
+    font-size: 1.35rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border: 2px solid #1c1c1c;
+    background-color: #f4f9fc;
+}
+
+.field-value {
+    display: block;
+    font-weight: 700;
+    background-color: #dfeaf2;
+    padding: 0.1rem 0.35rem;
+}
+
+.card-dates {
+    display: flex;
+    gap: var(--goa-space-l);
+}
+
+.hint {
+    display: flex;
+    align-items: center;
+    gap: var(--goa-space-xs);
+    color: var(--goa-color-text-secondary);
+    font-size: 0.9rem;
+}
+
+/* ---- Presentation panel, shown when a card is activated ---- */
+
+.present {
+    max-width: 21rem;
+    border: 1px solid var(--goa-color-greyscale-200);
+    border-radius: 6px;
+    padding: var(--goa-space-l);
+    text-align: center;
+}
+
+.present-code {
+    color: var(--goa-color-text-default);
+}
+
+/* ---- App promotion banner ---- */
+
+.promo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--goa-space-l);
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(105deg, #14657a 0%, #0f7f96 100%);
+    border-radius: 6px;
+    padding: var(--goa-space-xl);
+    color: #ffffff;
+}
+
+.promo-copy {
+    flex: 1 1 22rem;
+    min-width: 0;
+}
+
+.promo-heading {
+    font: var(--goa-typography-heading-l);
+    margin: 0 0 var(--goa-space-s);
+    color: #ffffff;
+}
+
+.promo-text {
+    color: #ffffff;
+    max-width: 30rem;
+}
+
+.stores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--goa-space-s);
+    margin-top: var(--goa-space-l);
+}
+
+.store {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--goa-space-xs);
+    background-color: #000000;
+    color: #ffffff;
+    text-decoration: none;
+    border: 1px solid #4a4a4a;
+    border-radius: 6px;
+    padding: 0.5rem 0.9rem;
+}
+
+.store:hover {
+    background-color: #1c1c1c;
+}
+
+.store:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 2px;
+}
+
+.store-lines {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.store-small {
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.store-large {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.empty {
+    color: var(--goa-color-text-secondary);
+}

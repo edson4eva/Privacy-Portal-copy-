@@ -345,6 +345,10 @@ export const getDemoResponse = (url: string): unknown | undefined => {
         return { identification: DEMO_IDENTIFICATION };
     }
 
+    if (path === 'wallet') {
+        return { wallet: DEMO_WALLET };
+    }
+
     const detailMatch = /^accessed-services\/(.+)$/.exec(path);
     if (detailMatch) {
         return detailResponse(decodeURIComponent(detailMatch[1]));
@@ -407,6 +411,25 @@ const DEMO_IDENTIFICATION = {
 };
 
 /**
+ * Documents held in the Alberta Wallet. The real wallet is issued and presented
+ * through the mobile app, so these values would come from the wallet service,
+ * which is not part of this repository. Demo mode answers with the same
+ * fictional profile used elsewhere - never a real health number.
+ */
+const DEMO_WALLET = {
+    documents: [
+        {
+            id: 'mobile-health-card',
+            documentType: 'Mobile Health Card',
+            personalHealthNumber: '54321-8807',
+            nameOnCard: 'USER, Demo Alexander',
+            birthdate: '1985-04-12',
+            expiryDate: '2030-04-12',
+        },
+    ],
+};
+
+/**
  * Side menu shown in demo mode. The real menu is supplied by UIAM in the
  * sign-in response, which is unavailable here, so this mirrors the Alberta.ca
  * Account structure and points the Privacy Portal entries at the apps that are
@@ -426,7 +449,7 @@ export const DEMO_USER_MENU = {
             items: [{ type: 'link', heading: 'Personal information', href: '/complaints/personal-information' }],
         },
         { type: 'link', heading: 'My identification', icon: 'document-text', href: '/complaints/my-identification' },
-        { type: 'link', heading: 'Alberta Wallet', icon: 'wallet', href: '#' },
+        { type: 'link', heading: 'Alberta Wallet', icon: 'wallet', href: '/complaints/alberta-wallet' },
         {
             type: 'group',
             heading: 'Privacy Portal',
