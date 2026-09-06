@@ -357,6 +357,10 @@ export const getDemoResponse = (url: string): unknown | undefined => {
         return { securitySettings: DEMO_SECURITY_SETTINGS };
     }
 
+    if (path === 'account-activity') {
+        return { accountActivity: { events: buildDemoActivity() } };
+    }
+
     const detailMatch = /^accessed-services\/(.+)$/.exec(path);
     if (detailMatch) {
         return detailResponse(decodeURIComponent(detailMatch[1]));
@@ -472,6 +476,78 @@ const DEMO_SECURITY_SETTINGS = {
 };
 
 /**
+ * Account activity history. Real events come from the Alberta.ca Account audit
+ * log, which is not part of this repository, so demo mode generates a run of
+ * plausible events - enough of them that paging through the table is real.
+ */
+interface DemoActivityEvent {
+    id: string;
+    event: string;
+    method?: string;
+    status: 'Successful' | 'Failed';
+    occurredAt: string;
+    ipAddress: string;
+    location: string;
+    device: string;
+    deviceDetail: string;
+}
+
+const DEMO_ACTIVITY_DEVICES = [
+    { device: 'Windows NT 10.0, Chrome', deviceDetail: 'Unknown' },
+    { device: 'macOS 14.4, Safari', deviceDetail: 'Unknown' },
+    { device: 'Android 14, Chrome', deviceDetail: 'Pixel 8' },
+    { device: 'iOS 17.4, Safari', deviceDetail: 'iPhone' },
+];
+
+const DEMO_ACTIVITY_ORIGINS = [
+    { ipAddress: '142.229.84.78', location: 'Edmonton' },
+    { ipAddress: '142.229.84.68', location: 'Edmonton' },
+    { ipAddress: '142.229.148.138', location: 'Edmonton' },
+    { ipAddress: '198.161.92.14', location: 'Calgary' },
+];
+
+const buildDemoActivity = (): DemoActivityEvent[] => {
+    const events: DemoActivityEvent[] = [];
+    const start = new Date();
+
+    for (let index = 0; index < 70; index++) {
+        // Walk backwards from now in uneven steps so the history looks lived in.
+        const occurredAt = new Date(start);
+        occurredAt.setHours(start.getHours() - index * 7 - (index % 5) * 3);
+        occurredAt.setMinutes((index * 13) % 60, 0, 0);
+
+        const origin = DEMO_ACTIVITY_ORIGINS[index % DEMO_ACTIVITY_ORIGINS.length];
+        const hardware = DEMO_ACTIVITY_DEVICES[index % 7 === 0 ? (index % DEMO_ACTIVITY_DEVICES.length) : 0];
+
+        let event = 'Sign in';
+        let method: string | undefined = 'Google';
+        let status: 'Successful' | 'Failed' = 'Successful';
+
+        if (index % 17 === 5) {
+            status = 'Failed';
+        } else if (index % 23 === 9) {
+            event = 'Password change';
+            method = undefined;
+        } else if (index % 29 === 14) {
+            event = 'Email update';
+            method = undefined;
+        }
+
+        events.push({
+            id: `activity-${index + 1}`,
+            event,
+            method,
+            status,
+            occurredAt: occurredAt.toISOString(),
+            ...origin,
+            ...hardware,
+        });
+    }
+
+    return events;
+};
+
+/**
  * Side menu shown in demo mode. The real menu is supplied by UIAM in the
  * sign-in response, which is unavailable here, so this mirrors the Alberta.ca
  * Account structure and points the Privacy Portal entries at the apps that are
@@ -506,6 +582,6 @@ export const DEMO_USER_MENU = {
             ],
         },
         { type: 'link', heading: 'Security settings', icon: 'settings', href: '/complaints/security-settings' },
-        { type: 'link', heading: 'Account activity', icon: 'time', href: '#' },
+        { type: 'link', heading: 'Account activity', icon: 'time', href: '/complaints/account-activity' },
     ],
 };

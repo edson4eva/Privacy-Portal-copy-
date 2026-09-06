@@ -1,0 +1,61 @@
+.container {
+    box-sizing: border-box;
+    padding-left: var(--goa-space-3xl);
+    margin-top: var(--goa-space-2xl);
+    max-width: 900px;
+
+    p {
+        margin-bottom: 0;
+        max-width: 40rem;
+    }
+}
+
+@media (max-width: 624px) {
+    .container {
+        background-color: var(--pp-background-color-internal);
+        padding-left: var(--goa-space-m);
+        padding-right: var(--goa-space-m);
+    }
+}
+
+.page-heading {
+    font: var(--goa-typography-heading-xl);
+    color: var(--goa-color-text-default);
+    margin: 0;
+}
+
+.intro {
+    color: var(--goa-color-text-default);
+}
+
+/* The table carries five columns of fine print, so let it scroll rather than
+   crush the columns on a narrow screen. */
+.table-container {
+    overflow-x: auto;
+}
+
+.detail {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--goa-color-text-secondary);
+}
+
+.cell {
+    vertical-align: top;
+}
+
+.suspicious-heading {
+    font: var(--goa-typography-heading-m);
+    color: var(--goa-color-text-default);
+    margin: 0;
+}
+
+.link-icon {
+    display: inline-block;
+    margin-left: 0.25rem;
+    vertical-align: -0.15em;
+}
+
+.empty {
+    color: var(--goa-color-text-secondary);
+}
