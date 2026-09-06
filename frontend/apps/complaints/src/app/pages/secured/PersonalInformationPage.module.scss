@@ -1,0 +1,71 @@
+.container {
+    box-sizing: border-box;
+    padding-left: var(--goa-space-3xl);
+    margin-top: var(--goa-space-2xl);
+    max-width: 720px;
+
+    p {
+        margin-bottom: 0;
+        max-width: 624px;
+    }
+}
+
+@media (max-width: 624px) {
+    .container {
+        background-color: var(--pp-background-color-internal);
+        padding-left: var(--goa-space-m);
+        padding-right: var(--goa-space-m);
+    }
+}
+
+.intro {
+    color: var(--goa-color-text-default);
+}
+
+.section-title {
+    display: block;
+    font: var(--goa-typography-heading-m);
+    color: var(--goa-color-text-default);
+}
+
+/* Label above value, divided rows - reads the same on narrow screens without
+   collapsing a two-column grid. */
+.rows {
+    border-top: 1px solid var(--goa-color-greyscale-200);
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--goa-space-xs) var(--goa-space-m);
+    align-items: baseline;
+    padding: var(--goa-space-m) 0;
+    border-bottom: 1px solid var(--goa-color-greyscale-200);
+}
+
+.label {
+    flex: 0 0 14rem;
+    color: var(--goa-color-text-secondary);
+}
+
+.value {
+    flex: 1 1 16rem;
+    min-width: 0;
+    color: var(--goa-color-text-default);
+    overflow-wrap: break-word;
+}
+
+.value-empty {
+    color: var(--goa-color-text-secondary);
+}
+
+.badges {
+    display: flex;
+    align-items: baseline;
+    gap: var(--goa-space-xs);
+    flex-wrap: wrap;
+}
+
+.footnote {
+    color: var(--goa-color-text-secondary);
+}

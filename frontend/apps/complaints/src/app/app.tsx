@@ -22,6 +22,7 @@ import { ComplaintRedirect } from './pages/public/ComplaintRedirect';
 import ComplaintHistory from './pages/secured/ComplaintHistory';
 import FileComplaint from './pages/secured/FileComplaint';
 import PrivacyFeaturesPage from './pages/public/PrivacyFeaturesPage';
+import PersonalInformationPage from './pages/secured/PersonalInformationPage';
 import { ErrorBoundary } from 'react-error-boundary';
 import FallbackUI from './pages/public/FallbackPage';
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
@@ -177,6 +178,16 @@ export function App(): React.ReactElement {
                                                     <AnonymousOnly redirectPath="/file-complaint">
                                                         <ComplaintLandingPage />
                                                     </AnonymousOnly>
+                                                </ErrorBoundary>
+                                            }
+                                        ></Route>
+                                        <Route
+                                            path={'/personal-information'}
+                                            element={
+                                                <ErrorBoundary fallbackRender={FallbackUI} onError={logError}>
+                                                    <SignedInOnly>
+                                                        <PersonalInformationPage />
+                                                    </SignedInOnly>
                                                 </ErrorBoundary>
                                             }
                                         ></Route>

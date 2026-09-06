@@ -337,12 +337,48 @@ export const getDemoResponse = (url: string): unknown | undefined => {
         return listResponse();
     }
 
+    if (path === 'personal-information') {
+        return { personalInformation: DEMO_PERSONAL_INFORMATION };
+    }
+
     const detailMatch = /^accessed-services\/(.+)$/.exec(path);
     if (detailMatch) {
         return detailResponse(decodeURIComponent(detailMatch[1]));
     }
 
     return undefined;
+};
+
+/**
+ * Personal information shown on the account's personal information page. The
+ * real values would come from the Alberta.ca Account profile service, which is
+ * not part of this repository, so demo mode answers with a representative
+ * profile instead.
+ */
+const DEMO_PERSONAL_INFORMATION = {
+    identity: {
+        legalName: 'Demo User',
+        preferredName: 'Demo',
+        dateOfBirth: '1985-04-12',
+    },
+    contact: {
+        email: 'demo.user@example.com',
+        emailVerified: true,
+        phone: '(780) 555-0142',
+        phoneVerified: false,
+    },
+    address: {
+        street: '123 Jasper Avenue NW',
+        unit: 'Suite 400',
+        city: 'Edmonton',
+        province: 'Alberta',
+        postalCode: 'T5J 0R2',
+    },
+    account: {
+        accountType: 'Personal',
+        verificationLevel: 'Verified',
+        lastUpdated: '2026-07-18',
+    },
 };
 
 /**
@@ -358,7 +394,12 @@ export const getDemoResponse = (url: string): unknown | undefined => {
 export const DEMO_USER_MENU = {
     top: null,
     left: [
-        { type: 'group', heading: 'Personal', icon: 'person', items: [] },
+        {
+            type: 'group',
+            heading: 'Personal',
+            icon: 'person',
+            items: [{ type: 'link', heading: 'Personal information', href: '/complaints/personal-information' }],
+        },
         { type: 'link', heading: 'My identification', icon: 'document-text', href: '#' },
         { type: 'link', heading: 'Alberta Wallet', icon: 'wallet', href: '#' },
         {
