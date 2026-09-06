@@ -446,7 +446,10 @@ export const DEMO_USER_MENU = {
             type: 'group',
             heading: 'Personal',
             icon: 'person',
-            items: [{ type: 'link', heading: 'Personal information', href: '/complaints/personal-information' }],
+            items: [
+                { type: 'link', heading: 'Personal information', href: '/complaints/personal-information' },
+                { type: 'link', heading: 'Payment preferences', href: '#' },
+            ],
         },
         { type: 'link', heading: 'My identification', icon: 'document-text', href: '/complaints/my-identification' },
         { type: 'link', heading: 'Alberta Wallet', icon: 'wallet', href: '/complaints/alberta-wallet' },
