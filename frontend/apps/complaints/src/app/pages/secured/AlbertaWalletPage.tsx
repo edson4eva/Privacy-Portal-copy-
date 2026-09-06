@@ -1,4 +1,5 @@
 import { GoabButton, GoabCircularProgress, GoabIcon } from '@abgov/react-components';
+import { GoabIconType } from '@abgov/ui-components-common';
 import { useEffect, useState } from 'react';
 import { get } from 'shared/src/lib/api/dataService';
 import { PpSpacer } from 'shared/src/lib/pp-spacer/PpSpacer';
@@ -7,13 +8,22 @@ import useWindowWidth from 'shared/src/lib/utils/useWindowWidth';
 import albertaShield from '../../../assets/alberta-shield-of-arms.svg';
 import styles from './AlbertaWalletPage.module.scss';
 
+interface WalletField {
+    label: string;
+    value: string;
+    /** Formatted for display when set; shown verbatim otherwise. */
+    isDate?: boolean;
+}
+
 interface WalletDocument {
     id: string;
     documentType: string;
-    personalHealthNumber: string;
+    icon: GoabIconType;
+    primaryLabel: string;
+    primaryValue: string;
     nameOnCard: string;
-    birthdate: string;
-    expiryDate: string;
+    addressLines?: string[];
+    fields: WalletField[];
 }
 
 interface Wallet {
@@ -74,7 +84,7 @@ const DocumentCard = ({
         <div className={styles['card-header']}>
             <span className={styles['card-type']}>
                 <span className={styles['card-icon']}>
-                    <GoabIcon type="pulse" size="small" />
+                    <GoabIcon type={document.icon} size="small" />
                 </span>
                 {document.documentType}
             </span>
@@ -87,9 +97,9 @@ const DocumentCard = ({
         <PpSpacer vSpacing="m" />
         <div className={styles['card-body']}>
             <div className={styles['card-fields']}>
-                <div className={styles['field-label']}>Personal health number</div>
-                <div className={styles['phn']} data-testid={`phn-${document.id}`}>
-                    {document.personalHealthNumber}
+                <div className={styles['field-label']}>{document.primaryLabel}</div>
+                <div className={styles['phn']} data-testid={`primary-${document.id}`}>
+                    {document.primaryValue}
                 </div>
 
                 <PpSpacer vSpacing="s" />
@@ -98,20 +108,33 @@ const DocumentCard = ({
                     {document.nameOnCard}
                 </span>
 
+                {document.addressLines && (
+                    <>
+                        <PpSpacer vSpacing="s" />
+                        <div className={styles['field-label']}>Address</div>
+                        <span className={styles['field-value']} data-testid={`address-${document.id}`}>
+                            {document.addressLines.map((line) => (
+                                <span className={styles['address-line']} key={line}>
+                                    {line}
+                                </span>
+                            ))}
+                        </span>
+                    </>
+                )}
+
                 <PpSpacer vSpacing="s" />
-                <div className={styles['card-dates']}>
-                    <div>
-                        <div className={styles['field-label']}>Birthdate</div>
-                        <span className={styles['field-value']} data-testid={`birthdate-${document.id}`}>
-                            {formatCardDate(document.birthdate)}
-                        </span>
-                    </div>
-                    <div>
-                        <div className={styles['field-label']}>Expiry date</div>
-                        <span className={styles['field-value']} data-testid={`expiry-${document.id}`}>
-                            {formatCardDate(document.expiryDate)}
-                        </span>
-                    </div>
+                <div className={styles['card-grid']}>
+                    {document.fields.map((field) => (
+                        <div key={field.label}>
+                            <div className={styles['field-label']}>{field.label}</div>
+                            <span
+                                className={styles['field-value']}
+                                data-testid={`field-${document.id}-${field.label.toLowerCase().replace(/[^a-z]+/g, '-')}`}
+                            >
+                                {field.isDate ? formatCardDate(field.value) : field.value}
+                            </span>
+                        </div>
+                    ))}
                 </div>
             </div>
 
@@ -132,6 +155,7 @@ export function AlbertaWalletPage(): React.ReactElement {
     const [wallet, setWallet] = useState<Wallet>();
     const [isLoading, setIsLoading] = useState(true);
     const [presentingId, setPresentingId] = useState<string>();
+    const [showAddNotice, setShowAddNotice] = useState(false);
 
     useEffect(() => {
         async function fetchData() {
@@ -162,10 +186,25 @@ export function AlbertaWalletPage(): React.ReactElement {
 
             <div className={styles['header']}>
                 <h1 className={styles['page-heading']}>Alberta Wallet</h1>
-                <GoabButton type="primary" leadingIcon="add" testId="add-to-wallet">
+                <GoabButton
+                    type="primary"
+                    leadingIcon="add"
+                    onClick={() => setShowAddNotice(true)}
+                    testId="add-to-wallet"
+                >
                     Add to Alberta Wallet
                 </GoabButton>
             </div>
+
+            {showAddNotice && (
+                <>
+                    <PpSpacer vSpacing="m" />
+                    <p className={styles['empty']} data-testid="add-notice">
+                        A document is issued to your wallet through the Alberta Wallet app on your phone, where it is
+                        bound to your device. It cannot be added from a browser.
+                    </p>
+                </>
+            )}
 
             <PpSpacer vSpacing="l" />
 

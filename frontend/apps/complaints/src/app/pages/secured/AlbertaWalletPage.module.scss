@@ -240,3 +240,15 @@
 .empty {
     color: var(--goa-color-text-secondary);
 }
+
+/* Secondary licence fields sit two or three to a row, as the printed card
+   groups them, rather than one long column. */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(4.5rem, 1fr));
+    gap: var(--goa-space-xs) var(--goa-space-s);
+}
+
+.address-line {
+    display: block;
+}

@@ -437,15 +437,40 @@ const DEMO_IDENTIFICATION = {
 const DEMO_WALLET = {
     documents: [
         {
+            id: 'mobile-drivers-licence',
+            documentType: "Mobile Driver's Licence",
+            icon: 'car',
+            primaryLabel: 'Licence number',
+            primaryValue: '412887-355',
+            nameOnCard: 'USER, DEMO ALEXANDER',
+            addressLines: ['123 JASPER AVENUE NW', 'EDMONTON, AB  T5J 0R2'],
+            fields: [
+                { label: 'Class', value: '5' },
+                { label: 'DOB', value: '1985-04-12', isDate: true },
+                { label: 'Sex', value: 'M' },
+                { label: 'Eyes', value: 'BRO' },
+                { label: 'Hair', value: 'BRO' },
+                { label: 'Height', value: '178 cm' },
+                { label: 'Cond/End', value: 'NONE' },
+                { label: 'Issued', value: '2026-04-12', isDate: true },
+                { label: 'Expiry date', value: '2030-04-12', isDate: true },
+            ],
+        },
+        {
             id: 'mobile-health-card',
             documentType: 'Mobile Health Card',
-            personalHealthNumber: '54321-8807',
+            icon: 'pulse',
+            primaryLabel: 'Personal health number',
+            primaryValue: '54321-8807',
             nameOnCard: 'USER, Demo Alexander',
-            birthdate: '1985-04-12',
-            expiryDate: '2030-04-12',
+            fields: [
+                { label: 'Birthdate', value: '1985-04-12', isDate: true },
+                { label: 'Expiry date', value: '2030-04-12', isDate: true },
+            ],
         },
     ],
 };
+
 
 /**
  * Direct deposit details shown on the Payment preferences page. Real values
