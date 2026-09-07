@@ -525,7 +525,7 @@ export function InboxPage(): React.ReactElement {
                             name="unread-only"
                             checked={unreadOnly}
                             onChange={(detail) => setUnreadOnly(detail.checked)}
-                            text={`Unread only (${unreadCount})`}
+                            text={`Unread (${unreadCount})`}
                             testId="unread-only"
                         />
                         <div className={styles['field']}>
