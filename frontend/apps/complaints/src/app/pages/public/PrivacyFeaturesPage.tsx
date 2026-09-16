@@ -22,7 +22,7 @@ export function PrivacyFeaturesPage(): React.ReactElement {
                 <PageTitle title="PRIVACY PORTAL" fontColor="#004F84" />
                 <PpSpacer vSpacing="m" />
                 <div className={styles['header-xl-wrapper']}>
-                    <PageSubTitle subTitle="Protecting your privacy" />
+                    <PageSubTitle subTitle="Privacy features" />
                 </div>
                 <PpSpacer vSpacing="m" />
                 <p>
@@ -75,13 +75,15 @@ export function PrivacyFeaturesPage(): React.ReactElement {
                 <div className={styles['options']}>
                     <div className={cardStyles}>
                         <img
-                            title="sevices-accessed"
+                            title="service-activity"
                             src="./assets/features/2025_New-features-page-Services-accessed.png"
                         />
                         <PpSpacer vSpacing="xl" />
-                        <label className={styles['options-title']}>Services accessed</label>
+                        <label className={styles['options-title']}>Service activity</label>
                         <PpSpacer vSpacing="s" />
-                        <p>Check which digital services you've used and the personal information they hold.</p>
+                        <p>
+                            Review activity and personal information use across government services you've used.
+                        </p>
                         <PpSpacer vSpacing="l" />
                         <Link to={`${process.env.NX_PUBLIC_APP_URL}/privacy/account-history`}>View</Link>
                     </div>

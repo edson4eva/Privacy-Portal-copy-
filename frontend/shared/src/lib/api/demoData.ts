@@ -363,6 +363,34 @@ export const getDemoResponse = (url: string): unknown | undefined => {
         return { accountActivity: { events: buildDemoActivity() } };
     }
 
+    if (path === 'service-activity') {
+        return {
+            serviceActivity: {
+                availableFrom: DEMO_ACTIVITY_AVAILABLE_FROM,
+                categories: DEMO_ACTIVITY_CATEGORIES,
+                services: DEMO_ACTIVITY_SERVICES,
+                events: DEMO_ACTIVITY_EVENTS,
+            },
+        };
+    }
+
+    const serviceMatch = /^service-activity\/(.+)$/.exec(path);
+    if (serviceMatch) {
+        const id = decodeURIComponent(serviceMatch[1]);
+        const service = DEMO_ACTIVITY_SERVICES.find((entry) => entry.id === id);
+        if (!service) {
+            return undefined;
+        }
+
+        return {
+            serviceActivity: {
+                categories: DEMO_ACTIVITY_CATEGORIES,
+                service,
+                events: DEMO_ACTIVITY_EVENTS.filter((event) => event.serviceId === id),
+            },
+        };
+    }
+
     if (path === 'inbox') {
         return { inbox: { programs: DEMO_INBOX_PROGRAMS, messages: DEMO_INBOX_MESSAGES } };
     }
@@ -768,6 +796,240 @@ const DEMO_INBOX_MESSAGES = [
 ];
 
 /**
+ * Service activity: the services a holder has used, and the individual
+ * activities recorded against them. Real data comes from the AccessedServices
+ * API, which is not part of this repository, so demo mode answers with a
+ * representative history.
+ *
+ * Two taxonomies are in play and are deliberately kept apart. A service has a
+ * subject category, which is what the detail page shows beside the ministry. An
+ * activity has a kind - a payment, an application, a use of personal
+ * information, an account event - which is what the list filters and columns
+ * show.
+ */
+const DEMO_ACTIVITY_CATEGORIES = [
+    { id: 'applications', label: 'Applications' },
+    { id: 'payments', label: 'Payments' },
+    { id: 'personal-information', label: 'Personal information' },
+    { id: 'account-activity', label: 'Account activity' },
+];
+
+/** Activity is only recorded for participating services from this date. */
+const DEMO_ACTIVITY_AVAILABLE_FROM = '2024-07-24';
+
+const DEMO_ACTIVITY_SERVICES = [
+    {
+        id: 'alberta-energy-rebate',
+        name: 'Alberta Energy Rebate',
+        description:
+            'This online service can be used to get $600 to help with the cost of everyday essentials for eligible Albertans.',
+        descriptionLinkText: 'eligible Albertans',
+        categoryId: 'family-and-social-support',
+        categoryLabel: 'Family and Social Support',
+        ministry: 'Energy and Minerals',
+        accessServiceUrl: 'https://www.alberta.ca/affordability-action-plan',
+        detailsAvailable: true,
+        personalInformation: [
+            'Name',
+            'Date of birth',
+            'Marital status',
+            'Social Insurance Number',
+            "Co-applicant (other spouse/common-law partner) information",
+            'Household income and finances',
+            'Payment information',
+            'Email address',
+        ],
+        howPersonalInformationIsUsed:
+            'This information is used to determine eligibility and rebate amounts, and to issue payments to Albertans who qualify.',
+        legislation: {
+            summary:
+                'This legislation gives the legal authority that allows the service to collect your personal information.',
+            label: 'FOIP',
+            url: 'https://www.alberta.ca/freedom-of-information-and-protection-of-privacy',
+        },
+    },
+    {
+        id: 'fine-payments',
+        name: 'Fine payments',
+        description: 'Pay violation tickets, notices of conviction and time to pay notices.',
+        categoryId: 'justice',
+        categoryLabel: 'Justice',
+        ministry: 'Justice and Solicitor General',
+        accessServiceUrl: 'https://www.alberta.ca/pay-a-fine',
+        // No service details published yet, so the page says so rather than
+        // showing an empty section.
+        detailsAvailable: false,
+    },
+    {
+        id: 'alberta-ca-account',
+        name: 'Alberta.ca Account',
+        description: 'Sign in once to reach the Government of Alberta services that use an Alberta.ca Account.',
+        categoryId: 'permits-Records-government-services',
+        categoryLabel: 'Permits, Records & Government Services',
+        ministry: 'Service Alberta and Red Tape Reduction',
+        accessServiceUrl: 'https://account.alberta.ca',
+        detailsAvailable: true,
+        personalInformation: ['Name', 'Date of birth', 'Email address', 'Phone number', 'Identity document details'],
+        howPersonalInformationIsUsed:
+            'This information is used to confirm who you are when you sign in, and to keep your account secure.',
+        legislation: {
+            summary:
+                'This legislation gives the legal authority that allows the service to collect your personal information.',
+            label: 'FOIP',
+            url: 'https://www.alberta.ca/freedom-of-information-and-protection-of-privacy',
+        },
+    },
+    {
+        id: 'child-care-subsidy',
+        name: 'Child care subsidy',
+        description: 'Apply for help with the cost of licensed child care.',
+        categoryId: 'family-and-social-support',
+        categoryLabel: 'Family and Social Support',
+        ministry: 'Children and Family Services',
+        accessServiceUrl: 'https://www.alberta.ca/child-care-subsidy',
+        detailsAvailable: false,
+    },
+];
+
+const DEMO_ACTIVITY_EVENTS = [
+    {
+        id: 'act-1',
+        serviceId: 'alberta-energy-rebate',
+        event: 'Your rebate payment was issued',
+        categoryId: 'payments',
+        occurredAt: '2026-09-03T15:12:00.000Z',
+        details: [
+            { label: 'Amount', value: '$600.00' },
+            { label: 'Payment method', value: 'Direct transfer' },
+            { label: 'Email', value: 'demo.user@example.com' },
+            { label: 'Status', value: 'Deposited' },
+        ],
+    },
+    {
+        id: 'act-2',
+        serviceId: 'fine-payments',
+        event: 'You paid for a fine',
+        categoryId: 'payments',
+        occurredAt: '2026-08-28T18:40:00.000Z',
+        details: [
+            { label: 'Amount', value: '$155.00' },
+            { label: 'Payment method', value: 'Credit card' },
+            { label: 'Status', value: 'Completed' },
+        ],
+    },
+    {
+        id: 'act-3',
+        serviceId: 'alberta-energy-rebate',
+        event: 'Your application was assessed automatically',
+        categoryId: 'applications',
+        occurredAt: '2026-08-28T13:05:00.000Z',
+        details: [
+            { label: 'Outcome', value: 'Approved' },
+            { label: 'Assessed by', value: 'Automated eligibility check' },
+        ],
+    },
+    {
+        id: 'act-4',
+        serviceId: 'alberta-energy-rebate',
+        event: 'Your 2025 income information was received from CRA',
+        categoryId: 'personal-information',
+        occurredAt: '2026-08-27T16:20:00.000Z',
+        details: [
+            { label: 'Received from', value: 'Canada Revenue Agency' },
+            { label: 'Information', value: 'Total income for the 2025 tax year' },
+            { label: 'Used for', value: 'Confirming rebate eligibility' },
+        ],
+    },
+    {
+        id: 'act-5',
+        serviceId: 'alberta-ca-account',
+        event: 'Your identity document was verified',
+        categoryId: 'account-activity',
+        occurredAt: '2026-08-27T14:02:00.000Z',
+        details: [
+            { label: 'Document', value: "Alberta driver's licence" },
+            { label: 'Verified by', value: 'Alberta registry agent' },
+            { label: 'Result', value: 'Verified' },
+        ],
+    },
+    {
+        id: 'act-6',
+        serviceId: 'alberta-energy-rebate',
+        event: 'You gave consent to verify your income',
+        categoryId: 'personal-information',
+        occurredAt: '2026-08-27T11:48:00.000Z',
+        details: [
+            { label: 'Consent given for', value: 'Income verification with the Canada Revenue Agency' },
+            { label: 'Consent given on', value: 'August 27, 2026' },
+        ],
+    },
+    {
+        id: 'act-7',
+        serviceId: 'alberta-energy-rebate',
+        event: 'You submitted your application',
+        categoryId: 'applications',
+        occurredAt: '2026-08-24T17:30:00.000Z',
+        details: [
+            { label: 'Reference number', value: 'AER-2026-771254' },
+            { label: 'Status', value: 'Submitted' },
+        ],
+    },
+    {
+        id: 'act-8',
+        serviceId: 'alberta-ca-account',
+        event: 'You signed in from a new device',
+        categoryId: 'account-activity',
+        occurredAt: '2026-08-22T02:14:00.000Z',
+        details: [
+            { label: 'Device', value: 'Chrome on Windows' },
+            { label: 'Location', value: 'Edmonton, AB' },
+        ],
+    },
+    {
+        id: 'act-9',
+        serviceId: 'child-care-subsidy',
+        event: 'Your subsidy payment was sent to your provider',
+        categoryId: 'payments',
+        occurredAt: '2026-08-14T11:00:00.000Z',
+        details: [
+            { label: 'Amount', value: '$612.00' },
+            { label: 'Paid to', value: 'Riverbend Early Learning Centre' },
+            { label: 'Status', value: 'Completed' },
+        ],
+    },
+    {
+        id: 'act-10',
+        serviceId: 'child-care-subsidy',
+        event: 'You submitted your renewal application',
+        categoryId: 'applications',
+        occurredAt: '2026-08-02T19:25:00.000Z',
+        details: [
+            { label: 'Reference number', value: 'CCS-2026-448193' },
+            { label: 'Status', value: 'Submitted' },
+        ],
+    },
+    {
+        id: 'act-11',
+        serviceId: 'alberta-ca-account',
+        event: 'Your email address was updated',
+        categoryId: 'account-activity',
+        occurredAt: '2026-07-28T20:41:00.000Z',
+        details: [{ label: 'Changed to', value: 'demo.user@example.com' }],
+    },
+    {
+        id: 'act-12',
+        serviceId: 'fine-payments',
+        event: 'Your payment receipt was issued',
+        categoryId: 'payments',
+        occurredAt: '2026-07-19T15:06:00.000Z',
+        details: [
+            { label: 'Receipt number', value: 'FP-2026-9981' },
+            { label: 'Amount', value: '$155.00' },
+        ],
+    },
+];
+
+/**
  * Side menu shown in demo mode. The real menu is supplied by UIAM in the
  * sign-in response, which is unavailable here, so this mirrors the Alberta.ca
  * Account structure and points the Privacy Portal entries at the apps that are
@@ -789,6 +1051,7 @@ export const DEMO_USER_MENU = {
                 { type: 'link', heading: 'Payment preferences', href: '/complaints/payment-preferences' },
             ],
         },
+        { type: 'group', heading: 'Business', icon: 'business', items: [] },
         { type: 'link', heading: 'My identification', icon: 'document-text', href: '/complaints/my-identification' },
         { type: 'link', heading: 'Alberta Wallet', icon: 'wallet', href: '/complaints/alberta-wallet' },
         {
@@ -796,8 +1059,8 @@ export const DEMO_USER_MENU = {
             heading: 'Privacy Portal',
             icon: 'lock-closed',
             items: [
-                { type: 'link', heading: 'New privacy features', href: '/complaints/features' },
-                { type: 'link', heading: 'Services accessed', href: '/account-history/' },
+                { type: 'link', heading: 'Privacy features', href: '/complaints/features' },
+                { type: 'link', heading: 'Service activity', href: '/account-history/accessed-services' },
                 { type: 'link', heading: 'Privacy complaint', href: '/complaints/file-complaint' },
             ],
         },

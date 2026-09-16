@@ -51,21 +51,21 @@ jest.mock('../../pages/NotFound', () => {
     };
 });
 
-jest.mock('../account-history/accessed-services/service-list/AccessedServicesPage', () => {
-    return function MockAccessedServicesPage({ isPreview }: { isPreview: boolean }) {
+jest.mock('../service-activity/ServiceActivityPage', () => {
+    return function MockServiceActivityPage({ isPreview }: { isPreview: boolean }) {
         return (
             <div data-testid="accessed-services-page" data-preview={isPreview}>
-                Accessed Services
+                Service Activity
             </div>
         );
     };
 });
 
-jest.mock('../account-history/accessed-services/service-details/AccessedServiceDetails', () => {
-    return function MockAccessedServiceDetails({ isPreview }: { isPreview: boolean }) {
+jest.mock('../service-activity/ServiceActivityDetail', () => {
+    return function MockServiceActivityDetail({ isPreview }: { isPreview: boolean }) {
         return (
             <div data-testid="accessed-service-details" data-preview={isPreview}>
-                Service Details
+                Service Activity Detail
             </div>
         );
     };

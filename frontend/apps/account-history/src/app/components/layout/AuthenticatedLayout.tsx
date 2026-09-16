@@ -8,8 +8,8 @@ import { AppSideMenu, SideMenuItem } from 'shared/src/lib/app-side-menu';
 import { ProfileRoute, useAuth } from 'shared/src/lib/context/auth-provider';
 import AccountHistory from '../../pages/AccountHistory';
 import NotFoundPage from '../../pages/NotFound';
-import AccessedServiceDetails from '../account-history/accessed-services/service-details/AccessedServiceDetails';
-import AccessedServicesPage from '../account-history/accessed-services/service-list/AccessedServicesPage';
+import ServiceActivityDetail from '../service-activity/ServiceActivityDetail';
+import ServiceActivityPage from '../service-activity/ServiceActivityPage';
 import NoAccess from '../no-access/NoAccess';
 import styles from './AuthenticatedLayout.module.scss';
 import InternalServerError from '../shared/InternalServerError';
@@ -72,25 +72,25 @@ const AuthenticatedLayout = (): React.ReactElement => {
                                 path="/accessed-services"
                                 element={
                                     <ProfileRoute profile={'personal'}>
-                                        <AccessedServicesPage isPreview={false} />
+                                        <ServiceActivityPage isPreview={false} />
                                     </ProfileRoute>
                                 }
                             />
                             <Route
                                 path="/preview/accessed-services"
-                                element={<AccessedServicesPage isPreview={true} />}
+                                element={<ServiceActivityPage isPreview={true} />}
                             />
                             <Route
                                 path="/accessed-services/:service"
                                 element={
                                     <ProfileRoute profile={'personal'}>
-                                        <AccessedServiceDetails isPreview={false} />
+                                        <ServiceActivityDetail isPreview={false} />
                                     </ProfileRoute>
                                 }
                             />
                             <Route
                                 path="/preview/accessed-services/:service"
-                                element={<AccessedServiceDetails isPreview={true} />}
+                                element={<ServiceActivityDetail isPreview={true} />}
                             />
                             <Route path="/no-access" element={<NoAccess />} />
                             <Route path={SHARED_ROUTES.signout} element={<SignoutRoute title="Sign Out" />} />
