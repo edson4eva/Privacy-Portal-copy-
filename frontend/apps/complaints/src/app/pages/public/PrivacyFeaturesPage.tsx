@@ -6,10 +6,20 @@ import useWindowWidth from 'shared/src/lib/utils/useWindowWidth';
 
 import styles from './PrivacyFeaturesPage.module.scss';
 import { PpSpacer } from 'shared/src/lib/pp-spacer/PpSpacer';
+import { isDemoMode } from 'shared/src/lib/utils/demoMode';
 
 export function PrivacyFeaturesPage(): React.ReactElement {
     const windowWidth = useWindowWidth();
     const cardStyles = [styles['card'], styles['no-border']].join(' ');
+
+    /**
+     * Service activity lives in another app behind the same host here, and
+     * reaching it means signing in. Outside a demonstration that is the account
+     * service's own sign-in, which this app cannot stand in for.
+     */
+    const serviceActivityHref = isDemoMode()
+        ? '/sign-in?returnTo=%2Faccount-history%2Faccessed-services'
+        : `${process.env.NX_PUBLIC_APP_URL}/privacy/account-history`;
 
     return (
         <>
@@ -85,7 +95,9 @@ export function PrivacyFeaturesPage(): React.ReactElement {
                             Review activity and personal information use across government services you've used.
                         </p>
                         <PpSpacer vSpacing="l" />
-                        <Link to={`${process.env.NX_PUBLIC_APP_URL}/privacy/account-history`}>View</Link>
+                        <Link to={serviceActivityHref} data-testid="service-activity-view">
+                            View
+                        </Link>
                     </div>
                     <div className={cardStyles}>
                         <img

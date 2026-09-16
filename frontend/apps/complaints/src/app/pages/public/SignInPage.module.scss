@@ -1,0 +1,63 @@
+.container {
+    box-sizing: border-box;
+    padding: var(--goa-space-2xl) var(--goa-space-l) var(--goa-space-3xl);
+    display: flex;
+    justify-content: center;
+
+    p {
+        margin-bottom: 0;
+    }
+}
+
+.card {
+    width: 100%;
+    max-width: 30rem;
+    background: #ffffff;
+    border: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
+    border-top: 4px solid #0081a2;
+    border-radius: 4px;
+    padding: var(--goa-space-xl);
+}
+
+.heading {
+    font: var(--goa-typography-heading-l);
+    color: var(--goa-color-text-default);
+    margin: 0;
+}
+
+.intro {
+    color: var(--goa-color-text-secondary);
+}
+
+/* States plainly that this stands in for the real sign-in, so the page cannot
+   be mistaken for it. */
+.demo-notice {
+    display: flex;
+    gap: var(--goa-space-s);
+    align-items: flex-start;
+    background: #fdf5e3;
+    border-left: 6px solid #feba35;
+    padding: var(--goa-space-m) var(--goa-space-l);
+}
+
+.demo-notice-title {
+    display: block;
+    font-weight: 700;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--goa-space-2xs);
+}
+
+.field-label {
+    font-weight: 700;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--goa-space-s);
+    align-items: center;
+}
