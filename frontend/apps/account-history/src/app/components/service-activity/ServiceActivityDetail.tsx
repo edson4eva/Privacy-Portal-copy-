@@ -190,28 +190,38 @@ export function ServiceActivityDetail({ isPreview }: { isPreview: boolean }): Re
                                 <span>Category</span>
                             </div>
 
-                            {currentPageEvents.map((event) => {
+                            {currentPageEvents.map((event, index) => {
                                 const isExpanded = expandedId === event.id;
                                 const hasDetails = !!event.details?.length;
+                                const rowClasses = [
+                                    styles['row'],
+                                    styles['row-toggle'],
+                                    index % 2 === 1 ? styles['row-even'] : '',
+                                    isExpanded ? styles['row-open'] : '',
+                                ]
+                                    .filter(Boolean)
+                                    .join(' ');
 
                                 return (
                                     <div key={event.id}>
                                         <button
                                             type="button"
-                                            className={`${styles['row']} ${styles['row-toggle']}`}
+                                            className={rowClasses}
                                             onClick={() => setExpandedId(isExpanded ? undefined : event.id)}
                                             aria-expanded={isExpanded}
                                             data-testid={`event-${event.id}`}
                                         >
-                                            <span className={styles['chevron']} aria-hidden>
-                                                <GoabIcon
-                                                    type={isExpanded ? 'chevron-down' : 'chevron-forward'}
-                                                    size="small"
-                                                />
+                                            <span
+                                                className={`${styles['chevron']} ${
+                                                    isExpanded ? styles['chevron-open'] : ''
+                                                }`}
+                                                aria-hidden
+                                            >
+                                                <GoabIcon type="chevron-forward" size="small" />
                                             </span>
                                             <span className={styles['event-title']}>{event.event}</span>
-                                            <span>{formatDay(event.occurredAt)}</span>
-                                            <span>
+                                            <span className={styles['row-date']}>{formatDay(event.occurredAt)}</span>
+                                            <span className={styles['row-category']}>
                                                 {categoriesById.get(event.categoryId)?.label ?? event.categoryId}
                                             </span>
                                         </button>
