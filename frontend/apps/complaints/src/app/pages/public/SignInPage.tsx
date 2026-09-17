@@ -55,7 +55,8 @@ export function SignInPage(): React.ReactElement {
                         <strong className={styles['demo-notice-title']}>Demonstration sign-in</strong>
                         <p>
                             This stands in for the Alberta.ca Account sign-in. A fictional account is already filled
-                            in, nothing is checked or sent anywhere, and choosing Sign in simply continues.
+                            in, so there is nothing to enter - choose Sign in to continue. Nothing is checked or sent
+                            anywhere.
                         </p>
                     </div>
                 </div>

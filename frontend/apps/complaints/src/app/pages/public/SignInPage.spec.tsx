@@ -52,7 +52,8 @@ describe('SignInPage', () => {
         renderPage();
 
         expect(screen.getByTestId('demo-notice')).toHaveTextContent('Demonstration sign-in');
-        expect(screen.getByTestId('demo-notice')).toHaveTextContent(/nothing is checked or sent anywhere/);
+        expect(screen.getByTestId('demo-notice')).toHaveTextContent(/nothing to enter/);
+        expect(screen.getByTestId('demo-notice')).toHaveTextContent(/Nothing is checked or sent anywhere/);
     });
 
     it('continues to the page the link was headed for', () => {

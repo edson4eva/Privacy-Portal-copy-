@@ -13,13 +13,19 @@ export function PrivacyFeaturesPage(): React.ReactElement {
     const cardStyles = [styles['card'], styles['no-border']].join(' ');
 
     /**
-     * Service activity lives in another app behind the same host here, and
-     * reaching it means signing in. Outside a demonstration that is the account
-     * service's own sign-in, which this app cannot stand in for.
+     * Each option here needs the holder signed in. Outside a demonstration that
+     * is the account service's own sign-in on another host, which this app
+     * cannot stand in for; within one, go through the sign-in page here so the
+     * walkthrough does not leave for a real login it cannot complete.
      */
-    const serviceActivityHref = isDemoMode()
-        ? '/sign-in?returnTo=%2Faccount-history%2Faccessed-services'
-        : `${process.env.NX_PUBLIC_APP_URL}/privacy/account-history`;
+    const optionHref = (demoPath: string, accountPath: string) =>
+        isDemoMode()
+            ? `/sign-in?returnTo=${encodeURIComponent(demoPath)}`
+            : `${process.env.NX_PUBLIC_APP_URL}${accountPath}`;
+
+    const serviceActivityHref = optionHref('/account-history/accessed-services', '/privacy/account-history');
+    const complaintHref = optionHref('/complaints/file-complaint', '/privacy/complaints/file-complaint');
+    const securitySettingsHref = optionHref('/complaints/security-settings', '/account/security-settings');
 
     return (
         <>
@@ -111,7 +117,7 @@ export function PrivacyFeaturesPage(): React.ReactElement {
                             Report any concerns about how the Government of Alberta handles your personal information.
                         </p>
                         <PpSpacer vSpacing="l" />
-                        <Link to={`${process.env.NX_PUBLIC_APP_URL}/privacy/complaints/file-complaint`}>
+                        <Link to={complaintHref} data-testid="privacy-complaint-file">
                             File a complaint
                         </Link>
                     </div>
@@ -125,7 +131,9 @@ export function PrivacyFeaturesPage(): React.ReactElement {
                         <PpSpacer vSpacing="s" />
                         <p>Keep your Alberta.ca Account secure by updating your sign-in and recovery details.</p>
                         <PpSpacer vSpacing="l" />
-                        <Link to={`${process.env.NX_PUBLIC_APP_URL}/account/security-settings`}>Manage</Link>
+                        <Link to={securitySettingsHref} data-testid="security-settings-manage">
+                            Manage
+                        </Link>
                     </div>
                 </div>
                 <PpSpacer vSpacing="2xl" />
