@@ -7,8 +7,12 @@
         padding-left: 64px;
         padding-right: 72px;
         
+        /* Content measure for every page in this app. The service activity
+           table needs room for four columns, so this is wider than prose
+           alone would want; pages that are mostly prose constrain their own
+           paragraphs. */
         > div {
-            max-width: 720px;
+            max-width: 960px;
         }
     }
 }

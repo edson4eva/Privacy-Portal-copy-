@@ -1,8 +1,7 @@
 .container {
     box-sizing: border-box;
-    padding-left: var(--goa-space-3xl);
     margin-top: var(--goa-space-2xl);
-    max-width: 1040px;
+    max-width: 960px;
 
     p {
         margin-bottom: 0;
@@ -12,8 +11,6 @@
 @media (max-width: 624px) {
     .container {
         background-color: var(--pp-background-color-internal);
-        padding-left: var(--goa-space-m);
-        padding-right: var(--goa-space-m);
     }
 }
 
