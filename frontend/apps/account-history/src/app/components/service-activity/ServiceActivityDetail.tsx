@@ -45,7 +45,13 @@ export function ServiceActivityDetail({ isPreview }: { isPreview: boolean }): Re
 
     const [activity, setActivity] = useState<ServiceActivity>();
     const [isLoading, setIsLoading] = useState(true);
-    const [expandedId, setExpandedId] = useState<string>();
+    /** Any number of activities can be open at once, so several can be compared. */
+    const [expandedIds, setExpandedIds] = useState<string[]>([]);
+
+    const toggleExpanded = (id: string) =>
+        setExpandedIds((previous) =>
+            previous.includes(id) ? previous.filter((entry) => entry !== id) : [...previous, id]
+        );
     const [page, setPage] = useState(1);
 
     /**
@@ -191,7 +197,7 @@ export function ServiceActivityDetail({ isPreview }: { isPreview: boolean }): Re
                             </div>
 
                             {currentPageEvents.map((event, index) => {
-                                const isExpanded = expandedId === event.id;
+                                const isExpanded = expandedIds.includes(event.id);
                                 const hasDetails = !!event.details?.length;
                                 const rowClasses = [
                                     styles['row'],
@@ -207,7 +213,7 @@ export function ServiceActivityDetail({ isPreview }: { isPreview: boolean }): Re
                                         <button
                                             type="button"
                                             className={rowClasses}
-                                            onClick={() => setExpandedId(isExpanded ? undefined : event.id)}
+                                            onClick={() => toggleExpanded(event.id)}
                                             aria-expanded={isExpanded}
                                             data-testid={`event-${event.id}`}
                                         >

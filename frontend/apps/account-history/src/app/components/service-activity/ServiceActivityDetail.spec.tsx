@@ -124,6 +124,32 @@ describe('ServiceActivityDetail', () => {
         expect(screen.queryByTestId('details-e1')).not.toBeInTheDocument();
     });
 
+    it('keeps several activities open at once', async () => {
+        mockGet.mockResolvedValue(withDetails);
+        renderDetail();
+
+        await waitFor(() => expect(screen.getByTestId('event-e1')).toBeInTheDocument());
+        fireEvent.click(screen.getByTestId('event-e1'));
+        fireEvent.click(screen.getByTestId('event-e2'));
+
+        // Opening the second must not close the first.
+        expect(screen.getByTestId('details-e1')).toBeInTheDocument();
+        expect(screen.getByTestId('details-e2')).toBeInTheDocument();
+    });
+
+    it('closes only the activity that was chosen', async () => {
+        mockGet.mockResolvedValue(withDetails);
+        renderDetail();
+
+        await waitFor(() => expect(screen.getByTestId('event-e1')).toBeInTheDocument());
+        fireEvent.click(screen.getByTestId('event-e1'));
+        fireEvent.click(screen.getByTestId('event-e2'));
+        fireEvent.click(screen.getByTestId('event-e1'));
+
+        expect(screen.queryByTestId('details-e1')).not.toBeInTheDocument();
+        expect(screen.getByTestId('details-e2')).toBeInTheDocument();
+    });
+
     it('says so when an activity recorded no further details', async () => {
         mockGet.mockResolvedValue(withDetails);
         renderDetail();
