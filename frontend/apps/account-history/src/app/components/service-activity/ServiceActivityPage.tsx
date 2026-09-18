@@ -5,7 +5,7 @@ import {
     GoabIcon,
     GoabPagination,
 } from '@abgov/react-components';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { get } from 'shared/src/lib/api/dataService';
 import PageTitle from 'shared/src/lib/page-title/PageTitle';
@@ -85,10 +85,22 @@ export function ServiceActivityPage({ isPreview }: { isPreview: boolean }): Reac
         });
     }, [events, serviceId, categoryId, dateRangeId, newestFirst]);
 
+    const totalPages = Math.max(1, Math.ceil(visibleEvents.length / PER_PAGE));
+    /** Filtering can leave the chosen page beyond the end of the list. */
+    const currentPage = Math.min(page, totalPages);
+
     const currentPageEvents = useMemo(
-        () => visibleEvents.slice((page - 1) * PER_PAGE, page * PER_PAGE),
-        [visibleEvents, page]
+        () => visibleEvents.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE),
+        [visibleEvents, currentPage]
     );
+
+    /**
+     * Held steady between renders. The pagination component binds its change
+     * event in an effect keyed on this handler, so a new function each render
+     * tears the listener down and rebuilds it, and a change dispatched around
+     * that swap is lost - which is how Previous came to do nothing.
+     */
+    const goToPage = useCallback(({ page: nextPage }: { page: number }) => setPage(nextPage), []);
 
     /** Any change to the filters or the sort invalidates the page being viewed. */
     const applyFilter = (apply: () => void) => {
@@ -230,8 +242,8 @@ export function ServiceActivityPage({ isPreview }: { isPreview: boolean }): Reac
                         testId="activity-pagination"
                         itemCount={visibleEvents.length}
                         perPageCount={PER_PAGE}
-                        pageNumber={page}
-                        onChange={({ page: nextPage }) => setPage(nextPage)}
+                        pageNumber={currentPage}
+                        onChange={goToPage}
                     />
                 </div>
             </div>

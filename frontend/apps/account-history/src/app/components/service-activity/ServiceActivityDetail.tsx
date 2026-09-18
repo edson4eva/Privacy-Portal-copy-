@@ -1,5 +1,5 @@
 import { GoabButton, GoabCircularProgress, GoabDetails, GoabIcon, GoabPagination } from '@abgov/react-components';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { get } from 'shared/src/lib/api/dataService';
 import { PpSpacer } from 'shared/src/lib/pp-spacer/PpSpacer';
@@ -90,7 +90,12 @@ export function ServiceActivityDetail({ isPreview }: { isPreview: boolean }): Re
         () => [...events].sort((a, b) => new Date(b.occurredAt).getTime() - new Date(a.occurredAt).getTime()),
         [events]
     );
-    const currentPageEvents = sortedEvents.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+    const totalPages = Math.max(1, Math.ceil(sortedEvents.length / PER_PAGE));
+    const currentPage = Math.min(page, totalPages);
+    const currentPageEvents = sortedEvents.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
+
+    /** Held steady between renders; see the note on the list page. */
+    const goToPage = useCallback(({ page: nextPage }: { page: number }) => setPage(nextPage), []);
 
     const backToList = () => navigate(isPreview ? '/preview/accessed-services' : '/accessed-services');
 
@@ -269,8 +274,8 @@ export function ServiceActivityDetail({ isPreview }: { isPreview: boolean }): Re
                                     testId="detail-pagination"
                                     itemCount={sortedEvents.length}
                                     perPageCount={PER_PAGE}
-                                    pageNumber={page}
-                                    onChange={({ page: nextPage }) => setPage(nextPage)}
+                                    pageNumber={currentPage}
+                                    onChange={goToPage}
                                 />
                             </div>
                         </div>

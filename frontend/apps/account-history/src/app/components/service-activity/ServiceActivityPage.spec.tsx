@@ -10,12 +10,28 @@ jest.mock('@abgov/react-components', () => ({
     ),
     GoabDropdownItem: ({ value, label }: { value: string; label: string }) => <option value={value}>{label}</option>,
     GoabIcon: ({ type }: { type: string }) => <i data-testid={`icon-${type}`} />,
-    GoabPagination: ({ itemCount, perPageCount, pageNumber, onChange, testId }: { itemCount: number; perPageCount: number; pageNumber: number; onChange: (d: { page: number }) => void; testId?: string }) => (
-        <div data-testid={testId}>
-            <span data-testid="page-info">{`Page ${pageNumber} of ${Math.max(1, Math.ceil(itemCount / perPageCount))}`}</span>
-            <button data-testid="next-page" onClick={() => onChange({ page: pageNumber + 1 })}>Next</button>
-        </div>
-    ),
+    GoabPagination: ({ itemCount, perPageCount, pageNumber, onChange, testId }: { itemCount: number; perPageCount: number; pageNumber: number; onChange: (d: { page: number }) => void; testId?: string }) => {
+        const total = Math.max(1, Math.ceil(itemCount / perPageCount));
+        return (
+            <div data-testid={testId}>
+                <span data-testid="page-info">{`Page ${pageNumber} of ${total}`}</span>
+                <button
+                    data-testid="previous-page"
+                    disabled={pageNumber <= 1}
+                    onClick={() => onChange({ page: pageNumber - 1 })}
+                >
+                    Previous
+                </button>
+                <button
+                    data-testid="next-page"
+                    disabled={pageNumber >= total}
+                    onClick={() => onChange({ page: pageNumber + 1 })}
+                >
+                    Next
+                </button>
+            </div>
+        );
+    },
 }));
 
 jest.mock('shared/src/lib/page-title/PageTitle', () => ({
@@ -138,6 +154,43 @@ describe('ServiceActivityPage', () => {
 
         fireEvent.change(screen.getByTestId('filter-category'), { target: { value: 'payments' } });
         expect(screen.getByTestId('page-info')).toHaveTextContent('Page 1 of 1');
+    });
+
+    it('goes back with Previous after going forward with Next', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('page-info')).toHaveTextContent('Page 1 of 2'));
+        const firstRowOnPageOne = screen.getAllByTestId(/^row-/)[0].getAttribute('data-testid');
+
+        fireEvent.click(screen.getByTestId('next-page'));
+        expect(screen.getByTestId('page-info')).toHaveTextContent('Page 2 of 2');
+
+        fireEvent.click(screen.getByTestId('previous-page'));
+        expect(screen.getByTestId('page-info')).toHaveTextContent('Page 1 of 2');
+        expect(screen.getAllByTestId(/^row-/)[0]).toHaveAttribute('data-testid', firstRowOnPageOne);
+    });
+
+    it('has no Previous to take on the first page', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('previous-page')).toBeInTheDocument());
+        expect(screen.getByTestId('previous-page')).toBeDisabled();
+    });
+
+    it('never leaves the chosen page beyond the end of a filtered list', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('next-page')).toBeInTheDocument());
+        fireEvent.click(screen.getByTestId('next-page'));
+        expect(screen.getByTestId('page-info')).toHaveTextContent('Page 2 of 2');
+
+        // A filter that leaves one page must not strand the view on page 2.
+        fireEvent.change(screen.getByTestId('filter-category'), { target: { value: 'account-activity' } });
+        expect(screen.getByTestId('page-info')).toHaveTextContent('Page 1 of 1');
+        expect(screen.getByTestId('row-e4')).toBeInTheDocument();
     });
 
     it('explains when nothing matches', async () => {
