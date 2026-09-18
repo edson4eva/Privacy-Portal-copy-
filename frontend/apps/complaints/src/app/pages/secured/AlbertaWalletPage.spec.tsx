@@ -60,7 +60,36 @@ const healthCard = {
     ],
 };
 
-const payload = { wallet: { documents: [licence, healthCard] } };
+const rebate = {
+    id: 'alberta-energy-rebate-card',
+    documentType: 'Alberta Energy Rebate',
+    icon: 'flash',
+    primaryLabel: 'Reference number',
+    primaryValue: 'AER-2026-771254',
+    nameOnCard: 'USER, Demo Alexander',
+    fields: [
+        { label: 'Status', value: 'Approved' },
+        { label: 'Amount issued', value: '$600.00' },
+        { label: 'Issued', value: '2026-09-03', isDate: true },
+    ],
+};
+
+const campsite = {
+    id: 'campsite-reservation',
+    documentType: 'Campsite Reservation',
+    icon: 'bonfire',
+    primaryLabel: 'Reservation number',
+    primaryValue: 'ABP-2027-30518',
+    nameOnCard: 'USER, Demo Alexander',
+    fields: [
+        { label: 'Park', value: 'Bow Valley Provincial Park' },
+        { label: 'Site', value: 'C-14' },
+        { label: 'Check-in', value: '2027-07-16', isDate: true },
+        { label: 'Status', value: 'Confirmed' },
+    ],
+};
+
+const payload = { wallet: { documents: [licence, healthCard, rebate, campsite] } };
 
 const renderPage = () => render(<MemoryRouter><AlbertaWalletPage /></MemoryRouter>);
 
@@ -132,12 +161,39 @@ describe('AlbertaWalletPage', () => {
         expect(screen.queryByTestId('specimen-mobile-health-card')).not.toBeInTheDocument();
     });
 
-    it('shows both documents', async () => {
+    it('shows every document in the wallet', async () => {
         mockGet.mockResolvedValue(payload);
         renderPage();
 
-        await waitFor(() => expect(screen.getAllByTestId(/^wallet-card-/)).toHaveLength(2));
+        await waitFor(() => expect(screen.getAllByTestId(/^wallet-card-/)).toHaveLength(4));
         expect(screen.getByTestId('crest-mobile-health-card')).toBeInTheDocument();
+    });
+
+    it('renders the energy rebate with its reference number and amount', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('primary-alberta-energy-rebate-card')).toBeInTheDocument());
+        expect(screen.getByText('Alberta Energy Rebate')).toBeInTheDocument();
+        expect(screen.getByTestId('primary-alberta-energy-rebate-card')).toHaveTextContent('AER-2026-771254');
+        expect(screen.getByTestId('field-alberta-energy-rebate-card-status')).toHaveTextContent('Approved');
+        expect(screen.getByTestId('field-alberta-energy-rebate-card-amount-issued')).toHaveTextContent('$600.00');
+        expect(screen.getByTestId('field-alberta-energy-rebate-card-issued')).toHaveTextContent('September 3, 2026');
+        // A benefit card carries no address, so that block stays absent.
+        expect(screen.queryByTestId('address-alberta-energy-rebate-card')).not.toBeInTheDocument();
+    });
+
+    it('renders the campsite reservation with its park, site and dates', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('primary-campsite-reservation')).toBeInTheDocument());
+        expect(screen.getByText('Campsite Reservation')).toBeInTheDocument();
+        expect(screen.getByTestId('primary-campsite-reservation')).toHaveTextContent('ABP-2027-30518');
+        expect(screen.getByTestId('field-campsite-reservation-park')).toHaveTextContent('Bow Valley Provincial Park');
+        expect(screen.getByTestId('field-campsite-reservation-site')).toHaveTextContent('C-14');
+        expect(screen.getByTestId('field-campsite-reservation-check-in')).toHaveTextContent('July 16, 2027');
+        expect(screen.getByTestId('field-campsite-reservation-status')).toHaveTextContent('Confirmed');
     });
 
     it('shows the hint and presents the document when the card is activated', async () => {

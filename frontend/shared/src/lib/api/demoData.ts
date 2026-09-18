@@ -512,6 +512,39 @@ const DEMO_WALLET = {
                 { label: 'Expiry date', value: '2030-04-12', isDate: true },
             ],
         },
+        {
+            id: 'alberta-energy-rebate-card',
+            documentType: 'Alberta Energy Rebate',
+            icon: 'flash',
+            primaryLabel: 'Reference number',
+            // Matches the application the service activity records, so the two
+            // parts of the demonstration tell one story.
+            primaryValue: 'AER-2026-771254',
+            nameOnCard: 'USER, Demo Alexander',
+            fields: [
+                { label: 'Status', value: 'Approved' },
+                { label: 'Benefit year', value: '2026' },
+                { label: 'Amount issued', value: '$600.00' },
+                { label: 'Issued', value: '2026-09-03', isDate: true },
+                { label: 'Valid until', value: '2027-03-31', isDate: true },
+            ],
+        },
+        {
+            id: 'campsite-reservation',
+            documentType: 'Campsite Reservation',
+            icon: 'bonfire',
+            primaryLabel: 'Reservation number',
+            primaryValue: 'ABP-2027-30518',
+            nameOnCard: 'USER, Demo Alexander',
+            fields: [
+                { label: 'Park', value: 'Bow Valley Provincial Park' },
+                { label: 'Campground', value: 'Bow Valley Campground' },
+                { label: 'Site', value: 'C-14' },
+                { label: 'Check-in', value: '2027-07-16', isDate: true },
+                { label: 'Check-out', value: '2027-07-19', isDate: true },
+                { label: 'Status', value: 'Confirmed' },
+            ],
+        },
     ],
 };
 
