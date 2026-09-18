@@ -10,6 +10,13 @@ export const API_ROUTES = {
     },
 } as const;
 
+/**
+ * Where signing out lands while demo mode is on. The apps are mounted under
+ * their own paths behind one host there, so this is configured rather than
+ * assumed, and falls back to the host root.
+ */
+export const DEMO_SIGN_IN_HREF = process.env.NX_PUBLIC_DEMO_SIGN_IN_HREF || '/';
+
 export const SHARED_ROUTES = {
     public: '/',
     signin: '/signin',

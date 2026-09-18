@@ -6,7 +6,7 @@ import { getAsync, isSuccessResponse } from '../api/authService';
 import { User } from './auth-context-interfaces';
 import { Navigate } from 'react-router-dom';
 import { isDemoMode } from '../utils/demoMode';
-import { DEMO_USER_MENU } from '../api/demoData';
+import { DEMO_USER, DEMO_USER_MENU } from '../api/demoData';
 
 interface AuthContextType {
     isLoading: boolean;
@@ -38,18 +38,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     useEffect(() => {
         const signInDemoUser = () => {
             setIsAuthenticated(true);
-            setUser({
-                name: 'Demo User',
-                firstName: 'Demo',
-                lastName: 'User',
-                email: 'demo.user@example.com',
-                profile: 'personal',
-                businessName: undefined,
-                userMenu: DEMO_USER_MENU as User['userMenu'],
-                isVerified: true,
-                isAdmin: false,
-                isAuthenticated: true,
-            });
+            setUser({ ...DEMO_USER, userMenu: DEMO_USER_MENU } as User);
             setIsLoading(false);
             setHasLoaded(true);
         };

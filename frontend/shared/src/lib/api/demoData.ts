@@ -1030,6 +1030,22 @@ const DEMO_ACTIVITY_EVENTS = [
 ];
 
 /**
+ * The account stood in for while demo mode is on. Held here with the menu it
+ * carries so the auth provider and the sign-in route use the same one.
+ */
+export const DEMO_USER = {
+    name: 'Demo User',
+    firstName: 'Demo',
+    lastName: 'User',
+    email: 'demo.user@example.com',
+    profile: 'personal',
+    businessName: undefined,
+    isVerified: true,
+    isAdmin: false,
+    isAuthenticated: true,
+};
+
+/**
  * Side menu shown in demo mode. The real menu is supplied by UIAM in the
  * sign-in response, which is unavailable here, so this mirrors the Alberta.ca
  * Account structure and points the Privacy Portal entries at the apps that are
