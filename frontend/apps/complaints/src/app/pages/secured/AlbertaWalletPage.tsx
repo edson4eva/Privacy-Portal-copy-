@@ -128,16 +128,18 @@ const Barcode = (): React.ReactElement => (
 const LicenceCard = ({
     document,
     onPresent,
+    isFront,
 }: {
     document: WalletDocument;
     onPresent: () => void;
+    isFront: boolean;
 }): React.ReactElement => {
     const licence = document.licence;
 
     return (
         <button
             type="button"
-            className={styles['licence']}
+            className={`${styles['licence']} ${isFront ? styles['card-front'] : ''}`}
             onClick={onPresent}
             data-testid={`wallet-card-${document.id}`}
             aria-label={`Present ${document.documentType}`}
@@ -246,6 +248,9 @@ const LicenceCard = ({
                     <span className={styles['portrait-ghost']}>
                         <PortraitPlaceholder />
                     </span>
+                    <span className={styles['qr-frame']} data-testid={`qr-${document.id}`}>
+                        <QrPlaceholder seed={document.id} />
+                    </span>
                 </div>
             </div>
 
@@ -256,16 +261,93 @@ const LicenceCard = ({
     );
 };
 
+/**
+ * A QR-shaped mark for a card. The real wallet generates a code at the moment a
+ * document is presented; this is a fixed pattern derived from the document id,
+ * so each card carries its own and it does not change between renders. It
+ * encodes nothing and cannot be scanned.
+ */
+const QrPlaceholder = ({ seed }: { seed: string }): React.ReactElement => {
+    const modules = 21;
+    const quiet = 1;
+    const size = modules + quiet * 2;
+
+    // Finder patterns sit in three corners, as they do on a real code.
+    const inFinder = (x: number, y: number) => {
+        const corners = [
+            [0, 0],
+            [modules - 7, 0],
+            [0, modules - 7],
+        ];
+        return corners.some(([fx, fy]) => x >= fx && x < fx + 7 && y >= fy && y < fy + 7);
+    };
+
+    const finderFilled = (x: number, y: number) => {
+        const corners = [
+            [0, 0],
+            [modules - 7, 0],
+            [0, modules - 7],
+        ];
+        const corner = corners.find(([fx, fy]) => x >= fx && x < fx + 7 && y >= fy && y < fy + 7);
+        if (!corner) {
+            return false;
+        }
+
+        const dx = x - corner[0];
+        const dy = y - corner[1];
+        const ring = Math.max(Math.abs(dx - 3), Math.abs(dy - 3));
+        return ring === 3 || ring <= 1;
+    };
+
+    let seedHash = 2166136261;
+    for (const character of seed) {
+        seedHash = (seedHash ^ character.charCodeAt(0)) * 16777619;
+        seedHash = seedHash >>> 0;
+    }
+
+    /**
+     * Mixes the seed with each position. An earlier version only used the seed
+     * modulo a small number, so different documents came out with the same
+     * pattern.
+     */
+    const moduleOn = (x: number, y: number): boolean => {
+        let h = (seedHash ^ ((x + 1) * 73856093) ^ ((y + 1) * 19349663)) >>> 0;
+        h = (h ^ (h >>> 13)) * 1274126177;
+        h = h >>> 0;
+        return ((h >>> 7) & 0xff) < 118;
+    };
+
+    const cells: React.ReactElement[] = [];
+    for (let y = 0; y < modules; y++) {
+        for (let x = 0; x < modules; x++) {
+            const filled = inFinder(x, y) ? finderFilled(x, y) : moduleOn(x, y);
+
+            if (filled) {
+                cells.push(<rect key={`${x}-${y}`} x={x + quiet} y={y + quiet} width="1" height="1" />);
+            }
+        }
+    }
+
+    return (
+        <svg className={styles['qr']} viewBox={`0 0 ${size} ${size}`} role="img" aria-label="Presentation code">
+            <rect x="0" y="0" width={size} height={size} fill="#ffffff" />
+            <g fill="#1a2733">{cells}</g>
+        </svg>
+    );
+};
+
 const DocumentCard = ({
     document,
     onPresent,
+    isFront,
 }: {
     document: WalletDocument;
     onPresent: () => void;
+    isFront: boolean;
 }): React.ReactElement => (
     <button
         type="button"
-        className={styles['card']}
+        className={`${styles['card']} ${isFront ? styles['card-front'] : ''}`}
         onClick={onPresent}
         data-testid={`wallet-card-${document.id}`}
         aria-label={`Present ${document.documentType}`}
@@ -327,13 +409,18 @@ const DocumentCard = ({
                 </div>
             </div>
 
-            <img
-                className={styles['crest']}
-                src={albertaShield}
-                alt=""
-                aria-hidden
-                data-testid={`crest-${document.id}`}
-            />
+            <div className={styles['card-aside']}>
+                <span className={styles['qr-frame']} data-testid={`qr-${document.id}`}>
+                    <QrPlaceholder seed={document.id} />
+                </span>
+                <img
+                    className={styles['crest']}
+                    src={albertaShield}
+                    alt=""
+                    aria-hidden
+                    data-testid={`crest-${document.id}`}
+                />
+            </div>
         </div>
     </button>
 );
@@ -403,22 +490,35 @@ export function AlbertaWalletPage(): React.ReactElement {
                     government-issued digital document.
                 </p>
             ) : (
-                documents.map((document) => (
-                    <div key={document.id}>
-                        {document.layout === 'licence' ? (
-                            <LicenceCard document={document} onPresent={() => setPresentingId(document.id)} />
+                <div className={styles['stack']} data-testid="wallet-stack">
+                    {documents.map((document) => {
+                        const isFront = presentingId === document.id;
+                        const bringForward = () => setPresentingId(isFront ? undefined : document.id);
+
+                        return document.layout === 'licence' ? (
+                            <LicenceCard
+                                key={document.id}
+                                document={document}
+                                onPresent={bringForward}
+                                isFront={isFront}
+                            />
                         ) : (
-                            <DocumentCard document={document} onPresent={() => setPresentingId(document.id)} />
-                        )}
-                        <PpSpacer vSpacing="s" />
-                        <div className={styles['hint']}>
-                            <GoabIcon type="information-circle" size="small" />
-                            Click or tap card to present digital document
-                        </div>
-                        <PpSpacer vSpacing="l" />
-                    </div>
-                ))
+                            <DocumentCard
+                                key={document.id}
+                                document={document}
+                                onPresent={bringForward}
+                                isFront={isFront}
+                            />
+                        );
+                    })}
+                </div>
             )}
+
+            <PpSpacer vSpacing="s" />
+            <div className={styles['hint']}>
+                <GoabIcon type="information-circle" size="small" />
+                Click or tap a card to bring it forward and present it
+            </div>
 
             {presenting && (
                 <>

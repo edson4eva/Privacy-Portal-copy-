@@ -196,19 +196,65 @@ describe('AlbertaWalletPage', () => {
         expect(screen.getByTestId('field-campsite-reservation-status')).toHaveTextContent('Confirmed');
     });
 
-    it('shows the hint and presents the document when the card is activated', async () => {
+    it('puts a presentation code on every card, licence included', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getAllByTestId(/^qr-/)).toHaveLength(4));
+        for (const id of [
+            'mobile-drivers-licence',
+            'mobile-health-card',
+            'alberta-energy-rebate-card',
+            'campsite-reservation',
+        ]) {
+            expect(screen.getByTestId(`qr-${id}`)).toBeInTheDocument();
+        }
+    });
+
+    it('gives each card its own code rather than repeating one', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getAllByTestId(/^qr-/)).toHaveLength(4));
+        const patterns = screen.getAllByTestId(/^qr-/).map((frame) => frame.innerHTML);
+        expect(new Set(patterns).size).toBe(patterns.length);
+    });
+
+    it('holds the cards in one stack with a single hint beneath', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('wallet-stack')).toBeInTheDocument());
+        expect(screen.getByTestId('wallet-stack').children).toHaveLength(4);
+        // One hint for the stack, not one per card.
+        expect(screen.getAllByText(/Click or tap a card to bring it forward/)).toHaveLength(1);
+    });
+
+    it('brings a card forward and presents it, then puts it back', async () => {
         mockGet.mockResolvedValue(payload);
         renderPage();
 
         await waitFor(() => expect(screen.getByTestId('wallet-card-mobile-health-card')).toBeInTheDocument());
-        expect(screen.getAllByText('Click or tap card to present digital document').length).toBeGreaterThan(0);
         expect(screen.queryByTestId('present-panel')).not.toBeInTheDocument();
 
         fireEvent.click(screen.getByTestId('wallet-card-mobile-health-card'));
         expect(screen.getByTestId('present-panel')).toBeInTheDocument();
 
-        fireEvent.click(screen.getByTestId('stop-presenting'));
+        // Choosing the same card again returns it to the stack.
+        fireEvent.click(screen.getByTestId('wallet-card-mobile-health-card'));
         expect(screen.queryByTestId('present-panel')).not.toBeInTheDocument();
+    });
+
+    it('brings a different card forward without leaving the first in front', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('wallet-card-campsite-reservation')).toBeInTheDocument());
+
+        fireEvent.click(screen.getByTestId('wallet-card-mobile-health-card'));
+        fireEvent.click(screen.getByTestId('wallet-card-campsite-reservation'));
+
+        expect(screen.getByTestId('present-panel')).toHaveTextContent('Campsite Reservation');
     });
 
     it('links to both app stores in a new tab', async () => {
