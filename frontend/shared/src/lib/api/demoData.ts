@@ -1113,6 +1113,12 @@ export const DEMO_USER_MENU = {
                 { type: 'link', heading: 'Privacy complaint', href: '/complaints/file-complaint' },
             ],
         },
+        {
+            type: 'link',
+            heading: 'Citizen-facing transparency experience',
+            icon: 'eye',
+            href: '#',
+        },
         { type: 'link', heading: 'Security settings', icon: 'settings', href: '/complaints/security-settings' },
         { type: 'link', heading: 'Account activity', icon: 'time', href: '/complaints/account-activity' },
         { type: 'link', heading: 'Inbox', iconSrc: inboxEnvelope, href: '/complaints/inbox' },
