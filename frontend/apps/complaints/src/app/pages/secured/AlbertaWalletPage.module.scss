@@ -44,7 +44,7 @@
 
 .stack {
     width: 100%;
-    max-width: 27rem;
+    max-width: 22rem;
 }
 
 .stack > * + * {
@@ -56,7 +56,7 @@
     position: relative;
     display: block;
     width: 100%;
-    max-width: 27rem;
+    max-width: 22rem;
     aspect-ratio: 1.585;
     border-radius: 1.15rem;
     padding: 0.9rem 1rem;
@@ -219,7 +219,7 @@
 /* ---- Presentation panel, shown when a card is activated ---- */
 
 .present {
-    max-width: 27rem;
+    max-width: 22rem;
     border-radius: 1.15rem;
     border: 1px solid var(--goa-color-greyscale-200);
     border-radius: 6px;
