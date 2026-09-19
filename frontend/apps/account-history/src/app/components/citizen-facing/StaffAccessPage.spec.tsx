@@ -161,16 +161,16 @@ describe('StaffAccessPage', () => {
         expect(mockGet).toHaveBeenCalledWith('/v1/staff-access');
     });
 
-    it('shows who looked, their role and unit, and the account they used', async () => {
+    it('shows the account used, the role and the unit, but not the name', async () => {
         mockGet.mockResolvedValue(payload);
         renderPage();
 
         await waitFor(() => expect(screen.getByTestId('row-sa-1')).toBeInTheDocument());
         const row = screen.getByTestId('row-sa-1');
-        expect(row).toHaveTextContent('J. Doe');
         expect(row).toHaveTextContent('jdoe01');
         expect(row).toHaveTextContent('Benefits Officer 2');
         expect(row).toHaveTextContent('Income Support - Edmonton North');
+        expect(row).not.toHaveTextContent('J. Doe');
     });
 
     it('shows the information seen and the reason given', async () => {
