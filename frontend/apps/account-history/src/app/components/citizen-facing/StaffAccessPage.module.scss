@@ -2,6 +2,13 @@
     box-sizing: border-box;
     margin-top: var(--goa-space-2xl);
     max-width: 960px;
+}
+
+/* Six columns of dense text do not fit the app's 960px measure, and the last
+   of them is the link to the record, so it is the one that goes missing.
+   This page states a wider measure and opts out of the shared one. */
+.wide {
+    max-width: 1200px;
 
     p {
         margin-bottom: 0;
@@ -50,11 +57,16 @@
 .head,
 .row {
     display: grid;
-    grid-template-columns: 13rem 7.5rem 9rem minmax(11rem, 1fr) minmax(11rem, 1fr) 7rem;
-    gap: var(--goa-space-m);
+    /* Budgeted to fit the content box of a 1440px window - 12 + 7.5 + 8 +
+       8.5 fixed, two columns at a 8.5rem floor, five 0.75rem gaps and 2rem of
+       padding comes to 58.75rem - so the link in the last column is reachable
+       without scrolling sideways. Wider windows give the spare room to the
+       two text columns. */
+    grid-template-columns: 12rem 7.5rem 8rem minmax(8.5rem, 1fr) minmax(8.5rem, 1fr) 8.5rem;
+    gap: var(--goa-space-s);
     align-items: start;
-    padding: var(--goa-space-m) var(--goa-space-l);
-    min-width: 62rem;
+    padding: var(--goa-space-m);
+    min-width: 58rem;
 }
 
 .head {
@@ -108,6 +120,33 @@
     font-variant-numeric: tabular-nums;
 }
 
+.view-link {
+    white-space: nowrap;
+}
+
+/* The last column is the way into the record, so it is pinned to the right
+   edge of the scroller: on a window too narrow for six columns of text the
+   table scrolls under it rather than taking it off screen. The negative
+   margin pulls it over the row's own padding, so nothing shows through
+   beside it while scrolling. */
+.head > span:last-child,
+.row > span:last-child {
+    position: sticky;
+    right: 0;
+    margin-right: calc(var(--goa-space-m) * -1);
+    padding: 0 var(--goa-space-m) 0 var(--goa-space-s);
+    background: #ffffff;
+    box-shadow: -1px 0 0 var(--goa-color-greyscale-200, #dcdcdc);
+}
+
+.head > span:last-child {
+    background: #f7f7f5;
+}
+
+.row:nth-of-type(even) > span:last-child {
+    background: #fbfbfa;
+}
+
 .when-zone {
     display: block;
     color: #5a6773;
@@ -123,14 +162,14 @@
 }
 
 .empty {
-    padding: var(--goa-space-xl) var(--goa-space-l);
+    padding: var(--goa-space-xl) var(--goa-space-m);
     color: var(--goa-color-text-secondary);
 }
 
 .pager {
     display: flex;
     align-items: center;
-    padding: var(--goa-space-m) var(--goa-space-l);
+    padding: var(--goa-space-m);
     border-top: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
     background: #fbfbfa;
 }

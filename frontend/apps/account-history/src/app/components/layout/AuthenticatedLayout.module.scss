@@ -6,12 +6,14 @@
         flex-grow: 1;
         padding-left: 64px;
         padding-right: 72px;
-        
+
         /* Content measure for every page in this app. The service activity
            table needs room for four columns, so this is wider than prose
            alone would want; pages that are mostly prose constrain their own
-           paragraphs. */
-        > div {
+           paragraphs. A page carrying a table too wide for this measure sets
+           data-wide and states its own, rather than every page growing to
+           suit the widest one. */
+        > div:not([data-wide]) {
             max-width: 960px;
         }
     }

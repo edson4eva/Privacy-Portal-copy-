@@ -134,6 +134,14 @@ describe('StaffAccessPage', () => {
         expect(screen.queryByTestId('review-sa-1')).not.toBeInTheDocument();
     });
 
+    it('opts out of the app measure so the last column is not cut off', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('access-container')).toBeInTheDocument());
+        expect(screen.getByTestId('access-container')).toHaveAttribute('data-wide', 'true');
+    });
+
     it('renders the heading, intro and all six columns', async () => {
         mockGet.mockResolvedValue(payload);
         renderPage();

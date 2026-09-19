@@ -54,7 +54,7 @@ export function StaffAccessPage({ basePath = '/transparency' }: { basePath?: str
     }
 
     return (
-        <div className={styles['container']}>
+        <div className={`${styles['container']} ${styles['wide']}`} data-wide="true" data-testid="access-container">
             {windowWidth <= 623 && <PpSpacer vSpacing="xl" />}
 
             <PageTitle title="CITIZEN-FACING EXPERIENCE" fontColor="#004F84" />
@@ -126,7 +126,11 @@ export function StaffAccessPage({ basePath = '/transparency' }: { basePath?: str
                                     )}
                                 </span>
                                 <span>
-                                    <Link to={`${basePath}/${record.id}`} data-testid={`view-${record.id}`}>
+                                    <Link
+                                        className={styles['view-link']}
+                                        to={`${basePath}/${record.id}`}
+                                        data-testid={`view-${record.id}`}
+                                    >
                                         View activity
                                     </Link>
                                 </span>
