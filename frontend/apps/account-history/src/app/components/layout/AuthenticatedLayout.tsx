@@ -92,6 +92,29 @@ const AuthenticatedLayout = (): React.ReactElement => {
                                 path="/preview/accessed-services/:service"
                                 element={<ServiceActivityDetail isPreview={true} />}
                             />
+                            {/* The same experience, reached from the transparency entry in
+                                the menu. Its own paths, so back and the menu highlight
+                                stay within the section it was opened from. */}
+                            <Route
+                                path="/transparency"
+                                element={
+                                    <ProfileRoute profile={'personal'}>
+                                        <ServiceActivityPage
+                                            isPreview={false}
+                                            listPath="/transparency"
+                                            eyebrow="TRANSPARENCY EXPERIENCE"
+                                        />
+                                    </ProfileRoute>
+                                }
+                            />
+                            <Route
+                                path="/transparency/:service"
+                                element={
+                                    <ProfileRoute profile={'personal'}>
+                                        <ServiceActivityDetail isPreview={false} listPath="/transparency" />
+                                    </ProfileRoute>
+                                }
+                            />
                             <Route path="/no-access" element={<NoAccess />} />
                             <Route path={SHARED_ROUTES.signout} element={<SignoutRoute title="Sign Out" />} />
 

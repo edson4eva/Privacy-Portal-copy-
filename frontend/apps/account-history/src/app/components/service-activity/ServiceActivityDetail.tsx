@@ -38,7 +38,14 @@ const describe = (service: ActivityService): React.ReactNode => {
     );
 };
 
-export function ServiceActivityDetail({ isPreview }: { isPreview: boolean }): React.ReactElement {
+export function ServiceActivityDetail({
+    isPreview,
+    listPath,
+}: {
+    isPreview: boolean;
+    /** Where back goes, so a detail page stays in the section it was opened from. */
+    listPath?: string;
+}): React.ReactElement {
     const windowWidth = useWindowWidth();
     const navigate = useNavigate();
     const { service: serviceId } = useParams();
@@ -97,7 +104,7 @@ export function ServiceActivityDetail({ isPreview }: { isPreview: boolean }): Re
     /** Held steady between renders; see the note on the list page. */
     const goToPage = useCallback(({ page: nextPage }: { page: number }) => setPage(nextPage), []);
 
-    const backToList = () => navigate(isPreview ? '/preview/accessed-services' : '/accessed-services');
+    const backToList = () => navigate(listPath ?? (isPreview ? '/preview/accessed-services' : '/accessed-services'));
 
     if (isLoading) {
         return <GoabCircularProgress variant="inline" size="small" visible={true}></GoabCircularProgress>;

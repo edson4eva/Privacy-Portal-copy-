@@ -214,6 +214,19 @@ describe('ServiceActivityPage', () => {
         expect(screen.getByTestId('activity-empty')).toBeInTheDocument();
     });
 
+    it('keeps detail links inside the section it is rendered in', async () => {
+        mockGet.mockResolvedValue(payload);
+        render(
+            <MemoryRouter>
+                <ServiceActivityPage isPreview={false} listPath="/transparency" eyebrow="TRANSPARENCY EXPERIENCE" />
+            </MemoryRouter>
+        );
+
+        await waitFor(() => expect(screen.getByTestId('view-e1')).toBeInTheDocument());
+        expect(screen.getByTestId('view-e1')).toHaveAttribute('href', '/transparency/rebate');
+        expect(screen.getByTestId('page-title')).toHaveTextContent('TRANSPARENCY EXPERIENCE');
+    });
+
     it('uses the preview endpoint in preview mode', async () => {
         mockGet.mockResolvedValue(payload);
         render(<MemoryRouter><ServiceActivityPage isPreview={true} /></MemoryRouter>);

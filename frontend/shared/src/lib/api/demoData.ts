@@ -1117,7 +1117,7 @@ export const DEMO_USER_MENU = {
             type: 'link',
             heading: 'Citizen-facing transparency experience',
             icon: 'eye',
-            href: '#',
+            href: '/account-history/transparency',
         },
         { type: 'link', heading: 'Security settings', icon: 'settings', href: '/complaints/security-settings' },
         { type: 'link', heading: 'Account activity', icon: 'time', href: '/complaints/account-activity' },
