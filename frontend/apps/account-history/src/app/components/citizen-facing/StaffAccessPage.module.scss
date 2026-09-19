@@ -139,6 +139,46 @@
     max-width: 44rem;
 }
 
+/* ---- Flags ---------------------------------------------------------------
+   Two states are worth saying on the face of a row: an access outside
+   business hours, and one an auditor has not settled yet. Everything else
+   lives in the record. */
+
+.chip-flag,
+.chip-review {
+    display: inline-block;
+    margin-top: var(--goa-space-2xs);
+    padding: 0.05rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.chip-flag {
+    background: #fcf3d9;
+    border: 1px solid #e8d48a;
+    color: #6b5415;
+}
+
+.chip-review {
+    background: #fbeceb;
+    border: 1px solid #e8b4b0;
+    color: #8a2c22;
+}
+
+.flag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--goa-space-2xs) var(--goa-space-xs);
+    max-width: 48rem;
+
+    > span {
+        margin-top: 0;
+    }
+}
+
 /* ---- One access record ---- */
 
 .record {
@@ -146,7 +186,33 @@
     border-radius: 6px;
     background: #ffffff;
     padding: var(--goa-space-xl);
-    max-width: 44rem;
+    max-width: 48rem;
+}
+
+/* Each group answers one of the questions the field reference asks, so the
+   groups are ruled apart rather than run together. */
+.section + .section {
+    margin-top: var(--goa-space-xl);
+    padding-top: var(--goa-space-xl);
+    border-top: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
+}
+
+.section-heading {
+    font: var(--goa-typography-heading-s);
+    color: var(--goa-color-text-default);
+    margin: 0 0 var(--goa-space-s) 0;
+}
+
+.section-note {
+    color: #5a6773;
+    margin: 0 0 var(--goa-space-m) 0;
+    max-width: 38rem;
+}
+
+.technical {
+    margin-top: var(--goa-space-xl);
+    padding-top: var(--goa-space-l);
+    border-top: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
 }
 
 .rows {

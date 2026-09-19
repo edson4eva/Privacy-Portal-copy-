@@ -6,16 +6,43 @@ import StaffAccessPage from './StaffAccessPage';
 jest.mock('@abgov/react-components', () => ({
     GoabCircularProgress: ({ visible }: { visible: boolean }) => <div data-testid="spinner">{String(visible)}</div>,
     GoabDetails: ({ heading, children }: { heading: string; children: React.ReactNode }) => (
-        <details open><summary>{heading}</summary>{children}</details>
+        <details open>
+            <summary>{heading}</summary>
+            {children}
+        </details>
     ),
     GoabIcon: ({ type }: { type: string }) => <i data-testid={`icon-${type}`} />,
-    GoabPagination: ({ itemCount, perPageCount, pageNumber, onChange, testId }: { itemCount: number; perPageCount: number; pageNumber: number; onChange: (d: { page: number }) => void; testId?: string }) => {
+    GoabPagination: ({
+        itemCount,
+        perPageCount,
+        pageNumber,
+        onChange,
+        testId,
+    }: {
+        itemCount: number;
+        perPageCount: number;
+        pageNumber: number;
+        onChange: (d: { page: number }) => void;
+        testId?: string;
+    }) => {
         const total = Math.max(1, Math.ceil(itemCount / perPageCount));
         return (
             <div data-testid={testId}>
                 <span data-testid="page-info">{`Page ${pageNumber} of ${total}`}</span>
-                <button data-testid="previous-page" disabled={pageNumber <= 1} onClick={() => onChange({ page: pageNumber - 1 })}>Previous</button>
-                <button data-testid="next-page" disabled={pageNumber >= total} onClick={() => onChange({ page: pageNumber + 1 })}>Next</button>
+                <button
+                    data-testid="previous-page"
+                    disabled={pageNumber <= 1}
+                    onClick={() => onChange({ page: pageNumber - 1 })}
+                >
+                    Previous
+                </button>
+                <button
+                    data-testid="next-page"
+                    disabled={pageNumber >= total}
+                    onClick={() => onChange({ page: pageNumber + 1 })}
+                >
+                    Next
+                </button>
             </div>
         );
     },
@@ -47,18 +74,65 @@ const record = (id: string, overrides: Record<string, unknown> = {}) => ({
 
 const records = [
     record('sa-1'),
-    record('sa-2', { name: 'M. Tran', username: 'mtran03', accessedAt: '2026-09-18T15:07:00.000Z', categories: ['Driver & vehicle'] }),
-    record('sa-3', { name: 'A. Okafor', username: 'aokafor', accessedAt: '2026-09-18T02:14:00.000Z', categories: ['Child & family services', 'Health'] }),
+    record('sa-2', {
+        name: 'M. Tran',
+        username: 'mtran03',
+        accessedAt: '2026-09-18T15:07:00.000Z',
+        categories: ['Driver and vehicle'],
+    }),
+    record('sa-3', {
+        name: 'A. Okafor',
+        username: 'aokafor',
+        accessedAt: '2026-09-18T02:14:00.000Z',
+        categories: ['Child and family services', 'Health'],
+    }),
     record('sa-4', { accessedAt: '2026-09-16T17:45:00.000Z' }),
     record('sa-5', { accessedAt: '2026-09-14T19:20:00.000Z' }),
     record('sa-6', { accessedAt: '2026-09-11T16:05:00.000Z' }),
 ];
 
 const payload = { staffAccess: { records } };
-const renderPage = () => render(<MemoryRouter><StaffAccessPage /></MemoryRouter>);
+const renderPage = () =>
+    render(
+        <MemoryRouter>
+            <StaffAccessPage />
+        </MemoryRouter>
+    );
 
 describe('StaffAccessPage', () => {
     beforeEach(() => jest.clearAllMocks());
+
+    it('flags an after-hours access on the row', async () => {
+        mockGet.mockResolvedValue({
+            staffAccess: {
+                records: [
+                    record('sa-1', { businessHours: 'Business hours' }),
+                    record('sa-2', { accessedAt: '2026-09-18T02:14:00.000Z', businessHours: 'After-hours' }),
+                ],
+            },
+        });
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('row-sa-2')).toBeInTheDocument());
+        expect(screen.getByTestId('after-hours-sa-2')).toHaveTextContent('After-hours');
+        expect(screen.queryByTestId('after-hours-sa-1')).not.toBeInTheDocument();
+    });
+
+    it('flags an access an auditor has not settled, and only that one', async () => {
+        mockGet.mockResolvedValue({
+            staffAccess: {
+                records: [
+                    record('sa-1', { reviewOutcome: 'Appropriate' }),
+                    record('sa-2', { accessedAt: '2026-09-18T02:14:00.000Z', reviewOutcome: 'Under review' }),
+                ],
+            },
+        });
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('row-sa-2')).toBeInTheDocument());
+        expect(screen.getByTestId('review-sa-2')).toHaveTextContent('Under review');
+        expect(screen.queryByTestId('review-sa-1')).not.toBeInTheDocument();
+    });
 
     it('renders the heading, intro and all six columns', async () => {
         mockGet.mockResolvedValue(payload);
@@ -107,7 +181,7 @@ describe('StaffAccessPage', () => {
         renderPage();
 
         await waitFor(() => expect(screen.getByTestId('row-sa-3')).toBeInTheDocument());
-        expect(screen.getByTestId('row-sa-3')).toHaveTextContent('Child & family services; Health');
+        expect(screen.getByTestId('row-sa-3')).toHaveTextContent('Child and family services; Health');
     });
 
     it('stamps the date in Alberta time, as the log recorded it', async () => {

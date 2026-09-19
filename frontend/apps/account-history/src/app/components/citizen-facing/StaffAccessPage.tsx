@@ -6,10 +6,13 @@ import PageTitle from 'shared/src/lib/page-title/PageTitle';
 import { PpSpacer } from 'shared/src/lib/pp-spacer/PpSpacer';
 import useWindowWidth from 'shared/src/lib/utils/useWindowWidth';
 
-import { StaffAccessRecord, formatAccessedAt } from './staffAccess';
+import { StaffAccessRecord, formatAccessedAt, isUnderReview } from './staffAccess';
 import styles from './StaffAccessPage.module.scss';
 
 const PER_PAGE = 5;
+
+/** Said on the row itself, being the anomaly signal a reader can judge fastest. */
+const isAfterHours = (record: StaffAccessRecord): boolean => /after-hours/i.test(record.businessHours ?? '');
 
 export function StaffAccessPage({ basePath = '/transparency' }: { basePath?: string }): React.ReactElement {
     const windowWidth = useWindowWidth();
@@ -59,16 +62,18 @@ export function StaffAccessPage({ basePath = '/transparency' }: { basePath?: str
             <h1 className={styles['page-heading']}>Who accessed your information</h1>
             <PpSpacer vSpacing="m" />
             <p className={styles['intro']}>
-                A record of Government of Alberta staff who have looked at your personal information, what they saw,
-                and the reason they gave for looking.
+                A record of Government of Alberta staff who have looked at your personal information, what they saw, and
+                the reason they gave for looking.
             </p>
             <PpSpacer vSpacing="m" />
 
             <div className={styles['notice']} data-testid="access-notice">
                 <GoabIcon type="information-circle" size="small" />
                 <p>
-                    Staff may look at your information to deliver a service, to verify who you are, or to meet a legal
-                    obligation. If an entry looks wrong to you, you can file a privacy complaint.
+                    Every access is recorded with the reason the employee gave for it. Staff may look at your
+                    information to decide eligibility, to correct a payment, to verify who you are, to answer your own
+                    inquiry, or to meet a legal obligation. If an entry looks wrong to you, you can file a privacy
+                    complaint.
                 </p>
             </div>
 
@@ -103,12 +108,22 @@ export function StaffAccessPage({ basePath = '/transparency' }: { basePath?: str
                                 <span className={styles['when']}>
                                     {when.date} {when.time}
                                     <span className={styles['when-zone']}>{when.zone}</span>
+                                    {isAfterHours(record) && (
+                                        <span className={styles['chip-flag']} data-testid={`after-hours-${record.id}`}>
+                                            After-hours
+                                        </span>
+                                    )}
                                 </span>
                                 <span>{record.categories.join('; ')}</span>
                                 <span>{record.information.join(', ')}</span>
                                 <span>
                                     <span className={styles['reason-type']}>{record.reasonType}</span>
                                     <span className={styles['reason-detail']}>{record.reasonDetail}</span>
+                                    {isUnderReview(record) && (
+                                        <span className={styles['chip-review']} data-testid={`review-${record.id}`}>
+                                            {record.reviewOutcome}
+                                        </span>
+                                    )}
                                 </span>
                                 <span>
                                     <Link to={`${basePath}/${record.id}`} data-testid={`view-${record.id}`}>
