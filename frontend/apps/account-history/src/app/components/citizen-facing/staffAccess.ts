@@ -35,6 +35,13 @@ export interface StaffAccessRecord {
 
     /* 2.2 Who accessed the information. */
     ministry?: string;
+    /**
+     * Set only when the accessor is not a ministry: a registry agent, a
+     * service provider, or a private-sector party holding authorized access.
+     * The guide keeps employee type separate from the organization, and a
+     * reader's first question about an outside party is who they are.
+     */
+    organization?: string;
     officeLocation?: string;
     accessProfile?: string;
     accessLevel?: string;

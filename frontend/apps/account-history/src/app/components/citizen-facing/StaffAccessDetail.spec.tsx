@@ -119,6 +119,28 @@ describe('StaffAccessDetail', () => {
         expect(mockGet).toHaveBeenCalledWith('/v1/staff-access/sa-1');
     });
 
+    it('names an outside organization on the record', async () => {
+        mockGet.mockResolvedValue({
+            staffAccess: {
+                record: {
+                    ...record,
+                    ministry: undefined,
+                    organization: 'Imperial Parking Canada Corporation',
+                    unit: 'Parking enforcement - Calgary',
+                    employeeType: 'Service provider - private sector',
+                },
+            },
+        });
+        renderDetail();
+
+        await waitFor(() => expect(screen.getByTestId('section-who')).toBeInTheDocument());
+        const who = screen.getByTestId('section-who');
+        expect(who).toHaveTextContent('Organization');
+        expect(who).toHaveTextContent('Imperial Parking Canada Corporation');
+        expect(who).toHaveTextContent('Service provider - private sector');
+        expect(who).not.toHaveTextContent('Ministry');
+    });
+
     it('answers when it happened, and for how long', async () => {
         mockGet.mockResolvedValue(payload);
         renderDetail();

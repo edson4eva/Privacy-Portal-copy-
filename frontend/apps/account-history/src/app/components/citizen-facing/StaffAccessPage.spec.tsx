@@ -142,6 +142,31 @@ describe('StaffAccessPage', () => {
         expect(screen.getByTestId('access-container')).toHaveAttribute('data-wide', 'true');
     });
 
+    it('names an outside organization on its row, and only there', async () => {
+        mockGet.mockResolvedValue({
+            staffAccess: {
+                records: [
+                    record('sa-1'),
+                    record('sa-11', {
+                        username: 'impark-ar-0142',
+                        role: 'Authorized requester — parking enforcement',
+                        organization: 'Imperial Parking Canada Corporation',
+                        unit: 'Parking enforcement — Calgary',
+                        accessedAt: '2026-09-19T22:58:00.000Z',
+                    }),
+                ],
+            },
+        });
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('row-sa-11')).toBeInTheDocument());
+        const row = screen.getByTestId('row-sa-11');
+        expect(row).toHaveTextContent('Imperial Parking Canada Corporation');
+        expect(row).toHaveTextContent('impark-ar-0142');
+        expect(row).toHaveTextContent('Parking enforcement — Calgary');
+        expect(screen.queryByTestId('org-sa-1')).not.toBeInTheDocument();
+    });
+
     it('renders the heading, intro and all six columns', async () => {
         mockGet.mockResolvedValue(payload);
         renderPage();

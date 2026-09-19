@@ -114,6 +114,14 @@
     color: #5a6773;
 }
 
+/* An outside party is the notable thing about a row it appears on, so the
+   organization is set apart from the program area beneath it. */
+.who-org {
+    display: block;
+    font-weight: 700;
+    color: var(--goa-color-text-default);
+}
+
 .when {
     font-variant-numeric: tabular-nums;
 }
