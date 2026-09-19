@@ -1115,7 +1115,7 @@ export const DEMO_USER_MENU = {
         },
         {
             type: 'link',
-            heading: 'Citizen-facing transparency experience',
+            heading: 'Citizen-facing experience',
             icon: 'eye',
             href: '/account-history/transparency',
         },
