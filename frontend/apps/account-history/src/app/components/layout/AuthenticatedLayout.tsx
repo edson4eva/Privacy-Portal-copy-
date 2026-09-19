@@ -8,6 +8,8 @@ import { AppSideMenu, SideMenuItem } from 'shared/src/lib/app-side-menu';
 import { ProfileRoute, useAuth } from 'shared/src/lib/context/auth-provider';
 import AccountHistory from '../../pages/AccountHistory';
 import NotFoundPage from '../../pages/NotFound';
+import StaffAccessDetail from '../citizen-facing/StaffAccessDetail';
+import StaffAccessPage from '../citizen-facing/StaffAccessPage';
 import ServiceActivityDetail from '../service-activity/ServiceActivityDetail';
 import ServiceActivityPage from '../service-activity/ServiceActivityPage';
 import NoAccess from '../no-access/NoAccess';
@@ -92,26 +94,21 @@ const AuthenticatedLayout = (): React.ReactElement => {
                                 path="/preview/accessed-services/:service"
                                 element={<ServiceActivityDetail isPreview={true} />}
                             />
-                            {/* The same experience, reached from the transparency entry in
-                                the menu. Its own paths, so back and the menu highlight
-                                stay within the section it was opened from. */}
+                            {/* The citizen-facing experience: who has looked at the
+                                holder's information, and one record in full. */}
                             <Route
                                 path="/transparency"
                                 element={
                                     <ProfileRoute profile={'personal'}>
-                                        <ServiceActivityPage
-                                            isPreview={false}
-                                            listPath="/transparency"
-                                            eyebrow="TRANSPARENCY EXPERIENCE"
-                                        />
+                                        <StaffAccessPage />
                                     </ProfileRoute>
                                 }
                             />
                             <Route
-                                path="/transparency/:service"
+                                path="/transparency/:access"
                                 element={
                                     <ProfileRoute profile={'personal'}>
-                                        <ServiceActivityDetail isPreview={false} listPath="/transparency" />
+                                        <StaffAccessDetail />
                                     </ProfileRoute>
                                 }
                             />

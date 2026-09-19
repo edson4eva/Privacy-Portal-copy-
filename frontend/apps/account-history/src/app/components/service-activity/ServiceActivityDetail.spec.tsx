@@ -215,24 +215,6 @@ describe('ServiceActivityDetail', () => {
         expect(mockNavigate).toHaveBeenCalledWith('/accessed-services');
     });
 
-    it('goes back into the section it was opened from', async () => {
-        mockGet.mockResolvedValue(withDetails);
-        render(
-            <MemoryRouter initialEntries={['/transparency/rebate']}>
-                <Routes>
-                    <Route
-                        path="/transparency/:service"
-                        element={<ServiceActivityDetail isPreview={false} listPath="/transparency" />}
-                    />
-                </Routes>
-            </MemoryRouter>
-        );
-
-        await waitFor(() => expect(screen.getByTestId('back-to-list')).toBeInTheDocument());
-        fireEvent.click(screen.getByTestId('back-to-list'));
-        expect(mockNavigate).toHaveBeenCalledWith('/transparency');
-    });
-
     it('reports a service it cannot find', async () => {
         mockGet.mockResolvedValue({ serviceActivity: undefined });
         renderDetail('nope');

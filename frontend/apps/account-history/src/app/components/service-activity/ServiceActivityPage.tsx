@@ -33,19 +33,7 @@ const formatDay = (value: string): string => {
         : date.toLocaleDateString('en-CA', { month: 'long', day: 'numeric', year: 'numeric' });
 };
 
-/**
- * The same experience is reached from two places in the menu, so where the list
- * lives and what sits above its heading are given to it rather than assumed.
- */
-export function ServiceActivityPage({
-    isPreview,
-    listPath,
-    eyebrow = 'PRIVACY PORTAL',
-}: {
-    isPreview: boolean;
-    listPath?: string;
-    eyebrow?: string;
-}): React.ReactElement {
+export function ServiceActivityPage({ isPreview }: { isPreview: boolean }): React.ReactElement {
     const windowWidth = useWindowWidth();
 
     const [activity, setActivity] = useState<ServiceActivity>();
@@ -124,14 +112,13 @@ export function ServiceActivityPage({
         return <GoabCircularProgress variant="inline" size="small" visible={true}></GoabCircularProgress>;
     }
 
-    const basePath = listPath ?? (isPreview ? '/preview/accessed-services' : '/accessed-services');
-    const detailPath = (id: string) => `${basePath}/${id}`;
+    const detailPath = (id: string) => (isPreview ? `/preview/accessed-services/${id}` : `/accessed-services/${id}`);
 
     return (
         <div className={styles['container']}>
             {windowWidth <= 623 && <PpSpacer vSpacing="xl" />}
 
-            <PageTitle title={eyebrow} fontColor="#004F84" />
+            <PageTitle title="PRIVACY PORTAL" fontColor="#004F84" />
             <PpSpacer vSpacing="m" />
             <h1 className={styles['page-heading']}>Service activity</h1>
             <PpSpacer vSpacing="m" />

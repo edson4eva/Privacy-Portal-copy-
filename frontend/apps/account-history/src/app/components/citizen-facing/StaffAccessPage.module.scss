@@ -1,0 +1,182 @@
+.container {
+    box-sizing: border-box;
+    margin-top: var(--goa-space-2xl);
+    max-width: 960px;
+
+    p {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 624px) {
+    .container {
+        background-color: var(--pp-background-color-internal);
+    }
+}
+
+.page-heading {
+    font: var(--goa-typography-heading-xl);
+    color: var(--goa-color-text-default);
+    margin: 0;
+}
+
+.intro {
+    color: var(--goa-color-text-default);
+    max-width: 48rem;
+}
+
+.notice {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--goa-space-s);
+    background: #eaf3fa;
+    border: 1px solid #c5dcec;
+    border-radius: 4px;
+    padding: var(--goa-space-m) var(--goa-space-l);
+    max-width: 48rem;
+}
+
+/* ---- Access table --------------------------------------------------------
+   Six columns of dense text, so the table scrolls sideways rather than
+   crushing them, and every cell sits on its own ruled row. */
+
+.table-container {
+    overflow-x: auto;
+    border: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+.head,
+.row {
+    display: grid;
+    grid-template-columns: 13rem 7.5rem 9rem minmax(11rem, 1fr) minmax(11rem, 1fr) 7rem;
+    gap: var(--goa-space-m);
+    align-items: start;
+    padding: var(--goa-space-m) var(--goa-space-l);
+    min-width: 62rem;
+}
+
+.head {
+    border-bottom: 3px solid #0081a2;
+    background: #f7f7f5;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.row {
+    border-bottom: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
+    line-height: 1.45;
+}
+
+.row:last-of-type {
+    border-bottom: none;
+}
+
+.row:nth-of-type(even) {
+    background: #fbfbfa;
+}
+
+/* Who accessed: name, then the account they used, then role and unit. */
+.who-name {
+    font-weight: 700;
+}
+
+/* The account is an identifier, so it is set as one. */
+.username {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    font-size: 0.85em;
+    background: #f3f1ee;
+    border: 1px solid #e4e0d9;
+    border-radius: 3px;
+    color: #a6402f;
+    padding: 0.05rem 0.3rem;
+    white-space: nowrap;
+}
+
+.who-role {
+    display: block;
+    color: var(--goa-color-text-default);
+}
+
+.who-unit {
+    display: block;
+    color: #5a6773;
+}
+
+.when {
+    font-variant-numeric: tabular-nums;
+}
+
+.when-zone {
+    display: block;
+    color: #5a6773;
+}
+
+.reason-type {
+    font-weight: 700;
+}
+
+.reason-detail {
+    display: block;
+    color: #5a6773;
+}
+
+.empty {
+    padding: var(--goa-space-xl) var(--goa-space-l);
+    color: var(--goa-color-text-secondary);
+}
+
+.pager {
+    display: flex;
+    align-items: center;
+    padding: var(--goa-space-m) var(--goa-space-l);
+    border-top: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
+    background: #fbfbfa;
+}
+
+.unusual {
+    max-width: 44rem;
+}
+
+/* ---- One access record ---- */
+
+.record {
+    border: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
+    border-radius: 6px;
+    background: #ffffff;
+    padding: var(--goa-space-xl);
+    max-width: 44rem;
+}
+
+.rows {
+    display: grid;
+    grid-template-columns: 14rem minmax(0, 1fr);
+    row-gap: var(--goa-space-m);
+    column-gap: var(--goa-space-l);
+    align-items: baseline;
+}
+
+@media (max-width: 560px) {
+    .rows {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: var(--goa-space-2xs);
+    }
+}
+
+.label {
+    color: #55697a;
+}
+
+.value {
+    font-weight: 700;
+    color: var(--goa-color-text-default);
+    overflow-wrap: break-word;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--goa-space-s);
+    align-items: center;
+}

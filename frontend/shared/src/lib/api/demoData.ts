@@ -363,6 +363,17 @@ export const getDemoResponse = (url: string): unknown | undefined => {
         return { accountActivity: { events: buildDemoActivity() } };
     }
 
+    if (path === 'staff-access') {
+        return { staffAccess: { records: DEMO_STAFF_ACCESS } };
+    }
+
+    const staffAccessMatch = /^staff-access\/(.+)$/.exec(path);
+    if (staffAccessMatch) {
+        const id = decodeURIComponent(staffAccessMatch[1]);
+        const record = DEMO_STAFF_ACCESS.find((entry) => entry.id === id);
+        return record ? { staffAccess: { record } } : undefined;
+    }
+
     if (path === 'service-activity') {
         return {
             serviceActivity: {
@@ -1059,6 +1070,158 @@ const DEMO_ACTIVITY_EVENTS = [
             { label: 'Receipt number', value: 'FP-2026-9981' },
             { label: 'Amount', value: '$155.00' },
         ],
+    },
+];
+
+/**
+ * A record of Government of Alberta staff who have looked at a holder's
+ * personal information: who they are, when they looked, what they saw and why.
+ *
+ * Real records would come from the access logs of the systems holding that
+ * information, which are not part of this repository, so demo mode answers with
+ * a representative set. The staff named here are invented, as are their
+ * usernames.
+ */
+const DEMO_STAFF_ACCESS = [
+    {
+        id: 'sa-1',
+        name: 'J. Doe',
+        username: 'jdoe01',
+        role: 'Benefits Officer 2',
+        unit: 'Income Support - Edmonton North',
+        accessedAt: '2026-09-19T20:32:00.000Z',
+        categories: ['Financial'],
+        information: ['Personal income', 'direct deposit details', 'payment history'],
+        reasonType: 'Benefit calculation',
+        reasonDetail: 'client called re: September shortfall',
+        system: 'Income Support Case Management',
+        accessType: 'Viewed',
+    },
+    {
+        id: 'sa-2',
+        name: 'M. Tran',
+        username: 'mtran03',
+        role: 'Registry Agent Auditor',
+        unit: 'Motor Vehicles',
+        accessedAt: '2026-09-18T15:07:00.000Z',
+        categories: ['Driver & vehicle'],
+        information: ['Licence status', 'suspensions', 'driving abstract'],
+        reasonType: 'Audit or QA',
+        reasonDetail: 'sampling of 20 registry transactions',
+        system: 'Motor Vehicles Registry',
+        accessType: 'Viewed',
+    },
+    {
+        id: 'sa-3',
+        name: 'A. Okafor',
+        username: 'aokafor',
+        role: 'Intake Worker',
+        unit: 'Child Intervention',
+        accessedAt: '2026-09-18T02:14:00.000Z',
+        categories: ['Child & family services', 'Health'],
+        information: ['Intervention history', 'mental health records'],
+        reasonType: 'Emergency',
+        reasonDetail: 'after-hours report of risk to child',
+        system: 'Child Intervention Case Management',
+        accessType: 'Viewed',
+    },
+    {
+        id: 'sa-4',
+        name: 'R. Patel',
+        username: 'rpatel12',
+        role: 'Program Analyst',
+        unit: 'Seniors Financial Assistance',
+        accessedAt: '2026-09-16T17:45:00.000Z',
+        categories: ['Government identifiers'],
+        information: ['SIN', 'Personal Health Number'],
+        reasonType: 'Identity verification',
+        reasonDetail: 'duplicate client file merge',
+        system: 'Seniors Financial Assistance',
+        accessType: 'Viewed and updated',
+    },
+    {
+        id: 'sa-5',
+        name: 'S. Whitecalf',
+        username: 'swhitecalf',
+        role: 'Health Records Clerk',
+        unit: 'Alberta Health Services - Calgary Zone',
+        accessedAt: '2026-09-14T19:20:00.000Z',
+        categories: ['Health'],
+        information: ['Personal Health Number', 'coverage status'],
+        reasonType: 'Coverage check',
+        reasonDetail: 'confirming eligibility before an appointment',
+        system: 'Alberta Health Care Insurance Plan',
+        accessType: 'Viewed',
+    },
+    {
+        id: 'sa-6',
+        name: 'K. Nowak',
+        username: 'knowak02',
+        role: 'Collections Officer',
+        unit: 'Tax and Revenue Administration',
+        accessedAt: '2026-09-11T16:05:00.000Z',
+        categories: ['Financial'],
+        information: ['Outstanding balances', 'payment arrangements'],
+        reasonType: 'Account review',
+        reasonDetail: 'arrears file opened',
+        system: 'Tax and Revenue Administration',
+        accessType: 'Viewed',
+    },
+    {
+        id: 'sa-7',
+        name: 'D. Leclair',
+        username: 'dleclair',
+        role: 'Registry Agent',
+        unit: 'Motor Vehicles - Red Deer',
+        accessedAt: '2026-09-08T21:48:00.000Z',
+        categories: ['Driver & vehicle', 'Government identifiers'],
+        information: ['Licence status', 'address on file'],
+        reasonType: 'Service request',
+        reasonDetail: 'in-person licence renewal',
+        system: 'Motor Vehicles Registry',
+        accessType: 'Viewed and updated',
+    },
+    {
+        id: 'sa-8',
+        name: 'B. Iqbal',
+        username: 'biqbal01',
+        role: 'Privacy Analyst',
+        unit: 'Service Alberta and Red Tape Reduction',
+        accessedAt: '2026-09-04T18:33:00.000Z',
+        categories: ['Government identifiers', 'Financial'],
+        information: ['Access history', 'account identifiers'],
+        reasonType: 'Privacy complaint',
+        reasonDetail: 'investigating a complaint you filed',
+        system: 'Privacy Case Management',
+        accessType: 'Viewed',
+    },
+    {
+        id: 'sa-9',
+        name: 'L. Morin',
+        username: 'lmorin04',
+        role: 'Caseworker',
+        unit: 'Assured Income for the Severely Handicapped',
+        accessedAt: '2026-08-29T15:12:00.000Z',
+        categories: ['Financial', 'Health'],
+        information: ['Household income', 'medical eligibility documents'],
+        reasonType: 'Benefit calculation',
+        reasonDetail: 'annual review of your file',
+        system: 'AISH Case Management',
+        accessType: 'Viewed',
+    },
+    {
+        id: 'sa-10',
+        name: 'T. Beaudry',
+        username: 'tbeaudry',
+        role: 'Systems Administrator',
+        unit: 'Technology and Innovation',
+        accessedAt: '2026-08-21T14:02:00.000Z',
+        categories: ['Government identifiers'],
+        information: ['Account identifiers'],
+        reasonType: 'Audit or QA',
+        reasonDetail: 'scheduled access review',
+        system: 'Identity and Access Management',
+        accessType: 'Viewed',
     },
 ];
 
