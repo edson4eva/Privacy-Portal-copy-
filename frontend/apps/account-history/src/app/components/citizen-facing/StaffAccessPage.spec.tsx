@@ -60,8 +60,6 @@ const mockGet = get as jest.Mock;
 
 const record = (id: string, overrides: Record<string, unknown> = {}) => ({
     id,
-    name: 'J. Doe',
-    username: 'jdoe01',
     positionId: 'POS-IS-0142',
     role: 'Benefits Officer 2',
     unit: 'Income Support - Edmonton North',
@@ -76,14 +74,12 @@ const record = (id: string, overrides: Record<string, unknown> = {}) => ({
 const records = [
     record('sa-1'),
     record('sa-2', {
-        name: 'M. Tran',
-        username: 'mtran03',
+        positionId: 'POS-MV-0087',
         accessedAt: '2026-09-18T15:07:00.000Z',
         categories: ['Driver and vehicle'],
     }),
     record('sa-3', {
-        name: 'A. Okafor',
-        username: 'aokafor',
+        positionId: 'POS-CI-0231',
         accessedAt: '2026-09-18T02:14:00.000Z',
         categories: ['Child and family services', 'Health'],
     }),
@@ -91,6 +87,13 @@ const records = [
     record('sa-5', { accessedAt: '2026-09-14T19:20:00.000Z' }),
     record('sa-6', { accessedAt: '2026-09-11T16:05:00.000Z' }),
 ];
+
+/**
+ * The requirement is that no individual who accessed the information is
+ * named, in full or as initials, so it is asserted against the rendered text
+ * rather than against a list of names that would go stale.
+ */
+const PERSONAL_NAME = /\b[A-Z]\.\s?[A-Z][a-z]+\b/;
 
 const payload = { staffAccess: { records } };
 const renderPage = () =>
@@ -149,7 +152,6 @@ describe('StaffAccessPage', () => {
                 records: [
                     record('sa-1'),
                     record('sa-11', {
-                        username: 'impark-ar-0142',
                         positionId: 'POS-AR-0142',
                         role: 'Authorized requester — parking enforcement',
                         organization: 'Imperial Parking Canada Corporation',
@@ -187,6 +189,14 @@ describe('StaffAccessPage', () => {
         expect(screen.getByTestId('row-sa-11')).toHaveTextContent('PT-2026-884213');
     });
 
+    it('names no individual anywhere on the page', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('row-sa-1')).toBeInTheDocument());
+        expect(document.body.textContent ?? '').not.toMatch(PERSONAL_NAME);
+    });
+
     it('renders the heading, intro and all six columns', async () => {
         mockGet.mockResolvedValue(payload);
         renderPage();
@@ -215,8 +225,6 @@ describe('StaffAccessPage', () => {
         expect(screen.getByTestId('position-sa-1')).toHaveTextContent('POS-IS-0142');
         expect(row).toHaveTextContent('Benefits Officer 2');
         expect(row).toHaveTextContent('Income Support - Edmonton North');
-        expect(row).not.toHaveTextContent('J. Doe');
-        expect(row).not.toHaveTextContent('jdoe01');
     });
 
     it('says so rather than falling back to an account when no position is recorded', async () => {
@@ -225,7 +233,6 @@ describe('StaffAccessPage', () => {
 
         await waitFor(() => expect(screen.getByTestId('row-sa-1')).toBeInTheDocument());
         expect(screen.getByTestId('position-sa-1')).toHaveTextContent('Position not recorded');
-        expect(screen.getByTestId('row-sa-1')).not.toHaveTextContent('jdoe01');
     });
 
     it('shows the information seen and the reason given', async () => {

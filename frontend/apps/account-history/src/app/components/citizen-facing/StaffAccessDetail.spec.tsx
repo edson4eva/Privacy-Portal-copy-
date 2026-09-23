@@ -47,8 +47,6 @@ const record = {
     id: 'sa-1',
     recordId: 'ACC-2026-0098412',
     caseNumber: 'SR-448271',
-    name: 'J. Doe',
-    username: 'jdoe01',
     positionId: 'POS-IS-0142',
     role: 'Benefits Assessment Officer 2',
     ministry: 'Seniors, Community and Social Services',
@@ -85,10 +83,17 @@ const record = {
     authMethod: 'Single sign-on with multi-factor',
     anomalyFlags: [],
     reviewOutcome: 'Appropriate',
-    reviewer: 'K. Singh',
+    reviewer: 'Income Support management review',
     reviewedOn: '2026-09-30',
     followUp: 'None',
 };
+
+/**
+ * The requirement is that no individual who accessed the information is
+ * named, in full or as initials, so it is asserted against the rendered text
+ * rather than against a list of names that would go stale.
+ */
+const PERSONAL_NAME = /\b[A-Z]\.\s?[A-Z][a-z]+\b/;
 
 const payload = { staffAccess: { record } };
 
@@ -117,8 +122,6 @@ describe('StaffAccessDetail', () => {
         expect(who).toHaveTextContent('Employee');
         expect(who).toHaveTextContent('None declared');
         expect(who).not.toHaveTextContent('Name and account');
-        expect(who).not.toHaveTextContent('J. Doe');
-        expect(who).not.toHaveTextContent('jdoe01');
         expect(mockGet).toHaveBeenCalledWith('/v1/staff-access/sa-1');
     });
 
@@ -130,7 +133,6 @@ describe('StaffAccessDetail', () => {
         const summary = screen.getByTestId('record-summary');
         expect(summary).toHaveTextContent('Income Support - Edmonton North (POS-IS-0142) looked at your information');
         expect(summary).toHaveTextContent('2026-09-19 at 14:32 MDT');
-        expect(summary).not.toHaveTextContent('J. Doe');
     });
 
     it('names an outside party by its organization in the summary', async () => {
@@ -158,7 +160,6 @@ describe('StaffAccessDetail', () => {
         await waitFor(() => expect(screen.getByTestId('record-summary')).toBeInTheDocument());
         const summary = screen.getByTestId('record-summary');
         expect(summary).toHaveTextContent('Income Support - Edmonton North looked at your information');
-        expect(summary).not.toHaveTextContent('J. Doe');
     });
 
     it('names an outside organization on the record', async () => {
@@ -238,6 +239,14 @@ describe('StaffAccessDetail', () => {
         expect(why).toHaveTextContent('PT-2026-884213');
     });
 
+    it('names no individual anywhere on the record', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderDetail();
+
+        await waitFor(() => expect(screen.getByTestId('access-record')).toBeInTheDocument());
+        expect(document.body.textContent ?? '').not.toMatch(PERSONAL_NAME);
+    });
+
     it('reports the review of the access', async () => {
         mockGet.mockResolvedValue(payload);
         renderDetail();
@@ -246,7 +255,7 @@ describe('StaffAccessDetail', () => {
         const review = screen.getByTestId('section-review');
         expect(review).toHaveTextContent('Appropriate');
         expect(review).toHaveTextContent('None');
-        expect(review).toHaveTextContent('K. Singh');
+        expect(review).toHaveTextContent('Income Support management review');
         expect(review).toHaveTextContent('2026-09-30');
     });
 

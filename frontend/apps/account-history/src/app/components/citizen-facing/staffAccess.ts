@@ -13,13 +13,11 @@ export interface StaffAccessRecord {
     id: string;
 
     /* Part 1 - the condensed five-field log. */
-    /** Who accessed: name, account, position and program area. */
-    name: string;
-    username: string;
     /**
-     * Identifies the position rather than the person holding it. The list
-     * shows this instead of the network account, because an account name is
-     * built from a person's own name and so identifies them just as plainly.
+     * Who accessed, identified as a post rather than a person. The guide's
+     * field 1 asks for a name and a user ID as well; both are deliberately
+     * absent here, because an account name is built from the name it belongs
+     * to and so identifies the holder just as plainly as the name does.
      */
     positionId?: string;
     role: string;
@@ -110,6 +108,7 @@ export interface StaffAccessRecord {
     /* 2.9 Oversight and review. */
     anomalyFlags?: string[];
     reviewOutcome?: string;
+    /** The body that reviewed the access, not the person who did. */
     reviewer?: string;
     reviewedOn?: string;
     followUp?: string;
