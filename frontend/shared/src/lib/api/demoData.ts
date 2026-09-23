@@ -189,6 +189,7 @@ const PRIVACY_REASONS_BY_ID: Record<string, string[]> = {
     'alberta-energy-rebate': [
         'To confirm the utility account and address the rebate should be applied to',
         'To verify household eligibility against the program criteria',
+        'To assess your income against the income tax you filed with the Canada Revenue Agency (CRA) for the calendar year the rebate covers',
     ],
     'drivers-licence-renewal': [
         'To confirm your driving record and the class of licence held',
@@ -881,11 +882,12 @@ const DEMO_ACTIVITY_SERVICES = [
             'Social Insurance Number',
             'Co-applicant (other spouse/common-law partner) information',
             'Household income and finances',
+            'Canada Revenue Agency (CRA) assessed income for the 2025 tax year',
             'Payment information',
             'Email address',
         ],
         howPersonalInformationIsUsed:
-            'This information is used to determine eligibility and rebate amounts, and to issue payments to Albertans who qualify.',
+            'This information is used to determine eligibility and rebate amounts, and to issue payments to Albertans who qualify. Your income is assessed against the income you filed with the Canada Revenue Agency for the relevant calendar year, which sets both whether you qualify and the amount payable.',
         legislation: {
             summary:
                 'This legislation gives the legal authority that allows the service to collect your personal information.',
@@ -945,6 +947,7 @@ const DEMO_ACTIVITY_EVENTS = [
         occurredAt: '2026-09-03T15:12:00.000Z',
         details: [
             { label: 'Amount', value: '$600.00' },
+            { label: 'Eligibility based on', value: 'Canada Revenue Agency (CRA) assessed income, 2025 tax year' },
             { label: 'Payment method', value: 'Direct transfer' },
             { label: 'Email', value: 'demo.user@example.com' },
             { label: 'Status', value: 'Deposited' },
@@ -971,6 +974,10 @@ const DEMO_ACTIVITY_EVENTS = [
         details: [
             { label: 'Outcome', value: 'Approved' },
             { label: 'Assessed by', value: 'Automated eligibility check' },
+            {
+                label: 'Income assessed',
+                value: 'Canada Revenue Agency (CRA) — total income filed for the 2025 tax year',
+            },
         ],
     },
     {
@@ -1110,7 +1117,12 @@ const DEMO_STAFF_ACCESS = [
         relationshipDeclared: 'None declared',
         householdViewed: 'None',
         categories: ['Financial'],
-        information: ['Personal income', 'direct deposit details', 'payment history'],
+        information: [
+            'Personal income',
+            'direct deposit details',
+            'payment history',
+            'Canada Revenue Agency (CRA) assessed income for the 2025 tax year',
+        ],
         sensitivity: 'Protected B',
         accessType: 'Viewed',
         identifierDisplay: 'Bank account number shown as the last three digits only',
@@ -1489,7 +1501,11 @@ const DEMO_STAFF_ACCESS = [
         relationshipDeclared: 'None declared',
         householdViewed: 'Spouse',
         categories: ['Financial', 'Health'],
-        information: ['Household income', 'medical eligibility assessments'],
+        information: [
+            'Household income',
+            'medical eligibility assessments',
+            'Canada Revenue Agency (CRA) assessed income for the 2025 tax year',
+        ],
         sensitivity: 'Protected C',
         accessType: 'Viewed',
         identifierDisplay: 'Identifiers shown as the last three digits only',
@@ -1636,7 +1652,11 @@ const DEMO_STAFF_ACCESS = [
         relationshipDeclared: 'None declared',
         householdViewed: 'None',
         categories: ['Financial'],
-        information: ['Benefit payment history', 'direct deposit details'],
+        information: [
+            'Benefit payment history',
+            'direct deposit details',
+            'Canada Revenue Agency (CRA) assessed income for the 2025 tax year',
+        ],
         sensitivity: 'Protected B',
         accessType: 'Viewed',
         identifierDisplay: 'Bank account number shown as the last three digits only',
