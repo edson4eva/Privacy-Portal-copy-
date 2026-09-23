@@ -18,7 +18,14 @@ describe('the palette still agrees with the design system', () => {
             if (parent === dir) throw new Error('could not locate the frontend root');
             dir = parent;
         }
-        tokens = readFileSync(join(dir, 'node_modules/@abgov/design-tokens/dist/tokens.css'), 'utf8');
+        /*
+         * The apps import @abgov/web-components/index.css, not
+         * @abgov/design-tokens, and the two do not always agree: 2.5.0 of the
+         * components puts greyscale-black at #333333 where design-tokens
+         * 2.12.8 puts it at #000000. The palette has to mirror what the
+         * browser is given, so this reads the stylesheet the apps import.
+         */
+        tokens = readFileSync(join(dir, 'node_modules/@abgov/web-components/index.css'), 'utf8');
     });
 
     it.each(Object.keys(PALETTE) as (keyof typeof PALETTE)[])('%s mirrors its token', (name) => {

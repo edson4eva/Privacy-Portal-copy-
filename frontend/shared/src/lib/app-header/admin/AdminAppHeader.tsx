@@ -1,5 +1,4 @@
-import { GoabAppHeader, GoabBlock, GoabButton, GoabIcon, GoabLink } from '@abgov/react-components';
-import { GoabDrawer } from '@abgov/react-components/experimental';
+import { GoabAppHeader, GoabBlock, GoabButton, GoabDrawer, GoabIcon, GoabLink } from '@abgov/react-components';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './AdminAppHeader.module.scss';

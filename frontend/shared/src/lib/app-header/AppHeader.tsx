@@ -1,6 +1,5 @@
 /* eslint-disable unicorn/prevent-abbreviations */
-import { GoabAppHeader, GoabBlock, GoabButton, GoabIcon, GoabLink } from '@abgov/react-components';
-import { GoabDrawer } from '@abgov/react-components/experimental';
+import { GoabAppHeader, GoabBlock, GoabButton, GoabDrawer, GoabIcon, GoabLink } from '@abgov/react-components';
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './AppHeader.module.scss';

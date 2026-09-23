@@ -21,6 +21,20 @@ const repoRoot = (): string => {
     return dir;
 };
 
+/**
+ * The reference for what a token is and what it holds.
+ *
+ * It is @abgov/web-components/index.css and NOT @abgov/design-tokens, because
+ * that is the stylesheet the apps actually import - see each app's
+ * src/styles.css. The components ship their own copy of the definitions, and
+ * it does not always match the design-tokens package: web-components 2.5.0
+ * puts --goa-color-greyscale-black at #333333 where design-tokens 2.12.8 puts
+ * it at #000000. Checking against design-tokens would pass tokens that are
+ * undefined in the browser and fail values that are correct there.
+ */
+const tokenSource = (root: string): string =>
+    readFileSync(join(root, 'node_modules/@abgov/web-components/index.css'), 'utf8');
+
 const stylesheets = (root: string): string[] => {
     const found: string[] = [];
     const walk = (dir: string) => {
@@ -44,8 +58,8 @@ describe('stylesheets name only tokens that exist', () => {
     const sheets = stylesheets(root);
 
     const defined = new Set<string>();
-    for (const file of [join(root, 'node_modules/@abgov/design-tokens/dist/tokens.css'), ...sheets]) {
-        for (const match of readFileSync(file, 'utf8').matchAll(/(--goa-[a-z0-9-]+)\s*:/g)) {
+    for (const text of [tokenSource(root), ...sheets.map((file) => readFileSync(file, 'utf8'))]) {
+        for (const match of text.matchAll(/(--goa-[a-z0-9-]+)\s*:/g)) {
             defined.add(match[1]);
         }
     }
