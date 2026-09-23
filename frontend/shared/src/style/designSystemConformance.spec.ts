@@ -98,6 +98,32 @@ describe('stylesheets follow the design system', () => {
         expect(offenders).toEqual([]);
     });
 
+    it('never states "none" where a colour is wanted', () => {
+        /*
+         * "none" is a valid background *image* value and not a valid
+         * background *colour*, so a colour property set to none is thrown
+         * away and whatever the default is shows through instead. Four
+         * callout colours were set this way, which is how a status bar meant
+         * to be invisible stayed a solid block. "transparent" is the value
+         * that means it.
+         */
+        const offenders: string[] = [];
+        for (const sheet of sheets) {
+            for (const line of sheet.text.split('\n').map((l) => l.trim())) {
+                if (
+                    /^--[a-z-]*colo(?:u)?r[a-z-]*:\s*none\s*;/.test(line) ||
+                    /^--[a-z-]*-bg-[a-z-]*:\s*none\s*;/.test(line)
+                ) {
+                    offenders.push(`${sheet.name}: ${line}`);
+                }
+                if (/^(?:background-color|color|border-color|outline-color|fill|stroke):\s*none\s*;/.test(line)) {
+                    offenders.push(`${sheet.name}: ${line}`);
+                }
+            }
+        }
+        expect(offenders).toEqual([]);
+    });
+
     it('takes line height from tokens', () => {
         const offenders: string[] = [];
         for (const sheet of sheets) {

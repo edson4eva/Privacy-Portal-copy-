@@ -36,30 +36,47 @@
     --goa-callout-border-radius: 15px;
     --goa-callout-l-heading-size: var(--goa-typography-heading-m);
     --goa-callout-l-content-gap: var(--goa-space-m);
-    --goa-callout-info-color-bg-statusbar: none;
+
+    /* The app's callout is a rounded box outlined in the type's colour, with
+       the icon in that colour too and no filled bar behind it.
+
+       These four said "none", which is a valid background *image* value but
+       not a valid background *colour*, so the browser threw the declaration
+       away and the bar kept the colour it has by default: a solid block of
+       exactly the colour the icon was then set to, which is why the icon
+       could not be seen on it. "transparent" is the value that means what
+       was meant here. */
+    --goa-callout-info-color-bg-statusbar: transparent;
+    --goa-callout-warning-color-bg-statusbar: transparent;
+    --goa-callout-success-color-bg-statusbar: transparent;
+    --goa-callout-emergency-color-bg-statusbar: transparent;
     --goa-callout-info-icon-color: var(--goa-color-info-default);
     --goa-callout-warning-icon-color: var(--goa-color-warning-dark);
     --goa-callout-success-icon-color: var(--goa-color-success-default);
     --goa-callout-emergency-icon-color: var(--goa-color-emergency-default);
-    --goa-callout-warning-color-bg-statusbar: none;
-    --goa-callout-success-color-bg-statusbar: none;
-    --goa-callout-emergency-color-bg-statusbar: none;
-    --goa-callout-l-statusbar-padding: 29px var(--goa-space-xs) 0px var(--goa-space-l);
-    --goa-callout-info-color-bg-content: none;
-    --goa-callout-warning-color-bg-content: none;
-    --goa-callout-success-color-bg-content: none;
-    --goa-callout-emergency-color-bg-content: none;
-    --goa-callout-l-content-padding: var(--goa-space-l) var(--goa-space-l) var(--goa-space-l) 0px;
+
+    /* Same again for the content area behind the text. */
+    --goa-callout-info-color-bg-content: transparent;
+    --goa-callout-warning-color-bg-content: transparent;
+    --goa-callout-success-color-bg-content: transparent;
+    --goa-callout-emergency-color-bg-content: transparent;
+
+    /* The icon's column and the text beside it start at the same height, so
+       the icon sits on the first line rather than 29px down a column with no
+       bottom padding. The text keeps its own inset from the icon column. */
+    --goa-callout-l-statusbar-padding: var(--goa-space-l) var(--goa-space-s) var(--goa-space-l) var(--goa-space-l);
+    --goa-callout-l-content-padding: var(--goa-space-l) var(--goa-space-l) var(--goa-space-l) var(--goa-space-none);
     --goa-callout-info-border-color: var(--goa-color-info-default);
     --goa-callout-warning-border-color: var(--goa-color-warning-dark);
     --goa-callout-success-border-color: var(--goa-color-success-default);
     --goa-callout-emergency-border-color: var(--goa-color-emergency-default);
     --goa-callout-m-text-size: var(--goa-typography-body-m);
-    --goa-callout-m-border-width: 0px;
+    --goa-callout-m-border-width: var(--goa-border-width-none);
     --goa-callout-m-heading-size: var(--goa-typography-heading-xs);
     --goa-callout-m-content-gap: var(--goa-space-xs);
-    --goa-callout-m-content-padding: 0px;
-    --goa-callout-m-statusbar-padding: 0px 10px 0px 0px;
+    --goa-callout-m-content-padding: var(--goa-space-none);
+    --goa-callout-m-statusbar-padding: var(--goa-space-none) var(--goa-space-xs) var(--goa-space-none)
+        var(--goa-space-none);
 
     /*Container*/
     --goa-container-border-radius: 15px;
