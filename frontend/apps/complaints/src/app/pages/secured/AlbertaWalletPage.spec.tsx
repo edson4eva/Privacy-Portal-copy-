@@ -111,7 +111,25 @@ const campsite = {
     ],
 };
 
-const payload = { wallet: { documents: [licence, healthCard, rebate, campsite] } };
+const apprenticeship = {
+    id: 'apprenticeship-credential',
+    serviceArea: 'Education and training',
+    listedService: 'Apprenticeship and industry training',
+    serviceUrl: 'https://www.alberta.ca/apprenticeship-industry-training',
+    documentType: 'Apprenticeship and Industry Training',
+    icon: 'hammer',
+    primaryLabel: 'MyTradesecrets client ID',
+    primaryValue: '4471-0119',
+    nameOnCard: 'USER, Demo Alexander',
+    fields: [
+        { label: 'Trade', value: 'Electrician' },
+        { label: 'Status', value: 'Registered apprentice' },
+        { label: 'Period', value: '3rd of 4' },
+        { label: 'Registered', value: '2024-09-03', isDate: true },
+    ],
+};
+
+const payload = { wallet: { documents: [licence, healthCard, rebate, campsite, apprenticeship] } };
 
 const renderPage = () =>
     render(
@@ -192,7 +210,7 @@ describe('AlbertaWalletPage', () => {
         mockGet.mockResolvedValue(payload);
         renderPage();
 
-        await waitFor(() => expect(screen.getAllByTestId(/^wallet-card-/)).toHaveLength(4));
+        await waitFor(() => expect(screen.getAllByTestId(/^wallet-card-/)).toHaveLength(5));
         expect(screen.getByTestId('crest-mobile-health-card')).toBeInTheDocument();
     });
 
@@ -227,7 +245,7 @@ describe('AlbertaWalletPage', () => {
         mockGet.mockResolvedValue(payload);
         renderPage();
 
-        await waitFor(() => expect(screen.getAllByTestId(/^qr-/)).toHaveLength(4));
+        await waitFor(() => expect(screen.getAllByTestId(/^qr-/)).toHaveLength(5));
         for (const id of [
             'mobile-drivers-licence',
             'mobile-health-card',
@@ -242,7 +260,7 @@ describe('AlbertaWalletPage', () => {
         mockGet.mockResolvedValue(payload);
         renderPage();
 
-        await waitFor(() => expect(screen.getAllByTestId(/^qr-/)).toHaveLength(4));
+        await waitFor(() => expect(screen.getAllByTestId(/^qr-/)).toHaveLength(5));
         const patterns = screen.getAllByTestId(/^qr-/).map((frame) => frame.innerHTML);
         expect(new Set(patterns).size).toBe(patterns.length);
     });
@@ -258,11 +276,28 @@ describe('AlbertaWalletPage', () => {
         // the inventory's order, not the order the cards arrive in.
         expect(headings).toEqual([
             'Driving safety',
+            'Education and training',
             'Family and social supports',
             'Health',
             'Tourism, sport and outdoor recreation',
             'Get the Alberta Wallet app',
         ]);
+    });
+
+    it('carries the apprenticeship credential under Education and training', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('area-Education and training')).toBeInTheDocument());
+        const group = screen.getByTestId('area-Education and training');
+        expect(group).toHaveTextContent('Apprenticeship and Industry Training');
+        // Its type and its listed service differ only in capitalisation, so
+        // the group does not print the service line as well.
+        expect(group.querySelectorAll('p')).toHaveLength(0);
+        expect(group).toHaveTextContent('MyTradesecrets client ID');
+        expect(group).toHaveTextContent('4471-0119');
+        expect(group).toHaveTextContent('Electrician');
+        expect(group).toHaveTextContent('Registered apprentice');
     });
 
     it('names the listed service each category covers', async () => {
@@ -294,11 +329,14 @@ describe('AlbertaWalletPage', () => {
         await waitFor(() => expect(screen.getByTestId('wallet-stack-Health')).toBeInTheDocument());
         const stacks = [
             'Driving safety',
+            'Education and training',
             'Family and social supports',
             'Health',
             'Tourism, sport and outdoor recreation',
         ];
-        expect(stacks.map((area) => screen.getByTestId(`wallet-stack-${area}`).children.length)).toEqual([1, 1, 1, 1]);
+        expect(stacks.map((area) => screen.getByTestId(`wallet-stack-${area}`).children.length)).toEqual([
+            1, 1, 1, 1, 1,
+        ]);
         // One hint for the wallet, not one per category.
         expect(screen.getAllByText(/Choose a card, or the link beneath it/)).toHaveLength(1);
     });
@@ -326,6 +364,7 @@ describe('AlbertaWalletPage', () => {
                 'campsite-reservation',
                 'https://www.albertaparks.ca/albertaparks-ca/visit-our-parks/camping-in-alberta-parks/',
             ],
+            ['apprenticeship-credential', 'https://www.alberta.ca/apprenticeship-industry-training'],
         ];
 
         for (const [id, href] of expected) {
@@ -352,6 +391,7 @@ describe('AlbertaWalletPage', () => {
                 'albertaparks.ca',
                 'https://www.albertaparks.ca/albertaparks-ca/visit-our-parks/camping-in-alberta-parks/',
             ],
+            ['apprenticeship-credential', 'alberta.ca', 'https://www.alberta.ca/apprenticeship-industry-training'],
         ];
 
         for (const [id, host, href] of expected) {

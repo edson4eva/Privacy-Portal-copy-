@@ -14,6 +14,18 @@ interface StaffAccess {
     unit: string;
     categories: string[];
     information: string[];
+    serviceArea?: string;
+    listedService?: string;
+    system?: string;
+    reasonDetail?: string;
+}
+
+interface WalletCard {
+    id: string;
+    serviceArea?: string;
+    listedService?: string;
+    serviceUrl?: string;
+    primaryLabel: string;
 }
 
 interface ActivityService {
@@ -77,6 +89,32 @@ interface MenuEntry {
     href?: string;
     items?: MenuEntry[];
 }
+
+describe('demo data: apprenticeship and industry training', () => {
+    const AREA = 'Education and training';
+    const SERVICE = 'Apprenticeship and industry training';
+    const LINK = 'https://www.alberta.ca/apprenticeship-industry-training';
+
+    it('logs an access to the apprenticeship record', () => {
+        const record = staffAccess().find((entry) => entry.listedService === SERVICE);
+
+        expect(record).toBeDefined();
+        expect(record?.serviceArea).toBe(AREA);
+        expect(record?.categories).toEqual(['Education', 'Employment']);
+        expect(record?.system).toBe('MyTradesecrets');
+        expect(record?.reasonDetail).toMatch(/transfer prior learning/);
+    });
+
+    it('holds a credential for it in the wallet, linked to the published page', () => {
+        const documents = (getDemoResponse('/v1/wallet') as { wallet: { documents: WalletCard[] } }).wallet.documents;
+        const credential = documents.find((document) => document.listedService === SERVICE);
+
+        expect(credential).toBeDefined();
+        expect(credential?.serviceArea).toBe(AREA);
+        expect(credential?.serviceUrl).toBe(LINK);
+        expect(credential?.primaryLabel).toBe('MyTradesecrets client ID');
+    });
+});
 
 describe('demo data: the side menu', () => {
     const left = DEMO_USER_MENU.left as MenuEntry[];
