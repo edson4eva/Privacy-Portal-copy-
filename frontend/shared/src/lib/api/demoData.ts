@@ -480,6 +480,8 @@ const DEMO_WALLET = {
     documents: [
         {
             id: 'mobile-drivers-licence',
+            serviceArea: 'Driving safety',
+            listedService: 'Licensing and owning a vehicle',
             documentType: "Driver's Licence",
             // Rendered as the physical card rather than a wallet summary.
             layout: 'licence',
@@ -516,6 +518,8 @@ const DEMO_WALLET = {
         },
         {
             id: 'mobile-health-card',
+            serviceArea: 'Health',
+            listedService: 'Coverage and benefits',
             documentType: 'Mobile Health Card',
             icon: 'pulse',
             primaryLabel: 'Personal health number',
@@ -528,6 +532,8 @@ const DEMO_WALLET = {
         },
         {
             id: 'alberta-energy-rebate-card',
+            serviceArea: 'Family and social supports',
+            listedService: 'Alberta Energy Rebate',
             documentType: 'Alberta Energy Rebate',
             icon: 'flash',
             primaryLabel: 'Reference number',
@@ -545,6 +551,8 @@ const DEMO_WALLET = {
         },
         {
             id: 'campsite-reservation',
+            serviceArea: 'Tourism, sport and outdoor recreation',
+            listedService: 'Provincial parks and campgrounds',
             documentType: 'Campsite Reservation',
             icon: 'bonfire',
             primaryLabel: 'Reservation number',

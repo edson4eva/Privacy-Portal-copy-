@@ -4,8 +4,18 @@ import { MemoryRouter } from 'react-router-dom';
 import AlbertaWalletPage from './AlbertaWalletPage';
 
 jest.mock('@abgov/react-components', () => ({
-    GoabButton: ({ children, onClick, testId }: { children: React.ReactNode; onClick?: () => void; testId?: string }) => (
-        <button data-testid={testId} onClick={onClick}>{children}</button>
+    GoabButton: ({
+        children,
+        onClick,
+        testId,
+    }: {
+        children: React.ReactNode;
+        onClick?: () => void;
+        testId?: string;
+    }) => (
+        <button data-testid={testId} onClick={onClick}>
+            {children}
+        </button>
     ),
     GoabCircularProgress: ({ visible }: { visible: boolean }) => <div data-testid="spinner">{String(visible)}</div>,
     GoabIcon: ({ type }: { type: string }) => <i data-testid={`icon-${type}`} />,
@@ -18,6 +28,8 @@ const mockGet = get as jest.Mock;
 
 const licence = {
     id: 'mobile-drivers-licence',
+    serviceArea: 'Driving safety',
+    listedService: 'Licensing and owning a vehicle',
     documentType: "Driver's Licence",
     layout: 'licence',
     icon: 'car',
@@ -49,6 +61,8 @@ const licence = {
 
 const healthCard = {
     id: 'mobile-health-card',
+    serviceArea: 'Health',
+    listedService: 'Coverage and benefits',
     documentType: 'Mobile Health Card',
     icon: 'pulse',
     primaryLabel: 'Personal health number',
@@ -62,6 +76,8 @@ const healthCard = {
 
 const rebate = {
     id: 'alberta-energy-rebate-card',
+    serviceArea: 'Family and social supports',
+    listedService: 'Alberta Energy Rebate',
     documentType: 'Alberta Energy Rebate',
     icon: 'flash',
     primaryLabel: 'Reference number',
@@ -76,6 +92,8 @@ const rebate = {
 
 const campsite = {
     id: 'campsite-reservation',
+    serviceArea: 'Tourism, sport and outdoor recreation',
+    listedService: 'Provincial parks and campgrounds',
     documentType: 'Campsite Reservation',
     icon: 'bonfire',
     primaryLabel: 'Reservation number',
@@ -91,7 +109,12 @@ const campsite = {
 
 const payload = { wallet: { documents: [licence, healthCard, rebate, campsite] } };
 
-const renderPage = () => render(<MemoryRouter><AlbertaWalletPage /></MemoryRouter>);
+const renderPage = () =>
+    render(
+        <MemoryRouter>
+            <AlbertaWalletPage />
+        </MemoryRouter>
+    );
 
 describe('AlbertaWalletPage', () => {
     beforeEach(() => jest.clearAllMocks());
@@ -220,14 +243,70 @@ describe('AlbertaWalletPage', () => {
         expect(new Set(patterns).size).toBe(patterns.length);
     });
 
-    it('holds the cards in one stack with a single hint beneath', async () => {
+    it('groups the cards under their category, in the inventory order', async () => {
         mockGet.mockResolvedValue(payload);
         renderPage();
 
-        await waitFor(() => expect(screen.getByTestId('wallet-stack')).toBeInTheDocument());
-        expect(screen.getByTestId('wallet-stack').children).toHaveLength(4);
-        // One hint for the stack, not one per card.
+        await waitFor(() => expect(screen.getByTestId('area-Driving safety')).toBeInTheDocument());
+        const headings = screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent);
+
+        // Driving safety, Family and social supports, Health then Tourism is
+        // the inventory's order, not the order the cards arrive in.
+        expect(headings).toEqual([
+            'Driving safety',
+            'Family and social supports',
+            'Health',
+            'Tourism, sport and outdoor recreation',
+            'Get the Alberta Wallet app',
+        ]);
+    });
+
+    it('names the listed service each category covers', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('area-Health')).toBeInTheDocument());
+        expect(screen.getByTestId('area-Health')).toHaveTextContent('Coverage and benefits');
+        expect(screen.getByTestId('area-Driving safety')).toHaveTextContent('Licensing and owning a vehicle');
+        expect(screen.getByTestId('area-Tourism, sport and outdoor recreation')).toHaveTextContent(
+            'Provincial parks and campgrounds'
+        );
+    });
+
+    it('does not repeat a service name the card already carries', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('area-Family and social supports')).toBeInTheDocument());
+        // The rebate is both a card and the service it is listed under.
+        expect(screen.getAllByText('Alberta Energy Rebate')).toHaveLength(1);
+        expect(screen.getByTestId('area-Family and social supports').querySelectorAll('p')).toHaveLength(0);
+    });
+
+    it('keeps every card, one to its category, and hints once for the wallet', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('wallet-stack-Health')).toBeInTheDocument());
+        const stacks = [
+            'Driving safety',
+            'Family and social supports',
+            'Health',
+            'Tourism, sport and outdoor recreation',
+        ];
+        expect(stacks.map((area) => screen.getByTestId(`wallet-stack-${area}`).children.length)).toEqual([1, 1, 1, 1]);
+        // One hint for the wallet, not one per category.
         expect(screen.getAllByText(/Click or tap a card to bring it forward/)).toHaveLength(1);
+    });
+
+    it('groups a document the inventory does not cover rather than dropping it', async () => {
+        mockGet.mockResolvedValue({
+            wallet: { documents: [{ ...healthCard, serviceArea: undefined, listedService: undefined }] },
+        });
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('area-Other documents')).toBeInTheDocument());
+        expect(screen.getByTestId('wallet-stack-Other documents').children).toHaveLength(1);
     });
 
     it('brings a card forward and presents it, then puts it back', async () => {

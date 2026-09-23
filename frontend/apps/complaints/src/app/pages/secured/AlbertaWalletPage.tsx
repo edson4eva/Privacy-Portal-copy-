@@ -3,6 +3,7 @@ import { GoabIconType } from '@abgov/ui-components-common';
 import { useEffect, useState } from 'react';
 import { get } from 'shared/src/lib/api/dataService';
 import { PpSpacer } from 'shared/src/lib/pp-spacer/PpSpacer';
+import { serviceAreasPresent } from 'shared/src/lib/service-areas/serviceAreas';
 import useWindowWidth from 'shared/src/lib/utils/useWindowWidth';
 
 import albertaShield from '../../../assets/alberta-shield-of-arms.svg';
@@ -41,11 +42,48 @@ interface WalletDocument {
     nameOnCard: string;
     addressLines?: string[];
     fields: WalletField[];
+    /**
+     * The Alberta.ca topic the document's service is listed under, and the
+     * service itself, both from the published services inventory. The same
+     * two attributes the access log files an access under, so a reader meets
+     * one set of categories across the portal.
+     */
+    serviceArea?: string;
+    listedService?: string;
 }
 
 interface Wallet {
     documents: WalletDocument[];
 }
+
+/**
+ * The cards in each category, in the inventory's order, empty groups dropped.
+ *
+ * A group names the services its cards are listed under, except where a card
+ * already carries that name itself: the Alberta Energy Rebate is both a card
+ * and the service it is listed under, and printing it twice, one above the
+ * other, tells a reader nothing.
+ */
+const groupByServiceArea = (
+    documents: WalletDocument[]
+): { area: string; services: string[]; documents: WalletDocument[] }[] =>
+    serviceAreasPresent(documents.map((document) => document.serviceArea)).map((area) => {
+        const inArea = documents.filter((document) => document.serviceArea === area);
+        const named = new Set(inArea.map((document) => document.documentType.toLowerCase()));
+        const services = [...new Set(inArea.map((document) => document.listedService).filter(Boolean))] as string[];
+
+        return {
+            area,
+            services: services.filter((service) => !named.has(service.toLowerCase())),
+            documents: inArea,
+        };
+    });
+
+/**
+ * Documents the inventory does not cover still have to be reachable, so they
+ * are grouped together rather than dropped.
+ */
+const UNFILED = 'Other documents';
 
 const APP_STORE_URL = 'https://apps.apple.com/ca/app/alberta-wallet/id6448763285';
 const GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=ca.ab.gov.wallet';
@@ -118,8 +156,10 @@ const PortraitPlaceholder = (): React.ReactElement => (
 /** Decorative bars only - deliberately not an encoding of anything. */
 const Barcode = (): React.ReactElement => (
     <span className={styles['barcode']} aria-hidden>
-        {[3, 1, 2, 1, 1, 3, 1, 2, 2, 1, 1, 1, 3, 2, 1, 1, 2, 3, 1, 1, 2, 1, 3, 1, 1, 2, 2, 1, 3, 1, 1, 2, 1, 1, 3, 2,
-            1, 1, 2, 1, 3, 1, 2, 1, 1, 3, 1, 1, 2, 2].map((width, index) => (
+        {[
+            3, 1, 2, 1, 1, 3, 1, 2, 2, 1, 1, 1, 3, 2, 1, 1, 2, 3, 1, 1, 2, 1, 3, 1, 1, 2, 2, 1, 3, 1, 1, 2, 1, 1, 3, 2,
+            1, 1, 2, 1, 3, 1, 2, 1, 1, 3, 1, 1, 2, 2,
+        ].map((width, index) => (
             <span key={`${index}-${width}`} style={{ width: `${width}px` }} />
         ))}
     </span>
@@ -455,6 +495,9 @@ export function AlbertaWalletPage(): React.ReactElement {
 
     const documents = wallet?.documents ?? [];
     const presenting = documents.find((document) => document.id === presentingId);
+    const filed = groupByServiceArea(documents);
+    const unfiled = documents.filter((document) => !document.serviceArea);
+    const groups = unfiled.length > 0 ? [...filed, { area: UNFILED, services: [], documents: unfiled }] : filed;
 
     return (
         <div className={styles['container']}>
@@ -490,28 +533,38 @@ export function AlbertaWalletPage(): React.ReactElement {
                     government-issued digital document.
                 </p>
             ) : (
-                <div className={styles['stack']} data-testid="wallet-stack">
-                    {documents.map((document) => {
-                        const isFront = presentingId === document.id;
-                        const bringForward = () => setPresentingId(isFront ? undefined : document.id);
+                <>
+                    {groups.map((group) => (
+                        <section className={styles['area']} key={group.area} data-testid={`area-${group.area}`}>
+                            <h2 className={styles['area-heading']}>{group.area}</h2>
+                            {group.services.length > 0 && (
+                                <p className={styles['area-services']}>{group.services.join(', ')}</p>
+                            )}
+                            <div className={styles['stack']} data-testid={`wallet-stack-${group.area}`}>
+                                {group.documents.map((document) => {
+                                    const isFront = presentingId === document.id;
+                                    const bringForward = () => setPresentingId(isFront ? undefined : document.id);
 
-                        return document.layout === 'licence' ? (
-                            <LicenceCard
-                                key={document.id}
-                                document={document}
-                                onPresent={bringForward}
-                                isFront={isFront}
-                            />
-                        ) : (
-                            <DocumentCard
-                                key={document.id}
-                                document={document}
-                                onPresent={bringForward}
-                                isFront={isFront}
-                            />
-                        );
-                    })}
-                </div>
+                                    return document.layout === 'licence' ? (
+                                        <LicenceCard
+                                            key={document.id}
+                                            document={document}
+                                            onPresent={bringForward}
+                                            isFront={isFront}
+                                        />
+                                    ) : (
+                                        <DocumentCard
+                                            key={document.id}
+                                            document={document}
+                                            onPresent={bringForward}
+                                            isFront={isFront}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        </section>
+                    ))}
+                </>
             )}
 
             <PpSpacer vSpacing="s" />
@@ -532,7 +585,11 @@ export function AlbertaWalletPage(): React.ReactElement {
                             document without seeing the rest of your information.
                         </p>
                         <PpSpacer vSpacing="m" />
-                        <GoabButton type="secondary" onClick={() => setPresentingId(undefined)} testId="stop-presenting">
+                        <GoabButton
+                            type="secondary"
+                            onClick={() => setPresentingId(undefined)}
+                            testId="stop-presenting"
+                        >
                             Done
                         </GoabButton>
                     </div>
@@ -548,12 +605,7 @@ export function AlbertaWalletPage(): React.ReactElement {
                         anytime, anywhere.
                     </p>
                     <div className={styles['stores']}>
-                        <StoreBadge
-                            href={APP_STORE_URL}
-                            icon="logo-apple"
-                            small="Download on the"
-                            large="App Store"
-                        />
+                        <StoreBadge href={APP_STORE_URL} icon="logo-apple" small="Download on the" large="App Store" />
                         <StoreBadge
                             href={GOOGLE_PLAY_URL}
                             icon="logo-google-playstore"

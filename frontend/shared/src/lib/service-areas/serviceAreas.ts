@@ -1,6 +1,7 @@
 /**
- * The categories an access can belong to: the topics Alberta.ca groups its
- * services under.
+ * The categories anything in the portal can belong to: the topics Alberta.ca
+ * groups its services under. Used by the access log and by the wallet, so
+ * both file things under the same names.
  *
  * Taken verbatim from "Alberta.ca: All Services Inventory", the summary tab of
  * the services inventory (source: https://www.alberta.ca/all-services and each
@@ -40,9 +41,9 @@ export const SERVICE_AREAS = [
 export type ServiceArea = (typeof SERVICE_AREAS)[number];
 
 /**
- * The categories to offer, being those some access actually belongs to, in the
- * inventory's order. Offering all 23 would give a reader 18 filters that can
- * only ever return nothing.
+ * The categories in play, being those something actually belongs to, in the
+ * inventory's order. Offering all 23 would give a reader 18 categories that
+ * can only ever be empty.
  */
 export const serviceAreasPresent = (areas: (string | undefined)[]): string[] => {
     const present = new Set(areas.filter((area): area is string => Boolean(area)));

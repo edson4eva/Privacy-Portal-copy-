@@ -14,7 +14,7 @@ import PageTitle from 'shared/src/lib/page-title/PageTitle';
 import { PpSpacer } from 'shared/src/lib/pp-spacer/PpSpacer';
 import useWindowWidth from 'shared/src/lib/utils/useWindowWidth';
 
-import { serviceAreasPresent } from './serviceAreas';
+import { serviceAreasPresent } from 'shared/src/lib/service-areas/serviceAreas';
 import { StaffAccessRecord, formatAccessedAt, isUnderReview } from './staffAccess';
 import styles from './StaffAccessPage.module.scss';
 

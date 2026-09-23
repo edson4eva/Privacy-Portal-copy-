@@ -42,6 +42,25 @@
    brought forward pushes the rest down to clear itself. The overlap is a
    percentage of the stack's width, so it holds at any card size. */
 
+/* ---- Categories ---------------------------------------------------------
+   Cards are grouped under the Alberta.ca topic their document's service is
+   listed under, so the wallet is read the same way as the access log. */
+
+.area + .area {
+    margin-top: var(--goa-space-xl);
+}
+
+.area-heading {
+    font: var(--goa-typography-heading-s);
+    color: var(--goa-color-text-default);
+    margin: 0;
+}
+
+.area-services {
+    color: var(--goa-color-text-secondary);
+    margin: var(--goa-space-2xs) 0 var(--goa-space-m) 0;
+}
+
 .stack {
     width: 100%;
     max-width: 22rem;
@@ -49,6 +68,10 @@
 
 .stack > * + * {
     margin-top: -40%;
+}
+
+.card-front:not(:last-child) {
+    margin-bottom: 40%;
 }
 
 .card,
@@ -78,10 +101,11 @@
     transform: translateY(-0.4rem);
 }
 
-/* The card that has been brought forward: lifted, and given room beneath it. */
+/* The card that has been brought forward: lifted, and given room beneath it
+   only when another card overlaps it there. Grouping by category left some
+   stacks holding a single card, and that card needs no room made below it. */
 .card-front {
     z-index: 3;
-    margin-bottom: 40%;
     transform: translateY(-0.4rem);
     box-shadow:
         0 -1px 0 rgba(255, 255, 255, 0.55) inset,
