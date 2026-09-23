@@ -382,25 +382,49 @@ describe('AlbertaWalletPage', () => {
         renderPage();
 
         await waitFor(() => expect(screen.getByTestId('service-link-mobile-health-card')).toBeInTheDocument());
+        // The label states the whole address, not just the host: two of these
+        // cards are pages on alberta.ca, and "Go to alberta.ca" on both said
+        // nothing about which page either opened. Compared exactly, because a
+        // substring match would let the host-only label pass again.
         const expected: [string, string, string][] = [
             ['mobile-drivers-licence', 'eservices.alberta.ca', 'https://eservices.alberta.ca/'],
             ['mobile-health-card', 'albertahealthservices.ca', 'https://www.albertahealthservices.ca/'],
-            ['alberta-energy-rebate-card', 'alberta.ca', 'https://www.alberta.ca/alberta-energy-rebate'],
+            [
+                'alberta-energy-rebate-card',
+                'alberta.ca/alberta-energy-rebate',
+                'https://www.alberta.ca/alberta-energy-rebate',
+            ],
             [
                 'campsite-reservation',
-                'albertaparks.ca',
+                'albertaparks.ca/albertaparks-ca/visit-our-parks/camping-in-alberta-parks',
                 'https://www.albertaparks.ca/albertaparks-ca/visit-our-parks/camping-in-alberta-parks/',
             ],
-            ['apprenticeship-credential', 'alberta.ca', 'https://www.alberta.ca/apprenticeship-industry-training'],
+            [
+                'apprenticeship-credential',
+                'alberta.ca/apprenticeship-industry-training',
+                'https://www.alberta.ca/apprenticeship-industry-training',
+            ],
         ];
 
-        for (const [id, host, href] of expected) {
+        for (const [id, address, href] of expected) {
             const link = screen.getByTestId(`service-link-${id}`);
             expect(link).toHaveAttribute('href', href);
             expect(link).toHaveAttribute('target', '_blank');
             expect(link).toHaveAttribute('rel', 'noopener noreferrer');
-            expect(link).toHaveTextContent(`Go to ${host}`);
+            expect(link.textContent?.trim()).toEqual(`Go to ${address}`);
         }
+    });
+
+    it('tells the two alberta.ca links apart', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('service-link-apprenticeship-credential')).toBeInTheDocument());
+        const rebate = screen.getByTestId('service-link-alberta-energy-rebate-card').textContent ?? '';
+        const trades = screen.getByTestId('service-link-apprenticeship-credential').textContent ?? '';
+
+        expect(trades).toContain('alberta.ca/apprenticeship-industry-training');
+        expect(rebate).not.toEqual(trades);
     });
 
     it('carries no advertising tracking on the rebate link', async () => {

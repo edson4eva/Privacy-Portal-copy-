@@ -87,10 +87,16 @@ const groupByServiceArea = (
  */
 const UNFILED = 'Other documents';
 
-/** The host a service link reaches, for naming the link honestly. */
-const siteName = (url: string | undefined): string => {
+/**
+ * The address a service link reaches, written out so the reader can see where
+ * it goes before choosing it. The host alone is not enough: two of these
+ * cards are pages on alberta.ca, and "Go to alberta.ca" on both said nothing
+ * about which page either one opened.
+ */
+const linkLabel = (url: string | undefined): string => {
     try {
-        return new URL(url ?? '').host.replace(/^www\./, '');
+        const address = new URL(url ?? '');
+        return `${address.host}${address.pathname}`.replace(/^www\./, '').replace(/\/$/, '');
     } catch {
         return 'the service website';
     }
@@ -574,7 +580,7 @@ export function AlbertaWalletPage(): React.ReactElement {
                                             rel="noopener noreferrer"
                                             data-testid={`service-link-${document.id}`}
                                         >
-                                            Go to {siteName(document.serviceUrl)}
+                                            Go to {linkLabel(document.serviceUrl)}
                                             <GoabIcon type="open" size="small" />
                                         </a>
                                     ))}

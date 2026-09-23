@@ -79,11 +79,14 @@
     margin-top: var(--goa-space-s);
 }
 
-/* Beneath each card, naming the site it reaches. */
+/* Beneath each card, naming the address it reaches. A long path wraps rather
+   than pushing the card out of the column. */
 .service-link {
     display: inline-flex;
     align-items: center;
     gap: var(--goa-space-2xs);
+    max-width: 22rem;
+    overflow-wrap: anywhere;
 }
 
 .card,
