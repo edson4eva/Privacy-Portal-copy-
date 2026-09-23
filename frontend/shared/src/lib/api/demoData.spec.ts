@@ -1,4 +1,4 @@
-import { getDemoResponse } from './demoData';
+import { DEMO_USER_MENU, getDemoResponse } from './demoData';
 
 /**
  * The element naming the Canada Revenue Agency assessment. Income-tested
@@ -68,5 +68,39 @@ describe('demo data: the CRA income assessment', () => {
 
         expect(privacy?.content).toMatch(CRA_ELEMENT);
         expect(privacy?.content).toMatch(/calendar year/);
+    });
+});
+
+interface MenuEntry {
+    type: string;
+    heading: string;
+    href?: string;
+    items?: MenuEntry[];
+}
+
+describe('demo data: the side menu', () => {
+    const left = DEMO_USER_MENU.left as MenuEntry[];
+    const privacyPortal = () => left.find((entry) => entry.heading === 'Privacy Portal');
+
+    it('keeps the citizen-facing experience inside the Privacy Portal group', () => {
+        const headings = privacyPortal()?.items?.map((item) => item.heading);
+
+        expect(headings).toEqual([
+            'Privacy features',
+            'Service activity',
+            'Citizen-facing experience',
+            'Privacy complaint',
+        ]);
+    });
+
+    it('does not also leave it at the top level', () => {
+        expect(left.map((entry) => entry.heading)).not.toContain('Citizen-facing experience');
+    });
+
+    it('points it at the access log', () => {
+        const entry = privacyPortal()?.items?.find((item) => item.heading === 'Citizen-facing experience');
+
+        expect(entry?.type).toBe('link');
+        expect(entry?.href).toBe('/account-history/transparency');
     });
 });

@@ -1776,14 +1776,9 @@ export const DEMO_USER_MENU = {
             items: [
                 { type: 'link', heading: 'Privacy features', href: '/complaints/features' },
                 { type: 'link', heading: 'Service activity', href: '/account-history/accessed-services' },
+                { type: 'link', heading: 'Citizen-facing experience', href: '/account-history/transparency' },
                 { type: 'link', heading: 'Privacy complaint', href: '/complaints/file-complaint' },
             ],
-        },
-        {
-            type: 'link',
-            heading: 'Citizen-facing experience',
-            icon: 'eye',
-            href: '/account-history/transparency',
         },
         { type: 'link', heading: 'Security settings', icon: 'settings', href: '/complaints/security-settings' },
         { type: 'link', heading: 'Account activity', icon: 'time', href: '/complaints/account-activity' },
