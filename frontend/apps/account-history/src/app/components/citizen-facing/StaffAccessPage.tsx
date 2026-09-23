@@ -90,7 +90,7 @@ export function StaffAccessPage({ basePath = '/transparency' }: { basePath?: str
             <PpSpacer vSpacing="m" />
 
             <div data-testid="access-notice">
-                <GoabCallout type="information" size="medium" maxWidth="48rem">
+                <GoabCallout type="information" size="large" maxWidth="48rem">
                     Every access is recorded with the reason the employee gave for it. Staff may look at your
                     information to decide eligibility, to correct a payment, to verify who you are, to answer your own
                     inquiry, or to meet a legal obligation. If an entry looks wrong to you, you can file a privacy

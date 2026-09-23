@@ -33,7 +33,7 @@
     --goa-callout-l-heading-size: var(--goa-typography-heading-m);
     --goa-callout-l-content-gap: var(--goa-space-m);
     --goa-callout-info-color-bg-statusbar: none;
-    --goa-callout-info-icon-color: var(--goa-color-information-default);
+    --goa-callout-info-icon-color: var(--goa-color-info-default);
     --goa-callout-warning-icon-color: var(--goa-color-warning-dark);
     --goa-callout-success-icon-color: var(--goa-color-success-default);
     --goa-callout-emergency-icon-color: var(--goa-color-emergency-default);
@@ -46,7 +46,7 @@
     --goa-callout-success-color-bg-content: none;
     --goa-callout-emergency-color-bg-content: none;
     --goa-callout-l-content-padding: var(--goa-space-l) var(--goa-space-l) var(--goa-space-l) 0px;
-    --goa-callout-info-border-color: var(--goa-color-information-default);
+    --goa-callout-info-border-color: var(--goa-color-info-default);
     --goa-callout-warning-border-color: var(--goa-color-warning-dark);
     --goa-callout-success-border-color: var(--goa-color-success-default);
     --goa-callout-emergency-border-color: var(--goa-color-emergency-default);
