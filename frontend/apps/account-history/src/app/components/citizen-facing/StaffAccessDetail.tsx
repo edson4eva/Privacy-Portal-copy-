@@ -49,6 +49,16 @@ const Section = ({
 
 const list = (values?: string[]): string | undefined => (values && values.length ? values.join(', ') : undefined);
 
+/** Each element on its own line, so a long list can be read down rather than across. */
+const bullets = (values?: string[], testId?: string): React.ReactElement | undefined =>
+    values && values.length ? (
+        <ul className={styles['element-list']} data-testid={testId}>
+            {values.map((value) => (
+                <li key={value}>{value}</li>
+            ))}
+        </ul>
+    ) : undefined;
+
 export function StaffAccessDetail({ basePath = '/transparency' }: { basePath?: string }): React.ReactElement {
     const windowWidth = useWindowWidth();
     const navigate = useNavigate();
@@ -171,7 +181,7 @@ export function StaffAccessDetail({ basePath = '/transparency' }: { basePath?: s
 
                 <Section heading="What they looked at" testId="section-what">
                     <Row label="Category" value={list(record.categories)} />
-                    <Row label="Type of information accessed" value={list(record.information)} />
+                    <Row label="Type of information accessed" value={bullets(record.information, 'information-list')} />
                     <Row label="Sensitivity" value={record.sensitivity} />
                     <Row label="What was done" value={record.accessType} />
                     <Row label="Identifiers on screen" value={record.identifierDisplay} />

@@ -203,10 +203,52 @@ describe('StaffAccessDetail', () => {
         await waitFor(() => expect(screen.getByTestId('section-what')).toBeInTheDocument());
         const what = screen.getByTestId('section-what');
         expect(what).toHaveTextContent('Financial');
-        expect(what).toHaveTextContent('Personal income, payment history');
         expect(what).toHaveTextContent('Protected B');
         expect(what).toHaveTextContent('Viewed');
         expect(what).toHaveTextContent('last three digits only');
+    });
+
+    it('lists each piece of information on its own line', async () => {
+        mockGet.mockResolvedValue({
+            staffAccess: {
+                record: {
+                    ...record,
+                    information: [
+                        'Benefit payment history',
+                        'direct deposit details',
+                        'Canada Revenue Agency (CRA) assessed income for the 2025 tax year',
+                    ],
+                },
+            },
+        });
+        renderDetail();
+
+        await waitFor(() => expect(screen.getByTestId('information-list')).toBeInTheDocument());
+        const items = screen.getByTestId('information-list').querySelectorAll('li');
+        expect([...items].map((item) => item.textContent)).toEqual([
+            'Benefit payment history',
+            'direct deposit details',
+            'Canada Revenue Agency (CRA) assessed income for the 2025 tax year',
+        ]);
+    });
+
+    it('lists a single element as a list too, rather than switching shape', async () => {
+        mockGet.mockResolvedValue({
+            staffAccess: { record: { ...record, information: ['Client or case number'] } },
+        });
+        renderDetail();
+
+        await waitFor(() => expect(screen.getByTestId('information-list')).toBeInTheDocument());
+        expect(screen.getByTestId('information-list').querySelectorAll('li')).toHaveLength(1);
+    });
+
+    it('leaves the row out when no elements were recorded', async () => {
+        mockGet.mockResolvedValue({ staffAccess: { record: { ...record, information: [] } } });
+        renderDetail();
+
+        await waitFor(() => expect(screen.getByTestId('section-what')).toBeInTheDocument());
+        expect(screen.queryByTestId('information-list')).not.toBeInTheDocument();
+        expect(screen.getByTestId('section-what')).not.toHaveTextContent('Type of information accessed');
     });
 
     it('answers why, including the authority relied on', async () => {

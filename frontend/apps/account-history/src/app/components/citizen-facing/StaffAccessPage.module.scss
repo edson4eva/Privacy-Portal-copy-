@@ -285,6 +285,16 @@
     overflow-wrap: break-word;
 }
 
+.element-list {
+    list-style: disc;
+    margin: 0;
+    padding-left: 1.15rem;
+
+    li + li {
+        margin-top: var(--goa-space-2xs);
+    }
+}
+
 .actions {
     display: flex;
     flex-wrap: wrap;
