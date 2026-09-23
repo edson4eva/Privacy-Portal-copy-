@@ -300,7 +300,7 @@ describe('AlbertaWalletPage', () => {
         ];
         expect(stacks.map((area) => screen.getByTestId(`wallet-stack-${area}`).children.length)).toEqual([1, 1, 1, 1]);
         // One hint for the wallet, not one per category.
-        expect(screen.getAllByText(/Choose a card to open the service it belongs to/)).toHaveLength(1);
+        expect(screen.getAllByText(/Choose a card, or the link beneath it/)).toHaveLength(1);
     });
 
     it('groups a document the inventory does not cover rather than dropping it', async () => {
@@ -311,33 +311,6 @@ describe('AlbertaWalletPage', () => {
 
         await waitFor(() => expect(screen.getByTestId('area-Other documents')).toBeInTheDocument());
         expect(screen.getByTestId('wallet-stack-Other documents').children).toHaveLength(1);
-    });
-
-    it('brings a card forward and presents it, then puts it back', async () => {
-        mockGet.mockResolvedValue(payload);
-        renderPage();
-
-        await waitFor(() => expect(screen.getByTestId('wallet-card-mobile-health-card')).toBeInTheDocument());
-        expect(screen.queryByTestId('present-panel')).not.toBeInTheDocument();
-
-        fireEvent.click(screen.getByTestId('present-mobile-health-card'));
-        expect(screen.getByTestId('present-panel')).toBeInTheDocument();
-
-        // Choosing it again returns the card to the stack.
-        fireEvent.click(screen.getByTestId('present-mobile-health-card'));
-        expect(screen.queryByTestId('present-panel')).not.toBeInTheDocument();
-    });
-
-    it('brings a different card forward without leaving the first in front', async () => {
-        mockGet.mockResolvedValue(payload);
-        renderPage();
-
-        await waitFor(() => expect(screen.getByTestId('wallet-card-campsite-reservation')).toBeInTheDocument());
-
-        fireEvent.click(screen.getByTestId('present-mobile-health-card'));
-        fireEvent.click(screen.getByTestId('present-campsite-reservation'));
-
-        expect(screen.getByTestId('present-panel')).toHaveTextContent('Campsite Reservation');
     });
 
     it('opens each card at the website of the service it belongs to', async () => {
@@ -365,6 +338,31 @@ describe('AlbertaWalletPage', () => {
         }
     });
 
+    it('offers a link beneath each card, naming the site it reaches', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('service-link-mobile-health-card')).toBeInTheDocument());
+        const expected: [string, string, string][] = [
+            ['mobile-drivers-licence', 'eservices.alberta.ca', 'https://eservices.alberta.ca/'],
+            ['mobile-health-card', 'albertahealthservices.ca', 'https://www.albertahealthservices.ca/'],
+            ['alberta-energy-rebate-card', 'alberta.ca', 'https://www.alberta.ca/alberta-energy-rebate'],
+            [
+                'campsite-reservation',
+                'albertaparks.ca',
+                'https://www.albertaparks.ca/albertaparks-ca/visit-our-parks/camping-in-alberta-parks/',
+            ],
+        ];
+
+        for (const [id, host, href] of expected) {
+            const link = screen.getByTestId(`service-link-${id}`);
+            expect(link).toHaveAttribute('href', href);
+            expect(link).toHaveAttribute('target', '_blank');
+            expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+            expect(link).toHaveTextContent(`Go to ${host}`);
+        }
+    });
+
     it('carries no advertising tracking on the rebate link', async () => {
         mockGet.mockResolvedValue(payload);
         renderPage();
@@ -384,8 +382,8 @@ describe('AlbertaWalletPage', () => {
         const card = screen.getByTestId('wallet-card-mobile-health-card');
         expect(card.tagName).toBe('DIV');
         expect(card).not.toHaveAttribute('href');
-        // Presenting is still offered, so the card is not left inert.
-        expect(screen.getByTestId('present-mobile-health-card')).toBeInTheDocument();
+        // And no link is offered beneath it either, rather than one to nowhere.
+        expect(screen.queryByTestId('service-link-mobile-health-card')).not.toBeInTheDocument();
     });
 
     it('links to both app stores in a new tab', async () => {

@@ -70,17 +70,20 @@
     margin-top: -40%;
 }
 
-.card-front:not(:last-child) {
-    margin-bottom: 40%;
-}
-
 /* Presenting a card, beneath the stack rather than on the card, since the
    card itself is now a link to its service. */
 .card-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--goa-space-xs);
+    gap: var(--goa-space-m);
     margin-top: var(--goa-space-s);
+}
+
+/* Beneath each card, naming the site it reaches. */
+.service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--goa-space-2xs);
 }
 
 .card,
@@ -108,18 +111,6 @@
 .card:hover,
 .licence:hover {
     transform: translateY(-0.4rem);
-}
-
-/* The card that has been brought forward: lifted, and given room beneath it
-   only when another card overlaps it there. Grouping by category left some
-   stacks holding a single card, and that card needs no room made below it. */
-.card-front {
-    z-index: 3;
-    transform: translateY(-0.4rem);
-    box-shadow:
-        0 -1px 0 rgba(255, 255, 255, 0.55) inset,
-        0 20px 38px rgba(15, 25, 35, 0.3),
-        0 4px 10px rgba(15, 25, 35, 0.18);
 }
 
 .card {
@@ -249,21 +240,6 @@
     gap: var(--goa-space-xs);
     color: var(--goa-color-text-secondary);
     font-size: 0.9rem;
-}
-
-/* ---- Presentation panel, shown when a card is activated ---- */
-
-.present {
-    max-width: 22rem;
-    border-radius: 1.15rem;
-    border: 1px solid var(--goa-color-greyscale-200);
-    border-radius: 6px;
-    padding: var(--goa-space-l);
-    text-align: center;
-}
-
-.present-code {
-    color: var(--goa-color-text-default);
 }
 
 /* ---- App promotion banner ---- */

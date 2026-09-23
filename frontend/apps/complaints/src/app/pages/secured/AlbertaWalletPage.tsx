@@ -87,6 +87,15 @@ const groupByServiceArea = (
  */
 const UNFILED = 'Other documents';
 
+/** The host a service link reaches, for naming the link honestly. */
+const siteName = (url: string | undefined): string => {
+    try {
+        return new URL(url ?? '').host.replace(/^www\./, '');
+    } catch {
+        return 'the service website';
+    }
+};
+
 const APP_STORE_URL = 'https://apps.apple.com/ca/app/alberta-wallet/id6448763285';
 const GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=ca.ab.gov.wallet';
 
@@ -198,11 +207,11 @@ const CardShell = ({
         </div>
     );
 
-const LicenceCard = ({ document, isFront }: { document: WalletDocument; isFront: boolean }): React.ReactElement => {
+const LicenceCard = ({ document }: { document: WalletDocument }): React.ReactElement => {
     const licence = document.licence;
 
     return (
-        <CardShell document={document} className={`${styles['licence']} ${isFront ? styles['card-front'] : ''}`}>
+        <CardShell document={document} className={styles['licence']}>
             <div className={styles['licence-top']}>
                 <span className={styles['licence-wordmark']} aria-hidden>
                     Alberta
@@ -395,8 +404,8 @@ const QrPlaceholder = ({ seed }: { seed: string }): React.ReactElement => {
     );
 };
 
-const DocumentCard = ({ document, isFront }: { document: WalletDocument; isFront: boolean }): React.ReactElement => (
-    <CardShell document={document} className={`${styles['card']} ${isFront ? styles['card-front'] : ''}`}>
+const DocumentCard = ({ document }: { document: WalletDocument }): React.ReactElement => (
+    <CardShell document={document} className={styles['card']}>
         <div className={styles['card-header']}>
             <span className={styles['card-type']}>
                 <span className={styles['card-icon']}>
@@ -475,7 +484,6 @@ export function AlbertaWalletPage(): React.ReactElement {
 
     const [wallet, setWallet] = useState<Wallet>();
     const [isLoading, setIsLoading] = useState(true);
-    const [presentingId, setPresentingId] = useState<string>();
     const [showAddNotice, setShowAddNotice] = useState(false);
 
     useEffect(() => {
@@ -499,7 +507,6 @@ export function AlbertaWalletPage(): React.ReactElement {
     }
 
     const documents = wallet?.documents ?? [];
-    const presenting = documents.find((document) => document.id === presentingId);
     const filed = groupByServiceArea(documents);
     const unfiled = documents.filter((document) => !document.serviceArea);
     const groups = unfiled.length > 0 ? [...filed, { area: UNFILED, services: [], documents: unfiled }] : filed;
@@ -548,40 +555,29 @@ export function AlbertaWalletPage(): React.ReactElement {
                             <div className={styles['stack']} data-testid={`wallet-stack-${group.area}`}>
                                 {group.documents.map((document) =>
                                     document.layout === 'licence' ? (
-                                        <LicenceCard
-                                            key={document.id}
-                                            document={document}
-                                            isFront={presentingId === document.id}
-                                        />
+                                        <LicenceCard key={document.id} document={document} />
                                     ) : (
-                                        <DocumentCard
-                                            key={document.id}
-                                            document={document}
-                                            isFront={presentingId === document.id}
-                                        />
+                                        <DocumentCard key={document.id} document={document} />
                                     )
                                 )}
                             </div>
 
-                            {/* Choosing a card now opens its service, so presenting has a
-                                control of its own. It sits outside the stack, where a card
-                                overlapping the one above it cannot cover it. */}
                             <div className={styles['card-actions']}>
-                                {group.documents.map((document) => (
-                                    <GoabButton
-                                        key={document.id}
-                                        type="tertiary"
-                                        leadingIcon="qr-code"
-                                        onClick={() =>
-                                            setPresentingId(presentingId === document.id ? undefined : document.id)
-                                        }
-                                        testId={`present-${document.id}`}
-                                    >
-                                        {presentingId === document.id
-                                            ? `Stop presenting ${document.documentType}`
-                                            : `Present ${document.documentType}`}
-                                    </GoabButton>
-                                ))}
+                                {group.documents
+                                    .filter((document) => document.serviceUrl)
+                                    .map((document) => (
+                                        <a
+                                            key={document.id}
+                                            className={styles['service-link']}
+                                            href={document.serviceUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            data-testid={`service-link-${document.id}`}
+                                        >
+                                            Go to {siteName(document.serviceUrl)}
+                                            <GoabIcon type="open" size="small" />
+                                        </a>
+                                    ))}
                             </div>
                         </section>
                     ))}
@@ -591,32 +587,8 @@ export function AlbertaWalletPage(): React.ReactElement {
             <PpSpacer vSpacing="s" />
             <div className={styles['hint']}>
                 <GoabIcon type="information-circle" size="small" />
-                Choose a card to open the service it belongs to, or present it to a verifier
+                Choose a card, or the link beneath it, to go to the service the document belongs to
             </div>
-
-            {presenting && (
-                <>
-                    <div className={styles['present']} data-testid="present-panel">
-                        <div className={styles['present-code']}>
-                            <GoabIcon type="qr-code" size="4" />
-                        </div>
-                        <PpSpacer vSpacing="s" />
-                        <p>
-                            Presenting your {presenting.documentType}. A verifier scans this code to confirm the
-                            document without seeing the rest of your information.
-                        </p>
-                        <PpSpacer vSpacing="m" />
-                        <GoabButton
-                            type="secondary"
-                            onClick={() => setPresentingId(undefined)}
-                            testId="stop-presenting"
-                        >
-                            Done
-                        </GoabButton>
-                    </div>
-                    <PpSpacer vSpacing="xl" />
-                </>
-            )}
 
             <div className={styles['promo']}>
                 <div className={styles['promo-copy']}>
