@@ -16,6 +16,12 @@ export interface StaffAccessRecord {
     /** Who accessed: name, account, position and program area. */
     name: string;
     username: string;
+    /**
+     * Identifies the position rather than the person holding it. The list
+     * shows this instead of the network account, because an account name is
+     * built from a person's own name and so identifies them just as plainly.
+     */
+    positionId?: string;
     role: string;
     unit: string;
     /** When, as an ISO timestamp; rendered in Alberta time. */

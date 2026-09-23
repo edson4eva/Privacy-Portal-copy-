@@ -100,7 +100,9 @@ export function StaffAccessPage({ basePath = '/transparency' }: { basePath?: str
                         return (
                             <div className={styles['row']} key={record.id} data-testid={`row-${record.id}`}>
                                 <span>
-                                    <span className={styles['username']}>{record.username}</span>
+                                    <span className={styles['identifier']} data-testid={`position-${record.id}`}>
+                                        {record.positionId ?? 'Position not recorded'}
+                                    </span>
                                     <span className={styles['who-role']}>{record.role},</span>
                                     {record.organization && (
                                         <span className={styles['who-org']} data-testid={`org-${record.id}`}>

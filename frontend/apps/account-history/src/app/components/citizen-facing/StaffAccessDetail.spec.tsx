@@ -49,6 +49,7 @@ const record = {
     caseNumber: 'SR-448271',
     name: 'J. Doe',
     username: 'jdoe01',
+    positionId: 'POS-IS-0142',
     role: 'Benefits Assessment Officer 2',
     ministry: 'Seniors, Community and Social Services',
     unit: 'Income Support - Edmonton North',
@@ -112,6 +113,7 @@ describe('StaffAccessDetail', () => {
         expect(who).toHaveTextContent('J. Doe');
         expect(who).toHaveTextContent('jdoe01');
         expect(who).toHaveTextContent('Benefits Assessment Officer 2');
+        expect(who).toHaveTextContent('POS-IS-0142');
         expect(who).toHaveTextContent('Seniors, Community and Social Services');
         expect(who).toHaveTextContent('Income Support - Edmonton North');
         expect(who).toHaveTextContent('Employee');

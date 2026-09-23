@@ -62,6 +62,7 @@ const record = (id: string, overrides: Record<string, unknown> = {}) => ({
     id,
     name: 'J. Doe',
     username: 'jdoe01',
+    positionId: 'POS-IS-0142',
     role: 'Benefits Officer 2',
     unit: 'Income Support - Edmonton North',
     accessedAt: '2026-09-19T20:32:00.000Z',
@@ -149,6 +150,7 @@ describe('StaffAccessPage', () => {
                     record('sa-1'),
                     record('sa-11', {
                         username: 'impark-ar-0142',
+                        positionId: 'POS-AR-0142',
                         role: 'Authorized requester — parking enforcement',
                         organization: 'Imperial Parking Canada Corporation',
                         unit: 'Parking enforcement — Calgary',
@@ -162,7 +164,7 @@ describe('StaffAccessPage', () => {
         await waitFor(() => expect(screen.getByTestId('row-sa-11')).toBeInTheDocument());
         const row = screen.getByTestId('row-sa-11');
         expect(row).toHaveTextContent('Imperial Parking Canada Corporation');
-        expect(row).toHaveTextContent('impark-ar-0142');
+        expect(row).toHaveTextContent('POS-AR-0142');
         expect(row).toHaveTextContent('Parking enforcement — Calgary');
         expect(screen.queryByTestId('org-sa-1')).not.toBeInTheDocument();
     });
@@ -204,16 +206,26 @@ describe('StaffAccessPage', () => {
         expect(mockGet).toHaveBeenCalledWith('/v1/staff-access');
     });
 
-    it('shows the account used, the role and the unit, but not the name', async () => {
+    it('identifies the position, not the person holding it', async () => {
         mockGet.mockResolvedValue(payload);
         renderPage();
 
         await waitFor(() => expect(screen.getByTestId('row-sa-1')).toBeInTheDocument());
         const row = screen.getByTestId('row-sa-1');
-        expect(row).toHaveTextContent('jdoe01');
+        expect(screen.getByTestId('position-sa-1')).toHaveTextContent('POS-IS-0142');
         expect(row).toHaveTextContent('Benefits Officer 2');
         expect(row).toHaveTextContent('Income Support - Edmonton North');
         expect(row).not.toHaveTextContent('J. Doe');
+        expect(row).not.toHaveTextContent('jdoe01');
+    });
+
+    it('says so rather than falling back to an account when no position is recorded', async () => {
+        mockGet.mockResolvedValue({ staffAccess: { records: [record('sa-1', { positionId: undefined })] } });
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('row-sa-1')).toBeInTheDocument());
+        expect(screen.getByTestId('position-sa-1')).toHaveTextContent('Position not recorded');
+        expect(screen.getByTestId('row-sa-1')).not.toHaveTextContent('jdoe01');
     });
 
     it('shows the information seen and the reason given', async () => {

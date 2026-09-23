@@ -141,11 +141,19 @@ export function StaffAccessDetail({ basePath = '/transparency' }: { basePath?: s
                         label="Name and account"
                         value={
                             <>
-                                {record.name} <span className={styles['username']}>{record.username}</span>
+                                {record.name} <span className={styles['identifier']}>{record.username}</span>
                             </>
                         }
                     />
                     <Row label="Position" value={record.role} />
+                    <Row
+                        label="Position ID"
+                        value={
+                            record.positionId ? (
+                                <span className={styles['identifier']}>{record.positionId}</span>
+                            ) : undefined
+                        }
+                    />
                     <Row label="Organization" value={record.organization} />
                     <Row label="Ministry" value={record.ministry} />
                     <Row label="Program area" value={record.unit} />

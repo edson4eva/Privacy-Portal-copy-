@@ -92,8 +92,8 @@
 /* Who accessed: the account used, then the role and unit behind it. The
    employee's name is not on the list; it is on the record itself. */
 
-/* The account is an identifier, so it is set as one. */
-.username {
+/* A position ID or an account name is an identifier, so it is set as one. */
+.identifier {
     font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
     font-size: 0.85em;
     background: #f3f1ee;
