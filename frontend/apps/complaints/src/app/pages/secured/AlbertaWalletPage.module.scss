@@ -68,7 +68,9 @@
         0 -1px 0 rgba(255, 255, 255, 0.5) inset,
         0 10px 24px rgba(15, 25, 35, 0.22),
         0 2px 6px rgba(15, 25, 35, 0.14);
-    transition: transform 160ms ease-out, box-shadow 160ms ease-out;
+    transition:
+        transform 160ms ease-out,
+        box-shadow 160ms ease-out;
 }
 
 .card:hover,
@@ -96,7 +98,7 @@
 }
 
 .card:focus-visible {
-    outline: 3px solid var(--goa-color-interactive-focus, #004f84);
+    outline: 3px solid var(--goa-color-interactive-focus);
     outline-offset: 2px;
 }
 
@@ -116,7 +118,7 @@
 }
 
 .card-icon {
-    color: #0081a2;
+    color: var(--goa-color-brand-default);
     display: inline-flex;
 }
 
@@ -132,7 +134,7 @@
     display: inline-block;
     width: 0.45rem;
     height: 0.45rem;
-    background-color: #0081a2;
+    background-color: var(--goa-color-brand-default);
     margin-left: 0.15rem;
     vertical-align: 0.1em;
 }
@@ -197,7 +199,7 @@
     display: block;
     width: 17cqw;
     padding: 0.8cqw;
-    background: #ffffff;
+    background: var(--goa-color-greyscale-white);
     border: 1px solid rgba(26, 39, 51, 0.25);
 }
 
@@ -242,7 +244,7 @@
     background: linear-gradient(105deg, #14657a 0%, #0f7f96 100%);
     border-radius: 6px;
     padding: var(--goa-space-xl);
-    color: #ffffff;
+    color: var(--goa-color-greyscale-white);
 }
 
 .promo-copy {
@@ -253,11 +255,11 @@
 .promo-heading {
     font: var(--goa-typography-heading-l);
     margin: 0 0 var(--goa-space-s);
-    color: #ffffff;
+    color: var(--goa-color-greyscale-white);
 }
 
 .promo-text {
-    color: #ffffff;
+    color: var(--goa-color-greyscale-white);
     max-width: 30rem;
 }
 
@@ -273,7 +275,7 @@
     align-items: center;
     gap: var(--goa-space-xs);
     background-color: #000000;
-    color: #ffffff;
+    color: var(--goa-color-greyscale-white);
     text-decoration: none;
     border: 1px solid #4a4a4a;
     border-radius: 6px;
@@ -285,7 +287,7 @@
 }
 
 .store:focus-visible {
-    outline: 3px solid #ffffff;
+    outline: 3px solid var(--goa-color-greyscale-white);
     outline-offset: 2px;
 }
 
@@ -341,7 +343,7 @@
 }
 
 .licence:focus-visible {
-    outline: 3px solid var(--goa-color-interactive-focus, #004f84);
+    outline: 3px solid var(--goa-color-interactive-focus);
     outline-offset: 2px;
 }
 
@@ -372,7 +374,7 @@
 
 .licence-can {
     background: #1a2733;
-    color: #ffffff;
+    color: var(--goa-color-greyscale-white);
     font-size: 2.6cqw;
     font-weight: 700;
     letter-spacing: 0.06em;

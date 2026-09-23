@@ -4,6 +4,12 @@ import { MemoryRouter } from 'react-router-dom';
 import StaffAccessPage from './StaffAccessPage';
 
 jest.mock('@abgov/react-components', () => ({
+    GoabBadge: ({ type, content }: { type: string; content: string }) => (
+        <span data-testid={`badge-${type}`}>{content}</span>
+    ),
+    GoabCallout: ({ type, children }: { type: string; children: React.ReactNode }) => (
+        <aside data-testid={`callout-${type}`}>{children}</aside>
+    ),
     GoabCircularProgress: ({ visible }: { visible: boolean }) => <div data-testid="spinner">{String(visible)}</div>,
     GoabDetails: ({ heading, children }: { heading: string; children: React.ReactNode }) => (
         <details open>
@@ -105,6 +111,33 @@ const renderPage = () =>
 
 describe('StaffAccessPage', () => {
     beforeEach(() => jest.clearAllMocks());
+
+    it('renders the notice as a design system callout', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('access-notice')).toBeInTheDocument());
+        expect(screen.getByTestId('callout-information')).toBeInTheDocument();
+    });
+
+    it('renders the row markers as design system badges', async () => {
+        mockGet.mockResolvedValue({
+            staffAccess: {
+                records: [
+                    record('sa-2', {
+                        accessedAt: '2026-09-18T02:14:00.000Z',
+                        businessHours: 'After-hours',
+                        reviewOutcome: 'Under review',
+                    }),
+                ],
+            },
+        });
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('row-sa-2')).toBeInTheDocument());
+        expect(screen.getByTestId('badge-important')).toHaveTextContent('After-hours');
+        expect(screen.getByTestId('badge-emergency')).toHaveTextContent('Under review');
+    });
 
     it('flags an after-hours access on the row', async () => {
         mockGet.mockResolvedValue({

@@ -1,66 +1,66 @@
 .container {
-  display: flex;
-  max-width: 28.75rem;
-  position: absolute;
-  left: calc(50%); 
-  transform: translateX(-50%);
-  background-color: var(--pp-background-color-landing);
-  flex-direction: column;
+    display: flex;
+    max-width: 28.75rem;
+    position: absolute;
+    left: calc(50%);
+    transform: translateX(-50%);
+    background-color: var(--pp-background-color-landing);
+    flex-direction: column;
 }
 
 .inner-box {
-  display: flex;
-  border-radius: 1rem;
-  border: 1px solid #DCDCDC;
-  padding: 1.5rem;
-  flex-direction: column;
+    display: flex;
+    border-radius: 1rem;
+    border: 1px solid var(--goa-color-greyscale-200);
+    padding: 1.5rem;
+    flex-direction: column;
 }
 
 .button-1 {
-  display: flex;
-  align-items: center;
-  margin: 0 auto;
-  justify-content: center;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    justify-content: center;
+    width: 100%;
 }
 
 .button-2 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .tertiry-button {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .primary-title {
-  font: var(--goa-typography-heading-xs);
-  padding-top: 40px;
+    font: var(--goa-typography-heading-xs);
+    padding-top: 40px;
 }
 
 .container-header {
-  padding-bottom:  var(--goa-space-l);
-  font: var(--goa-typography-heading-m);
+    padding-bottom: var(--goa-space-l);
+    font: var(--goa-typography-heading-m);
 }
 
 .container-title {
-  font: var(--goa-typography-body-m);
+    font: var(--goa-typography-body-m);
 }
 
 .line-container {
-  display: flex;
-  align-items: center;
-  max-width: 25.75rem;
-  height: 4rem;
-  padding: 32px 0px 32px 0px;
+    display: flex;
+    align-items: center;
+    max-width: 25.75rem;
+    height: 4rem;
+    padding: 32px 0px 32px 0px;
 }
 
 .line {
     display: flex;
-    border: 0.0025em solid var(--Greyscale-200, #DCDCDC);
+    border: 0.0025em solid var(--Greyscale-200, var(--goa-color-greyscale-200));
     width: 50%;
 }
 
@@ -71,79 +71,79 @@
 }
 
 @media (max-width: 623px) {
-  .container {
-    display: flex;
-    max-width: 23.43rem;
-    flex-direction: column;
-    padding: 48px 16px;
-    margin: 0;
-    min-height: 41.62rem;
-  }
-
-  .inner-box {
-    max-width: 21.43rem;
-    border-radius: 1rem;
-    border: 1px solid #DCDCDC;
-    padding: 24px 16px;
-  }
-
-  .button-1 {
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding-bottom: 2rem;
-  }
-
-  .button-2 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .tertiry-button { flex-direction: column; align-items: flex-start; }
-
-  .container-header {
-    padding-bottom:  var(--goa-space-s);
-    font: var(--goa-typography-heading-m);
-  }
-
-  .line-container {
-    display: flex;
-  }
-
-  .line {
-      display: flex;
-      border: 0.1em solid var(--Greyscale-200, #DCDCDC);
-      margin: 16px 6px 16px 6px;
-      width: 50%;
-  }
-
-  .span-text {
-      display: flex;
-  }
-
-  .create-account-container {
-    display: flex;
-    align-items: center;
-    align-content: center;
-
-    .content {
-      display: flex;
-      align-items: center;
-
-      .text {
-        font-weight: normal;
-        margin-right: 8px;
-      }
-
-      .icon {
-        align-items: center;
-        margin-top: 5px;
-      }
+    .container {
+        display: flex;
+        max-width: 23.43rem;
+        flex-direction: column;
+        padding: 48px 16px;
+        margin: 0;
+        min-height: 41.62rem;
     }
-  }
+
+    .inner-box {
+        max-width: 21.43rem;
+        border-radius: 1rem;
+        border: 1px solid var(--goa-color-greyscale-200);
+        padding: 24px 16px;
+    }
+
+    .button-1 {
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding-bottom: 2rem;
+    }
+
+    .button-2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .tertiry-button {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .container-header {
+        padding-bottom: var(--goa-space-s);
+        font: var(--goa-typography-heading-m);
+    }
+
+    .line-container {
+        display: flex;
+    }
+
+    .line {
+        display: flex;
+        border: 0.1em solid var(--Greyscale-200, var(--goa-color-greyscale-200));
+        margin: 16px 6px 16px 6px;
+        width: 50%;
+    }
+
+    .span-text {
+        display: flex;
+    }
+
+    .create-account-container {
+        display: flex;
+        align-items: center;
+        align-content: center;
+
+        .content {
+            display: flex;
+            align-items: center;
+
+            .text {
+                font-weight: normal;
+                margin-right: 8px;
+            }
+
+            .icon {
+                align-items: center;
+                margin-top: 5px;
+            }
+        }
+    }
 }
-
-
-

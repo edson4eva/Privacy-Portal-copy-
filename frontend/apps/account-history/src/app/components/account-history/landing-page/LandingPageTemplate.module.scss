@@ -4,7 +4,7 @@
 .alert-section {
     display: flex;
     div:nth-child(1) {
-        background-color: #f9ce2d;
+        background-color: var(--goa-color-warning-default);
         border-radius: 1.5rem;
         height: 1.5rem;
     }

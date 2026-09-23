@@ -1,13 +1,15 @@
 :root {
-    --pp-background-color-landing: white;
-    --pp-background-color-internal: #f3f3f3;
+    --pp-background-color-landing: var(--goa-color-greyscale-white);
+    --pp-background-color-internal: var(--goa-color-greyscale-100);
     --goa-container-border-color: var(--goa-color-greyscale-200);
 }
 
 .main-container {
     display: flex;
     flex-direction: row;
-    max-width: calc(286px + 856px + 4rem); // 286px menu + 856px FileComplaint (includes its padding) + 64px container padding
+    max-width: calc(
+        286px + 856px + 4rem
+    ); // 286px menu + 856px FileComplaint (includes its padding) + 64px container padding
     min-height: calc(100vh - 12rem);
     padding-left: 2rem;
     padding-right: 2rem;
@@ -21,7 +23,7 @@
 
 .leftNav {
     justify-content: center;
-    border-right: 0.0625rem solid #dcdcdc;
+    border-right: 0.0625rem solid var(--goa-color-greyscale-200);
     min-height: fit-content;
     width: 286px; // Fixed width for side menu
     flex-shrink: 0; // Prevent shrinking

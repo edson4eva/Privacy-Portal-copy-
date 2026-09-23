@@ -1,4 +1,11 @@
-import { GoabButton, GoabCircularProgress, GoabDetails, GoabIcon } from '@abgov/react-components';
+import {
+    GoabBadge,
+    GoabButton,
+    GoabCircularProgress,
+    GoabContainer,
+    GoabDetails,
+    GoabIcon,
+} from '@abgov/react-components';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { get } from 'shared/src/lib/api/dataService';
@@ -141,11 +148,9 @@ export function StaffAccessDetail({ basePath = '/transparency' }: { basePath?: s
                 <>
                     <PpSpacer vSpacing="m" />
                     <div className={styles['flag-list']} data-testid="record-flags">
-                        {underReview && <span className={styles['chip-review']}>{record.reviewOutcome}</span>}
+                        {underReview && <GoabBadge type="emergency" content={record.reviewOutcome ?? ''} />}
                         {flags.map((flag) => (
-                            <span className={styles['chip-flag']} key={flag}>
-                                {flag}
-                            </span>
+                            <GoabBadge key={flag} type="important" content={flag} />
                         ))}
                     </div>
                 </>
@@ -153,7 +158,7 @@ export function StaffAccessDetail({ basePath = '/transparency' }: { basePath?: s
 
             <PpSpacer vSpacing="l" />
 
-            <div className={styles['record']} data-testid="access-record">
+            <GoabContainer type="non-interactive" padding="relaxed" maxWidth="48rem" testId="access-record">
                 <Section heading="Who accessed your information" testId="section-who">
                     <Row
                         label="Position ID"
@@ -260,7 +265,7 @@ export function StaffAccessDetail({ basePath = '/transparency' }: { basePath?: s
                         </div>
                     </GoabDetails>
                 </div>
-            </div>
+            </GoabContainer>
 
             <PpSpacer vSpacing="l" />
             <p className={styles['intro']}>

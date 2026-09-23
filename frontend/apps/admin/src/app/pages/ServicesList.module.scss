@@ -35,15 +35,16 @@
 }
 .chip-active {
     goa-filter-chip {
-        --goa-color-greyscale-700: #0070C4;    
-        --goa-color-interactive-focus: #0070C4;
-        --goa-typography-body-s: var(--goa-font-weight-bold) var(--goa-font-size-3)/var(--goa-line-height-2) var(--goa-font-family-sans);
+        --goa-color-greyscale-700: var(--goa-color-interactive-default);
+        --goa-color-interactive-focus: var(--goa-color-interactive-default);
+        --goa-typography-body-s: var(--goa-font-weight-bold) var(--goa-font-size-3) / var(--goa-line-height-2)
+            var(--goa-font-family-sans);
     }
 }
 .service-accessed-availability-alert {
     display: flex;
     div:nth-child(1) {
-        background-color: #f9ce2d;
+        background-color: var(--goa-color-warning-default);
         border-radius: 1.5rem;
         height: 1.5rem;
     }
@@ -55,7 +56,7 @@
 }
 .disabledLink {
     text-decoration: underline;
-    color: #9fc8e8;
+    color: var(--goa-color-info-light);
 }
 .table-container {
     max-width: 45rem;
@@ -70,10 +71,10 @@ table:has(> thead.tbl-thead) {
         justify-content: space-between;
         .services-count {
             border-radius: 0.25rem;
-            background-color: #0070c4;
+            background-color: var(--goa-color-interactive-default);
             padding: 0 0.5rem;
             font-size: 0.875rem;
-            color: #fff;
+            color: var(--goa-color-greyscale-white);
             font-weight: 400;
             line-height: 1.25rem;
             height: 1.375rem;
@@ -95,7 +96,7 @@ table:has(> thead.tbl-thead) {
     table:has(> thead.tbl-thead) {
         .th-service-accessed {
             .services-count {
-                background-color: #0081a2;
+                background-color: var(--goa-color-brand-default);
                 margin-right: 1rem;
             }
         }
@@ -117,7 +118,7 @@ table:has(> thead.tbl-thead) {
         }
         tr th:not(:first-child),
         tr td:not(:first-child) {
-            background-color: #fff;
+            background-color: var(--goa-color-greyscale-white);
         }
         .col-time {
             display: none;

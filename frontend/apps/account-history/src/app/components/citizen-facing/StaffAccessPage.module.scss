@@ -32,26 +32,15 @@
     max-width: 48rem;
 }
 
-.notice {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--goa-space-s);
-    background: #eaf3fa;
-    border: 1px solid #c5dcec;
-    border-radius: 4px;
-    padding: var(--goa-space-m) var(--goa-space-l);
-    max-width: 48rem;
-}
-
 /* ---- Access table --------------------------------------------------------
    Six columns of dense text, so the table scrolls sideways rather than
    crushing them, and every cell sits on its own ruled row. */
 
 .table-container {
     overflow-x: auto;
-    border: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
-    border-radius: 6px;
-    background: #ffffff;
+    border: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
+    border-radius: var(--goa-border-radius-l);
+    background: var(--goa-color-greyscale-white);
 }
 
 .head,
@@ -70,15 +59,16 @@
 }
 
 .head {
-    border-bottom: 3px solid #0081a2;
-    background: #f7f7f5;
-    font-weight: 700;
-    line-height: 1.35;
+    border-bottom: var(--goa-border-width-m) solid var(--goa-table-color-border-heading);
+    background: var(--goa-color-greyscale-100);
+    color: var(--goa-table-color-heading);
+    font-weight: var(--goa-font-weight-bold);
+    line-height: var(--goa-line-height-1);
 }
 
 .row {
-    border-bottom: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
-    line-height: 1.45;
+    border-bottom: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
+    line-height: var(--goa-line-height-2);
 }
 
 .row:last-of-type {
@@ -86,7 +76,7 @@
 }
 
 .row:nth-of-type(even) {
-    background: #fbfbfa;
+    background: var(--goa-color-greyscale-50);
 }
 
 /* Who accessed: the account used, then the role and unit behind it. The
@@ -94,13 +84,13 @@
 
 /* A position ID or an account name is an identifier, so it is set as one. */
 .identifier {
-    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
-    font-size: 0.85em;
-    background: #f3f1ee;
-    border: 1px solid #e4e0d9;
-    border-radius: 3px;
-    color: #a6402f;
-    padding: 0.05rem 0.3rem;
+    font-family: var(--goa-font-family-number);
+    font-size: var(--goa-font-size-2);
+    background: var(--goa-color-greyscale-100);
+    border: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
+    border-radius: var(--goa-border-radius-s);
+    color: var(--goa-color-text-default);
+    padding: 0 var(--goa-space-2xs);
     white-space: nowrap;
 }
 
@@ -111,18 +101,19 @@
 
 .who-unit {
     display: block;
-    color: #5a6773;
+    color: var(--goa-color-text-secondary);
 }
 
 /* An outside party is the notable thing about a row it appears on, so the
    organization is set apart from the program area beneath it. */
 .who-org {
     display: block;
-    font-weight: 700;
+    font-weight: var(--goa-font-weight-bold);
     color: var(--goa-color-text-default);
 }
 
 .when {
+    font-family: var(--goa-font-family-number);
     font-variant-numeric: tabular-nums;
 }
 
@@ -141,30 +132,30 @@
     right: 0;
     margin-right: calc(var(--goa-space-m) * -1);
     padding: 0 var(--goa-space-m) 0 var(--goa-space-s);
-    background: #ffffff;
-    box-shadow: -1px 0 0 var(--goa-color-greyscale-200, #dcdcdc);
+    background: var(--goa-color-greyscale-white);
+    box-shadow: calc(var(--goa-border-width-s) * -1) 0 0 var(--goa-color-greyscale-200);
 }
 
 .head > span:last-child {
-    background: #f7f7f5;
+    background: var(--goa-color-greyscale-100);
 }
 
 .row:nth-of-type(even) > span:last-child {
-    background: #fbfbfa;
+    background: var(--goa-color-greyscale-50);
 }
 
 .when-zone {
     display: block;
-    color: #5a6773;
+    color: var(--goa-color-text-secondary);
 }
 
 .reason-type {
-    font-weight: 700;
+    font-weight: var(--goa-font-weight-bold);
 }
 
 .reason-detail {
     display: block;
-    color: #5a6773;
+    color: var(--goa-color-text-secondary);
 }
 
 .empty {
@@ -176,8 +167,8 @@
     display: flex;
     align-items: center;
     padding: var(--goa-space-m);
-    border-top: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
-    background: #fbfbfa;
+    border-top: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
+    background: var(--goa-color-greyscale-50);
 }
 
 .unusual {
@@ -186,31 +177,12 @@
 
 /* ---- Flags ---------------------------------------------------------------
    Two states are worth saying on the face of a row: an access outside
-   business hours, and one an auditor has not settled yet. Everything else
-   lives in the record. */
-
-.chip-flag,
-.chip-review {
-    display: inline-block;
-    margin-top: var(--goa-space-2xs);
-    padding: 0.05rem 0.4rem;
-    border-radius: 3px;
-    font-size: 0.8rem;
-    line-height: 1.5;
-    font-weight: 400;
-    white-space: nowrap;
-}
+   business hours, and one an auditor has not settled yet. Both are design
+   system badges; this only spaces them. */
 
 .chip-flag {
-    background: #fcf3d9;
-    border: 1px solid #e8d48a;
-    color: #6b5415;
-}
-
-.chip-review {
-    background: #fbeceb;
-    border: 1px solid #e8b4b0;
-    color: #8a2c22;
+    display: inline-block;
+    margin-top: var(--goa-space-2xs);
 }
 
 .flag-list {
@@ -226,20 +198,12 @@
 
 /* ---- One access record ---- */
 
-.record {
-    border: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
-    border-radius: 6px;
-    background: #ffffff;
-    padding: var(--goa-space-xl);
-    max-width: 48rem;
-}
-
 /* Each group answers one of the questions the field reference asks, so the
    groups are ruled apart rather than run together. */
 .section + .section {
     margin-top: var(--goa-space-xl);
     padding-top: var(--goa-space-xl);
-    border-top: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
+    border-top: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
 }
 
 .section-heading {
@@ -249,7 +213,7 @@
 }
 
 .section-note {
-    color: #5a6773;
+    color: var(--goa-color-text-secondary);
     margin: 0 0 var(--goa-space-m) 0;
     max-width: 38rem;
 }
@@ -257,7 +221,7 @@
 .technical {
     margin-top: var(--goa-space-xl);
     padding-top: var(--goa-space-l);
-    border-top: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
+    border-top: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
 }
 
 .rows {
@@ -276,11 +240,11 @@
 }
 
 .label {
-    color: #55697a;
+    color: var(--goa-color-text-secondary);
 }
 
 .value {
-    font-weight: 700;
+    font-weight: var(--goa-font-weight-bold);
     color: var(--goa-color-text-default);
     overflow-wrap: break-word;
 }
@@ -288,7 +252,7 @@
 .element-list {
     list-style: disc;
     margin: 0;
-    padding-left: 1.15rem;
+    padding-left: var(--goa-space-m);
 
     li + li {
         margin-top: var(--goa-space-2xs);

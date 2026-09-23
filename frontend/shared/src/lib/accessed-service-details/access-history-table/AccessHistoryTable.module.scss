@@ -15,7 +15,7 @@
         }
         tr th:first-child,
         tr td:first-child {
-            background-color: #fff;
+            background-color: var(--goa-color-greyscale-white);
             width: 22.5rem;
         }
         tr th:nth-child(2):before {
@@ -49,7 +49,7 @@
             }
             tr th:nth-child(2),
             tr td:nth-child(2) {
-                background-color: #fff;
+                background-color: var(--goa-color-greyscale-white);
                 width: 8.3125rem;
             }
         }

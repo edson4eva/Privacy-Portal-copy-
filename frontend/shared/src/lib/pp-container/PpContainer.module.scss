@@ -4,5 +4,5 @@
     border: var(--goa-border-width-s) solid;
     border-radius: 15px;
     padding: var(--container-padding);
-    background-color: var(--container-background-color, #ffffff);
+    background-color: var(--container-background-color, var(--goa-color-greyscale-white));
 }

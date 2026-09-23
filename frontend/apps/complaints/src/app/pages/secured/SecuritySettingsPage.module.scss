@@ -25,7 +25,7 @@
 }
 
 .card {
-    border: 1px solid var(--goa-color-interactive-default, #0070c4);
+    border: 1px solid var(--goa-color-interactive-default);
     border-radius: 8px;
     padding: var(--goa-space-xl);
 }
@@ -54,8 +54,8 @@
     font-size: 0.8rem;
     font-weight: 400;
     color: var(--goa-color-text-default);
-    background-color: var(--goa-color-greyscale-100, #ececec);
-    border: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
+    background-color: var(--goa-color-greyscale-100);
+    border: 1px solid var(--goa-color-greyscale-200);
     border-radius: 3px;
     padding: 0.05rem 0.35rem;
 }
@@ -70,7 +70,7 @@
     border: none;
     padding: 0;
     font: inherit;
-    color: var(--goa-color-interactive-default, #0070c4);
+    color: var(--goa-color-interactive-default);
     text-decoration: underline;
     cursor: pointer;
 }
@@ -80,7 +80,7 @@
 }
 
 .action:focus-visible {
-    outline: 3px solid var(--goa-color-interactive-focus, #004f84);
+    outline: 3px solid var(--goa-color-interactive-focus);
     outline-offset: 2px;
 }
 

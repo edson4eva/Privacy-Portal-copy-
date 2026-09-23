@@ -6,7 +6,7 @@
 
 .square-bullet-list li::marker {
     font-size: 8px;
-    color: black;
+    color: var(--goa-color-greyscale-black);
 }
 
 .bullet-list-title {
@@ -60,7 +60,7 @@ ul {
 
     .line {
         display: flex;
-        border: 0.1em solid var(--Greyscale-200, #dcdcdc);
+        border: 0.1em solid var(--Greyscale-200, var(--goa-color-greyscale-200));
         margin: 16px 6px 16px 6px;
         width: 50%;
     }

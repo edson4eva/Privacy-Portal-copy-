@@ -1,42 +1,42 @@
-div.update-action{
+div.update-action {
     text-align: center;
     padding: 0.3rem;
     border-radius: 20px;
-    background-color: #fce796;
+    background-color: var(--goa-color-extended-yellow);
 }
-div.add-action{
+div.add-action {
     text-align: center;
     padding: 0.3rem;
     border-radius: 20px;
-    background-color: #bbfcb4;
+    background-color: var(--goa-color-extended-green);
 }
-div.rollback-action{
+div.rollback-action {
     text-align: center;
     padding: 0.3rem;
     border-radius: 20px;
-    background-color: #ffc76d;
+    background-color: var(--goa-color-extended-orange);
 }
-div.publish-action{
+div.publish-action {
     text-align: center;
     padding: 0.3rem;
     border-radius: 20px;
     background-color: var(--goa-color-brand-light);
 }
-.modal-div{
+.modal-div {
     display: grid;
 }
-.modal-heading{
+.modal-heading {
     font-size: var(--goa-font-size-5);
 }
-.modal-row{
+.modal-row {
     display: flex;
 }
-.modal-label{
+.modal-label {
     font-weight: var(--goa-font-weight-bold);
     font-size: var(--goa-font-size-3);
     float: left;
 }
-.model-value{
+.model-value {
     float: left;
     font-size: var(--goa-font-size-3);
     margin-left: 1rem;
@@ -44,7 +44,8 @@ div.publish-action{
 .raw-section-content {
     margin-block-start: 0;
     text-decoration: none;
-    ol,ul{
+    ol,
+    ul {
         margin-block-start: 0.5em;
     }
     li {
@@ -54,12 +55,12 @@ div.publish-action{
         }
     }
     a[href^="https://"]::after,a[href^="http://"]::after
-    {        
+    {
         content: '';
         vertical-align: middle;
         width: 24px;
         height: 24px;
-        margin-left: 0.5rem;        
+        margin-left: 0.5rem;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%230070c4' stroke-width='29' fill-rule='nonzero' viewBox='0 0 512 512'%3E%3Cpath d='M384 224v184a40 40 0 01-40 40H104a40 40 0 01-40-40V168a40 40 0 0140-40h167.48M336 64h112v112M224 288L440 72' stroke-linecap='round' stroke-linejoin='round' %3E%3C/path%3E%3C/svg%3E");
         background-position: center;
         background-repeat: no-repeat;
@@ -76,7 +77,7 @@ div.publish-action{
     margin-left: auto;
     margin-right: auto;
 }
-.link-btn:hover{
+.link-btn:hover {
     color: var(--goa-color-interactive-hover);
 }
 .link-btn {
@@ -91,7 +92,7 @@ div.publish-action{
 .service-accessed-availability-alert {
     display: flex;
     div:nth-child(1) {
-        background-color: #f9ce2d;
+        background-color: var(--goa-color-warning-default);
         border-radius: 1.5rem;
         height: 1.5rem;
     }
@@ -104,7 +105,7 @@ div.publish-action{
 
 .table-container {
     margin: 2rem 0 2rem 0;
-    table{
+    table {
         th,
         td {
             padding: 0.75rem 0 0.75rem 0.75rem;
@@ -112,9 +113,9 @@ div.publish-action{
             line-height: 1.5rem;
         }
         tr th:first-child,
-        tr td:first-child{
+        tr td:first-child {
             width: 4rem;
-            word-wrap:break-word;
+            word-wrap: break-word;
         }
         tr td:nth-child(2),
         tr td:nth-child(2) {
@@ -123,21 +124,21 @@ div.publish-action{
         tr td:nth-child(3),
         tr td:nth-child(3) {
             width: 10rem;
-            word-wrap:normal;
+            word-wrap: normal;
         }
         tr th:nth-child(4),
         tr td:nth-child(4) {
             width: 5rem;
-            word-wrap:normal;
+            word-wrap: normal;
         }
         tr th:nth-child(5),
         tr td:nth-child(5) {
             width: 3rem;
-            word-wrap:normal;
+            word-wrap: normal;
         }
         tr th:not(:first-child),
         tr td:not(:first-child) {
-            background-color: #fff;
+            background-color: var(--goa-color-greyscale-white);
         }
     }
 }
@@ -171,7 +172,7 @@ div.publish-action{
         }
         tr th:not(:first-child),
         tr td:not(:first-child) {
-            background-color: #fff;
+            background-color: var(--goa-color-greyscale-white);
         }
         .col-time {
             display: none;

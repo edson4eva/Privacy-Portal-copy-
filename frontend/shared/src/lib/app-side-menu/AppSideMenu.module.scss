@@ -15,7 +15,7 @@ goa-side-menu > .uiam--side-menu--sub-item {
 }
 
 goa-side-menu a:hover:not(.current) {
-    background: #eff8ff;
+    background: var(--goa-color-info-background);
 }
 
 goa-side-menu .uiam--side-menu--sub-item.current {

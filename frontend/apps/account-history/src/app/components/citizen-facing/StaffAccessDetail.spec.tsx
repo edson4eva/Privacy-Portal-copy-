@@ -10,6 +10,12 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('@abgov/react-components', () => ({
+    GoabBadge: ({ type, content }: { type: string; content: string }) => (
+        <span data-testid={`badge-${type}`}>{content}</span>
+    ),
+    GoabContainer: ({ children, testId }: { children: React.ReactNode; testId?: string }) => (
+        <section data-testid={testId}>{children}</section>
+    ),
     GoabDetails: ({ heading, children }: { heading: string; children: React.ReactNode }) => (
         <details>
             <summary>{heading}</summary>
@@ -384,6 +390,9 @@ describe('StaffAccessDetail', () => {
         expect(flags).toHaveTextContent('Under review');
         expect(flags).toHaveTextContent('After-hours access');
         expect(flags).toHaveTextContent('High volume');
+        // Each is a design system badge, the open review set apart from the rest.
+        expect(screen.getByTestId('badge-emergency')).toHaveTextContent('Under review');
+        expect(screen.getAllByTestId('badge-important')).toHaveLength(2);
     });
 
     it('raises no flags on a routine access', async () => {

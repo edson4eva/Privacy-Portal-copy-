@@ -3,5 +3,5 @@
 }
 
 .mce-toolbar .tox-icon {
-	color: rgb(0,112,196);
+	color: var(--goa-color-interactive-default);
 }

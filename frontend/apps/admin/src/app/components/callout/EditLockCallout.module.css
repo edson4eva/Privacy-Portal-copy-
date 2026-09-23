@@ -1,6 +1,6 @@
 .lock-callout-container{
     padding: 1rem 1rem 1rem 1rem;
-    background-color: #ffe8b6;
+    background-color: var(--goa-color-warning-light);
     border-radius: 5px;
     border: 1px solid var(--goa-color-warning-dark);
     .lock-header{

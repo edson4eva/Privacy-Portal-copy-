@@ -45,8 +45,8 @@
 }
 
 .interac-badge {
-    background-color: #f5a623;
-    color: #1c1c1c;
+    background-color: var(--goa-color-warning-dark);
+    color: var(--goa-color-greyscale-black);
     font-weight: 700;
     font-size: 0.95rem;
     font-style: italic;
@@ -57,7 +57,7 @@
 .interac-verified {
     font-size: 1.35rem;
     font-weight: 600;
-    color: #1c1c1c;
+    color: var(--goa-color-greyscale-black);
 }
 
 .interac-tm {
@@ -121,7 +121,7 @@
     border: none;
     padding: 0;
     font: inherit;
-    color: var(--goa-color-emergency-default, #ec040b);
+    color: var(--goa-color-emergency-default);
     text-decoration: underline;
     cursor: pointer;
 }
@@ -131,7 +131,7 @@
 }
 
 .delete:focus-visible {
-    outline: 3px solid var(--goa-color-interactive-focus, #004f84);
+    outline: 3px solid var(--goa-color-interactive-focus);
     outline-offset: 2px;
 }
 

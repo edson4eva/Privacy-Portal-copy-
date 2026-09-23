@@ -1,6 +1,6 @@
 .container {
     display: flex;
-    background-color: #fff;
+    background-color: var(--goa-color-greyscale-white);
     .content {
         flex-grow: 1;
     }
@@ -9,7 +9,7 @@
     .container {
         display: block;
         padding-right: 1rem;
-        background-color: #f3f3f3;
+        background-color: var(--goa-color-greyscale-100);
     }
     .leftNav {
         display: none;

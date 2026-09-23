@@ -5,7 +5,7 @@
 .custom-pp-container-step2 {
     --container-height: auto;
     --container-padding: 1rem;
-    --container-background-color: #eff8ff;
+    --container-background-color: var(--goa-color-info-background);
 }
 
 .form-item-container {
@@ -21,7 +21,7 @@
 .decide-alert {
     display: flex;
     div:nth-child(1) {
-        background-color: #f9ce2d;
+        background-color: var(--goa-color-warning-default);
         border-radius: 1.5rem;
         height: 1.5rem;
     }
@@ -76,16 +76,16 @@
 
 //below 3 classes are used to only for tablet (ipad/android)
 .tablet-background {
-    background-color: white;
-    border: 1px solid gray;
+    background-color: var(--goa-color-greyscale-white);
+    border: 1px solid var(--goa-color-greyscale-400);
 }
 
 .spacer {
     margin-bottom: 1.25rem;
 }
 
-.name-outline{
-    border: 1px solid gray
+.name-outline {
+    border: 1px solid var(--goa-color-greyscale-400);
 }
 
 @media (max-width: 623px) {

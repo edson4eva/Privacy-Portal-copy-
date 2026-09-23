@@ -6,20 +6,20 @@
     margin-left: auto;
     margin-right: auto;
 }
-.section-header{
+.section-header {
     width: 100%;
-    overflow:hidden
+    overflow: hidden;
 }
-.section-header-text{
+.section-header-text {
     font: var(--goa-typography-heading-m);
     color: var(--goa-accordion-color-heading);
     float: left;
 }
-.section-header-btn{
+.section-header-btn {
     float: right;
-    margin-right: 1rem
+    margin-right: 1rem;
 }
-.section-bottom-btn-panel{
+.section-bottom-btn-panel {
     margin-top: 5px;
 }
 .service-name-badge-container {
@@ -30,7 +30,7 @@
     }
     .badge {
         display: inline-block;
-        background-color: var(--Color-Brand-Default, #0081a2);
+        background-color: var(--Color-Brand-Default, var(--goa-color-brand-default));
         font: var(--goa-typography-body-xs);
         padding: 0 var(--goa-space-xs) 0.125rem var(--goa-space-xs);
         border-radius: 6.1875rem;
@@ -51,7 +51,7 @@
         width: unset !important;
         tr th:first-child,
         tr td:first-child {
-            background-color: #fff;
+            background-color: var(--goa-color-greyscale-white);
             width: 13.125rem;
         }
         tr th:nth-child(2),
@@ -94,7 +94,7 @@
         justify-content: center;
         position: relative;
         width: 100%;
-        background-color: #fff;
+        background-color: var(--goa-color-greyscale-white);
         width: calc(100% + 3rem);
         margin-left: -1.5rem;
         margin-bottom: 2rem;
@@ -111,7 +111,7 @@
 
         .text {
             text-align: center;
-            color: #0070c4;
+            color: var(--goa-color-interactive-default);
             font-weight: 700;
         }
     }
@@ -128,7 +128,7 @@
             }
             tr th:nth-child(2),
             tr td:nth-child(2) {
-                background-color: #fff;
+                background-color: var(--goa-color-greyscale-white);
                 width: 8.3125rem;
             }
         }

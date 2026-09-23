@@ -1,4 +1,4 @@
-import { GoabCircularProgress, GoabDetails, GoabIcon, GoabPagination } from '@abgov/react-components';
+import { GoabBadge, GoabCallout, GoabCircularProgress, GoabDetails, GoabPagination } from '@abgov/react-components';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { get } from 'shared/src/lib/api/dataService';
@@ -67,14 +67,13 @@ export function StaffAccessPage({ basePath = '/transparency' }: { basePath?: str
             </p>
             <PpSpacer vSpacing="m" />
 
-            <div className={styles['notice']} data-testid="access-notice">
-                <GoabIcon type="information-circle" size="small" />
-                <p>
+            <div data-testid="access-notice">
+                <GoabCallout type="information" size="medium" maxWidth="48rem">
                     Every access is recorded with the reason the employee gave for it. Staff may look at your
                     information to decide eligibility, to correct a payment, to verify who you are, to answer your own
                     inquiry, or to meet a legal obligation. If an entry looks wrong to you, you can file a privacy
                     complaint.
-                </p>
+                </GoabCallout>
             </div>
 
             <PpSpacer vSpacing="l" />
@@ -116,7 +115,7 @@ export function StaffAccessPage({ basePath = '/transparency' }: { basePath?: str
                                     <span className={styles['when-zone']}>{when.zone}</span>
                                     {isAfterHours(record) && (
                                         <span className={styles['chip-flag']} data-testid={`after-hours-${record.id}`}>
-                                            After-hours
+                                            <GoabBadge type="important" content="After-hours" />
                                         </span>
                                     )}
                                 </span>
@@ -126,8 +125,8 @@ export function StaffAccessPage({ basePath = '/transparency' }: { basePath?: str
                                     <span className={styles['reason-type']}>{record.reasonType}</span>
                                     <span className={styles['reason-detail']}>{record.reasonDetail}</span>
                                     {isUnderReview(record) && (
-                                        <span className={styles['chip-review']} data-testid={`review-${record.id}`}>
-                                            {record.reviewOutcome}
+                                        <span className={styles['chip-flag']} data-testid={`review-${record.id}`}>
+                                            <GoabBadge type="emergency" content={record.reviewOutcome ?? ''} />
                                         </span>
                                     )}
                                 </span>

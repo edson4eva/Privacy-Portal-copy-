@@ -53,13 +53,13 @@
 }
 
 .chip-category {
-    background: #0081a2;
-    color: #ffffff;
+    background: var(--goa-color-brand-default);
+    color: var(--goa-color-greyscale-white);
 }
 
 .chip-ministry {
-    background: #cfe7f2;
-    color: #05504f;
+    background: var(--goa-color-info-light);
+    color: var(--goa-color-success-dark);
 }
 
 /* ---- Tabs ---- */
@@ -67,7 +67,7 @@
 .tabs {
     display: flex;
     gap: var(--goa-space-l);
-    border-bottom: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
+    border-bottom: 1px solid var(--goa-color-greyscale-200);
 }
 
 .tab {
@@ -76,33 +76,33 @@
     border-bottom: 4px solid transparent;
     padding: 0.6rem 0.2rem;
     font: inherit;
-    color: var(--goa-color-interactive-default, #0070c4);
+    color: var(--goa-color-interactive-default);
     cursor: pointer;
     margin-bottom: -1px;
 }
 
 .tab:hover {
-    color: #004f84;
+    color: var(--goa-color-interactive-hover);
 }
 
 .tab:focus-visible {
-    outline: 3px solid var(--goa-color-interactive-focus, #004f84);
+    outline: 3px solid var(--goa-color-interactive-focus);
     outline-offset: 2px;
 }
 
 .tab-current {
     color: var(--goa-color-text-default);
     font-weight: 700;
-    border-bottom-color: #0070c4;
+    border-bottom-color: var(--goa-color-interactive-default);
 }
 
 /* ---- Activity history ---- */
 
 .table-container {
     overflow-x: auto;
-    border: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
+    border: 1px solid var(--goa-color-greyscale-200);
     border-radius: 6px;
-    background: #ffffff;
+    background: var(--goa-color-greyscale-white);
 }
 
 /* The event column takes the space left over, so a title stays on one line
@@ -120,21 +120,21 @@
     align-items: end;
     padding-top: var(--goa-space-s);
     padding-bottom: var(--goa-space-s);
-    border-bottom: 3px solid #0081a2;
+    border-bottom: 3px solid var(--goa-color-brand-default);
     font-weight: 700;
     font-size: 0.95rem;
     letter-spacing: 0.01em;
-    background: #fbfbfb;
+    background: var(--goa-color-greyscale-50);
 }
 
 .row {
-    border-bottom: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
+    border-bottom: 1px solid var(--goa-color-greyscale-200);
     transition: background-color 120ms ease-out;
 }
 
 /* A striped body makes a row easy to follow across four columns. */
 .row-even {
-    background: #f8f9fa;
+    background: var(--goa-color-greyscale-50);
 }
 
 .row-toggle {
@@ -147,23 +147,23 @@
 }
 
 .row-toggle:hover {
-    background: #eaf3fa;
+    background: var(--goa-color-info-background);
 }
 
 /* While a row is open it stays tinted, so it reads as one piece with the
    details panel beneath it. */
 .row-open,
 .row-open:hover {
-    background: #eaf3fa;
+    background: var(--goa-color-info-background);
 }
 
 .row-toggle:focus-visible {
-    outline: 3px solid var(--goa-color-interactive-focus, #004f84);
+    outline: 3px solid var(--goa-color-interactive-focus);
     outline-offset: -3px;
 }
 
 .chevron {
-    color: var(--goa-color-interactive-default, #0070c4);
+    color: var(--goa-color-interactive-default);
     display: inline-flex;
     align-self: start;
     padding-top: 0.2rem;
@@ -188,14 +188,14 @@
 }
 
 .row-category {
-    color: #4a5a68;
+    color: var(--goa-color-text-secondary);
 }
 
 /* Details for one activity, revealed beneath its row. */
 .activity-details {
-    background: #f4f8fb;
-    border-bottom: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
-    border-left: 4px solid #0081a2;
+    background: var(--goa-color-info-background);
+    border-bottom: 1px solid var(--goa-color-greyscale-200);
+    border-left: 4px solid var(--goa-color-brand-default);
     padding: var(--goa-space-m) var(--goa-space-l) var(--goa-space-l);
 }
 
@@ -204,7 +204,7 @@
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: #40566a;
+    color: var(--goa-color-greyscale-800);
 }
 
 .activity-details-grid {
@@ -215,7 +215,7 @@
 }
 
 .detail-label {
-    color: #55697a;
+    color: var(--goa-color-text-secondary);
     font-size: 0.85rem;
     letter-spacing: 0.01em;
 }
@@ -229,8 +229,8 @@
     display: flex;
     align-items: center;
     padding: var(--goa-space-m) var(--goa-space-l);
-    border-top: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
-    background: #fbfbfb;
+    border-top: 1px solid var(--goa-color-greyscale-200);
+    background: var(--goa-color-greyscale-50);
 }
 
 /* ---- Service details ---- */
@@ -257,8 +257,8 @@
 .coming-soon {
     display: flex;
     gap: var(--goa-space-s);
-    background: #fdf5e3;
-    border-left: 6px solid #feba35;
+    background: var(--goa-color-warning-background);
+    border-left: 6px solid var(--goa-color-interactive-focus);
     padding: var(--goa-space-m) var(--goa-space-l);
     max-width: 40rem;
 }

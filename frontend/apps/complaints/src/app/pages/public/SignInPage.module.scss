@@ -13,9 +13,9 @@
 .card {
     width: 100%;
     max-width: 30rem;
-    background: #ffffff;
-    border: 1px solid #0070c4;
-    border-top: 6px solid #0081a2;
+    background: var(--goa-color-greyscale-white);
+    border: 1px solid var(--goa-color-interactive-default);
+    border-top: 6px solid var(--goa-color-brand-default);
     padding: var(--goa-space-xl);
 }
 
@@ -32,8 +32,8 @@
     display: flex;
     gap: var(--goa-space-s);
     align-items: flex-start;
-    background: #fdf5e3;
-    border-left: 6px solid #feba35;
+    background: var(--goa-color-warning-background);
+    border-left: 6px solid var(--goa-color-interactive-focus);
     padding: var(--goa-space-m) var(--goa-space-l);
 }
 
@@ -64,7 +64,7 @@
 }
 
 .info-icon {
-    color: var(--goa-color-interactive-default, #0070c4);
+    color: var(--goa-color-interactive-default);
     display: inline-flex;
 }
 
@@ -81,12 +81,12 @@
     content: '';
     flex: 1 1 auto;
     height: 1px;
-    background: var(--goa-color-greyscale-200, #dcdcdc);
+    background: var(--goa-color-greyscale-200);
 }
 
 .rule {
     border: none;
-    border-top: 1px solid var(--goa-color-greyscale-200, #dcdcdc);
+    border-top: 1px solid var(--goa-color-greyscale-200);
     margin: 0;
 }
 
@@ -103,19 +103,19 @@
     gap: var(--goa-space-s);
     width: 100%;
     min-height: 3rem;
-    background: #ffffff;
-    border: 1px solid #b3b3b3;
+    background: var(--goa-color-greyscale-white);
+    border: 1px solid var(--goa-color-greyscale-400);
     font: inherit;
     color: var(--goa-color-text-default);
     cursor: pointer;
 }
 
 .provider:hover {
-    background: var(--goa-color-greyscale-100, #f1f1f1);
+    background: var(--goa-color-greyscale-100);
 }
 
 .provider:focus-visible {
-    outline: 3px solid var(--goa-color-interactive-focus, #004f84);
+    outline: 3px solid var(--goa-color-interactive-focus);
     outline-offset: 2px;
 }
 
@@ -124,7 +124,7 @@
     border: none;
     padding: 0;
     font: inherit;
-    color: var(--goa-color-interactive-default, #0070c4);
+    color: var(--goa-color-interactive-default);
     text-decoration: underline;
     cursor: pointer;
     align-self: flex-start;
@@ -134,11 +134,11 @@
 }
 
 .link-button:hover {
-    color: #004f84;
+    color: var(--goa-color-interactive-hover);
 }
 
 .link-button:focus-visible {
-    outline: 3px solid var(--goa-color-interactive-focus, #004f84);
+    outline: 3px solid var(--goa-color-interactive-focus);
     outline-offset: 2px;
 }
 
@@ -159,6 +159,6 @@
 /* Shown when one of the account-service links is chosen. */
 .elsewhere {
     color: var(--goa-color-text-secondary);
-    background: #f1f1f1;
+    background: var(--goa-color-greyscale-100);
     padding: var(--goa-space-s) var(--goa-space-m);
 }
