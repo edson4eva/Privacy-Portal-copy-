@@ -32,6 +32,31 @@
     max-width: 48rem;
 }
 
+/* ---- Category filter ----------------------------------------------------
+   Matching the filters on Service activity, so the two pages are worked the
+   same way. */
+
+.filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 22rem));
+    gap: var(--goa-space-m);
+    background: var(--goa-color-greyscale-50);
+    border: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
+    padding: var(--goa-space-l);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--goa-space-2xs);
+    min-width: 0;
+}
+
+.field-label {
+    font-weight: var(--goa-font-weight-bold);
+    color: var(--goa-color-text-default);
+}
+
 /* ---- Access table --------------------------------------------------------
    Six columns of dense text, so the table scrolls sideways rather than
    crushing them, and every cell sits on its own ruled row. */
@@ -47,11 +72,11 @@
 .row {
     display: grid;
     /* Budgeted to fit the content box of a 1440px window - 12 + 7.5 + 8 +
-       8.5 fixed, two columns at a 8.5rem floor, five 0.75rem gaps and 2rem of
-       padding comes to 58.75rem - so the link in the last column is reachable
+       10 + 8.5 fixed, two columns at a 7.5rem floor, five 0.75rem gaps and
+       2rem of padding comes to 58.75rem - so the link in the last column is reachable
        without scrolling sideways. Wider windows give the spare room to the
        two text columns. */
-    grid-template-columns: 12rem 7.5rem 8rem minmax(8.5rem, 1fr) minmax(8.5rem, 1fr) 8.5rem;
+    grid-template-columns: 12rem 7.5rem 10rem minmax(7.5rem, 1fr) minmax(7.5rem, 1fr) 8.5rem;
     gap: var(--goa-space-s);
     align-items: start;
     padding: var(--goa-space-m);
@@ -100,6 +125,14 @@
 }
 
 .who-unit {
+    display: block;
+    color: var(--goa-color-text-secondary);
+}
+
+/* Which of Alberta.ca's service topics the access belongs to, set beneath
+   the class of information so the two categories are not mistaken for one
+   another. */
+.service-area {
     display: block;
     color: var(--goa-color-text-secondary);
 }

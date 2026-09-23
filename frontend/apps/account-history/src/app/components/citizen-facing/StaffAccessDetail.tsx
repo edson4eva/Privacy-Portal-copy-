@@ -172,6 +172,8 @@ export function StaffAccessDetail({ basePath = '/transparency' }: { basePath?: s
                     <Row label="Organization" value={record.organization} />
                     <Row label="Ministry" value={record.ministry} />
                     <Row label="Program area" value={record.unit} />
+                    <Row label="Service area" value={record.serviceArea} />
+                    <Row label="Service listed under it" value={record.listedService} />
                     <Row label="Work location" value={record.officeLocation} />
                     <Row label="Employee type" value={record.employeeType} />
                     <Row label="Relationship to you" value={record.relationshipDeclared} />

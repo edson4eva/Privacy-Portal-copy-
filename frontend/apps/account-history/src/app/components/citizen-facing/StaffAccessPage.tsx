@@ -1,4 +1,12 @@
-import { GoabBadge, GoabCallout, GoabCircularProgress, GoabDetails, GoabPagination } from '@abgov/react-components';
+import {
+    GoabBadge,
+    GoabCallout,
+    GoabCircularProgress,
+    GoabDetails,
+    GoabDropdown,
+    GoabDropdownItem,
+    GoabPagination,
+} from '@abgov/react-components';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { get } from 'shared/src/lib/api/dataService';
@@ -6,10 +14,12 @@ import PageTitle from 'shared/src/lib/page-title/PageTitle';
 import { PpSpacer } from 'shared/src/lib/pp-spacer/PpSpacer';
 import useWindowWidth from 'shared/src/lib/utils/useWindowWidth';
 
+import { serviceAreasPresent } from './serviceAreas';
 import { StaffAccessRecord, formatAccessedAt, isUnderReview } from './staffAccess';
 import styles from './StaffAccessPage.module.scss';
 
 const PER_PAGE = 5;
+const ALL = 'all';
 
 /** Said on the row itself, being the anomaly signal a reader can judge fastest. */
 const isAfterHours = (record: StaffAccessRecord): boolean => /after-hours/i.test(record.businessHours ?? '');
@@ -20,6 +30,7 @@ export function StaffAccessPage({ basePath = '/transparency' }: { basePath?: str
     const [records, setRecords] = useState<StaffAccessRecord[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [page, setPage] = useState(1);
+    const [serviceArea, setServiceArea] = useState(ALL);
 
     useEffect(() => {
         async function fetchData() {
@@ -37,9 +48,15 @@ export function StaffAccessPage({ basePath = '/transparency' }: { basePath?: str
         fetchData();
     }, []);
 
+    /** Only the categories some access belongs to, in the inventory's order. */
+    const areas = useMemo(() => serviceAreasPresent(records.map((record) => record.serviceArea)), [records]);
+
     const sorted = useMemo(
-        () => [...records].sort((a, b) => new Date(b.accessedAt).getTime() - new Date(a.accessedAt).getTime()),
-        [records]
+        () =>
+            [...records]
+                .filter((record) => serviceArea === ALL || record.serviceArea === serviceArea)
+                .sort((a, b) => new Date(b.accessedAt).getTime() - new Date(a.accessedAt).getTime()),
+        [records, serviceArea]
     );
 
     const totalPages = Math.max(1, Math.ceil(sorted.length / PER_PAGE));
@@ -48,6 +65,11 @@ export function StaffAccessPage({ basePath = '/transparency' }: { basePath?: str
 
     /** Held steady so the pagination component keeps its change listener. */
     const goToPage = useCallback(({ page: nextPage }: { page: number }) => setPage(nextPage), []);
+
+    const chooseArea = useCallback((value?: string) => {
+        setServiceArea(value ?? ALL);
+        setPage(1);
+    }, []);
 
     if (isLoading) {
         return <GoabCircularProgress variant="inline" size="small" visible={true}></GoabCircularProgress>;
@@ -74,6 +96,27 @@ export function StaffAccessPage({ basePath = '/transparency' }: { basePath?: str
                     inquiry, or to meet a legal obligation. If an entry looks wrong to you, you can file a privacy
                     complaint.
                 </GoabCallout>
+            </div>
+
+            <PpSpacer vSpacing="l" />
+
+            <div className={styles['filters']} data-testid="access-filters">
+                <div className={styles['field']}>
+                    <label className={styles['field-label']} htmlFor="filter-service-area">
+                        Service area
+                    </label>
+                    <GoabDropdown
+                        name="filter-service-area"
+                        value={serviceArea}
+                        onChange={(detail) => chooseArea(detail.value)}
+                        testId="filter-service-area"
+                    >
+                        <GoabDropdownItem value={ALL} label="All service areas" />
+                        {areas.map((area) => (
+                            <GoabDropdownItem key={area} value={area} label={area} />
+                        ))}
+                    </GoabDropdown>
+                </div>
             </div>
 
             <PpSpacer vSpacing="l" />
@@ -119,7 +162,14 @@ export function StaffAccessPage({ basePath = '/transparency' }: { basePath?: str
                                         </span>
                                     )}
                                 </span>
-                                <span>{record.categories.join('; ')}</span>
+                                <span>
+                                    {record.categories.join('; ')}
+                                    {record.serviceArea && (
+                                        <span className={styles['service-area']} data-testid={`area-${record.id}`}>
+                                            {record.serviceArea}
+                                        </span>
+                                    )}
+                                </span>
                                 <span>{record.information.join(', ')}</span>
                                 <span>
                                     <span className={styles['reason-type']}>{record.reasonType}</span>

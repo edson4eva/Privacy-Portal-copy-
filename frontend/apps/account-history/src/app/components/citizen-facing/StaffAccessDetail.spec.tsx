@@ -54,6 +54,8 @@ const record = {
     recordId: 'ACC-2026-0098412',
     caseNumber: 'SR-448271',
     positionId: 'POS-IS-0142',
+    serviceArea: 'Family and social supports',
+    listedService: 'Alberta Supports',
     role: 'Benefits Assessment Officer 2',
     ministry: 'Seniors, Community and Social Services',
     unit: 'Income Support - Edmonton North',
@@ -125,6 +127,8 @@ describe('StaffAccessDetail', () => {
         expect(who).toHaveTextContent('Benefits Assessment Officer 2');
         expect(who).toHaveTextContent('Seniors, Community and Social Services');
         expect(who).toHaveTextContent('Income Support - Edmonton North');
+        expect(who).toHaveTextContent('Family and social supports');
+        expect(who).toHaveTextContent('Alberta Supports');
         expect(who).toHaveTextContent('Employee');
         expect(who).toHaveTextContent('None declared');
         expect(who).not.toHaveTextContent('Name and account');

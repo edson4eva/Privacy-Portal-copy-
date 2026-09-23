@@ -32,6 +32,15 @@ export interface StaffAccessRecord {
     reasonType: string;
     reasonDetail: string;
 
+    /**
+     * Which of Alberta.ca's service topics the access belongs to, and the
+     * service listed under that topic that it relates to. Both are taken from
+     * the published services inventory rather than named here, so an access
+     * can be filed only under a category the province actually publishes.
+     */
+    serviceArea?: string;
+    listedService?: string;
+
     /* 2.1 Transaction identifiers. */
     recordId?: string;
     caseNumber?: string;

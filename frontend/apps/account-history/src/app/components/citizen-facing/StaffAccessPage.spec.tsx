@@ -4,6 +4,24 @@ import { MemoryRouter } from 'react-router-dom';
 import StaffAccessPage from './StaffAccessPage';
 
 jest.mock('@abgov/react-components', () => ({
+    GoabDropdown: ({
+        name,
+        value,
+        onChange,
+        testId,
+        children,
+    }: {
+        name: string;
+        value: string;
+        onChange: (d: { value?: string }) => void;
+        testId?: string;
+        children: React.ReactNode;
+    }) => (
+        <select data-testid={testId} name={name} value={value} onChange={(e) => onChange({ value: e.target.value })}>
+            {children}
+        </select>
+    ),
+    GoabDropdownItem: ({ value, label }: { value: string; label: string }) => <option value={value}>{label}</option>,
     GoabBadge: ({ type, content }: { type: string; content: string }) => (
         <span data-testid={`badge-${type}`}>{content}</span>
     ),
@@ -67,6 +85,7 @@ const mockGet = get as jest.Mock;
 const record = (id: string, overrides: Record<string, unknown> = {}) => ({
     id,
     positionId: 'POS-IS-0142',
+    serviceArea: 'Family and social supports',
     role: 'Benefits Officer 2',
     unit: 'Income Support - Edmonton North',
     accessedAt: '2026-09-19T20:32:00.000Z',
@@ -111,6 +130,67 @@ const renderPage = () =>
 
 describe('StaffAccessPage', () => {
     beforeEach(() => jest.clearAllMocks());
+
+    it('shows the service area the access belongs to on the row', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('row-sa-1')).toBeInTheDocument());
+        expect(screen.getByTestId('area-sa-1')).toHaveTextContent('Family and social supports');
+    });
+
+    it('offers only the service areas some access belongs to, in the inventory order', async () => {
+        mockGet.mockResolvedValue({
+            staffAccess: {
+                records: [
+                    record('sa-1', { serviceArea: 'Health' }),
+                    record('sa-2', { accessedAt: '2026-09-18T15:07:00.000Z', serviceArea: 'About government' }),
+                    record('sa-3', { accessedAt: '2026-09-17T15:07:00.000Z', serviceArea: 'Driving safety' }),
+                ],
+            },
+        });
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('filter-service-area')).toBeInTheDocument());
+        const options = [...screen.getByTestId('filter-service-area').querySelectorAll('option')].map(
+            (option) => option.textContent
+        );
+        // About government, Driving safety then Health is the inventory's own
+        // order, not the order the records happen to arrive in.
+        expect(options).toEqual(['All service areas', 'About government', 'Driving safety', 'Health']);
+    });
+
+    it('filters the table to a chosen service area', async () => {
+        mockGet.mockResolvedValue({
+            staffAccess: {
+                records: [
+                    record('sa-1', { serviceArea: 'Family and social supports' }),
+                    record('sa-2', { accessedAt: '2026-09-18T15:07:00.000Z', serviceArea: 'Driving safety' }),
+                ],
+            },
+        });
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('row-sa-1')).toBeInTheDocument());
+        fireEvent.change(screen.getByTestId('filter-service-area'), { target: { value: 'Driving safety' } });
+
+        expect(screen.getByTestId('row-sa-2')).toBeInTheDocument();
+        expect(screen.queryByTestId('row-sa-1')).not.toBeInTheDocument();
+    });
+
+    it('returns to the first page when the area changes', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('page-info')).toBeInTheDocument());
+        fireEvent.click(screen.getByTestId('next-page'));
+        expect(screen.getByTestId('page-info')).toHaveTextContent('Page 2 of 2');
+
+        fireEvent.change(screen.getByTestId('filter-service-area'), {
+            target: { value: 'Family and social supports' },
+        });
+        expect(screen.getByTestId('page-info')).toHaveTextContent('Page 1');
+    });
 
     it('renders the notice as a design system callout', async () => {
         mockGet.mockResolvedValue(payload);

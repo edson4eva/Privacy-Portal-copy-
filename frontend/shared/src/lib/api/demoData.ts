@@ -1099,6 +1099,8 @@ const DEMO_ACTIVITY_EVENTS = [
 const DEMO_STAFF_ACCESS = [
     {
         id: 'sa-1',
+        serviceArea: 'Family and social supports',
+        listedService: 'Alberta Supports',
         recordId: 'ACC-2026-0098412',
         caseNumber: 'SR-448271',
         positionId: 'POS-IS-0142',
@@ -1149,6 +1151,8 @@ const DEMO_STAFF_ACCESS = [
     },
     {
         id: 'sa-2',
+        serviceArea: 'Driving safety',
+        listedService: 'Licensing and owning a vehicle',
         recordId: 'ACC-2026-0097158',
         caseNumber: 'AUD-2026-0112',
         positionId: 'POS-MV-0087',
@@ -1195,6 +1199,8 @@ const DEMO_STAFF_ACCESS = [
     },
     {
         id: 'sa-3',
+        serviceArea: 'Family and social supports',
+        listedService: 'Family supports',
         recordId: 'ACC-2026-0096033',
         caseNumber: 'SR-447905',
         positionId: 'POS-CI-0231',
@@ -1240,6 +1246,8 @@ const DEMO_STAFF_ACCESS = [
     },
     {
         id: 'sa-4',
+        serviceArea: 'Family and social supports',
+        listedService: 'Seniors',
         recordId: 'ACC-2026-0094871',
         caseNumber: 'SR-447120',
         positionId: 'POS-SFA-0064',
@@ -1286,6 +1294,8 @@ const DEMO_STAFF_ACCESS = [
     },
     {
         id: 'sa-5',
+        serviceArea: 'Health',
+        listedService: 'Coverage and benefits',
         recordId: 'ACC-2026-0092440',
         caseNumber: 'SR-446310',
         positionId: 'POS-AHS-1180',
@@ -1341,6 +1351,8 @@ const DEMO_STAFF_ACCESS = [
     },
     {
         id: 'sa-6',
+        serviceArea: 'Tax information',
+        listedService: 'About taxes in Alberta',
         recordId: 'ACC-2026-0089215',
         caseNumber: 'TRA-2026-3388',
         positionId: 'POS-TRA-0319',
@@ -1386,6 +1398,8 @@ const DEMO_STAFF_ACCESS = [
     },
     {
         id: 'sa-7',
+        serviceArea: 'Driving safety',
+        listedService: 'Licensing and owning a vehicle',
         recordId: 'ACC-2026-0086107',
         caseNumber: 'SR-444019',
         positionId: 'POS-MV-0455',
@@ -1438,6 +1452,8 @@ const DEMO_STAFF_ACCESS = [
     },
     {
         id: 'sa-8',
+        serviceArea: 'About government',
+        listedService: 'Publications, reporting and information management',
         recordId: 'ACC-2026-0082994',
         caseNumber: 'ATI-2026-0771',
         positionId: 'POS-AP-0027',
@@ -1483,6 +1499,8 @@ const DEMO_STAFF_ACCESS = [
     },
     {
         id: 'sa-9',
+        serviceArea: 'Family and social supports',
+        listedService: 'People with disabilities',
         recordId: 'ACC-2026-0078330',
         caseNumber: 'SR-441558',
         positionId: 'POS-AISH-0708',
@@ -1532,6 +1550,8 @@ const DEMO_STAFF_ACCESS = [
     },
     {
         id: 'sa-10',
+        serviceArea: 'About government',
+        listedService: 'Contact government',
         recordId: 'ACC-2026-0071845',
         positionId: 'POS-IAM-0011',
         role: 'Systems Administrator',
@@ -1577,6 +1597,8 @@ const DEMO_STAFF_ACCESS = [
     },
     {
         id: 'sa-11',
+        serviceArea: 'Driving safety',
+        listedService: 'Licensing and owning a vehicle',
         recordId: 'ACC-2026-0098770',
         caseNumber: 'AR-2026-118204',
         positionId: 'POS-AR-0142',
@@ -1634,6 +1656,8 @@ const DEMO_STAFF_ACCESS = [
     },
     {
         id: 'sa-13',
+        serviceArea: 'Family and social supports',
+        listedService: 'Alberta Energy Rebate',
         recordId: 'ACC-2026-0098604',
         caseNumber: 'AER-2026-77421',
         positionId: 'POS-AER-0203',
@@ -1683,6 +1707,8 @@ const DEMO_STAFF_ACCESS = [
     },
     {
         id: 'sa-12',
+        serviceArea: 'Driving safety',
+        listedService: 'Licensing and owning a vehicle',
         recordId: 'ACC-2026-0097902',
         caseNumber: 'SR-447588',
         positionId: 'POS-RA-0087',
