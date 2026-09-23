@@ -97,6 +97,14 @@ export function StaffAccessDetail({ basePath = '/transparency' }: { basePath?: s
 
     const when = formatAccessedAt(record.accessedAt);
     const flags = record.anomalyFlags ?? [];
+    /**
+     * The record names the post that made the access, not the person holding
+     * it: an outside party by the organization it belongs to, a ministry post
+     * by its program area, and either by its position ID.
+     */
+    const accessor = [record.organization ?? record.unit, record.positionId ? `(${record.positionId})` : '']
+        .filter(Boolean)
+        .join(' ');
     const underReview = isUnderReview(record);
 
     return (
@@ -115,7 +123,7 @@ export function StaffAccessDetail({ basePath = '/transparency' }: { basePath?: s
             </h1>
             <PpSpacer vSpacing="s" />
             <p className={styles['intro']} data-testid="record-summary">
-                {record.name} looked at your information on {when.date} at {when.time} {when.zone}
+                {accessor} looked at your information on {when.date} at {when.time} {when.zone}
                 {record.system ? ` in ${record.system}` : ''}.
             </p>
 
@@ -138,15 +146,6 @@ export function StaffAccessDetail({ basePath = '/transparency' }: { basePath?: s
             <div className={styles['record']} data-testid="access-record">
                 <Section heading="Who accessed your information" testId="section-who">
                     <Row
-                        label="Name and account"
-                        value={
-                            <>
-                                {record.name} <span className={styles['identifier']}>{record.username}</span>
-                            </>
-                        }
-                    />
-                    <Row label="Position" value={record.role} />
-                    <Row
                         label="Position ID"
                         value={
                             record.positionId ? (
@@ -154,6 +153,7 @@ export function StaffAccessDetail({ basePath = '/transparency' }: { basePath?: s
                             ) : undefined
                         }
                     />
+                    <Row label="Position" value={record.role} />
                     <Row label="Organization" value={record.organization} />
                     <Row label="Ministry" value={record.ministry} />
                     <Row label="Program area" value={record.unit} />

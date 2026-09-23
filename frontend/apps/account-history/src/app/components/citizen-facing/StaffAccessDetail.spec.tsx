@@ -104,21 +104,61 @@ const renderDetail = (id = 'sa-1') =>
 describe('StaffAccessDetail', () => {
     beforeEach(() => jest.clearAllMocks());
 
-    it('answers who accessed the information', async () => {
+    it('answers who accessed the information without naming the person', async () => {
         mockGet.mockResolvedValue(payload);
         renderDetail();
 
         await waitFor(() => expect(screen.getByTestId('section-who')).toBeInTheDocument());
         const who = screen.getByTestId('section-who');
-        expect(who).toHaveTextContent('J. Doe');
-        expect(who).toHaveTextContent('jdoe01');
-        expect(who).toHaveTextContent('Benefits Assessment Officer 2');
         expect(who).toHaveTextContent('POS-IS-0142');
+        expect(who).toHaveTextContent('Benefits Assessment Officer 2');
         expect(who).toHaveTextContent('Seniors, Community and Social Services');
         expect(who).toHaveTextContent('Income Support - Edmonton North');
         expect(who).toHaveTextContent('Employee');
         expect(who).toHaveTextContent('None declared');
+        expect(who).not.toHaveTextContent('Name and account');
+        expect(who).not.toHaveTextContent('J. Doe');
+        expect(who).not.toHaveTextContent('jdoe01');
         expect(mockGet).toHaveBeenCalledWith('/v1/staff-access/sa-1');
+    });
+
+    it('names the post in the summary above it, not the person', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderDetail();
+
+        await waitFor(() => expect(screen.getByTestId('record-summary')).toBeInTheDocument());
+        const summary = screen.getByTestId('record-summary');
+        expect(summary).toHaveTextContent('Income Support - Edmonton North (POS-IS-0142) looked at your information');
+        expect(summary).toHaveTextContent('2026-09-19 at 14:32 MDT');
+        expect(summary).not.toHaveTextContent('J. Doe');
+    });
+
+    it('names an outside party by its organization in the summary', async () => {
+        mockGet.mockResolvedValue({
+            staffAccess: {
+                record: {
+                    ...record,
+                    organization: 'Imperial Parking Canada Corporation',
+                    positionId: 'POS-AR-0142',
+                },
+            },
+        });
+        renderDetail();
+
+        await waitFor(() => expect(screen.getByTestId('record-summary')).toBeInTheDocument());
+        expect(screen.getByTestId('record-summary')).toHaveTextContent(
+            'Imperial Parking Canada Corporation (POS-AR-0142) looked at your information'
+        );
+    });
+
+    it('names nobody at all when the record has no position recorded', async () => {
+        mockGet.mockResolvedValue({ staffAccess: { record: { ...record, positionId: undefined } } });
+        renderDetail();
+
+        await waitFor(() => expect(screen.getByTestId('record-summary')).toBeInTheDocument());
+        const summary = screen.getByTestId('record-summary');
+        expect(summary).toHaveTextContent('Income Support - Edmonton North looked at your information');
+        expect(summary).not.toHaveTextContent('J. Doe');
     });
 
     it('names an outside organization on the record', async () => {
@@ -139,6 +179,7 @@ describe('StaffAccessDetail', () => {
         const who = screen.getByTestId('section-who');
         expect(who).toHaveTextContent('Organization');
         expect(who).toHaveTextContent('Imperial Parking Canada Corporation');
+        expect(who).not.toHaveTextContent('Name and account');
         expect(who).toHaveTextContent('Service provider - private sector');
         expect(who).not.toHaveTextContent('Ministry');
     });
