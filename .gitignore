@@ -113,3 +113,9 @@ backend/src/Services/Complaints/src/Complaints.API/appsettings.Uat.json
 /frontend/AGENTS.md
 /frontend/.github
 deploy/sandbox/.staging/
+
+# Scratch files from verifying a deployed bundle. These were fetched out of a
+# running container to check the compiled CSS and JavaScript, and three of
+# them reached earlier commits by accident.
+/*.css
+/*.js
