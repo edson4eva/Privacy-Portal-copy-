@@ -62,7 +62,7 @@ const Step2 = ({ control, editPreviousStep }: Step2Property): React.ReactElement
         <>
             {windowWidth < 624 && (
                 <>
-                    <PageTitle title="FILE A COMPLAINT" fontColor="var(--goa-color-info-default)" />
+                    <PageTitle title="FILE A COMPLAINT" />
                     <PpSpacer vSpacing={'s'}></PpSpacer>
                     <PageSubTitle subTitle="Provide details" />
                     <PpSpacer vSpacing="s"></PpSpacer>
@@ -70,7 +70,7 @@ const Step2 = ({ control, editPreviousStep }: Step2Property): React.ReactElement
             )}
             {windowWidth > 624 && <PpSpacer vSpacing="xl"></PpSpacer>}
             <div className={style['custom-pp-container-step2']}>
-                <PpContainer containerBorderColor="#004A8F" containerBoxShadow="none">
+                <PpContainer containerBorderColor="var(--goa-color-info-default)" containerBoxShadow="none">
                     <div className={style['info-container']}>
                         <div className={style['department']}>
                             <div>
@@ -223,7 +223,7 @@ const Step2 = ({ control, editPreviousStep }: Step2Property): React.ReactElement
                 <>
                     <div className={style['decide-alert']}>
                         <div>
-                            <GoabIcon type="alert-circle" fillColor="#000" theme="outline"></GoabIcon>
+                            <GoabIcon type="alert-circle" theme="outline"></GoabIcon>
                         </div>
                         <div>
                             Decide whether you want to use your Alberta.ca Account email to be contacted, or update the
@@ -305,8 +305,8 @@ const Step2 = ({ control, editPreviousStep }: Step2Property): React.ReactElement
                                                 windowWidth > 1024
                                                     ? '21.86rem'
                                                     : windowWidth < 624
-                                                        ? 'calc(21.86rem)'
-                                                        : 'calc(45rem)',
+                                                      ? 'calc(21.86rem)'
+                                                      : 'calc(45rem)',
                                             height: '2.625rem',
                                             border: '1px solid ' + (fieldState?.error ? 'red' : 'black'),
                                             borderRadius: '5px',

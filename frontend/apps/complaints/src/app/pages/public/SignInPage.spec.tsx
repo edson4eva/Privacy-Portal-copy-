@@ -10,18 +10,58 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('@abgov/react-components', () => ({
-    GoabButton: ({ children, onClick, testId }: { children: React.ReactNode; onClick?: () => void; testId?: string }) => (
-        <button data-testid={testId} onClick={onClick}>{children}</button>
+    GoabButton: ({
+        children,
+        onClick,
+        testId,
+    }: {
+        children: React.ReactNode;
+        onClick?: () => void;
+        testId?: string;
+    }) => (
+        <button data-testid={testId} onClick={onClick}>
+            {children}
+        </button>
     ),
-    GoabCheckbox: ({ checked, onChange, testId, text }: { checked?: boolean; onChange?: (d: { checked: boolean }) => void; testId?: string; text?: string }) => (
+    GoabCheckbox: ({
+        checked,
+        onChange,
+        testId,
+        text,
+    }: {
+        checked?: boolean;
+        onChange?: (d: { checked: boolean }) => void;
+        testId?: string;
+        text?: string;
+    }) => (
         <label>
-            <input type="checkbox" data-testid={testId} checked={!!checked} onChange={(e) => onChange?.({ checked: e.target.checked })} />
+            <input
+                type="checkbox"
+                data-testid={testId}
+                checked={!!checked}
+                onChange={(e) => onChange?.({ checked: e.target.checked })}
+            />
             {text}
         </label>
     ),
     GoabIcon: ({ type }: { type: string }) => <i data-testid={`icon-${type}`} />,
-    GoabInput: ({ value, onChange, testId, type }: { value?: string; onChange?: (d: { name: string; value: string }) => void; testId?: string; type?: string }) => (
-        <input data-testid={testId} type={type} value={value} onChange={(e) => onChange?.({ name: 'f', value: e.target.value })} />
+    GoabInput: ({
+        value,
+        onChange,
+        testId,
+        type,
+    }: {
+        value?: string;
+        onChange?: (d: { name: string; value: string }) => void;
+        testId?: string;
+        type?: string;
+    }) => (
+        <input
+            data-testid={testId}
+            type={type}
+            value={value}
+            onChange={(e) => onChange?.({ name: 'f', value: e.target.value })}
+        />
     ),
 }));
 

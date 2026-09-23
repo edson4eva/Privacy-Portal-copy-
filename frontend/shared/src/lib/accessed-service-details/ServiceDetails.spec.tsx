@@ -14,8 +14,9 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('@abgov/react-components', () => ({
-    GoabSpacer: ({ vSpacing }: { vSpacing: string }) => 
-        <div data-testid={`spacer-${vSpacing}`} className={`spacer-${vSpacing}`}></div>,
+    GoabSpacer: ({ vSpacing }: { vSpacing: string }) => (
+        <div data-testid={`spacer-${vSpacing}`} className={`spacer-${vSpacing}`}></div>
+    ),
 }));
 
 // Mock child components
@@ -46,24 +47,24 @@ jest.mock('./report-unauthorized-access/ReportUnauthorizedAccess', () => {
 });
 
 jest.mock('./service-property/ServiceProperty', () => {
-    return function MockServiceProperty({ 
-        icon, 
-        title, 
+    return function MockServiceProperty({
+        icon,
+        title,
         value,
-        valueList, 
-        testId, 
-        isLight 
-    }: { 
-        icon: string; 
+        valueList,
+        testId,
+        isLight,
+    }: {
+        icon: string;
         title: string;
         value: string | undefined;
-        valueList?: string[]; 
-        testId?: string; 
+        valueList?: string[];
+        testId?: string;
         isLight?: boolean;
     }) {
         return (
-            <div 
-                data-testid={testId || 'service-property'} 
+            <div
+                data-testid={testId || 'service-property'}
                 data-icon={icon}
                 data-title={title}
                 data-value={value || ''}
@@ -78,11 +79,7 @@ jest.mock('./service-property/ServiceProperty', () => {
 
 jest.mock('./access-history-table/AccessHistoryTable', () => {
     return function MockAccessHistoryTable({ accessedDates }: { accessedDates: AccessServiceDate[] }) {
-        return (
-            <div data-testid="access-history-table">
-                Access History ({accessedDates.length} entries)
-            </div>
-        );
+        return <div data-testid="access-history-table">Access History ({accessedDates.length} entries)</div>;
     };
 });
 
@@ -97,16 +94,12 @@ jest.mock('./service-details-section/ServiceDetailsSection', () => {
 });
 
 jest.mock('./action-buttons/ActionButtons', () => {
-    return function MockActionButtons({
-        isAdminPanel,
-        onBack,
-    }: {
-        isAdminPanel: boolean;
-        onBack: () => void;
-    }) {
+    return function MockActionButtons({ isAdminPanel, onBack }: { isAdminPanel: boolean; onBack: () => void }) {
         return (
             <div data-testid="action-buttons" data-is-admin-panel={isAdminPanel}>
-                <button data-testid="action-back-button" onClick={onBack}>Back Action</button>
+                <button data-testid="action-back-button" onClick={onBack}>
+                    Back Action
+                </button>
             </div>
         );
     };
@@ -123,11 +116,7 @@ const mockNavigate = jest.mocked(useNavigate);
 
 // Helper function to render component with router
 const renderWithRouter = (ui: React.ReactElement) => {
-    return render(
-        <MemoryRouter>
-            {ui}
-        </MemoryRouter>
-    );
+    return render(<MemoryRouter>{ui}</MemoryRouter>);
 };
 
 // Test constants and mock data
@@ -186,7 +175,10 @@ describe('ServiceDetails', () => {
         );
 
         const descriptionElement = document.querySelector('.service-description');
-        expect(descriptionElement).toHaveProperty('innerHTML', '<p>Access your comprehensive health records and medical history</p>');
+        expect(descriptionElement).toHaveProperty(
+            'innerHTML',
+            '<p>Access your comprehensive health records and medical history</p>'
+        );
     });
 
     it('renders service properties with correct data', () => {

@@ -1,6 +1,6 @@
 .uiam--side-menu--sub-item {
     border-radius: 15px;
-    padding: 7px 12px 11px 32px;
+    padding: var(--goa-space-xs) var(--goa-space-s) var(--goa-space-s) var(--goa-space-xl);
     margin-left: 0;
     display: flex;
     align-items: center;
@@ -11,7 +11,7 @@ goa-side-menu > .uiam--side-menu--sub-item goa-icon {
 }
 
 goa-side-menu > .uiam--side-menu--sub-item {
-    padding: 16px 12px 16px 32px;
+    padding: var(--goa-space-m) var(--goa-space-s) var(--goa-space-m) var(--goa-space-xl);
 }
 
 goa-side-menu a:hover:not(.current) {
@@ -44,7 +44,7 @@ goa-side-menu .uiam--side-menu--sub-item {
 @media screen and (max-width: 1023px) {
     .uiam--side-menu--sub-item {
         padding: var(--goa-space-xs) var(--goa-space-m);
-        margin-top: 8px;
+        margin-top: var(--goa-space-xs);
     }
 
     goa-side-menu > .uiam--side-menu--sub-item {

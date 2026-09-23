@@ -11,8 +11,18 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('@abgov/react-components', () => ({
     GoabBadge: ({ content }: { content: string }) => <span data-testid="badge">{content}</span>,
-    GoabButton: ({ children, onClick, testId }: { children: React.ReactNode; onClick?: () => void; testId?: string }) => (
-        <button data-testid={testId} onClick={onClick}>{children}</button>
+    GoabButton: ({
+        children,
+        onClick,
+        testId,
+    }: {
+        children: React.ReactNode;
+        onClick?: () => void;
+        testId?: string;
+    }) => (
+        <button data-testid={testId} onClick={onClick}>
+            {children}
+        </button>
     ),
     GoabCircularProgress: ({ visible }: { visible: boolean }) => <div data-testid="spinner">{String(visible)}</div>,
     GoabIcon: ({ type }: { type: string }) => <i data-testid={`icon-${type}`} />,
@@ -31,12 +41,24 @@ jest.mock('@abgov/react-components', () => ({
     }) => (
         <div data-testid={testId}>
             <span data-testid="page-info">{`Page ${pageNumber} of ${Math.ceil(itemCount / perPageCount)}`}</span>
-            <button data-testid="next-page" onClick={() => onChange({ page: pageNumber + 1 })}>Next</button>
+            <button data-testid="next-page" onClick={() => onChange({ page: pageNumber + 1 })}>
+                Next
+            </button>
         </div>
     ),
-    GoabTable: ({ children, testId, onSort }: { children: React.ReactNode; testId?: string; onSort?: (d: { sortBy: string; sortDir: number }) => void }) => (
+    GoabTable: ({
+        children,
+        testId,
+        onSort,
+    }: {
+        children: React.ReactNode;
+        testId?: string;
+        onSort?: (d: { sortBy: string; sortDir: number }) => void;
+    }) => (
         <div data-testid={testId}>
-            <button data-testid="sort-event-asc" onClick={() => onSort?.({ sortBy: 'event', sortDir: 1 })}>sort</button>
+            <button data-testid="sort-event-asc" onClick={() => onSort?.({ sortBy: 'event', sortDir: 1 })}>
+                sort
+            </button>
             <table>{children}</table>
         </div>
     ),
@@ -63,7 +85,12 @@ const makeEvent = (index: number, overrides: Record<string, unknown> = {}) => ({
 
 const events = Array.from({ length: 12 }, (_, index) => makeEvent(index + 1));
 
-const renderPage = () => render(<MemoryRouter><AccountActivityPage /></MemoryRouter>);
+const renderPage = () =>
+    render(
+        <MemoryRouter>
+            <AccountActivityPage />
+        </MemoryRouter>
+    );
 
 describe('AccountActivityPage', () => {
     beforeEach(() => jest.clearAllMocks());
@@ -128,7 +155,9 @@ describe('AccountActivityPage', () => {
 
         await waitFor(() => expect(screen.getByTestId('when-activity-1')).toBeInTheDocument());
         // Rendered in the viewer's own zone, so assert the shape rather than a fixed zone.
-        expect(screen.getByTestId('when-activity-1').textContent).toMatch(/^September \d+, 2026 at \d+:\d{2} [AP]M \(.+\)$/);
+        expect(screen.getByTestId('when-activity-1').textContent).toMatch(
+            /^September \d+, 2026 at \d+:\d{2} [AP]M \(.+\)$/
+        );
     });
 
     it('sends Manage security to the security settings page', async () => {

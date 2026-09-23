@@ -10,16 +10,16 @@
 }
 
 .bullet-list-title {
-    margin-top: 0.75rem;
-    margin-bottom: 0.5rem;
+    margin-top: var(--goa-space-s);
+    margin-bottom: var(--goa-space-xs);
 }
 
 .bullet-list-description {
-    margin-top: 0.5rem;
+    margin-top: var(--goa-space-xs);
 }
 
 ul {
-    padding-left: 1.5rem;
+    padding-left: var(--goa-space-l);
 }
 
 .line {
@@ -51,7 +51,7 @@ ul {
 
 @media (max-width: 623px) {
     ul {
-        padding-left: 1.5rem;
+        padding-left: var(--goa-space-l);
     }
 
     .line-container {
@@ -61,7 +61,7 @@ ul {
     .line {
         display: flex;
         border: 0.1em solid var(--Greyscale-200, var(--goa-color-greyscale-200));
-        margin: 16px 6px 16px 6px;
+        margin: var(--goa-space-m) var(--goa-space-2xs) var(--goa-space-m) var(--goa-space-2xs);
         width: 50%;
     }
 

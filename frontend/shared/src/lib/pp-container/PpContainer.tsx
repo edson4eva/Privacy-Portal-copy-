@@ -8,7 +8,7 @@ interface PpContainerProperties {
 
 const PpContainer = ({
     children,
-    containerBorderColor = '#DCDCDC',
+    containerBorderColor = 'var(--goa-color-greyscale-200)',
     containerBoxShadow = '6px 6px 6px 0px rgba(0,0,0,0.16)',
 }: PpContainerProperties): React.ReactElement => {
     return (

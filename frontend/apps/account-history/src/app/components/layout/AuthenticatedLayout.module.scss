@@ -4,7 +4,7 @@
     background-color: var(--goa-color-greyscale-white);
     .content {
         flex-grow: 1;
-        padding-left: 64px;
+        padding-left: var(--goa-space-3xl);
         padding-right: 72px;
 
         /* Content measure for every page in this app. The service activity
@@ -24,7 +24,7 @@
         min-height: calc(100vh - 25rem);
         background-color: var(--goa-color-greyscale-100);
         .content {
-            padding: 0 1rem;
+            padding: 0 var(--goa-space-m);
         }
     }
     .leftNav {
@@ -37,8 +37,8 @@
 ==================*/
 .side-menu {
     width: 286px;
-    border-right: 1px solid var(--goa-color-greyscale-200);
-    padding-right: 24px;
+    border-right: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
+    padding-right: var(--goa-space-l);
     display: block;
 }
 

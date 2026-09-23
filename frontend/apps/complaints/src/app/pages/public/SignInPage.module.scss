@@ -14,7 +14,7 @@
     width: 100%;
     max-width: 30rem;
     background: var(--goa-color-greyscale-white);
-    border: 1px solid var(--goa-color-interactive-default);
+    border: var(--goa-border-width-s) solid var(--goa-color-interactive-default);
     border-top: 6px solid var(--goa-color-brand-default);
     padding: var(--goa-space-xl);
 }
@@ -23,7 +23,7 @@
     font: var(--goa-typography-heading-l);
     color: var(--goa-color-text-default);
     margin: 0;
-    line-height: 1.2;
+    line-height: var(--goa-line-height-1);
 }
 
 /* States plainly that this stands in for the real sign-in, so the page cannot
@@ -39,7 +39,7 @@
 
 .demo-notice-title {
     display: block;
-    font-weight: 700;
+    font-weight: var(--goa-font-weight-bold);
 }
 
 .field {
@@ -49,7 +49,7 @@
 }
 
 .field-label {
-    font-weight: 700;
+    font-weight: var(--goa-font-weight-bold);
 }
 
 /* Full-width primary action, as on the account card. */
@@ -86,7 +86,7 @@
 
 .rule {
     border: none;
-    border-top: 1px solid var(--goa-color-greyscale-200);
+    border-top: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
     margin: 0;
 }
 
@@ -104,7 +104,7 @@
     width: 100%;
     min-height: 3rem;
     background: var(--goa-color-greyscale-white);
-    border: 1px solid var(--goa-color-greyscale-400);
+    border: var(--goa-border-width-s) solid var(--goa-color-greyscale-400);
     font: inherit;
     color: var(--goa-color-text-default);
     cursor: pointer;
@@ -115,7 +115,7 @@
 }
 
 .provider:focus-visible {
-    outline: 3px solid var(--goa-color-interactive-focus);
+    outline: var(--goa-border-width-l) solid var(--goa-color-interactive-focus);
     outline-offset: 2px;
 }
 
@@ -130,7 +130,7 @@
     align-self: flex-start;
     display: inline-flex;
     align-items: center;
-    gap: 0.2rem;
+    gap: var(--goa-space-2xs);
 }
 
 .link-button:hover {
@@ -138,7 +138,7 @@
 }
 
 .link-button:focus-visible {
-    outline: 3px solid var(--goa-color-interactive-focus);
+    outline: var(--goa-border-width-l) solid var(--goa-color-interactive-focus);
     outline-offset: 2px;
 }
 

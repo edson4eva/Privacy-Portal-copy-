@@ -81,7 +81,7 @@ const Step3 = ({ control }: Step3Property): React.ReactElement => {
         <div className={style['step3']}>
             {windowWidth < 624 && (
                 <>
-                    <PageTitle title="FILE A COMPLAINT" fontColor="var(--goa-color-info-default)" />
+                    <PageTitle title="FILE A COMPLAINT" />
                     <PpSpacer vSpacing={'s'}></PpSpacer>
                     <PageSubTitle subTitle="Attach documentation" />
                     <PpSpacer vSpacing="s"></PpSpacer>

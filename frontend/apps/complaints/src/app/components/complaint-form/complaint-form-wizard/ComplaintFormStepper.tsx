@@ -282,7 +282,12 @@ const ComplaintFormStepper = ({ onBack }: ComplaintFormStepperProperties): React
             <ScrollToTop />
             <div className={style['stepper-container']}>
                 {windowWidth > 623 && <PpSpacer vSpacing="xl"></PpSpacer>}
-                <PpFormStepper step={step} onChange={setStep} mobile={windowWidth < 623} backgroundColor={'#F3F3F3'}>
+                <PpFormStepper
+                    step={step}
+                    onChange={setStep}
+                    mobile={windowWidth < 623}
+                    backgroundColor={'var(--goa-color-greyscale-100)'}
+                >
                     <PpFormStep text="Select department" status={status[0]} />
                     <PpFormStep text="Provide details" status={status[1]} />
                     <PpFormStep text="Attach documentation" status={status[2]} />

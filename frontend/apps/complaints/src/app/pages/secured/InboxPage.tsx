@@ -1,4 +1,12 @@
-import { GoabButton, GoabCheckbox, GoabCircularProgress, GoabDropdown, GoabDropdownItem, GoabIcon, GoabInput } from '@abgov/react-components';
+import {
+    GoabButton,
+    GoabCheckbox,
+    GoabCircularProgress,
+    GoabDropdown,
+    GoabDropdownItem,
+    GoabIcon,
+    GoabInput,
+} from '@abgov/react-components';
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { get } from 'shared/src/lib/api/dataService';
@@ -155,10 +163,7 @@ export function InboxPage(): React.ReactElement {
     const programs = inbox?.programs ?? [];
     const messages = inbox?.messages ?? [];
 
-    const programsById = useMemo(
-        () => new Map(programs.map((program) => [program.id, program])),
-        [programs]
-    );
+    const programsById = useMemo(() => new Map(programs.map((program) => [program.id, program])), [programs]);
 
     /**
      * Opening a message reads it; Mark as unread puts it back. Both are held for
@@ -175,9 +180,7 @@ export function InboxPage(): React.ReactElement {
             const matchesArchive = archivedIds.includes(message.id) === showArchived;
             const matchesProgram = programId === ALL_PROGRAMS || message.programId === programId;
             const matchesUnread =
-                !unreadOnly ||
-                unreadIds.includes(message.id) ||
-                (!!message.isUnread && !readIds.includes(message.id));
+                !unreadOnly || unreadIds.includes(message.id) || (!!message.isUnread && !readIds.includes(message.id));
             const matchesTerm =
                 !term ||
                 message.subject.toLowerCase().includes(term) ||
@@ -196,9 +199,7 @@ export function InboxPage(): React.ReactElement {
     const inboxMessages = messages.filter((message) => archivedIds.includes(message.id) === showArchived);
 
     const countFor = (id: string) =>
-        id === ALL_PROGRAMS
-            ? inboxMessages.length
-            : inboxMessages.filter((message) => message.programId === id).length;
+        id === ALL_PROGRAMS ? inboxMessages.length : inboxMessages.filter((message) => message.programId === id).length;
 
     const unreadCount = inboxMessages.filter((message) => isUnread(message)).length;
 
@@ -225,8 +226,9 @@ export function InboxPage(): React.ReactElement {
         return <GoabCircularProgress variant="inline" size="small" visible={true}></GoabCircularProgress>;
     }
 
-    const openMessageDetails = visibleMessages.find((message) => message.id === openMessageId)
-        ?? messages.find((message) => message.id === openMessageId);
+    const openMessageDetails =
+        visibleMessages.find((message) => message.id === openMessageId) ??
+        messages.find((message) => message.id === openMessageId);
 
     if (openMessageDetails) {
         const message = openMessageDetails;
@@ -251,12 +253,7 @@ export function InboxPage(): React.ReactElement {
             <div className={styles['container']}>
                 {windowWidth <= 623 && <PpSpacer vSpacing="xl" />}
 
-                <GoabButton
-                    type="tertiary"
-                    leadingIcon="arrow-back"
-                    onClick={() => showList()}
-                    testId="back-to-inbox"
-                >
+                <GoabButton type="tertiary" leadingIcon="arrow-back" onClick={() => showList()} testId="back-to-inbox">
                     Back to inbox
                 </GoabButton>
                 <PpSpacer vSpacing="m" />
@@ -339,9 +336,7 @@ export function InboxPage(): React.ReactElement {
                                             ))}
                                         </ul>
                                     )}
-                                    {section.paragraphs?.map((paragraph) => (
-                                        <p key={paragraph}>{paragraph}</p>
-                                    ))}
+                                    {section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                                 </div>
                             ))}
 
@@ -498,8 +493,8 @@ export function InboxPage(): React.ReactElement {
             <h1 className={styles['page-heading']}>{showArchived ? 'Archived messages' : 'Inbox'}</h1>
             <PpSpacer vSpacing="m" />
             <p className={styles['intro']}>
-                Secure messages from Government of Alberta programs and services. We will never ask for your password
-                or banking details in a message.
+                Secure messages from Government of Alberta programs and services. We will never ask for your password or
+                banking details in a message.
             </p>
             <PpSpacer vSpacing="l" />
 
@@ -601,10 +596,7 @@ export function InboxPage(): React.ReactElement {
                                     aria-label={`Open message: ${message.subject}`}
                                 >
                                     <span className={styles['program']}>
-                                        <span
-                                            className={styles['dot']}
-                                            style={{ backgroundColor: program?.colour }}
-                                        />
+                                        <span className={styles['dot']} style={{ backgroundColor: program?.colour }} />
                                         {program?.name}
                                     </span>
                                     <span className={styles['subject']}>

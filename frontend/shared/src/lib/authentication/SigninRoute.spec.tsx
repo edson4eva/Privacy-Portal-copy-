@@ -27,7 +27,12 @@ const mockIsDemoMode = isDemoMode as jest.Mock;
 
 const login = jest.fn();
 
-const renderRoute = () => render(<MemoryRouter><SigninRoute title="Sign in" /></MemoryRouter>);
+const renderRoute = () =>
+    render(
+        <MemoryRouter>
+            <SigninRoute title="Sign in" />
+        </MemoryRouter>
+    );
 
 describe('SigninRoute', () => {
     beforeEach(() => {

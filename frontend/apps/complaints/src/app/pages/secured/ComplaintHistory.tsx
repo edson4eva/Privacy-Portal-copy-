@@ -49,7 +49,7 @@ const ComplaintHistory = (): React.ReactElement => {
         <>
             <div className={style['container']}>
                 <div className={style['title-spacing']} />
-                <PageTitle title="PRIVACY COMPLAINT" fontColor="#004A8F" />
+                <PageTitle title="PRIVACY COMPLAINT" />
                 <GoabSpacer vSpacing="s"></GoabSpacer>
                 <PageSubTitle subTitle="Complaint history" />
                 <GoabSpacer vSpacing="l"></GoabSpacer>
@@ -63,12 +63,7 @@ const ComplaintHistory = (): React.ReactElement => {
                         <div className={style['no-complaints-alert']} data-testid="no-complaints-alert">
                             <div className={style['alert-header']}>
                                 <div className={style['alert-icon']}>
-                                    <GoabIcon
-                                        type="alert-circle"
-                                        fillColor="#000"
-                                        theme="outline"
-                                        testId="no-complaints-alert-icon"
-                                    />
+                                    <GoabIcon type="alert-circle" theme="outline" testId="no-complaints-alert-icon" />
                                 </div>
                                 <div className={style['alert-title']}>
                                     <span>Complaint history unavailable</span>

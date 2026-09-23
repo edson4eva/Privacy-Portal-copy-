@@ -1,8 +1,8 @@
 .container {
     background-color: var(--pp-background-color-landing);
-    padding-left: 64px;
+    padding-left: var(--goa-space-3xl);
     padding-right: 72px;
-    padding-top: 3rem;
+    padding-top: var(--goa-space-2xl);
     width: calc(720px + 64px + 72px); // 720px content + left/right padding = 856px total
     flex-shrink: 0; // Prevent shrinking
     box-sizing: border-box; // Padding is included in the total width
@@ -16,8 +16,8 @@
     .container {
         background-color: var(--pp-background-color-internal);
         padding-top: 0rem;
-        padding-left: 36px;
-        padding-right: 36px;
+        padding-left: var(--goa-space-xl);
+        padding-right: var(--goa-space-xl);
         width: 100%;
         max-width: 100%;
     }
@@ -31,8 +31,8 @@
     .container {
         background-color: var(--pp-background-color-internal);
         padding-top: 0rem;
-        padding-left: 16px;
-        padding-right: 16px;
+        padding-left: var(--goa-space-m);
+        padding-right: var(--goa-space-m);
         width: 100%;
         max-width: 100%;
     }

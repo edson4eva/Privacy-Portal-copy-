@@ -8,7 +8,7 @@
 @media (max-width: 623px) {
     .container {
         display: block;
-        padding-right: 1rem;
+        padding-right: var(--goa-space-m);
         background-color: var(--goa-color-greyscale-100);
     }
     .leftNav {
@@ -21,8 +21,8 @@
 ==================*/
 .side-menu {
     width: 286px;
-    border-right: 1px solid var(--goa-color-greyscale-200);
-    padding-right: 24px;
+    border-right: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
+    padding-right: var(--goa-space-l);
     display: block;
 }
 

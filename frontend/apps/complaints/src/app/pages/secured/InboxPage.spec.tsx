@@ -4,23 +4,75 @@ import { Link, MemoryRouter, Route, Routes } from 'react-router-dom';
 import InboxPage from './InboxPage';
 
 jest.mock('@abgov/react-components', () => ({
-    GoabButton: ({ children, onClick, testId }: { children: React.ReactNode; onClick?: () => void; testId?: string }) => (
-        <button data-testid={testId} onClick={onClick}>{children}</button>
+    GoabButton: ({
+        children,
+        onClick,
+        testId,
+    }: {
+        children: React.ReactNode;
+        onClick?: () => void;
+        testId?: string;
+    }) => (
+        <button data-testid={testId} onClick={onClick}>
+            {children}
+        </button>
     ),
-    GoabCheckbox: ({ checked, onChange, testId, text }: { checked?: boolean; onChange?: (d: { checked: boolean }) => void; testId?: string; text?: string }) => (
+    GoabCheckbox: ({
+        checked,
+        onChange,
+        testId,
+        text,
+    }: {
+        checked?: boolean;
+        onChange?: (d: { checked: boolean }) => void;
+        testId?: string;
+        text?: string;
+    }) => (
         <label>
-            <input type="checkbox" data-testid={testId} checked={!!checked} onChange={(e) => onChange?.({ checked: e.target.checked })} />
+            <input
+                type="checkbox"
+                data-testid={testId}
+                checked={!!checked}
+                onChange={(e) => onChange?.({ checked: e.target.checked })}
+            />
             {text}
         </label>
     ),
     GoabCircularProgress: ({ visible }: { visible: boolean }) => <div data-testid="spinner">{String(visible)}</div>,
-    GoabDropdown: ({ value, onChange, testId, children }: { value?: string; onChange?: (d: { value?: string }) => void; testId?: string; children?: React.ReactNode }) => (
-        <select data-testid={testId} value={value} onChange={(e) => onChange?.({ value: e.target.value })}>{children}</select>
+    GoabDropdown: ({
+        value,
+        onChange,
+        testId,
+        children,
+    }: {
+        value?: string;
+        onChange?: (d: { value?: string }) => void;
+        testId?: string;
+        children?: React.ReactNode;
+    }) => (
+        <select data-testid={testId} value={value} onChange={(e) => onChange?.({ value: e.target.value })}>
+            {children}
+        </select>
     ),
     GoabDropdownItem: ({ value, label }: { value: string; label: string }) => <option value={value}>{label}</option>,
     GoabIcon: ({ type }: { type: string }) => <i data-testid={`icon-${type}`} />,
-    GoabInput: ({ value, onChange, testId, placeholder }: { value?: string; onChange?: (d: { name: string; value: string }) => void; testId?: string; placeholder?: string }) => (
-        <input data-testid={testId} placeholder={placeholder} value={value} onChange={(e) => onChange?.({ name: 'inbox-search', value: e.target.value })} />
+    GoabInput: ({
+        value,
+        onChange,
+        testId,
+        placeholder,
+    }: {
+        value?: string;
+        onChange?: (d: { name: string; value: string }) => void;
+        testId?: string;
+        placeholder?: string;
+    }) => (
+        <input
+            data-testid={testId}
+            placeholder={placeholder}
+            value={value}
+            onChange={(e) => onChange?.({ name: 'inbox-search', value: e.target.value })}
+        />
     ),
 }));
 
@@ -77,7 +129,9 @@ const renderPage = (entry = '/inbox') =>
     render(
         <MemoryRouter initialEntries={[entry]}>
             {/* Stands in for the side menu entry, which is a router link to this page. */}
-            <Link to="/inbox" data-testid="nav-inbox">Inbox</Link>
+            <Link to="/inbox" data-testid="nav-inbox">
+                Inbox
+            </Link>
             <Routes>
                 <Route path="/inbox" element={<InboxPage />} />
             </Routes>

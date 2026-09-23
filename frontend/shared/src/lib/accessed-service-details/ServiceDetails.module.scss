@@ -17,6 +17,6 @@
 
     .button-container {
         flex-direction: column;
-        padding: 1.5rem 0 3rem 0;
+        padding: var(--goa-space-l) 0 var(--goa-space-2xl) 0;
     }
 }

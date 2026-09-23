@@ -5,12 +5,36 @@ import ServiceActivityPage from './ServiceActivityPage';
 
 jest.mock('@abgov/react-components', () => ({
     GoabCircularProgress: ({ visible }: { visible: boolean }) => <div data-testid="spinner">{String(visible)}</div>,
-    GoabDropdown: ({ value, onChange, testId, children }: { value?: string; onChange?: (d: { value?: string }) => void; testId?: string; children?: React.ReactNode }) => (
-        <select data-testid={testId} value={value} onChange={(e) => onChange?.({ value: e.target.value })}>{children}</select>
+    GoabDropdown: ({
+        value,
+        onChange,
+        testId,
+        children,
+    }: {
+        value?: string;
+        onChange?: (d: { value?: string }) => void;
+        testId?: string;
+        children?: React.ReactNode;
+    }) => (
+        <select data-testid={testId} value={value} onChange={(e) => onChange?.({ value: e.target.value })}>
+            {children}
+        </select>
     ),
     GoabDropdownItem: ({ value, label }: { value: string; label: string }) => <option value={value}>{label}</option>,
     GoabIcon: ({ type }: { type: string }) => <i data-testid={`icon-${type}`} />,
-    GoabPagination: ({ itemCount, perPageCount, pageNumber, onChange, testId }: { itemCount: number; perPageCount: number; pageNumber: number; onChange: (d: { page: number }) => void; testId?: string }) => {
+    GoabPagination: ({
+        itemCount,
+        perPageCount,
+        pageNumber,
+        onChange,
+        testId,
+    }: {
+        itemCount: number;
+        perPageCount: number;
+        pageNumber: number;
+        onChange: (d: { page: number }) => void;
+        testId?: string;
+    }) => {
         const total = Math.max(1, Math.ceil(itemCount / perPageCount));
         return (
             <div data-testid={testId}>
@@ -60,17 +84,58 @@ const payload = {
             { id: 'fines', name: 'Fine payments' },
         ],
         events: [
-            { id: 'e1', serviceId: 'rebate', event: 'Your rebate payment was issued', categoryId: 'payments', occurredAt: daysAgo(2) },
-            { id: 'e2', serviceId: 'fines', event: 'You paid for a fine', categoryId: 'payments', occurredAt: daysAgo(10) },
-            { id: 'e3', serviceId: 'rebate', event: 'You submitted your application', categoryId: 'applications', occurredAt: daysAgo(40) },
-            { id: 'e4', serviceId: 'rebate', event: 'Your identity document was verified', categoryId: 'account-activity', occurredAt: daysAgo(120) },
-            { id: 'e5', serviceId: 'fines', event: 'Your payment receipt was issued', categoryId: 'payments', occurredAt: daysAgo(200) },
-            { id: 'e6', serviceId: 'rebate', event: 'You gave consent to verify your income', categoryId: 'applications', occurredAt: daysAgo(300) },
+            {
+                id: 'e1',
+                serviceId: 'rebate',
+                event: 'Your rebate payment was issued',
+                categoryId: 'payments',
+                occurredAt: daysAgo(2),
+            },
+            {
+                id: 'e2',
+                serviceId: 'fines',
+                event: 'You paid for a fine',
+                categoryId: 'payments',
+                occurredAt: daysAgo(10),
+            },
+            {
+                id: 'e3',
+                serviceId: 'rebate',
+                event: 'You submitted your application',
+                categoryId: 'applications',
+                occurredAt: daysAgo(40),
+            },
+            {
+                id: 'e4',
+                serviceId: 'rebate',
+                event: 'Your identity document was verified',
+                categoryId: 'account-activity',
+                occurredAt: daysAgo(120),
+            },
+            {
+                id: 'e5',
+                serviceId: 'fines',
+                event: 'Your payment receipt was issued',
+                categoryId: 'payments',
+                occurredAt: daysAgo(200),
+            },
+            {
+                id: 'e6',
+                serviceId: 'rebate',
+                event: 'You gave consent to verify your income',
+                categoryId: 'applications',
+                occurredAt: daysAgo(300),
+            },
         ],
     },
 };
 
-const renderPage = () => render(<MemoryRouter><ServiceActivityPage isPreview={false} /></MemoryRouter>);
+const renderPage = () =>
+    render(
+        <MemoryRouter>
+            <ServiceActivityPage isPreview={false} />
+        </MemoryRouter>
+    );
 
 describe('ServiceActivityPage', () => {
     beforeEach(() => jest.clearAllMocks());
@@ -216,7 +281,11 @@ describe('ServiceActivityPage', () => {
 
     it('uses the preview endpoint in preview mode', async () => {
         mockGet.mockResolvedValue(payload);
-        render(<MemoryRouter><ServiceActivityPage isPreview={true} /></MemoryRouter>);
+        render(
+            <MemoryRouter>
+                <ServiceActivityPage isPreview={true} />
+            </MemoryRouter>
+        );
 
         await waitFor(() => expect(screen.getByTestId('view-e1')).toBeInTheDocument());
         expect(mockGet).toHaveBeenCalledWith('/v1/preview/service-activity');

@@ -11,7 +11,7 @@ const AlbertaAccountModal = (): React.ReactElement => {
             <GoabSpacer vSpacing="2xl" />
             <div className={styles['decide-alert']}>
                 <div>
-                    <GoabIcon type="alert-circle" fillColor="#000" theme="outline"></GoabIcon>
+                    <GoabIcon type="alert-circle" theme="outline"></GoabIcon>
                 </div>
                 <div>Having trouble with your Alberta.ca Account?</div>
             </div>

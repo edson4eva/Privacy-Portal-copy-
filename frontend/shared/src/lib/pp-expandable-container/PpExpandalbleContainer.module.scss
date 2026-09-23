@@ -16,9 +16,9 @@
     color: var(--goa-color-interactive-default);
     border: none;
     cursor: pointer;
-    padding: 5px 0px;
+    padding: var(--goa-space-2xs) 0px;
     font: 1.125rem;
-    font-weight: bold;
+    font-weight: var(--goa-font-weight-bold);
     font-size: var(--goa-font-size-4);
     text-decoration: underline;
 }

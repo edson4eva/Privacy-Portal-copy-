@@ -2,25 +2,25 @@
     margin-left: auto;
     margin-right: auto;
     width: fit-content;
-    padding: 3.5rem 0 0rem 2rem;
+    padding: calc(var(--goa-space-2xl) + var(--goa-space-xs)) 0 0rem var(--goa-space-xl);
 }
 .heading {
-    margin: 0.75rem 0;
+    margin: var(--goa-space-s) 0;
 }
 .landing-page-img {
-    margin: 0 0 1rem 0;
+    margin: 0 0 var(--goa-space-m) 0;
     width: 15.625rem;
     img {
         width: 250px;
     }
 }
 .dashboard-list {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin-top: var(--goa-space-xs);
+    margin-bottom: var(--goa-space-xs);
     text-decoration: none;
     line-height: var(--goa-line-height-3);
     li {
-        margin-left: 0.5rem;
+        margin-left: var(--goa-space-xs);
         &::marker {
             font-size: 0.5rem;
         }
@@ -29,15 +29,15 @@
 
 @media (max-width: 623px) {
     .container {
-        padding: 2.25rem 0 3.25rem 1rem;
+        padding: var(--goa-space-xl) 0 var(--goa-space-2xl) var(--goa-space-m);
     }
     .dashboard-list {
-        font-size: 1rem;
-        line-height: 1.5rem;
+        font-size: var(--goa-font-size-3);
+        line-height: var(--goa-line-height-2);
     }
     .landing-page-img {
         display: flex;
-        margin: 2rem auto;
+        margin: var(--goa-space-xl) auto;
         img {
             margin: auto;
             width: 15.625rem;

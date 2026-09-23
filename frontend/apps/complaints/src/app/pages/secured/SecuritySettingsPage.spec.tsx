@@ -4,8 +4,18 @@ import { MemoryRouter } from 'react-router-dom';
 import SecuritySettingsPage from './SecuritySettingsPage';
 
 jest.mock('@abgov/react-components', () => ({
-    GoabButton: ({ children, onClick, testId }: { children: React.ReactNode; onClick?: () => void; testId?: string }) => (
-        <button data-testid={testId} onClick={onClick}>{children}</button>
+    GoabButton: ({
+        children,
+        onClick,
+        testId,
+    }: {
+        children: React.ReactNode;
+        onClick?: () => void;
+        testId?: string;
+    }) => (
+        <button data-testid={testId} onClick={onClick}>
+            {children}
+        </button>
     ),
     GoabCheckbox: ({
         checked,
@@ -50,7 +60,12 @@ const payload = {
     },
 };
 
-const renderPage = () => render(<MemoryRouter><SecuritySettingsPage /></MemoryRouter>);
+const renderPage = () =>
+    render(
+        <MemoryRouter>
+            <SecuritySettingsPage />
+        </MemoryRouter>
+    );
 
 describe('SecuritySettingsPage', () => {
     beforeEach(() => {

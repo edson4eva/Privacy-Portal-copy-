@@ -1,7 +1,7 @@
 .input-error-div {
-    padding-top: 0.5rem;
+    padding-top: var(--goa-space-xs);
     display: flex;
-    gap: 0.5rem;
+    gap: var(--goa-space-xs);
 }
 .heading {
     font: var(--goa-typography-heading-s);

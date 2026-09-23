@@ -9,6 +9,7 @@ import PageTitle from 'shared/src/lib/page-title/PageTitle';
 import { trackEvent } from 'shared/src/lib/api/tagManagerService';
 import useWindowWidth from 'shared/src/lib/utils/useWindowWidth';
 import { PpSpacer } from 'shared/src/lib/pp-spacer/PpSpacer';
+import { PALETTE } from 'shared/src/lib/style/palette';
 
 export function ComplaintLandingPage(): React.ReactElement {
     const navigate = useNavigate();
@@ -45,7 +46,7 @@ export function ComplaintLandingPage(): React.ReactElement {
         <>
             <div className={styles['container']}>
                 {windowWidth > 623 && <PpSpacer vSpacing="2xl" />}
-                <PageTitle title="PRIVACY COMPLAINT" fontColor="#004F84" />
+                <PageTitle title="PRIVACY COMPLAINT" />
                 <PpSpacer vSpacing="s" />
                 <PageSubTitle subTitle="File a complaint" fontWeight="bold" />
                 <PpSpacer vSpacing="xl" />
@@ -75,7 +76,7 @@ export function ComplaintLandingPage(): React.ReactElement {
                                 <div className={styles['content']}>
                                     <span className={styles['text']}>Create account</span>
                                     <span className={styles['icon']}>
-                                        <GoabIcon size="small" type="chevron-down" fillColor="#004A8F"></GoabIcon>
+                                        <GoabIcon size="small" type="chevron-down" fillColor={PALETTE.info}></GoabIcon>
                                     </span>
                                 </div>
                             </GoabButton>

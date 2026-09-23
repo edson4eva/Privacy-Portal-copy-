@@ -1,13 +1,13 @@
-.lock-callout-container{
-    padding: 1rem 1rem 1rem 1rem;
+.lock-callout-container {
+    padding: var(--goa-space-m) var(--goa-space-m) var(--goa-space-m) var(--goa-space-m);
     background-color: var(--goa-color-warning-light);
-    border-radius: 5px;
-    border: 1px solid var(--goa-color-warning-dark);
-    .lock-header{
+    border-radius: var(--goa-border-radius-m);
+    border: var(--goa-border-width-s) solid var(--goa-color-warning-dark);
+    .lock-header {
         font-size: var(--goa-font-size-4);
         font-weight: var(--goa-font-weight-bold);
     }
-    .lock-desc{
+    .lock-desc {
         font-size: var(--goa-font-size-4);
     }
 }

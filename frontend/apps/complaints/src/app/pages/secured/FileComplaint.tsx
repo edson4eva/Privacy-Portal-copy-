@@ -60,7 +60,7 @@ const FileComplaint = (): React.ReactElement => {
             <div className={style['container']}>
                 {windowWidth > 624 && (
                     <>
-                        <PageTitle title="PRIVACY COMPLAINT" fontColor="var(--goa-color-info-default)" />
+                        <PageTitle title="PRIVACY COMPLAINT" />
                         <GoabSpacer vSpacing={'s'}></GoabSpacer>
                         <PageSubTitle subTitle="File a complaint" />
                     </>

@@ -15,6 +15,7 @@ import useWindowWidth from 'shared/src/lib/utils/useWindowWidth';
 import { privacyComplaintConcernList } from '../../../../types/ComplaintForm';
 import PpExpandableContainer from 'shared/src/lib/pp-expandable-container/PpExpandableContainer';
 import { PpSpacer } from 'shared/src/lib/pp-spacer/PpSpacer';
+import { PALETTE } from 'shared/src/lib/style/palette';
 
 interface Step4Property {
     goToStep: (value: number) => void;
@@ -65,7 +66,7 @@ const Step4: React.FC<Step4Property> = ({
         <div className={style['step4']}>
             {windowWidth < 624 && (
                 <>
-                    <PageTitle title="FILE A COMPLAINT" fontColor="var(--goa-color-info-default)" />
+                    <PageTitle title="FILE A COMPLAINT" />
                     <PpSpacer vSpacing={'s'}></PpSpacer>
                     <PageSubTitle subTitle="Review and submit" />
                     <PpSpacer vSpacing="s"></PpSpacer>
@@ -75,13 +76,13 @@ const Step4: React.FC<Step4Property> = ({
             {isComplaintSubmitted && (
                 <>
                     <div className={style['success-callout']}>
-                        <PpContainer containerBoxShadow="none" containerBorderColor="#006F4C">
+                        <PpContainer containerBoxShadow="none" containerBorderColor="var(--goa-color-success-default)">
                             <div className="success-container-heading">
                                 <GoabIcon
                                     type="checkmark-circle"
                                     size="small"
                                     opacity={1}
-                                    fillColor="#006F4C"
+                                    fillColor={PALETTE.success}
                                 ></GoabIcon>
                                 <span className={style['section-heading-value']} style={{ marginLeft: '8px' }}>
                                     Complaint submitted successfully
@@ -271,13 +272,16 @@ const Step4: React.FC<Step4Property> = ({
                                 )}
                                 {documents?.files?.length === 0 && (
                                     <div className={style['information-callout']}>
-                                        <PpContainer containerBoxShadow="none" containerBorderColor="#0070C4">
+                                        <PpContainer
+                                            containerBoxShadow="none"
+                                            containerBorderColor="var(--goa-color-interactive-default)"
+                                        >
                                             <div className="information-container-heading">
                                                 <GoabIcon
                                                     type="information-circle"
                                                     size="small"
                                                     opacity={1}
-                                                    fillColor="#0070C4"
+                                                    fillColor={PALETTE.interactive}
                                                 ></GoabIcon>
                                                 <span
                                                     className={style['heading-label-value']}

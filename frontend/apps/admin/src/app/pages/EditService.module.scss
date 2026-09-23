@@ -2,12 +2,12 @@
     padding-left: var(--goa-space-l);
 }
 .add-new-accordion {
-    padding: 15px;
-    border: 1px solid var(--goa-color-greyscale-50);
+    padding: var(--goa-space-m);
+    border: var(--goa-border-width-s) solid var(--goa-color-greyscale-50);
     border-radius: 15px;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25);
     max-width: 55rem;
-    margin-right: 10px;
+    margin-right: var(--goa-space-xs);
     .add-button {
         background: none !important;
         border: none;
@@ -19,7 +19,7 @@
 }
 .content-container {
     max-width: 55rem;
-    margin-top: 1rem;
+    margin-top: var(--goa-space-m);
     margin-left: auto;
     margin-right: auto;
 }
@@ -34,13 +34,13 @@
 }
 .section-header-btn {
     float: right;
-    margin-right: 1rem;
+    margin-right: var(--goa-space-m);
 }
 .section-bottom-btn-panel {
-    margin-top: 5px;
+    margin-top: var(--goa-space-2xs);
 }
 .service-name-badge-container {
-    margin-bottom: 3rem;
+    margin-bottom: var(--goa-space-2xl);
     .service-name {
         line-height: var(--goa-line-height-6);
         font-size: var(--goa-font-size-9);
@@ -49,7 +49,7 @@
         display: inline-block;
         background-color: var(--Color-Brand-Default, var(--goa-color-brand-default));
         font: var(--goa-typography-body-xs);
-        padding: 0 var(--goa-space-xs) 0.125rem var(--goa-space-xs);
+        padding: 0 var(--goa-space-xs) var(--goa-space-3xs) var(--goa-space-xs);
         border-radius: 6.1875rem;
         color: var(--goa-color-greyscale-100);
     }
@@ -58,15 +58,15 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 1.5rem;
+    padding: var(--goa-space-l);
     background-color: var(--goa-color-greyscale-white);
-    border: 1px solid var(--goa-color-warning-default);
+    border: var(--goa-border-width-s) solid var(--goa-color-warning-default);
     border-radius: 1rem;
     .coming-soon-title {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 0.5rem;
+        gap: var(--goa-space-xs);
         .coming-soon-title-icon {
             width: 1.5rem;
             height: 1.5rem;
@@ -78,8 +78,8 @@
         }
     }
     .coming-soon-description {
-        font-size: 1.125rem;
-        line-height: 1.75rem;
+        font-size: var(--goa-font-size-4);
+        line-height: var(--goa-line-height-3);
     }
 }
 .service-access-history {
@@ -91,7 +91,7 @@
 }
 
 .table-container {
-    margin: 1rem 0 2rem 0;
+    margin: var(--goa-space-m) 0 var(--goa-space-xl) 0;
     goa-table table {
         width: unset !important;
         tr th:first-child,
@@ -108,16 +108,16 @@
 .button-container {
     display: flex;
     flex-direction: row;
-    gap: 1rem;
-    padding: 0 0 1rem 0;
+    gap: var(--goa-space-m);
+    padding: 0 0 var(--goa-space-m) 0;
     goa-button:nth-child(2) {
         --goa-button-padding-lr: 0.5rem;
     }
 }
 .non-mobile-back-button {
     max-width: 45rem;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: var(--goa-space-2xs);
+    margin-bottom: var(--goa-space-2xs);
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -132,29 +132,29 @@
     width: 24px;
     height: 24px;
     background: var(--goa-color-success-default);
-    border-radius: 12px;
+    border-radius: var(--goa-border-radius-3xl);
 }
 .modal-header {
     display: table;
     .header-icon-yellow-circle {
         float: left;
-        margin-top: 5px;
+        margin-top: var(--goa-space-2xs);
         display: flex;
         background: var(--goa-color-warning-default);
-        border-radius: 12px;
+        border-radius: var(--goa-border-radius-3xl);
         text-align: center;
     }
     .header-icon-green-circle {
         float: left;
-        margin-top: 5px;
+        margin-top: var(--goa-space-2xs);
         display: flex;
         background: var(--goa-color-success-default);
-        border-radius: 12px;
+        border-radius: var(--goa-border-radius-3xl);
         text-align: center;
     }
     .header-text {
         float: left;
-        margin-left: 10px;
+        margin-left: var(--goa-space-xs);
     }
 }
 @media (max-width: 623px) {
@@ -163,7 +163,7 @@
     }
     .button-container {
         flex-direction: column;
-        padding: 1.5rem 0 3rem 0;
+        padding: var(--goa-space-l) 0 var(--goa-space-2xl) 0;
         goa-button:nth-child(2) {
             --goa-button-padding-lr: 0.75rem;
         }
@@ -181,30 +181,30 @@
         width: 100%;
         background-color: var(--goa-color-greyscale-white);
         width: calc(100% + 3rem);
-        margin-left: -1.5rem;
-        margin-bottom: 2rem;
-        border-top: 1px solid var(--goa-color-greyscale-200);
-        border-bottom: 2px solid var(--goa-color-greyscale-200);
+        margin-left: calc(var(--goa-space-l) * -1);
+        margin-bottom: var(--goa-space-xl);
+        border-top: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
+        border-bottom: var(--goa-border-width-m) solid var(--goa-color-greyscale-200);
         cursor: pointer;
         .icon {
             position: absolute;
             left: 0;
             display: flex;
             align-items: center;
-            padding-left: 10px;
+            padding-left: var(--goa-space-xs);
         }
 
         .text {
             text-align: center;
             color: var(--goa-color-interactive-default);
-            font-weight: 700;
+            font-weight: var(--goa-font-weight-bold);
         }
     }
     .service-name-badge-container {
-        margin-bottom: 1.5rem;
+        margin-bottom: var(--goa-space-l);
     }
     .table-container {
-        margin-bottom: 1.5rem;
+        margin-bottom: var(--goa-space-l);
         goa-table table {
             width: unset !important;
             tr th:first-child,

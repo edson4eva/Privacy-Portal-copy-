@@ -1,12 +1,12 @@
 .button-container {
     display: flex;
     flex-direction: row;
-    gap: 1rem;
-    padding: 2rem 0 3rem 0;
+    gap: var(--goa-space-m);
+    padding: var(--goa-space-xl) 0 var(--goa-space-2xl) 0;
 }
 @media (max-width: 623px) {
     .button-container {
         flex-direction: column;
-        padding: 1.5rem 0 3rem 0;
+        padding: var(--goa-space-l) 0 var(--goa-space-2xl) 0;
     }
 }

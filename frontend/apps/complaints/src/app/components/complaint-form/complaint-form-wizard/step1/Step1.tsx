@@ -27,7 +27,7 @@ const Step1 = ({ control, correlationId }: Step1Property): React.ReactElement =>
         <div className={styles['step-container']}>
             {windowWidth < 624 && (
                 <>
-                    <PageTitle title="FILE A COMPLAINT" fontColor="var(--goa-color-info-default)" />
+                    <PageTitle title="FILE A COMPLAINT" />
                     <PpSpacer vSpacing="s"></PpSpacer>
                     <PageSubTitle subTitle="Select department" />
                     <PpSpacer vSpacing="s"></PpSpacer>

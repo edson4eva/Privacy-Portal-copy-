@@ -1,5 +1,6 @@
 import { GoabIcon } from '@abgov/react-components';
 import styles from './InputComponent.module.scss';
+import { PALETTE } from 'shared/src/lib/style/palette';
 
 interface InputProperties {
     error: string | undefined;
@@ -11,7 +12,13 @@ export const InputComponent: React.FC<InputProperties> = ({ error, children }): 
             <div className={error ? styles['input-error'] : styles['input']}>{children}</div>
             {error && (
                 <div className={styles['input-error-div']}>
-                    <GoabIcon type="warning" size="medium" theme="filled" opacity={1} fillColor="#ec040b"></GoabIcon>
+                    <GoabIcon
+                        type="warning"
+                        size="medium"
+                        theme="filled"
+                        opacity={1}
+                        fillColor={PALETTE.error}
+                    ></GoabIcon>
                     <div className={styles['input-error-text']}>{error}</div>
                 </div>
             )}

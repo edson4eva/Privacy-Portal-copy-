@@ -1,18 +1,18 @@
 .heading {
-    margin: 0.75rem 0;
+    margin: var(--goa-space-s) 0;
 }
 .container {
     max-width: 45rem;
-    margin-top: 2rem;
-    margin-bottom: 1.75rem;
+    margin-top: var(--goa-space-xl);
+    margin-bottom: var(--goa-space-l);
     margin-left: auto;
     margin-right: auto;
 }
 .search-export-row {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
+    gap: var(--goa-space-xs);
+    margin-top: var(--goa-space-xs);
 
     > :first-child {
         flex: 1;
@@ -22,12 +22,12 @@
 .filter-row {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.75rem;
+    gap: var(--goa-space-xs);
+    margin-top: var(--goa-space-s);
     flex-wrap: wrap;
 
     .filter-span {
-        font-weight: bold;
+        font-weight: var(--goa-font-weight-bold);
     }
 }
 .chip-wrapper {
@@ -49,8 +49,8 @@
         height: 1.5rem;
     }
     div:nth-child(2) {
-        margin-left: 0.5rem;
-        margin-top: -0.1875rem;
+        margin-left: var(--goa-space-xs);
+        margin-top: calc(var(--goa-border-width-l) * -1);
         max-width: 41rem;
     }
 }
@@ -60,8 +60,8 @@
 }
 .table-container {
     max-width: 45rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-top: var(--goa-space-xl);
+    margin-bottom: var(--goa-space-xl);
     margin-left: auto;
     margin-right: auto;
 }
@@ -70,15 +70,15 @@ table:has(> thead.tbl-thead) {
         display: flex;
         justify-content: space-between;
         .services-count {
-            border-radius: 0.25rem;
+            border-radius: var(--goa-border-radius-m);
             background-color: var(--goa-color-interactive-default);
-            padding: 0 0.5rem;
-            font-size: 0.875rem;
+            padding: 0 var(--goa-space-xs);
+            font-size: var(--goa-font-size-2);
             color: var(--goa-color-greyscale-white);
-            font-weight: 400;
-            line-height: 1.25rem;
+            font-weight: var(--goa-font-weight-regular);
+            line-height: var(--goa-line-height-1);
             height: 1.375rem;
-            margin-top: 0.25rem;
+            margin-top: var(--goa-space-2xs);
         }
     }
 }
@@ -91,20 +91,20 @@ table:has(> thead.tbl-thead) {
 }
 @media (max-width: 623px) {
     .container {
-        padding: 2.25rem 0 3.25rem 1rem;
+        padding: var(--goa-space-xl) 0 var(--goa-space-2xl) var(--goa-space-m);
     }
     table:has(> thead.tbl-thead) {
         .th-service-accessed {
             .services-count {
                 background-color: var(--goa-color-brand-default);
-                margin-right: 1rem;
+                margin-right: var(--goa-space-m);
             }
         }
         th,
         td {
-            padding: 0.75rem 0 0.75rem 0.75rem;
-            font-size: 1rem;
-            line-height: 1.5rem;
+            padding: var(--goa-space-s) 0 var(--goa-space-s) var(--goa-space-s);
+            font-size: var(--goa-font-size-3);
+            line-height: var(--goa-line-height-2);
         }
         tr th:nth-child(2),
         tr td:nth-child(2) {

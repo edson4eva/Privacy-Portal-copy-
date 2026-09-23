@@ -11,8 +11,8 @@
 .inner-box {
     display: flex;
     border-radius: 1rem;
-    border: 1px solid var(--goa-color-greyscale-200);
-    padding: 1.5rem;
+    border: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
+    padding: var(--goa-space-l);
     flex-direction: column;
 }
 
@@ -55,7 +55,7 @@
     align-items: center;
     max-width: 25.75rem;
     height: 4rem;
-    padding: 32px 0px 32px 0px;
+    padding: var(--goa-space-xl) 0px var(--goa-space-xl) 0px;
 }
 
 .line {
@@ -65,9 +65,9 @@
 }
 
 .span-text {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-bottom: 0.25rem;
+    padding-left: var(--goa-space-xs);
+    padding-right: var(--goa-space-xs);
+    padding-bottom: var(--goa-space-2xs);
 }
 
 @media (max-width: 623px) {
@@ -75,7 +75,7 @@
         display: flex;
         max-width: 23.43rem;
         flex-direction: column;
-        padding: 48px 16px;
+        padding: var(--goa-space-2xl) var(--goa-space-m);
         margin: 0;
         min-height: 41.62rem;
     }
@@ -83,15 +83,15 @@
     .inner-box {
         max-width: 21.43rem;
         border-radius: 1rem;
-        border: 1px solid var(--goa-color-greyscale-200);
-        padding: 24px 16px;
+        border: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
+        padding: var(--goa-space-l) var(--goa-space-m);
     }
 
     .button-1 {
         align-items: center;
         justify-content: center;
         width: 100%;
-        padding-bottom: 2rem;
+        padding-bottom: var(--goa-space-xl);
     }
 
     .button-2 {
@@ -118,7 +118,7 @@
     .line {
         display: flex;
         border: 0.1em solid var(--Greyscale-200, var(--goa-color-greyscale-200));
-        margin: 16px 6px 16px 6px;
+        margin: var(--goa-space-m) var(--goa-space-2xs) var(--goa-space-m) var(--goa-space-2xs);
         width: 50%;
     }
 
@@ -136,13 +136,13 @@
             align-items: center;
 
             .text {
-                font-weight: normal;
-                margin-right: 8px;
+                font-weight: var(--goa-font-weight-regular);
+                margin-right: var(--goa-space-xs);
             }
 
             .icon {
                 align-items: center;
-                margin-top: 5px;
+                margin-top: var(--goa-space-2xs);
             }
         }
     }

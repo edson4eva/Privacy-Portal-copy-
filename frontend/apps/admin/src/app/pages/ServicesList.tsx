@@ -103,7 +103,7 @@ const ServicesList = (): React.ReactElement => {
     return (
         <>
             <div className={styles['container']}>
-                <PageTitle title="PRIVACY PORTAL" fontColor="#004A8F" />
+                <PageTitle title="PRIVACY PORTAL" />
                 <h2 className={styles['heading']} data-testid="page-heading">
                     Digital services
                 </h2>

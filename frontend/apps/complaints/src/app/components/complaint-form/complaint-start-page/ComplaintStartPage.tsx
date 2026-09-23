@@ -8,9 +8,8 @@ import style from './ComplaintStartPage.module.scss';
 import PageTitle from 'shared/src/lib/page-title/PageTitle';
 import PageSubTitle from 'shared/src/lib/page-sub-title/PageSubTitle';
 import useWindowWidth from 'shared/src/lib/utils/useWindowWidth';
-import { trackEvent } from 'shared/src/lib/api/tagManagerService'; 
+import { trackEvent } from 'shared/src/lib/api/tagManagerService';
 import { PpSpacer } from 'shared/src/lib/pp-spacer/PpSpacer';
-
 
 interface StartPageProperties {
     onStart: () => void;
@@ -80,7 +79,7 @@ const FileComplaint = ({ onStart }: StartPageProperties): React.ReactElement => 
             {windowWidth <= 623 && (
                 <>
                     <PpSpacer vSpacing="xl"></PpSpacer>
-                    <PageTitle title="PRIVACY COMPLAINT" fontColor="var(--goa-color-info-default)" />
+                    <PageTitle title="PRIVACY COMPLAINT" />
                     <PpSpacer vSpacing="s"></PpSpacer>
                     <PageSubTitle subTitle="File a complaint" fontWeight="normal" />
                 </>

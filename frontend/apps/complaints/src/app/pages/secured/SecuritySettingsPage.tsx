@@ -189,11 +189,7 @@ export function SecuritySettingsPage(): React.ReactElement {
                         not available from here, so nothing has been deleted.
                     </p>
                     <PpSpacer vSpacing="m" />
-                    <GoabButton
-                        type="secondary"
-                        onClick={() => setIsConfirmingDelete(false)}
-                        testId="cancel-delete"
-                    >
+                    <GoabButton type="secondary" onClick={() => setIsConfirmingDelete(false)} testId="cancel-delete">
                         Back to security settings
                     </GoabButton>
                 </div>

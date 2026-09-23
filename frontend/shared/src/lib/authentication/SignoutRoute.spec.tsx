@@ -28,7 +28,12 @@ const mockIsDemoMode = isDemoMode as jest.Mock;
 const logout = jest.fn();
 const assign = jest.fn();
 
-const renderRoute = () => render(<MemoryRouter><SignoutRoute title="Sign Out" /></MemoryRouter>);
+const renderRoute = () =>
+    render(
+        <MemoryRouter>
+            <SignoutRoute title="Sign Out" />
+        </MemoryRouter>
+    );
 
 describe('SignoutRoute', () => {
     beforeEach(() => {

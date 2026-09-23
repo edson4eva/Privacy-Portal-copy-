@@ -104,7 +104,7 @@ export function PersonalInformationPage(): React.ReactElement {
         <div className={styles['container']}>
             {windowWidth <= 623 && <PpSpacer vSpacing="xl" />}
 
-            <PageTitle title="PERSONAL" fontColor="#004F84" />
+            <PageTitle title="PERSONAL" />
             <PpSpacer vSpacing="m" />
             <PageSubTitle subTitle="Personal information" />
             <PpSpacer vSpacing="m" />

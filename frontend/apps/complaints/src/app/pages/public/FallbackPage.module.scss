@@ -1,8 +1,8 @@
 .container {
-    padding: 3.5rem 0 3rem 4rem;
+    padding: calc(var(--goa-space-2xl) + var(--goa-space-xs)) 0 var(--goa-space-2xl) var(--goa-space-3xl);
 }
 @media (max-width: 623px) {
     .container {
-        padding: 2.25rem 0 3.25rem 1rem;
+        padding: var(--goa-space-xl) 0 var(--goa-space-2xl) var(--goa-space-m);
     }
 }

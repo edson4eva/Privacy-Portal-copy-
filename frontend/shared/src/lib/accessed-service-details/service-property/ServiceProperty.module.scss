@@ -6,7 +6,7 @@
             width: 1.5rem;
         }
         .title {
-            padding-left: 0.5rem;
+            padding-left: var(--goa-space-xs);
             font: var(--goa-typography-heading-s);
         }
     }
@@ -14,15 +14,15 @@
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        gap: 1rem;
+        gap: var(--goa-space-m);
         align-items: center;
-        margin-top: 0.5rem;
+        margin-top: var(--goa-space-xs);
     }
     .badge {
         display: inline-block;
         background-color: var(--Color-Brand-Default, var(--goa-color-brand-default));
         font: var(--goa-typography-body-xs);
-        padding: 0 var(--goa-space-xs) 0.125rem var(--goa-space-xs);
+        padding: 0 var(--goa-space-xs) var(--goa-space-3xs) var(--goa-space-xs);
         border-radius: 6.1875rem;
         color: var(--goa-color-greyscale-100);
         white-space: nowrap;

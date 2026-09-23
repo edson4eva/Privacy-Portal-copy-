@@ -1,14 +1,14 @@
 .input-error {
-    border: 1px solid var(--goa-color-interactive-error);
-    border-radius: 5px;
+    border: var(--goa-border-width-s) solid var(--goa-color-interactive-error);
+    border-radius: var(--goa-border-radius-m);
     width: fit-content;
 }
 .input-error-text {
     color: var(--goa-color-interactive-error);
     font-size: var(--goa-font-size-3);
-    margin-left: 0.25rem;
+    margin-left: var(--goa-space-2xs);
 }
 .input-error-div {
-    padding-top: 0.5rem;
+    padding-top: var(--goa-space-xs);
     display: flex;
 }

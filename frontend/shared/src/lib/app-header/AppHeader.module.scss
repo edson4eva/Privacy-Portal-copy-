@@ -1,13 +1,13 @@
 .user-info {
     display: block;
     pointer-events: none;
-    padding: 10px 16px 8px;
-    line-height: 24px;
+    padding: var(--goa-space-xs) var(--goa-space-m) var(--goa-space-xs);
+    line-height: var(--goa-line-height-2);
     background-color: var(--goa-color-greyscale-100);
 }
 
 .email {
-    font-size: 16px;
+    font-size: var(--goa-font-size-3);
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

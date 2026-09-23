@@ -1,5 +1,6 @@
 import { GoabButton, GoabButtonGroup, GoabIcon, GoabModal } from '@abgov/react-components';
 import styles from './ErrorDialog.module.scss';
+import { PALETTE } from 'shared/src/lib/style/palette';
 
 export const ErrorDialog: React.FC<{
     heading: string;
@@ -11,7 +12,13 @@ export const ErrorDialog: React.FC<{
         <GoabModal
             heading={
                 <div className={styles['input-error-div']}>
-                    <GoabIcon type="warning" size="medium" theme="filled" opacity={1} fillColor="#ec040b"></GoabIcon>
+                    <GoabIcon
+                        type="warning"
+                        size="medium"
+                        theme="filled"
+                        opacity={1}
+                        fillColor={PALETTE.error}
+                    ></GoabIcon>
                     <div className={styles['heading']}>{heading}</div>
                 </div>
             }

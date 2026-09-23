@@ -72,16 +72,16 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProperties> = ({
             }}
             menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
             styles={{
-                control: (base) => ({ ...base, borderColor: '#666', width: '100%' }),
+                control: (base) => ({ ...base, borderColor: 'var(--goa-color-greyscale-700)', width: '100%' }),
                 container: (base) => ({ ...base, width: '100%' }),
                 valueContainer: (base) => ({ ...base, overflow: 'visible' }),
                 input: (base) => ({ ...base, minWidth: '60px' }),
                 placeholder: (base) => ({ ...base, pointerEvents: 'none' }),
                 option: (base, state) => ({
                     ...base,
-                    backgroundColor: state.isFocused ? '#f0f0f0' : 'transparent',
-                    color: '#333',
-                    ':active': { backgroundColor: '#e0e0e0' },
+                    backgroundColor: state.isFocused ? 'var(--goa-color-greyscale-100)' : 'transparent',
+                    color: 'var(--goa-color-greyscale-black)',
+                    ':active': { backgroundColor: 'var(--goa-color-greyscale-150)' },
                 }),
                 menuPortal: (base) => ({ ...base, zIndex: 9999 }),
                 menu: (base) => ({ ...base, zIndex: 9999 }),

@@ -29,8 +29,8 @@
 }
 
 .card {
-    border: 1px solid var(--goa-color-greyscale-200);
-    border-radius: 8px;
+    border: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
+    border-radius: var(--goa-border-radius-xl);
     padding: var(--goa-space-xl);
 }
 
@@ -47,16 +47,16 @@
 .interac-badge {
     background-color: var(--goa-color-warning-dark);
     color: var(--goa-color-greyscale-black);
-    font-weight: 700;
-    font-size: 0.95rem;
+    font-weight: var(--goa-font-weight-bold);
+    font-size: var(--goa-font-size-3);
     font-style: italic;
-    padding: 0.55rem 0.5rem;
-    border-radius: 3px;
+    padding: var(--goa-space-xs) var(--goa-space-xs);
+    border-radius: var(--goa-border-radius-s);
 }
 
 .interac-verified {
-    font-size: 1.35rem;
-    font-weight: 600;
+    font-size: var(--goa-font-size-6);
+    font-weight: var(--goa-font-weight-medium);
     color: var(--goa-color-greyscale-black);
 }
 
@@ -77,7 +77,7 @@
 
 .method-heading {
     font: var(--goa-typography-heading-m);
-    font-weight: 400;
+    font-weight: var(--goa-font-weight-regular);
     color: var(--goa-color-text-default);
     margin: 0;
 }
@@ -86,9 +86,9 @@
 
 .rows {
     display: grid;
-    grid-template-columns: 14rem 1fr;
-    row-gap: var(--goa-space-s);
-    column-gap: var(--goa-space-m);
+    grid-template-columns: 14rem minmax(0, 1fr);
+    row-gap: var(--goa-space-m);
+    column-gap: var(--goa-space-l);
     align-items: center;
 }
 
@@ -111,7 +111,7 @@
    tinted block, so the rows read as one surface. */
 .value {
     justify-self: start;
-    font-weight: 700;
+    font-weight: var(--goa-font-weight-bold);
     color: var(--goa-color-text-default);
     overflow-wrap: break-word;
 }
@@ -131,14 +131,14 @@
 }
 
 .delete:focus-visible {
-    outline: 3px solid var(--goa-color-interactive-focus);
+    outline: var(--goa-border-width-l) solid var(--goa-color-interactive-focus);
     outline-offset: 2px;
 }
 
 .account + .account {
     margin-top: var(--goa-space-xl);
     padding-top: var(--goa-space-xl);
-    border-top: 1px solid var(--goa-color-greyscale-200);
+    border-top: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
 }
 
 .empty {

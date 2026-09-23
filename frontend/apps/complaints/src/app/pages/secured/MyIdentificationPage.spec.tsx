@@ -34,7 +34,12 @@ const payload = {
     },
 };
 
-const renderPage = () => render(<MemoryRouter><MyIdentificationPage /></MemoryRouter>);
+const renderPage = () =>
+    render(
+        <MemoryRouter>
+            <MyIdentificationPage />
+        </MemoryRouter>
+    );
 
 describe('MyIdentificationPage', () => {
     beforeEach(() => {

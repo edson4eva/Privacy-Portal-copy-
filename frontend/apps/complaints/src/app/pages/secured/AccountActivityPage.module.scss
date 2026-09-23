@@ -36,7 +36,7 @@
 
 .detail {
     display: block;
-    font-size: 0.8rem;
+    font-size: var(--goa-font-size-1);
     color: var(--goa-color-text-secondary);
 }
 
@@ -52,7 +52,7 @@
 
 .link-icon {
     display: inline-block;
-    margin-left: 0.25rem;
+    margin-left: var(--goa-space-2xs);
     vertical-align: -0.15em;
 }
 

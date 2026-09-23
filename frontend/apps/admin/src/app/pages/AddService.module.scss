@@ -1,11 +1,11 @@
 .top-div {
-    padding: 2rem 0 1rem 0;
+    padding: var(--goa-space-xl) 0 var(--goa-space-m) 0;
     max-width: 55rem;
     margin-left: auto;
     margin-right: auto;
 }
 .bottom-div {
-    padding: 1rem 0 1rem 0;
+    padding: var(--goa-space-m) 0 var(--goa-space-m) 0;
     max-width: 55rem;
     margin-left: auto;
     margin-right: auto;
@@ -14,7 +14,7 @@
     max-width: 55rem;
     margin-left: auto;
     margin-right: auto;
-    padding: 1rem 0 1rem 0;
+    padding: var(--goa-space-m) 0 var(--goa-space-m) 0;
     .service-available-label {
         line-height: var(--goa-line-height-6);
         font-size: var(--goa-font-size-7);
@@ -35,29 +35,29 @@
     display: table;
     .header-icon-yellow-circle {
         float: left;
-        margin-top: 5px;
+        margin-top: var(--goa-space-2xs);
         display: flex;
         background: var(--goa-color-warning-default);
-        border-radius: 12px;
+        border-radius: var(--goa-border-radius-3xl);
         text-align: center;
     }
     .header-icon-green-circle {
         float: left;
-        margin-top: 5px;
+        margin-top: var(--goa-space-2xs);
         display: flex;
         background: var(--goa-color-success-default);
-        border-radius: 12px;
+        border-radius: var(--goa-border-radius-3xl);
         text-align: center;
     }
     .header-text {
         float: left;
-        margin-left: 10px;
+        margin-left: var(--goa-space-xs);
     }
 }
 
 .container {
-    padding: 15px;
-    border: 1px solid var(--goa-color-greyscale-50);
+    padding: var(--goa-space-m);
+    border: var(--goa-border-width-s) solid var(--goa-color-greyscale-50);
     border-radius: 15px;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25);
     max-width: 55rem;
@@ -82,7 +82,7 @@
 .sidebyside {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: var(--goa-space-xs);
 
     @media (max-width: 600px) {
         flex-direction: column; // Stacks items vertically on small screens

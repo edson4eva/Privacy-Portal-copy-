@@ -1,6 +1,7 @@
 import { Editor } from '@tinymce/tinymce-react';
 import { getAvailableIcons, getIcon } from './IconDefinitions';
 import styles from './RichTextEditor.module.scss';
+import { PALETTE } from 'shared/src/lib/style/palette';
 
 const allowIcons = getAvailableIcons();
 
@@ -57,7 +58,7 @@ const getDefaultInitialData = (): IconDataProperties => {
     let lastOne = allowIcons[allowIcons.length - 1].value;
     return {
         selectedIcon: lastOne,
-        selectedColor: '#0070C4',
+        selectedColor: PALETTE.interactive,
         url: '',
         iframe:
             '<!DOCTYPE html>' +

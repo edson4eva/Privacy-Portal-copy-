@@ -277,7 +277,6 @@ const EditService = (): React.ReactElement => {
                                 <div className={styles['coming-soon-title-icon']}>
                                     <GoabIcon
                                         type="alert-circle"
-                                        fillColor="#000"
                                         theme="outline"
                                         testId="service-details-coming-soon-alert-icon"
                                     ></GoabIcon>

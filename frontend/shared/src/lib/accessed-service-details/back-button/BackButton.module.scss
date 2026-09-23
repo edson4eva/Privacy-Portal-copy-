@@ -1,6 +1,6 @@
 .non-mobile-back-button {
     --goa-button-height: 2rem;
-    line-height: 1.5rem;
+    line-height: var(--goa-line-height-2);
 }
 .mobile-back-button {
     display: none;
@@ -18,23 +18,23 @@
         position: relative;
         background-color: var(--goa-color-greyscale-white);
         width: 100vw;
-        margin-left: -1rem;
-        margin-bottom: 2rem;
-        border-top: 1px solid var(--goa-color-greyscale-200);
-        border-bottom: 2px solid var(--goa-color-greyscale-200);
+        margin-left: calc(var(--goa-space-m) * -1);
+        margin-bottom: var(--goa-space-xl);
+        border-top: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
+        border-bottom: var(--goa-border-width-m) solid var(--goa-color-greyscale-200);
         cursor: pointer;
         .icon {
             position: absolute;
             left: 0;
             display: flex;
             align-items: center;
-            padding-left: 10px;
+            padding-left: var(--goa-space-xs);
         }
 
         .text {
             text-align: center;
             color: var(--goa-color-interactive-default);
-            font-weight: 700;
+            font-weight: var(--goa-font-weight-bold);
         }
     }
 }

@@ -276,7 +276,7 @@ const AddService = (): React.ReactElement => {
                         }
                     }}
                 ></BackButton>
-                <PageTitle title="DIGITAL SERVICES" fontColor="#004A8F" />
+                <PageTitle title="DIGITAL SERVICES" />
                 <GoabSpacer vSpacing={'s'}></GoabSpacer>
                 <PageSubTitle subTitle="Add new service" />
                 <div className={styles['section-header']}>Add a new service to the privacy portal</div>

@@ -1,9 +1,12 @@
 .page-title {
     font: var(--goa-typography-heading-xs);
+    /* The eyebrow is informational, so it takes the informational colour.
+       Pages used to pass this in, and passed two different blues. */
+    color: var(--goa-color-info-default);
 }
 
 @media (max-width: 623px) {
     .page-title {
-        font: var(--goa-typography-heading-xs);
+        font: var(--goa-typography-mobile-heading-xs);
     }
 }

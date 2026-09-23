@@ -10,18 +10,45 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('@abgov/react-components', () => ({
-    GoabButton: ({ children, onClick, testId }: { children: React.ReactNode; onClick?: () => void; testId?: string }) => (
-        <button data-testid={testId} onClick={onClick}>{children}</button>
+    GoabButton: ({
+        children,
+        onClick,
+        testId,
+    }: {
+        children: React.ReactNode;
+        onClick?: () => void;
+        testId?: string;
+    }) => (
+        <button data-testid={testId} onClick={onClick}>
+            {children}
+        </button>
     ),
     GoabCircularProgress: ({ visible }: { visible: boolean }) => <div data-testid="spinner">{String(visible)}</div>,
     GoabDetails: ({ heading, children }: { heading: string; children: React.ReactNode }) => (
-        <details open><summary>{heading}</summary>{children}</details>
+        <details open>
+            <summary>{heading}</summary>
+            {children}
+        </details>
     ),
     GoabIcon: ({ type }: { type: string }) => <i data-testid={`icon-${type}`} />,
-    GoabPagination: ({ itemCount, perPageCount, pageNumber, onChange, testId }: { itemCount: number; perPageCount: number; pageNumber: number; onChange: (d: { page: number }) => void; testId?: string }) => (
+    GoabPagination: ({
+        itemCount,
+        perPageCount,
+        pageNumber,
+        onChange,
+        testId,
+    }: {
+        itemCount: number;
+        perPageCount: number;
+        pageNumber: number;
+        onChange: (d: { page: number }) => void;
+        testId?: string;
+    }) => (
         <div data-testid={testId}>
             <span data-testid="page-info">{`Page ${pageNumber} of ${Math.max(1, Math.ceil(itemCount / perPageCount))}`}</span>
-            <button data-testid="next-page" onClick={() => onChange({ page: pageNumber + 1 })}>Next</button>
+            <button data-testid="next-page" onClick={() => onChange({ page: pageNumber + 1 })}>
+                Next
+            </button>
         </div>
     ),
 }));
@@ -42,7 +69,8 @@ const withDetails = {
         service: {
             id: 'rebate',
             name: 'Alberta Energy Rebate',
-            description: 'This online service can be used to get $600 to help with the cost of everyday essentials for eligible Albertans.',
+            description:
+                'This online service can be used to get $600 to help with the cost of everyday essentials for eligible Albertans.',
             descriptionLinkText: 'eligible Albertans',
             categoryId: 'family-and-social-support',
             categoryLabel: 'Family and Social Support',
@@ -51,11 +79,31 @@ const withDetails = {
             detailsAvailable: true,
             personalInformation: ['Name', 'Date of birth', 'Social Insurance Number'],
             howPersonalInformationIsUsed: 'This information is used to determine eligibility.',
-            legislation: { summary: 'This legislation gives the legal authority.', label: 'FOIP', url: 'https://example.alberta.ca/foip' },
+            legislation: {
+                summary: 'This legislation gives the legal authority.',
+                label: 'FOIP',
+                url: 'https://example.alberta.ca/foip',
+            },
         },
         events: [
-            { id: 'e1', serviceId: 'rebate', event: 'Your rebate payment was issued', categoryId: 'payments', occurredAt: '2026-09-03T15:12:00.000Z', details: [{ label: 'Amount', value: '$600.00' }, { label: 'Status', value: 'Deposited' }] },
-            { id: 'e2', serviceId: 'rebate', event: 'You submitted your application', categoryId: 'applications', occurredAt: '2026-08-24T17:30:00.000Z' },
+            {
+                id: 'e1',
+                serviceId: 'rebate',
+                event: 'Your rebate payment was issued',
+                categoryId: 'payments',
+                occurredAt: '2026-09-03T15:12:00.000Z',
+                details: [
+                    { label: 'Amount', value: '$600.00' },
+                    { label: 'Status', value: 'Deposited' },
+                ],
+            },
+            {
+                id: 'e2',
+                serviceId: 'rebate',
+                event: 'You submitted your application',
+                categoryId: 'applications',
+                occurredAt: '2026-08-24T17:30:00.000Z',
+            },
         ],
     },
 };

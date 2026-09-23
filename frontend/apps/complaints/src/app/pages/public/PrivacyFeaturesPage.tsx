@@ -35,7 +35,7 @@ export function PrivacyFeaturesPage(): React.ReactElement {
                         <PpSpacer vSpacing="xl" />
                     </>
                 )}
-                <PageTitle title="PRIVACY PORTAL" fontColor="#004F84" />
+                <PageTitle title="PRIVACY PORTAL" />
                 <PpSpacer vSpacing="m" />
                 <div className={styles['header-xl-wrapper']}>
                     <PageSubTitle subTitle="Privacy features" />
@@ -97,9 +97,7 @@ export function PrivacyFeaturesPage(): React.ReactElement {
                         <PpSpacer vSpacing="xl" />
                         <label className={styles['options-title']}>Service activity</label>
                         <PpSpacer vSpacing="s" />
-                        <p>
-                            Review activity and personal information use across government services you've used.
-                        </p>
+                        <p>Review activity and personal information use across government services you've used.</p>
                         <PpSpacer vSpacing="l" />
                         <Link to={serviceActivityHref} data-testid="service-activity-view">
                             View

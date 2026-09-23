@@ -11,8 +11,8 @@
         286px + 856px + 4rem
     ); // 286px menu + 856px FileComplaint (includes its padding) + 64px container padding
     min-height: calc(100vh - 12rem);
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: var(--goa-space-xl);
+    padding-right: var(--goa-space-xl);
 }
 
 .main-container-center-positioned {
@@ -23,7 +23,7 @@
 
 .leftNav {
     justify-content: center;
-    border-right: 0.0625rem solid var(--goa-color-greyscale-200);
+    border-right: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
     min-height: fit-content;
     width: 286px; // Fixed width for side menu
     flex-shrink: 0; // Prevent shrinking
@@ -35,8 +35,8 @@
         flex-direction: column;
         min-height: 41.62rem;
         background-color: var(--pp-background-color-internal);
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
+        padding-left: var(--goa-space-xs);
+        padding-right: var(--goa-space-xs);
     }
 
     .main-container-center-positioned {

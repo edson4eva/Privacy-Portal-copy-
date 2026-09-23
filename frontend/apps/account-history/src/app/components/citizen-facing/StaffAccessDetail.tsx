@@ -133,7 +133,7 @@ export function StaffAccessDetail({ basePath = '/transparency' }: { basePath?: s
             </GoabButton>
 
             <PpSpacer vSpacing="m" />
-            <PageTitle title="CITIZEN-FACING EXPERIENCE" fontColor="#004F84" />
+            <PageTitle title="CITIZEN-FACING EXPERIENCE" />
             <PpSpacer vSpacing="m" />
             <h1 className={styles['page-heading']} data-testid="record-heading">
                 {record.reasonType}

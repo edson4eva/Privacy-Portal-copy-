@@ -86,7 +86,10 @@ describe('LandingPageTemplate', () => {
 
             const pageTitle = screen.getByTestId('page-title');
             expect(pageTitle).toHaveTextContent('SERVICES ACCESSED');
-            expect(pageTitle).toHaveAttribute('data-font-color', '#004A8F');
+            // PageTitle takes the informational colour from a token itself; a
+            // page passing one in is how the eyebrow came to be two different
+            // blues across the app.
+            expect(pageTitle).not.toHaveAttribute('data-font-color');
         });
     });
 
@@ -140,7 +143,7 @@ describe('LandingPageTemplate', () => {
 
             const alertIcon = screen.getByTestId('alert-icon');
             expect(alertIcon).toHaveAttribute('data-type', 'alert-circle');
-            expect(alertIcon).toHaveAttribute('data-fill-color', '#000');
+            expect(alertIcon).not.toHaveAttribute('data-fill-color');
             expect(alertIcon).toHaveAttribute('data-theme', 'outline');
         });
 

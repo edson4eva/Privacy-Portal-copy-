@@ -1,5 +1,5 @@
 .services-section {
-    margin-top: 2rem;
+    margin-top: var(--goa-space-xl);
 }
 
 .custom-pp-container-step2 {
@@ -26,15 +26,15 @@
         height: 1.5rem;
     }
     div:nth-child(2) {
-        margin-left: 0.5rem;
-        margin-top: -0.1875rem;
+        margin-left: var(--goa-space-xs);
+        margin-top: calc(var(--goa-border-width-l) * -1);
         width: auto;
         max-width: 45rem;
         min-height: 3rem;
     }
 }
 .heading {
-    font-weight: bold;
+    font-weight: var(--goa-font-weight-bold);
 }
 .info-container {
     max-width: 672px;
@@ -49,7 +49,7 @@
     justify-content: space-between;
 }
 .service {
-    margin-top: 16px;
+    margin-top: var(--goa-space-m);
     width: 100%;
     height: auto;
     max-width: 672px;
@@ -64,28 +64,28 @@
     display: flex;
     width: 67ch;
     flex-direction: column;
-    gap: 2rem;
+    gap: var(--goa-space-xl);
 }
 
 .names,
 .emails {
     display: flex;
     justify-content: space-between;
-    gap: 1rem;
+    gap: var(--goa-space-m);
 }
 
 //below 3 classes are used to only for tablet (ipad/android)
 .tablet-background {
     background-color: var(--goa-color-greyscale-white);
-    border: 1px solid var(--goa-color-greyscale-400);
+    border: var(--goa-border-width-s) solid var(--goa-color-greyscale-400);
 }
 
 .spacer {
-    margin-bottom: 1.25rem;
+    margin-bottom: var(--goa-space-m);
 }
 
 .name-outline {
-    border: 1px solid var(--goa-color-greyscale-400);
+    border: var(--goa-border-width-s) solid var(--goa-color-greyscale-400);
 }
 
 @media (max-width: 623px) {
@@ -98,7 +98,7 @@
         display: flex;
         justify-content: space-between;
         flex-direction: column;
-        gap: 1rem;
+        gap: var(--goa-space-m);
     }
     .custom-pp-container-step2 {
         --container-height: auto;

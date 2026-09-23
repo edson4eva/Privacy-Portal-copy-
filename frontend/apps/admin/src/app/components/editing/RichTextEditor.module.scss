@@ -1,5 +1,5 @@
 .input-div {
     width: 100%;
-    border: 1px solid var(--goa-color-greyscale-700);
-    border-radius: 10px;
+    border: var(--goa-border-width-s) solid var(--goa-color-greyscale-700);
+    border-radius: var(--goa-border-radius-2xl);
 }

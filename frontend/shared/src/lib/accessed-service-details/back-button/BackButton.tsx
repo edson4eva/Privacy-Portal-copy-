@@ -1,5 +1,6 @@
 import { GoabButton, GoabIcon, GoabSpacer } from '@abgov/react-components';
 import styles from './BackButton.module.scss';
+import { PALETTE } from '../../style/palette';
 interface BackButtonProperties {
     buttonText: string;
     onClick: () => void;
@@ -23,7 +24,11 @@ const BackButton: React.FC<BackButtonProperties> = ({ buttonText, onClick }): Re
             </div>
             <div className={styles['mobile-back-button']} onClick={onClick} data-testid="mobile-back-button">
                 <div className={styles['icon']}>
-                    <GoabIcon type="chevron-back" fillColor="#0070C4" testId="mobile-back-button-icon"></GoabIcon>
+                    <GoabIcon
+                        type="chevron-back"
+                        fillColor={PALETTE.interactive}
+                        testId="mobile-back-button-icon"
+                    ></GoabIcon>
                 </div>
                 <div className={styles['text']} data-testid="mobile-back-button-text">
                     {buttonText}

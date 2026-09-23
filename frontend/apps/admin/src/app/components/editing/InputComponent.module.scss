@@ -6,12 +6,12 @@
         border: 0;
     }
     .input-error {
-        border: 1px solid var(--goa-color-interactive-error);
-        border-radius: 5px;
+        border: var(--goa-border-width-s) solid var(--goa-color-interactive-error);
+        border-radius: var(--goa-border-radius-m);
     }
     .input-error-text {
         color: var(--goa-color-interactive-error);
-        margin-left: 0.25rem;
+        margin-left: var(--goa-space-2xs);
     }
     .input-error-div {
         display: flex;

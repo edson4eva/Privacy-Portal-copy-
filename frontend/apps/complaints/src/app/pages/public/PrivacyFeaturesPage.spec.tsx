@@ -12,7 +12,12 @@ jest.mock('shared/src/lib/utils/demoMode', () => ({ isDemoMode: jest.fn() }));
 import { isDemoMode } from 'shared/src/lib/utils/demoMode';
 const mockIsDemoMode = isDemoMode as jest.Mock;
 
-const renderPage = () => render(<MemoryRouter><PrivacyFeaturesPage /></MemoryRouter>);
+const renderPage = () =>
+    render(
+        <MemoryRouter>
+            <PrivacyFeaturesPage />
+        </MemoryRouter>
+    );
 
 describe('PrivacyFeaturesPage', () => {
     beforeEach(() => jest.clearAllMocks());

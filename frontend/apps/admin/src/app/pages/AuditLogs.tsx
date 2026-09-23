@@ -101,7 +101,7 @@ const AuditLogs = (): React.ReactElement => {
     return (
         <>
             <div className={styles['container']}>
-                <PageTitle title="PRIVACY PORTAL" fontColor="#004A8F" />
+                <PageTitle title="PRIVACY PORTAL" />
                 <h2 className={styles['heading']} data-testid="page-heading">
                     Audit Logs
                 </h2>
@@ -167,10 +167,10 @@ const AuditLogs = (): React.ReactElement => {
                                                     auditLog.action === 'Published'
                                                         ? styles['publish-action']
                                                         : auditLog.action === 'Rolled back'
-                                                        ? styles['rollback-action']
-                                                        : auditLog.action === 'Updated'
-                                                        ? styles['update-action']
-                                                        : styles['add-action']
+                                                          ? styles['rollback-action']
+                                                          : auditLog.action === 'Updated'
+                                                            ? styles['update-action']
+                                                            : styles['add-action']
                                                 }
                                             >
                                                 {auditLog.action}

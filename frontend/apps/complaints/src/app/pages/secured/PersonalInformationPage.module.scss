@@ -31,7 +31,7 @@
 /* Label above value, divided rows - reads the same on narrow screens without
    collapsing a two-column grid. */
 .rows {
-    border-top: 1px solid var(--goa-color-greyscale-200);
+    border-top: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
 }
 
 .row {
@@ -40,7 +40,7 @@
     gap: var(--goa-space-xs) var(--goa-space-m);
     align-items: baseline;
     padding: var(--goa-space-m) 0;
-    border-bottom: 1px solid var(--goa-color-greyscale-200);
+    border-bottom: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
 }
 
 .label {

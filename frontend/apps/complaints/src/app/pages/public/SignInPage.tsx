@@ -56,8 +56,8 @@ export function SignInPage(): React.ReactElement {
                     <div>
                         <strong className={styles['demo-notice-title']}>Demonstration sign-in</strong>
                         <p>
-                            This stands in for the Alberta.ca Account sign-in. A fictional account is already filled
-                            in, so there is nothing to enter - choose Continue. Nothing is checked or sent anywhere.
+                            This stands in for the Alberta.ca Account sign-in. A fictional account is already filled in,
+                            so there is nothing to enter - choose Continue. Nothing is checked or sent anywhere.
                         </p>
                     </div>
                 </div>
@@ -114,12 +114,7 @@ export function SignInPage(): React.ReactElement {
                 <PpSpacer vSpacing="l" />
 
                 <div className={styles['providers']}>
-                    <button
-                        type="button"
-                        className={styles['provider']}
-                        onClick={signIn}
-                        data-testid="signin-google"
-                    >
+                    <button type="button" className={styles['provider']} onClick={signIn} data-testid="signin-google">
                         <GoabIcon type="logo-google" size="medium" />
                         Sign in with Google
                     </button>

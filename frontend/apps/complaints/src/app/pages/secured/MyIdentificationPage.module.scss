@@ -26,7 +26,7 @@
 
 .card-type {
     font: var(--goa-typography-heading-l);
-    font-weight: 400;
+    font-weight: var(--goa-font-weight-regular);
     color: var(--goa-color-text-default);
     margin: 0;
 }
@@ -42,19 +42,19 @@
 
 .link-icon {
     display: inline-block;
-    margin-left: 0.25rem;
+    margin-left: var(--goa-space-2xs);
     vertical-align: -0.15em;
 }
 
 .card {
-    border: 1px solid var(--goa-color-greyscale-200);
+    border: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
     border-radius: var(--goa-border-radius-m, 4px);
     padding: var(--goa-space-l) var(--goa-space-xl);
 }
 
 .rows {
     display: grid;
-    grid-template-columns: 12rem 1fr;
+    grid-template-columns: 14rem minmax(0, 1fr);
     row-gap: var(--goa-space-m);
     column-gap: var(--goa-space-l);
 }
@@ -76,13 +76,13 @@
 }
 
 .value {
-    font-weight: 700;
+    font-weight: var(--goa-font-weight-bold);
     color: var(--goa-color-text-default);
     overflow-wrap: break-word;
 }
 
 .value-empty {
-    font-weight: 400;
+    font-weight: var(--goa-font-weight-regular);
     color: var(--goa-color-text-secondary);
 }
 

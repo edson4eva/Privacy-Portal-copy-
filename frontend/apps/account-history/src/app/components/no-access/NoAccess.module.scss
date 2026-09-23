@@ -1,13 +1,13 @@
 .heading {
-    margin: 0.75rem 0;
+    margin: var(--goa-space-s) 0;
 }
 
 .no-access {
     height: 100%;
-    padding: 20px;
+    padding: var(--goa-space-m);
 
     .details {
-        margin-bottom: 60px;
+        margin-bottom: var(--goa-space-3xl);
     }
 
     img {
@@ -15,7 +15,7 @@
     }
 
     @media (min-width: 1023px) {
-        padding: 20px;
+        padding: var(--goa-space-m);
         img {
             max-width: 600px;
         }

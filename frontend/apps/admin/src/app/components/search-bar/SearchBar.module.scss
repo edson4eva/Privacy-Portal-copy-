@@ -1,5 +1,5 @@
 .search-filter-container {
-    margin-top: 0.5rem;
+    margin-top: var(--goa-space-xs);
     display: flex;
     .search-box-container {
         flex-grow: 1;

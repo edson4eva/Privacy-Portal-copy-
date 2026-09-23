@@ -15,14 +15,14 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProperties> = ({
     buttonSection,
 }) => (
     <div>
-        <PageTitle title="SERVICES ACCESSED" fontColor="#004A8F" />
+        <PageTitle title="SERVICES ACCESSED" />
         <h2 className={styles['heading']} data-testid="page-heading">
             {title}
         </h2>
         {alertText && (
             <div className={styles['alert-section']} data-testid="alert-section">
                 <div>
-                    <GoabIcon type="alert-circle" fillColor="#000" theme="outline" testId="alert-icon"></GoabIcon>
+                    <GoabIcon type="alert-circle" theme="outline" testId="alert-icon"></GoabIcon>
                 </div>
                 <div data-testid="alert-text">{alertText}</div>
             </div>

@@ -118,7 +118,7 @@ export function ServiceActivityPage({ isPreview }: { isPreview: boolean }): Reac
         <div className={styles['container']}>
             {windowWidth <= 623 && <PpSpacer vSpacing="xl" />}
 
-            <PageTitle title="PRIVACY PORTAL" fontColor="#004F84" />
+            <PageTitle title="PRIVACY PORTAL" />
             <PpSpacer vSpacing="m" />
             <h1 className={styles['page-heading']}>Service activity</h1>
             <PpSpacer vSpacing="m" />

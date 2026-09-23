@@ -17,7 +17,7 @@ const ComplaintCollectionNotice = ({ onStart, onBack }: StartPageProperties): Re
                 {windowWidth <= 623 && (
                     <>
                         <GoabSpacer vSpacing="xl"></GoabSpacer>
-                        <PageTitle title="PRIVACY COMPLAINT" fontColor="var(--goa-color-info-default)" />
+                        <PageTitle title="PRIVACY COMPLAINT" />
                         <GoabSpacer vSpacing={'s'}></GoabSpacer>
                         <PageSubTitle subTitle="File a complaint" />
                     </>
@@ -29,8 +29,8 @@ const ComplaintCollectionNotice = ({ onStart, onBack }: StartPageProperties): Re
                     investigating your privacy concern involving your personal information.
                 </p>
                 <p>
-                    This collection is authorized by section 4(c) of the <i>Protection of Privacy Act</i>. For
-                    questions about the collection of personal information, contact Privacy Services by email at{' '}
+                    This collection is authorized by section 4(c) of the <i>Protection of Privacy Act</i>. For questions
+                    about the collection of personal information, contact Privacy Services by email at{' '}
                     <a href="mailto:privacy@gov.ab.ca">privacy@gov.ab.ca</a>.
                 </p>
                 <GoabSpacer vSpacing="l"></GoabSpacer>

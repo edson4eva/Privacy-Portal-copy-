@@ -21,7 +21,13 @@ const profile = {
     personalInformation: {
         identity: { legalName: 'Demo User', preferredName: 'Demo', dateOfBirth: '1985-04-12' },
         contact: { email: 'demo.user@example.com', emailVerified: true, phone: '(780) 555-0142', phoneVerified: false },
-        address: { street: '123 Jasper Avenue NW', unit: 'Suite 400', city: 'Edmonton', province: 'Alberta', postalCode: 'T5J 0R2' },
+        address: {
+            street: '123 Jasper Avenue NW',
+            unit: 'Suite 400',
+            city: 'Edmonton',
+            province: 'Alberta',
+            postalCode: 'T5J 0R2',
+        },
         account: { accountType: 'Personal', verificationLevel: 'Verified', lastUpdated: '2026-07-18' },
     },
 };
@@ -29,12 +35,23 @@ const profile = {
 describe('PersonalInformationPage', () => {
     beforeEach(() => {
         jest.clearAllMocks();
-        mockUseAuth.mockReturnValue({ getCurrentUser: () => ({ name: 'Demo User', email: 'demo.user@example.com', profile: 'personal', isVerified: true }) });
+        mockUseAuth.mockReturnValue({
+            getCurrentUser: () => ({
+                name: 'Demo User',
+                email: 'demo.user@example.com',
+                profile: 'personal',
+                isVerified: true,
+            }),
+        });
     });
 
     it('renders the sections and values', async () => {
         mockGet.mockResolvedValue(profile);
-        render(<MemoryRouter><PersonalInformationPage /></MemoryRouter>);
+        render(
+            <MemoryRouter>
+                <PersonalInformationPage />
+            </MemoryRouter>
+        );
         await waitFor(() => expect(screen.getByText('Name and date of birth')).toBeInTheDocument());
         expect(screen.getByText('Contact information')).toBeInTheDocument();
         expect(screen.getByText('Mailing address')).toBeInTheDocument();
@@ -46,7 +63,11 @@ describe('PersonalInformationPage', () => {
         // Reject at call time; a promise rejected at setup time can surface as an
         // unhandled rejection before the component attaches its catch.
         mockGet.mockImplementation(() => Promise.reject(new Error('boom')));
-        render(<MemoryRouter><PersonalInformationPage /></MemoryRouter>);
+        render(
+            <MemoryRouter>
+                <PersonalInformationPage />
+            </MemoryRouter>
+        );
         await waitFor(() => expect(screen.getByText('Name and date of birth')).toBeInTheDocument());
         expect(screen.getAllByText('Not provided').length).toBeGreaterThan(0);
     });

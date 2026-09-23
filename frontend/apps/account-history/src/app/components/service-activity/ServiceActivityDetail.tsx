@@ -285,8 +285,8 @@ export function ServiceActivityDetail({ isPreview }: { isPreview: boolean }): Re
                     <div className={styles['unusual']}>
                         <GoabDetails heading="Notice unusual activity?">
                             <p>
-                                Notice any concerns or suspicious activity related to your personal information? You
-                                can now report it by filing a privacy complaint.
+                                Notice any concerns or suspicious activity related to your personal information? You can
+                                now report it by filing a privacy complaint.
                             </p>
                             <PpSpacer vSpacing="s" />
                             <a
@@ -310,9 +310,7 @@ export function ServiceActivityDetail({ isPreview }: { isPreview: boolean }): Re
                             </p>
                             <PpSpacer vSpacing="s" />
                             <ul className={styles['bullets']} data-testid="personal-information">
-                                {service.personalInformation?.map((item) => (
-                                    <li key={item}>{item}</li>
-                                ))}
+                                {service.personalInformation?.map((item) => <li key={item}>{item}</li>)}
                             </ul>
 
                             <PpSpacer vSpacing="xl" />

@@ -17,6 +17,7 @@ import { formatDate, formatDateString } from '../utils/dateUtils';
 import { PublishStatus, PublishWorkflowStatus } from '../types/PublishStatus';
 import { ErrorDialog } from '../components/error/ErrorDialog';
 import { extractAxiosError } from '../utils/apiUtils';
+import { PALETTE } from 'shared/src/lib/style/palette';
 
 const delayMS = 500;
 
@@ -242,7 +243,7 @@ const Publish = (): React.ReactElement => {
 
     return (
         <div className={styles['container']}>
-            <PageTitle title="PRIVACY PORTAL" fontColor="#004A8F" />
+            <PageTitle title="PRIVACY PORTAL" />
             {noPublish && (
                 <>
                     <div className={styles['banner']}>
@@ -539,7 +540,12 @@ const Publish = (): React.ReactElement => {
                     <div className={styles['completed-block']}>
                         <div className={styles['completed-header']}>
                             <div className={styles['header-icon']}>
-                                <GoabIcon type="checkmark-circle" size="large" theme="outline" fillColor="#006f4c" />
+                                <GoabIcon
+                                    type="checkmark-circle"
+                                    size="large"
+                                    theme="outline"
+                                    fillColor={PALETTE.success}
+                                />
                             </div>
                             <div className={styles['header-text']}>Content has been published successfully</div>
                         </div>

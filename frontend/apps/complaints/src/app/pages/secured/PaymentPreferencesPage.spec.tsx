@@ -4,8 +4,18 @@ import { MemoryRouter } from 'react-router-dom';
 import PaymentPreferencesPage from './PaymentPreferencesPage';
 
 jest.mock('@abgov/react-components', () => ({
-    GoabButton: ({ children, onClick, testId }: { children: React.ReactNode; onClick?: () => void; testId?: string }) => (
-        <button data-testid={testId} onClick={onClick}>{children}</button>
+    GoabButton: ({
+        children,
+        onClick,
+        testId,
+    }: {
+        children: React.ReactNode;
+        onClick?: () => void;
+        testId?: string;
+    }) => (
+        <button data-testid={testId} onClick={onClick}>
+            {children}
+        </button>
     ),
     GoabCircularProgress: ({ visible }: { visible: boolean }) => <div data-testid="spinner">{String(visible)}</div>,
 }));
@@ -33,7 +43,12 @@ const account = {
 
 const payload = { paymentPreferences: { accounts: [account] } };
 
-const renderPage = () => render(<MemoryRouter><PaymentPreferencesPage /></MemoryRouter>);
+const renderPage = () =>
+    render(
+        <MemoryRouter>
+            <PaymentPreferencesPage />
+        </MemoryRouter>
+    );
 
 describe('PaymentPreferencesPage', () => {
     beforeEach(() => jest.clearAllMocks());

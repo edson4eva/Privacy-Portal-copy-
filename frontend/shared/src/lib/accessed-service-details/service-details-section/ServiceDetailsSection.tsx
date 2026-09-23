@@ -7,12 +7,7 @@ const ComingSoonBox: React.FC = () => (
     <div className={styles['service-details-coming-soon-box']}>
         <div className={styles['coming-soon-title']}>
             <div className={styles['coming-soon-title-icon']}>
-                <GoabIcon
-                    type="alert-circle"
-                    fillColor="#000"
-                    theme="outline"
-                    testId="service-details-coming-soon-alert-icon"
-                />
+                <GoabIcon type="alert-circle" theme="outline" testId="service-details-coming-soon-alert-icon" />
             </div>
             <div className={styles['coming-soon-title-text']}>Service details coming soon</div>
         </div>

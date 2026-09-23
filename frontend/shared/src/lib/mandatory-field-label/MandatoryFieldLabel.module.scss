@@ -3,13 +3,13 @@
 }
 
 .label {
-    margin-bottom: 4px;
+    margin-bottom: var(--goa-space-2xs);
 }
 @media (max-width: 623px) {
     .required {
         color: var(--goa-color-interactive-error);
     }
     .label {
-        margin-bottom: 4px;
+        margin-bottom: var(--goa-space-2xs);
     }
 }

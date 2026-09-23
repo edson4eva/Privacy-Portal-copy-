@@ -6,8 +6,8 @@
         height: 1.5rem;
     }
     div:nth-child(2) {
-        margin-left: 0.5rem;
-        margin-top: -0.1875rem;
+        margin-left: var(--goa-space-xs);
+        margin-top: calc(var(--goa-border-width-l) * -1);
         width: auto;
         max-width: 45rem;
         min-height: 3rem;

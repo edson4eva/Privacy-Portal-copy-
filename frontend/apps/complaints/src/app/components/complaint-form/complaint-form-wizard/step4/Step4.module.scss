@@ -40,24 +40,24 @@
 
 .section-heading-label {
     font: var(--goa-typography-heading-m);
-    font-weight: 700;
-    line-height: 32px;
+    font-weight: var(--goa-font-weight-bold);
+    line-height: var(--goa-line-height-4);
 }
 .section-heading-value {
     font: var(--goa-typography-heading-m);
-    font-weight: 400;
-    line-height: 32px;
+    font-weight: var(--goa-font-weight-regular);
+    line-height: var(--goa-line-height-4);
 }
 
 .heading-label {
     font: var(--goa-typography-heading-s);
-    font-weight: 700;
-    line-height: 28px;
+    font-weight: var(--goa-font-weight-bold);
+    line-height: var(--goa-line-height-3);
 }
 
 .heading-value {
-    font-weight: 400;
-    line-height: 28px;
+    font-weight: var(--goa-font-weight-regular);
+    line-height: var(--goa-line-height-3);
     word-wrap: break-word;
 }
 
@@ -77,7 +77,7 @@
     min-height: 56px;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 24px;
+    margin-bottom: var(--goa-space-l);
 }
 
 .custom-pp-container-1 {
@@ -110,7 +110,7 @@
 }
 
 .information-callout {
-    margin-top: 1rem;
+    margin-top: var(--goa-space-m);
     --container-height: 76px;
     --container-padding: 1.5rem;
     max-width: 550px;
@@ -118,8 +118,8 @@
 
 .heading-label-value {
     font: var(--goa-typography-heading-s);
-    font-weight: 400;
-    line-height: 28px;
+    font-weight: var(--goa-font-weight-regular);
+    line-height: var(--goa-line-height-3);
 }
 
 @media (max-width: 623px) {
@@ -136,6 +136,6 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        gap: 1rem;
+        gap: var(--goa-space-m);
     }
 }

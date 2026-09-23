@@ -54,8 +54,7 @@ const formatRetrievedOn = (value: string | undefined): string | undefined => {
 };
 
 /** Only the last four digits are held, so the rest is shown as a fixed mask. */
-const maskAccountNumber = (last4: string | undefined): string | undefined =>
-    last4 ? `****_****_${last4}` : undefined;
+const maskAccountNumber = (last4: string | undefined): string | undefined => (last4 ? `****_****_${last4}` : undefined);
 
 const InteracVerified = (): React.ReactElement => (
     <span className={styles['interac']} data-testid="interac-verified">
@@ -66,15 +65,7 @@ const InteracVerified = (): React.ReactElement => (
     </span>
 );
 
-const Row = ({
-    label,
-    value,
-    testId,
-}: {
-    label: string;
-    value?: string;
-    testId?: string;
-}): React.ReactElement => (
+const Row = ({ label, value, testId }: { label: string; value?: string; testId?: string }): React.ReactElement => (
     <>
         <div className={styles['label']}>{label}</div>
         <div className={styles['value']} data-testid={testId}>
@@ -141,7 +132,7 @@ export function PaymentPreferencesPage(): React.ReactElement {
         <div className={styles['container']}>
             {windowWidth <= 623 && <PpSpacer vSpacing="xl" />}
 
-            <PageTitle title="PERSONAL" fontColor="#004F84" />
+            <PageTitle title="PERSONAL" />
             <PpSpacer vSpacing="m" />
             <h1 className={styles['page-heading']}>Payment preferences</h1>
             <PpSpacer vSpacing="m" />

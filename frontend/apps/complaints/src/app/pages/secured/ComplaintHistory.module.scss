@@ -5,7 +5,7 @@
 .container {
     width: 100%;
     max-width: 720px;
-    padding-left: 64px;
+    padding-left: var(--goa-space-3xl);
     padding-right: 72px;
     background-color: var(--pp-background-color-landing);
 }
@@ -20,12 +20,12 @@ p.spacing {
 
 .complaint-box {
     //max-width: 31.25rem;
-    padding-bottom: 1rem;
+    padding-bottom: var(--goa-space-m);
     background-color: var(--pp-background-color-landing);
 }
 
 .left-column {
-    font-weight: bold;
+    font-weight: var(--goa-font-weight-bold);
     background-color: var(--pp-background-color-landing);
     width: 15.62rem;
 }
@@ -38,16 +38,16 @@ p.spacing {
     display: flex;
     flex-direction: column;
     background-color: var(--goa-color-greyscale-white);
-    border: 1px solid var(--goa-color-warning-default);
+    border: var(--goa-border-width-s) solid var(--goa-color-warning-default);
     border-radius: 15px;
-    padding: 1.5rem;
+    padding: var(--goa-space-l);
     max-width: 720px;
 }
 
 .alert-header {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--goa-space-xs);
 }
 
 .alert-icon {
@@ -61,17 +61,17 @@ p.spacing {
 }
 
 .alert-title {
-    font-size: 1.5rem;
-    font-weight: 400;
+    font-size: var(--goa-font-size-7);
+    font-weight: var(--goa-font-weight-regular);
 }
 
 .alert-content {
-    margin-top: 1rem;
+    margin-top: var(--goa-space-m);
 }
 
 .alert-content p {
     margin: 0;
-    font-size: 1.12rem;
+    font-size: var(--goa-font-size-4);
 }
 
 .alert-content a {
@@ -87,8 +87,8 @@ p.spacing {
 
 @media (max-width: 1023px) {
     .container {
-        padding-left: 36px;
-        padding-right: 36px;
+        padding-left: var(--goa-space-xl);
+        padding-right: var(--goa-space-xl);
         max-width: 100%;
     }
 }
@@ -97,8 +97,8 @@ p.spacing {
     .container {
         flex-direction: column;
         background-color: var(--pp-background-color-internal);
-        padding-left: 16px;
-        padding-right: 15px;
+        padding-left: var(--goa-space-m);
+        padding-right: var(--goa-space-m);
         max-width: 100%;
     }
 
@@ -107,7 +107,7 @@ p.spacing {
     }
 
     .left-column {
-        font-weight: bold;
+        font-weight: var(--goa-font-weight-bold);
         max-width: 10.62rem;
     }
 
@@ -129,15 +129,15 @@ p.spacing {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 8px;
+        gap: var(--goa-space-xs);
     }
 
     .alert-icon {
-        margin-bottom: 1.5rem;
+        margin-bottom: var(--goa-space-l);
     }
 
     .alert-title {
-        font-size: 1.5rem;
+        font-size: var(--goa-font-size-7);
         word-wrap: break-word;
     }
 
