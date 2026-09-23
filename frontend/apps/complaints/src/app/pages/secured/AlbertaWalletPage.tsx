@@ -50,6 +50,8 @@ interface WalletDocument {
      */
     serviceArea?: string;
     listedService?: string;
+    /** The service's own website, opened when the card is chosen. */
+    serviceUrl?: string;
 }
 
 interface Wallet {
@@ -165,25 +167,42 @@ const Barcode = (): React.ReactElement => (
     </span>
 );
 
-const LicenceCard = ({
+/**
+ * The card's own element: a link to the service it belongs to, or a plain
+ * figure when the service has no website recorded. Choosing a card leaves the
+ * portal, so the destination is named for anyone who cannot see the card.
+ */
+const CardShell = ({
     document,
-    onPresent,
-    isFront,
+    className,
+    children,
 }: {
     document: WalletDocument;
-    onPresent: () => void;
-    isFront: boolean;
-}): React.ReactElement => {
+    className: string;
+    children: React.ReactNode;
+}): React.ReactElement =>
+    document.serviceUrl ? (
+        <a
+            className={className}
+            href={document.serviceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid={`wallet-card-${document.id}`}
+            aria-label={`${document.documentType}: open the ${document.listedService ?? document.documentType} service website in a new tab`}
+        >
+            {children}
+        </a>
+    ) : (
+        <div className={className} data-testid={`wallet-card-${document.id}`}>
+            {children}
+        </div>
+    );
+
+const LicenceCard = ({ document, isFront }: { document: WalletDocument; isFront: boolean }): React.ReactElement => {
     const licence = document.licence;
 
     return (
-        <button
-            type="button"
-            className={`${styles['licence']} ${isFront ? styles['card-front'] : ''}`}
-            onClick={onPresent}
-            data-testid={`wallet-card-${document.id}`}
-            aria-label={`Present ${document.documentType}`}
-        >
+        <CardShell document={document} className={`${styles['licence']} ${isFront ? styles['card-front'] : ''}`}>
             <div className={styles['licence-top']}>
                 <span className={styles['licence-wordmark']} aria-hidden>
                     Alberta
@@ -297,7 +316,7 @@ const LicenceCard = ({
             <span className={styles['specimen']} data-testid={`specimen-${document.id}`}>
                 SPECIMEN
             </span>
-        </button>
+        </CardShell>
     );
 };
 
@@ -376,22 +395,8 @@ const QrPlaceholder = ({ seed }: { seed: string }): React.ReactElement => {
     );
 };
 
-const DocumentCard = ({
-    document,
-    onPresent,
-    isFront,
-}: {
-    document: WalletDocument;
-    onPresent: () => void;
-    isFront: boolean;
-}): React.ReactElement => (
-    <button
-        type="button"
-        className={`${styles['card']} ${isFront ? styles['card-front'] : ''}`}
-        onClick={onPresent}
-        data-testid={`wallet-card-${document.id}`}
-        aria-label={`Present ${document.documentType}`}
-    >
+const DocumentCard = ({ document, isFront }: { document: WalletDocument; isFront: boolean }): React.ReactElement => (
+    <CardShell document={document} className={`${styles['card']} ${isFront ? styles['card-front'] : ''}`}>
         <div className={styles['card-header']}>
             <span className={styles['card-type']}>
                 <span className={styles['card-icon']}>
@@ -462,7 +467,7 @@ const DocumentCard = ({
                 />
             </div>
         </div>
-    </button>
+    </CardShell>
 );
 
 export function AlbertaWalletPage(): React.ReactElement {
@@ -541,26 +546,42 @@ export function AlbertaWalletPage(): React.ReactElement {
                                 <p className={styles['area-services']}>{group.services.join(', ')}</p>
                             )}
                             <div className={styles['stack']} data-testid={`wallet-stack-${group.area}`}>
-                                {group.documents.map((document) => {
-                                    const isFront = presentingId === document.id;
-                                    const bringForward = () => setPresentingId(isFront ? undefined : document.id);
-
-                                    return document.layout === 'licence' ? (
+                                {group.documents.map((document) =>
+                                    document.layout === 'licence' ? (
                                         <LicenceCard
                                             key={document.id}
                                             document={document}
-                                            onPresent={bringForward}
-                                            isFront={isFront}
+                                            isFront={presentingId === document.id}
                                         />
                                     ) : (
                                         <DocumentCard
                                             key={document.id}
                                             document={document}
-                                            onPresent={bringForward}
-                                            isFront={isFront}
+                                            isFront={presentingId === document.id}
                                         />
-                                    );
-                                })}
+                                    )
+                                )}
+                            </div>
+
+                            {/* Choosing a card now opens its service, so presenting has a
+                                control of its own. It sits outside the stack, where a card
+                                overlapping the one above it cannot cover it. */}
+                            <div className={styles['card-actions']}>
+                                {group.documents.map((document) => (
+                                    <GoabButton
+                                        key={document.id}
+                                        type="tertiary"
+                                        leadingIcon="qr-code"
+                                        onClick={() =>
+                                            setPresentingId(presentingId === document.id ? undefined : document.id)
+                                        }
+                                        testId={`present-${document.id}`}
+                                    >
+                                        {presentingId === document.id
+                                            ? `Stop presenting ${document.documentType}`
+                                            : `Present ${document.documentType}`}
+                                    </GoabButton>
+                                ))}
                             </div>
                         </section>
                     ))}
@@ -570,7 +591,7 @@ export function AlbertaWalletPage(): React.ReactElement {
             <PpSpacer vSpacing="s" />
             <div className={styles['hint']}>
                 <GoabIcon type="information-circle" size="small" />
-                Click or tap a card to bring it forward and present it
+                Choose a card to open the service it belongs to, or present it to a verifier
             </div>
 
             {presenting && (

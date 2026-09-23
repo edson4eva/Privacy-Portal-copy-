@@ -28,6 +28,7 @@ const mockGet = get as jest.Mock;
 
 const licence = {
     id: 'mobile-drivers-licence',
+    serviceUrl: 'https://eservices.alberta.ca/',
     serviceArea: 'Driving safety',
     listedService: 'Licensing and owning a vehicle',
     documentType: "Driver's Licence",
@@ -61,6 +62,7 @@ const licence = {
 
 const healthCard = {
     id: 'mobile-health-card',
+    serviceUrl: 'https://www.albertahealthservices.ca/',
     serviceArea: 'Health',
     listedService: 'Coverage and benefits',
     documentType: 'Mobile Health Card',
@@ -76,6 +78,7 @@ const healthCard = {
 
 const rebate = {
     id: 'alberta-energy-rebate-card',
+    serviceUrl: 'https://www.alberta.ca/alberta-energy-rebate',
     serviceArea: 'Family and social supports',
     listedService: 'Alberta Energy Rebate',
     documentType: 'Alberta Energy Rebate',
@@ -92,6 +95,7 @@ const rebate = {
 
 const campsite = {
     id: 'campsite-reservation',
+    serviceUrl: 'https://www.albertaparks.ca/albertaparks-ca/visit-our-parks/camping-in-alberta-parks/',
     serviceArea: 'Tourism, sport and outdoor recreation',
     listedService: 'Provincial parks and campgrounds',
     documentType: 'Campsite Reservation',
@@ -296,7 +300,7 @@ describe('AlbertaWalletPage', () => {
         ];
         expect(stacks.map((area) => screen.getByTestId(`wallet-stack-${area}`).children.length)).toEqual([1, 1, 1, 1]);
         // One hint for the wallet, not one per category.
-        expect(screen.getAllByText(/Click or tap a card to bring it forward/)).toHaveLength(1);
+        expect(screen.getAllByText(/Choose a card to open the service it belongs to/)).toHaveLength(1);
     });
 
     it('groups a document the inventory does not cover rather than dropping it', async () => {
@@ -316,11 +320,11 @@ describe('AlbertaWalletPage', () => {
         await waitFor(() => expect(screen.getByTestId('wallet-card-mobile-health-card')).toBeInTheDocument());
         expect(screen.queryByTestId('present-panel')).not.toBeInTheDocument();
 
-        fireEvent.click(screen.getByTestId('wallet-card-mobile-health-card'));
+        fireEvent.click(screen.getByTestId('present-mobile-health-card'));
         expect(screen.getByTestId('present-panel')).toBeInTheDocument();
 
-        // Choosing the same card again returns it to the stack.
-        fireEvent.click(screen.getByTestId('wallet-card-mobile-health-card'));
+        // Choosing it again returns the card to the stack.
+        fireEvent.click(screen.getByTestId('present-mobile-health-card'));
         expect(screen.queryByTestId('present-panel')).not.toBeInTheDocument();
     });
 
@@ -330,10 +334,58 @@ describe('AlbertaWalletPage', () => {
 
         await waitFor(() => expect(screen.getByTestId('wallet-card-campsite-reservation')).toBeInTheDocument());
 
-        fireEvent.click(screen.getByTestId('wallet-card-mobile-health-card'));
-        fireEvent.click(screen.getByTestId('wallet-card-campsite-reservation'));
+        fireEvent.click(screen.getByTestId('present-mobile-health-card'));
+        fireEvent.click(screen.getByTestId('present-campsite-reservation'));
 
         expect(screen.getByTestId('present-panel')).toHaveTextContent('Campsite Reservation');
+    });
+
+    it('opens each card at the website of the service it belongs to', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('wallet-card-mobile-health-card')).toBeInTheDocument());
+        const expected: [string, string][] = [
+            ['mobile-drivers-licence', 'https://eservices.alberta.ca/'],
+            ['mobile-health-card', 'https://www.albertahealthservices.ca/'],
+            ['alberta-energy-rebate-card', 'https://www.alberta.ca/alberta-energy-rebate'],
+            [
+                'campsite-reservation',
+                'https://www.albertaparks.ca/albertaparks-ca/visit-our-parks/camping-in-alberta-parks/',
+            ],
+        ];
+
+        for (const [id, href] of expected) {
+            const card = screen.getByTestId(`wallet-card-${id}`);
+            expect(card.tagName).toBe('A');
+            expect(card).toHaveAttribute('href', href);
+            expect(card).toHaveAttribute('target', '_blank');
+            // Leaving the portal must not hand the opener to the other site.
+            expect(card).toHaveAttribute('rel', 'noopener noreferrer');
+        }
+    });
+
+    it('carries no advertising tracking on the rebate link', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('wallet-card-alberta-energy-rebate-card')).toBeInTheDocument());
+        const href = screen.getByTestId('wallet-card-alberta-energy-rebate-card').getAttribute('href') ?? '';
+        for (const parameter of ['gclid', 'utm_', 'gad_source', 'gad_campaignid', 'gbraid']) {
+            expect(href).not.toContain(parameter);
+        }
+    });
+
+    it('does not make a card a link when its service has no website', async () => {
+        mockGet.mockResolvedValue({ wallet: { documents: [{ ...healthCard, serviceUrl: undefined }] } });
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('wallet-card-mobile-health-card')).toBeInTheDocument());
+        const card = screen.getByTestId('wallet-card-mobile-health-card');
+        expect(card.tagName).toBe('DIV');
+        expect(card).not.toHaveAttribute('href');
+        // Presenting is still offered, so the card is not left inert.
+        expect(screen.getByTestId('present-mobile-health-card')).toBeInTheDocument();
     });
 
     it('links to both app stores in a new tab', async () => {

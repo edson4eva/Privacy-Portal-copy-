@@ -480,6 +480,7 @@ const DEMO_WALLET = {
     documents: [
         {
             id: 'mobile-drivers-licence',
+            serviceUrl: 'https://eservices.alberta.ca/',
             serviceArea: 'Driving safety',
             listedService: 'Licensing and owning a vehicle',
             documentType: "Driver's Licence",
@@ -518,6 +519,7 @@ const DEMO_WALLET = {
         },
         {
             id: 'mobile-health-card',
+            serviceUrl: 'https://www.albertahealthservices.ca/',
             serviceArea: 'Health',
             listedService: 'Coverage and benefits',
             documentType: 'Mobile Health Card',
@@ -532,6 +534,7 @@ const DEMO_WALLET = {
         },
         {
             id: 'alberta-energy-rebate-card',
+            serviceUrl: 'https://www.alberta.ca/alberta-energy-rebate',
             serviceArea: 'Family and social supports',
             listedService: 'Alberta Energy Rebate',
             documentType: 'Alberta Energy Rebate',
@@ -551,6 +554,7 @@ const DEMO_WALLET = {
         },
         {
             id: 'campsite-reservation',
+            serviceUrl: 'https://www.albertaparks.ca/albertaparks-ca/visit-our-parks/camping-in-alberta-parks/',
             serviceArea: 'Tourism, sport and outdoor recreation',
             listedService: 'Provincial parks and campgrounds',
             documentType: 'Campsite Reservation',

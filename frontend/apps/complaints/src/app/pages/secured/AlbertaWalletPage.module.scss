@@ -74,6 +74,15 @@
     margin-bottom: 40%;
 }
 
+/* Presenting a card, beneath the stack rather than on the card, since the
+   card itself is now a link to its service. */
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--goa-space-xs);
+    margin-top: var(--goa-space-s);
+}
+
 .card,
 .licence {
     position: relative;
