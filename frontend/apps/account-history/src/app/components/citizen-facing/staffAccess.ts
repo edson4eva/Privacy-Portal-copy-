@@ -64,6 +64,13 @@ export interface StaffAccessRecord {
     changes?: { element: string; before: string; after: string }[];
 
     /* 2.6 Why - reason for inquiry. */
+    /**
+     * A number the outside party assigned as a result of the access - a
+     * parking ticket, an invoice, a file of its own. It is what ties the
+     * access to something the reader has actually received, so it is labelled
+     * by whatever the party calls it rather than given a generic name.
+     */
+    externalReference?: { label: string; value: string };
     legalAuthority?: string;
     consistentUse?: string;
     consent?: string;

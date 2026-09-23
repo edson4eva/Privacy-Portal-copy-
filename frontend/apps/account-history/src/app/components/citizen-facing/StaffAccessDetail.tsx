@@ -184,6 +184,9 @@ export function StaffAccessDetail({ basePath = '/transparency' }: { basePath?: s
                 >
                     <Row label="Reason for inquiry" value={record.reasonType} />
                     <Row label="Reason given" value={record.reasonDetail} />
+                    {record.externalReference && (
+                        <Row label={record.externalReference.label} value={record.externalReference.value} />
+                    )}
                     <Row label="Authority relied on" value={record.legalAuthority} />
                     <Row label="Use of your information" value={record.consistentUse} />
                     <Row label="Consent" value={record.consent} />

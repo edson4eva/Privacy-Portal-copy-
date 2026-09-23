@@ -178,6 +178,23 @@ describe('StaffAccessDetail', () => {
         expect(why).toHaveTextContent('Inbound call');
     });
 
+    it('names a reference number the outside party assigned', async () => {
+        mockGet.mockResolvedValue({
+            staffAccess: {
+                record: {
+                    ...record,
+                    externalReference: { label: 'Parking ticket number', value: 'PT-2026-884213' },
+                },
+            },
+        });
+        renderDetail();
+
+        await waitFor(() => expect(screen.getByTestId('section-why')).toBeInTheDocument());
+        const why = screen.getByTestId('section-why');
+        expect(why).toHaveTextContent('Parking ticket number');
+        expect(why).toHaveTextContent('PT-2026-884213');
+    });
+
     it('reports the review of the access', async () => {
         mockGet.mockResolvedValue(payload);
         renderDetail();

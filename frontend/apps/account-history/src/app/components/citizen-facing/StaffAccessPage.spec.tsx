@@ -167,6 +167,24 @@ describe('StaffAccessPage', () => {
         expect(screen.queryByTestId('org-sa-1')).not.toBeInTheDocument();
     });
 
+    it('shows a ticket number on the row, not only on the record', async () => {
+        mockGet.mockResolvedValue({
+            staffAccess: {
+                records: [
+                    record('sa-11', {
+                        organization: 'Imperial Parking Canada Corporation',
+                        reasonType: 'Information-sharing agreement request',
+                        reasonDetail: 'registered owner lookup to issue parking ticket PT-2026-884213',
+                    }),
+                ],
+            },
+        });
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('row-sa-11')).toBeInTheDocument());
+        expect(screen.getByTestId('row-sa-11')).toHaveTextContent('PT-2026-884213');
+    });
+
     it('renders the heading, intro and all six columns', async () => {
         mockGet.mockResolvedValue(payload);
         renderPage();
