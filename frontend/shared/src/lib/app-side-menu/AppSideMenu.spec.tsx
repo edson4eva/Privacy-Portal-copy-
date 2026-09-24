@@ -98,8 +98,15 @@ describe('AppSideMenu', () => {
         // does not shrink to make room.
         expect(name?.[1]).toContain('justify-content: flex-start');
         expect(name?.[1]).toContain('flex: 0 0 auto');
-        // And the entry gives up its right padding so one line fits.
+        // And the entry gives up its right padding so one line fits. The
+        // selector has to name the element too: the rule for a top level
+        // entry sets the whole padding shorthand as
+        // `goa-side-menu > .sub-item`, which outweighs a lone class and put
+        // the padding straight back.
         expect(wide?.[1]).toContain('padding-right: var(--goa-space-none)');
+        const selector = /([^{}]*has-second-name[^{]*)\{/.exec(stylesheet)?.[1] ?? '';
+        expect(selector).toContain('goa-side-menu >');
+        expect(selector).toContain('.uiam--side-menu--sub-item.uiam--side-menu--has-second-name');
     });
 
     it('names the current page in the interactive blue, not the text colour', () => {

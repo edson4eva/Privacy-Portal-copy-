@@ -100,8 +100,15 @@ goa-side-menu .uiam--side-menu--sub-item goa-icon {
  * gaps, the heading and the name come to about 209px in the brand's
  * semi-condensed face. Three pixels is not a margin to rely on, so the entry
  * gives up its right-hand padding and has about fifteen instead.
+ *
+ * The element is named in the selector, and the class twice, because the rule
+ * for a top level entry above sets the whole padding shorthand and is written
+ * as `goa-side-menu > .sub-item`. That is one class and one element, which
+ * outweighs a lone class, so a plain `.has-second-name` lost and the right
+ * padding came back - which is why this looked unfixed twice over.
  */
-.uiam--side-menu--has-second-name {
+goa-side-menu > .uiam--side-menu--sub-item.uiam--side-menu--has-second-name,
+.uiam--side-menu--sub-item.uiam--side-menu--has-second-name {
     padding-right: var(--goa-space-none);
 }
 
