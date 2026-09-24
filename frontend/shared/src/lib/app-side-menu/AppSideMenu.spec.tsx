@@ -129,6 +129,23 @@ describe('AppSideMenu', () => {
         expect(rule?.[1]).not.toContain('--goa-side-menu-child-color-text-selected');
     });
 
+    it('colours the current entry through the token the component forces', () => {
+        /*
+         * The component's own styles carry
+         *   color: var(--goa-side-menu-child-color-text-selected) !important
+         * so no rule this app writes on the link can win. The colour has to
+         * be set on the token, which is what this checks.
+         */
+        const overrides = readFileSync(join(__dirname, '..', '..', 'style', 'overrides.css'), 'utf8').replace(
+            /\/\*[\s\S]*?\*\//g,
+            ''
+        );
+        const declared = /--goa-side-menu-child-color-text-selected\s*:\s*([^;]+);/.exec(overrides);
+
+        expect(declared).not.toBeNull();
+        expect(declared?.[1].trim()).toBe('var(--goa-color-interactive-default)');
+    });
+
     it('marks the link for the current page', () => {
         renderMenu('/alberta-wallet');
 

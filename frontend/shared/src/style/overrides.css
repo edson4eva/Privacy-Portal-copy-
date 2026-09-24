@@ -50,9 +50,26 @@
     --goa-table-color-heading: var(--goa-color-text-default);
     --goa-table-color-border-heading: var(--goa-color-brand-default);
 
+    /*
+     * The one thing the side menu needs said here: the entry you are on is
+     * named in blue.
+     *
+     * It cannot be done from a rule on the link. The component's own styles
+     * carry
+     *
+     *     color: var(--goa-side-menu-child-color-text-selected) !important
+     *
+     * and that token is text-default, which is black. An !important in the
+     * component beats any selector this app can write, so the colour has to
+     * be changed at the token. That is why a rule setting `color` on
+     * `.current` read correctly in the stylesheet and still rendered black.
+     */
+    --goa-side-menu-child-color-text-selected: var(--goa-color-interactive-default);
+
     /**
-     * Side menu: nothing. A real Alberta.ca account is this design system's
-     * own side menu, so the way to look like one is to stop overriding it.
+     * Nothing else about the side menu is set here. A real Alberta.ca
+     * account is this design system's own side menu, so the way to look like
+     * one is to stop overriding it.
      *
      * Sixteen --goa-side-menu-* tokens used to be set here and fourteen of
      * them fought the system: a 15px pill radius where the system has none,
