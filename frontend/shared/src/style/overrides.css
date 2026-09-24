@@ -61,11 +61,14 @@
     --goa-callout-success-color-bg-content: transparent;
     --goa-callout-emergency-color-bg-content: transparent;
 
-    /* The icon's column and the text beside it start at the same height, so
-       the icon sits on the first line rather than 29px down a column with no
-       bottom padding. The text keeps its own inset from the icon column. */
-    --goa-callout-l-statusbar-padding: var(--goa-space-l) var(--goa-space-s) var(--goa-space-l) var(--goa-space-l);
-    --goa-callout-l-content-padding: var(--goa-space-l) var(--goa-space-l) var(--goa-space-l) var(--goa-space-none);
+    /* The text fills the outlined box: no padding on the content, and none on
+       the icon's column either, so nothing is inset from the border on any
+       side. The component lays the two out as flex children of the outline
+       (.icon then .content, stretched), so with both paddings at none the
+       only thing between the text and the left border is the icon glyph
+       itself. */
+    --goa-callout-l-statusbar-padding: var(--goa-space-none);
+    --goa-callout-l-content-padding: var(--goa-space-none);
     --goa-callout-info-border-color: var(--goa-color-info-default);
     --goa-callout-warning-border-color: var(--goa-color-warning-dark);
     --goa-callout-success-border-color: var(--goa-color-success-default);
