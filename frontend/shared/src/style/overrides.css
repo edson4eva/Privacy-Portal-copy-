@@ -33,6 +33,17 @@
      */
     --goa-callout-l-content-padding: var(--goa-space-none);
 
+    /*
+     * And the icon's column no longer decides the height. The callout lays
+     * the icon column and the content side by side and stretches both to the
+     * taller one. With space-l above and below a 20px icon that column is
+     * 68px, while two lines of 18px text at line-height-3 are 56px - so the
+     * box was 68px and 12px of it sat empty under the last line. At space-m
+     * the column is 52px and the text decides the height, which leaves
+     * nothing under it.
+     */
+    --goa-callout-l-statusbar-padding: var(--goa-space-m) var(--goa-space-s);
+
     /*Container*/
 
     /*Table*/
