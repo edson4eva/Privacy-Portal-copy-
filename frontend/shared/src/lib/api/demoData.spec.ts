@@ -132,6 +132,11 @@ describe('demo data: the side menu', () => {
         ]);
     });
 
+    it('carries no Business group', () => {
+        // It held no items, and the demo has no business profile behind it.
+        expect(left.map((entry) => entry.heading)).not.toContain('Business');
+    });
+
     it('does not also leave it at the top level', () => {
         expect(left.map((entry) => entry.heading)).not.toContain('Citizen-facing experience');
     });

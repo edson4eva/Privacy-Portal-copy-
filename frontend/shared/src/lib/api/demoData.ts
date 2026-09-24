@@ -1868,7 +1868,6 @@ export const DEMO_USER_MENU = {
                 { type: 'link', heading: 'Payment preferences', href: '/complaints/payment-preferences' },
             ],
         },
-        { type: 'group', heading: 'Business', icon: 'business', items: [] },
         { type: 'link', heading: 'My identification', icon: 'document-text', href: '/complaints/my-identification' },
         { type: 'link', heading: 'Alberta Wallet', icon: 'wallet', href: '/complaints/alberta-wallet' },
         {
