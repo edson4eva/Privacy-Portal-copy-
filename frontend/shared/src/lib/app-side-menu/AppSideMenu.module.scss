@@ -82,5 +82,8 @@ goa-side-menu .uiam--side-menu--sub-item goa-icon {
     text-align: center;
     font-size: var(--goa-font-size-1);
     font-weight: var(--goa-font-weight-regular);
-    color: var(--goa-color-emergency-dark);
+    /* The palette's lightest blue, --goa-color-info-light, is #aac9e7: 1.7:1
+       against white, which no one can read. This is the lightest blue in the
+       palette that a reader can, at 5.1:1. */
+    color: var(--goa-color-interactive-default);
 }
