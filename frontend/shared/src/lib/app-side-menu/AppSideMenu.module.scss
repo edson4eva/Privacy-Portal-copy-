@@ -77,16 +77,27 @@ goa-side-menu .uiam--side-menu--sub-item goa-icon {
 .uiam--side-menu--stacked {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* Stretched across the entry rather than centred. Centring made the
+       column as wide as its longest line - the second name - and then
+       centred the first line over that, which pushed the icon inward off the
+       line every other icon sits on and let the name spill out to the left
+       of them. */
+    align-items: stretch;
+    width: 100%;
     min-width: 0;
 }
 
+/* The icon and heading begin where every other entry's icon begins. */
 .uiam--side-menu--stacked-row {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
 }
 
 .uiam--side-menu--sub-label {
+    /* Centred across the entry, not on its own text, so it reads as
+       belonging to the line above rather than sitting beside it. */
+    width: 100%;
     text-align: center;
     font-size: var(--goa-font-size-1);
     font-weight: var(--goa-font-weight-regular);

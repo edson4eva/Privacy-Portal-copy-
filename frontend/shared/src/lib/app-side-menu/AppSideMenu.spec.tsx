@@ -72,6 +72,22 @@ describe('AppSideMenu', () => {
         expect(screen.queryByTestId('albertawalletsublabel')).not.toBeInTheDocument();
     });
 
+    it('starts the stacked entry at the left, so its icon lines up with the rest', () => {
+        const stylesheet = readFileSync(join(__dirname, 'AppSideMenu.module.scss'), 'utf8').replace(
+            /\/\*[\s\S]*?\*\//g,
+            ''
+        );
+        const stack = /\.uiam--side-menu--stacked\s*\{([^}]*)\}/.exec(stylesheet);
+        const row = /\.uiam--side-menu--stacked-row\s*\{([^}]*)\}/.exec(stylesheet);
+
+        // Centring the column made it as wide as its longest line and centred
+        // the icon over that, off the line the other icons sit on.
+        expect(stack?.[1]).not.toContain('align-items: center');
+        expect(stack?.[1]).toContain('align-items: stretch');
+        expect(stack?.[1]).toContain('width: 100%');
+        expect(row?.[1]).toContain('justify-content: flex-start');
+    });
+
     it('names the current page in the interactive blue, not the text colour', () => {
         // Comments go first: a check should read declarations, not the prose
         // beside them, and the comment on this rule names the token it
