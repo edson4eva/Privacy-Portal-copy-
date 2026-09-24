@@ -74,31 +74,28 @@ goa-side-menu .uiam--side-menu--sub-item goa-icon {
 
 /* An entry that goes by a second name stacks the two: the icon and heading on
    the first line, that name centred beneath both of them. */
-.uiam--side-menu--stacked {
+.uiam--side-menu--entry {
     display: flex;
-    flex-direction: column;
-    /* Stretched across the entry rather than centred. Centring made the
-       column as wide as its longest line - the second name - and then
-       centred the first line over that, which pushed the icon inward off the
-       line every other icon sits on and let the name spill out to the left
-       of them. */
-    align-items: stretch;
+    /* The second name sits beside the heading, sharing its baseline, not on a
+       line of its own. It wraps beneath only where the entry is too narrow to
+       hold both, which at the menu's 256px is a near thing either way. */
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--goa-space-2xs);
     width: 100%;
     min-width: 0;
 }
 
 /* The icon and heading begin where every other entry's icon begins. */
-.uiam--side-menu--stacked-row {
+.uiam--side-menu--entry-name {
     display: flex;
     align-items: center;
     justify-content: flex-start;
 }
 
 .uiam--side-menu--sub-label {
-    /* Centred across the entry, not on its own text, so it reads as
-       belonging to the line above rather than sitting beside it. */
-    width: 100%;
-    text-align: center;
+    /* Wraps as a whole phrase rather than breaking inside the brackets. */
+    white-space: nowrap;
     font-size: var(--goa-font-size-1);
     font-weight: var(--goa-font-weight-regular);
     /* The palette's lightest blue, --goa-color-info-light, is #aac9e7: 1.7:1

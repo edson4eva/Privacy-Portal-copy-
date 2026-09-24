@@ -46,7 +46,7 @@ const renderMenu = (path: string) =>
     );
 
 describe('AppSideMenu', () => {
-    it('sets a second name on its own line beneath the icon and heading', () => {
+    it('sets a second name beside the icon and heading', () => {
         renderMenu('/complaints/alberta-wallet');
 
         const inbox = screen.getByTestId('inboxlink');
@@ -54,17 +54,17 @@ describe('AppSideMenu', () => {
         expect(inbox).toHaveTextContent('Inbox');
         expect(subLabel).toHaveTextContent('(Unified Messaging Service)');
 
-        // The icon sits on the line above with the heading, not beside the
-        // stack, so the second name centres under both of them.
-        const stack = subLabel.parentElement;
-        expect(stack?.children).toHaveLength(2);
-        const firstLine = stack?.children[0];
-        expect(firstLine).toHaveTextContent('Inbox');
-        expect(firstLine?.querySelector('img')).not.toBeNull();
-        expect(stack?.children[1]).toBe(subLabel);
+        // The icon and heading are one child, the second name the next, so
+        // the two sit side by side on one line.
+        const entry = subLabel.parentElement;
+        expect(entry?.children).toHaveLength(2);
+        const name = entry?.children[0];
+        expect(name).toHaveTextContent('Inbox');
+        expect(name?.querySelector('img')).not.toBeNull();
+        expect(entry?.children[1]).toBe(subLabel);
     });
 
-    it('adds no second line to an entry that goes by one name', () => {
+    it('adds no second name to an entry that goes by one', () => {
         renderMenu('/complaints/alberta-wallet');
 
         const wallet = screen.getByTestId('albertawalletlink');
@@ -72,20 +72,19 @@ describe('AppSideMenu', () => {
         expect(screen.queryByTestId('albertawalletsublabel')).not.toBeInTheDocument();
     });
 
-    it('starts the stacked entry at the left, so its icon lines up with the rest', () => {
+    it('sets the second name beside the heading, on its baseline', () => {
         const stylesheet = readFileSync(join(__dirname, 'AppSideMenu.module.scss'), 'utf8').replace(
             /\/\*[\s\S]*?\*\//g,
             ''
         );
-        const stack = /\.uiam--side-menu--stacked\s*\{([^}]*)\}/.exec(stylesheet);
-        const row = /\.uiam--side-menu--stacked-row\s*\{([^}]*)\}/.exec(stylesheet);
+        const entry = /\.uiam--side-menu--entry\s*\{([^}]*)\}/.exec(stylesheet);
+        const name = /\.uiam--side-menu--entry-name\s*\{([^}]*)\}/.exec(stylesheet);
 
-        // Centring the column made it as wide as its longest line and centred
-        // the icon over that, off the line the other icons sit on.
-        expect(stack?.[1]).not.toContain('align-items: center');
-        expect(stack?.[1]).toContain('align-items: stretch');
-        expect(stack?.[1]).toContain('width: 100%');
-        expect(row?.[1]).toContain('justify-content: flex-start');
+        // Beside, not beneath: a column is what put it on its own line.
+        expect(entry?.[1]).not.toContain('flex-direction: column');
+        expect(entry?.[1]).toContain('align-items: baseline');
+        // The icon still begins where every other entry's icon begins.
+        expect(name?.[1]).toContain('justify-content: flex-start');
     });
 
     it('names the current page in the interactive blue, not the text colour', () => {

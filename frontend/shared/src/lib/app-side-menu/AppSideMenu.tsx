@@ -65,7 +65,7 @@ const MenuIcon = ({ item }: { item: SideMenuLink }): JSX.Element | null => {
 
 /**
  * The contents of a link: its icon and heading, and where the entry goes by a
- * second name, that name centred on a line beneath both of them.
+ * second name, that name beside the heading on the same line.
  */
 const MenuContents = ({ item }: { item: SideMenuLink }): JSX.Element => {
     if (!item.subheading) {
@@ -78,8 +78,8 @@ const MenuContents = ({ item }: { item: SideMenuLink }): JSX.Element => {
     }
 
     return (
-        <span className={styles['uiam--side-menu--stacked']}>
-            <span className={styles['uiam--side-menu--stacked-row']}>
+        <span className={styles['uiam--side-menu--entry']}>
+            <span className={styles['uiam--side-menu--entry-name']}>
                 <MenuIcon item={item} />
                 {item.heading}
             </span>
