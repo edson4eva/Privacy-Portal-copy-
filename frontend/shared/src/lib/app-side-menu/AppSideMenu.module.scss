@@ -1,33 +1,53 @@
+/**
+ * The side menu itself is the design system's component and styles itself.
+ * These rules cover only what this app puts inside it: its own anchors and
+ * router links in place of the component's own items, an image icon for an
+ * entry whose mark is not in the system, and a second name under an entry.
+ *
+ * Every value comes from the component's own --goa-side-menu-* tokens, so an
+ * item the app renders looks like an item the component renders - which is
+ * what a real Alberta.ca account looks like.
+ */
+
 .uiam--side-menu--sub-item {
-    border-radius: 15px;
-    padding: var(--goa-space-xs) var(--goa-space-s) var(--goa-space-s) var(--goa-space-xl);
-    margin-left: 0;
     display: flex;
     align-items: center;
+    /* A child of a group, indented past where the parent's icon sits so its
+       text lines up under the parent's text. */
+    padding: var(--goa-space-xs) var(--goa-space-s) 10px
+        calc(var(--goa-space-xl) + var(--goa-icon-size-l) + var(--goa-space-xs));
+    border-left: var(--goa-side-menu-sub-item-border-left);
+    border-radius: var(--goa-side-menu-group-border-radius);
+    background: var(--goa-side-menu-sub-item-color-bg);
+    font: var(--goa-side-menu-typography-item);
+    color: var(--goa-side-menu-color-menu-item);
 }
 
-goa-side-menu > .uiam--side-menu--sub-item goa-icon {
-    margin: 0 var(--goa-space-xs) 0 0;
-}
-
+/* A top level entry, indented as the component indents its own. */
 goa-side-menu > .uiam--side-menu--sub-item {
-    padding: var(--goa-space-m) var(--goa-space-s) var(--goa-space-m) var(--goa-space-xl);
+    padding: var(--goa-side-menu-padding-item);
 }
 
-goa-side-menu a:hover:not(.current) {
-    background: var(--goa-color-info-background);
+.uiam--side-menu--sub-item:hover {
+    border-left: var(--goa-side-menu-sub-item-border-left-hover);
+    background: var(--goa-side-menu-sub-item-color-bg-hover);
 }
 
-goa-side-menu .uiam--side-menu--sub-item.current {
-    font: var(--goa-typography-heading-s);
-    border-left: var(--goa-side-menu-child-border-width) solid var(--goa-color-interactive-disabled);
-    background: var(--goa-side-menu-child-color-bg-selected);
-    /* This color is not taking affect: */
-    --goa-side-menu-text-color: var(--goa-color-interactive-default);
+.uiam--side-menu--sub-item.current {
+    border-left: var(--goa-side-menu-sub-item-border-left-current);
+    background: var(--goa-side-menu-sub-item-color-bg-current);
+    font: var(--goa-side-menu-typography-item-current);
+    color: var(--goa-side-menu-child-color-text-selected);
 }
 
-goa-side-menu .uiam--side-menu--sub-item {
-    --goa-side-menu-text-color: initial;
+.uiam--side-menu--sub-item:focus-visible {
+    outline: var(--goa-side-menu-item-focus-border);
+    outline-offset: 0;
+}
+
+/* The gap between an entry's mark and its text, the component's own. */
+goa-side-menu .uiam--side-menu--sub-item goa-icon {
+    margin: 0 var(--goa-side-menu-heading-icon-gap) 0 0;
 }
 
 .uiam--side-menu--sign-out-link {
@@ -35,30 +55,17 @@ goa-side-menu .uiam--side-menu--sub-item {
     padding: var(--goa-space-l) 0 var(--goa-space-2xl) 0;
 }
 
-.uiam--side-menu--sub-item:hover,
-.uiam--side-menu--sub-item:focus-visible,
-.uiam--side-menu--sub-item.current {
-    border-radius: 15px;
-}
-
-@media screen and (max-width: 1023px) {
-    .uiam--side-menu--sub-item {
-        padding: var(--goa-space-xs) var(--goa-space-m);
-        margin-top: var(--goa-space-xs);
-    }
-
-    goa-side-menu > .uiam--side-menu--sub-item {
-        background-color: var(--goa-side-menu-group-color-bg);
-        border-radius: var(--goa-side-menu-group-border-radius);
-        margin-top: var(--goa-space-m);
-        padding: var(--goa-side-menu-group-padding);
-    }
+/* Image icons are sized to match the design system icons beside them. */
+.uiam--side-menu--icon-image {
+    width: var(--goa-side-menu-icon-size);
+    height: var(--goa-side-menu-icon-size);
+    flex: 0 0 auto;
+    margin: 0 var(--goa-side-menu-heading-icon-gap) 0 0;
+    object-fit: contain;
 }
 
 /* An entry that goes by a second name stacks the two: the icon and heading on
-   the first line, that name centred beneath both of them. Centring the column
-   centres each line on the other, so the heading sits over the middle of the
-   longer name. */
+   the first line, that name centred beneath both of them. */
 .uiam--side-menu--stacked {
     display: flex;
     flex-direction: column;
@@ -76,13 +83,4 @@ goa-side-menu .uiam--side-menu--sub-item {
     font-size: var(--goa-font-size-1);
     font-weight: var(--goa-font-weight-regular);
     color: var(--goa-color-emergency-dark);
-}
-
-/* Image icons are sized to match the design system icons beside them. */
-.uiam--side-menu--icon-image {
-    width: 1.25rem;
-    height: 1.25rem;
-    flex: 0 0 auto;
-    margin: 0 var(--goa-space-xs) 0 0;
-    object-fit: contain;
 }

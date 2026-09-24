@@ -20,9 +20,11 @@
   Side Menu
 ==================*/
 .side-menu {
-    width: 286px;
-    border-right: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
-    padding-right: var(--goa-space-l);
+    /* The component states its own width and its own right-hand rule, and a
+       real Alberta.ca account is that width, so both come from it rather than
+       from a number chosen here. */
+    width: var(--goa-side-menu-width);
+    border-right: var(--goa-side-menu-border-right);
     display: block;
 }
 

@@ -90,34 +90,26 @@
     --goa-table-color-heading: var(--goa-color-text-default);
     --goa-table-color-border-heading: var(--goa-color-brand-default);
 
-    /** Side Menu Group **/
-    --goa-side-menu-group-padding: 0;
-    --goa-side-menu-group-color-bg: var(--goa-color-greyscale-white);
-    --goa-side-menu-child-border-width: 0px;
-    --goa-side-menu-child-color-bg-hover: var(--goa-color-info-background);
-    --goa-side-menu-child-color-text-selected: var(--goa-color-interactive-default);
-    --goa-side-menu-parent-padding: 16px 12px 16px 32px;
-    --goa-side-menu-parent-text-active: var(--goa-typography-heading-s);
-    --goa-side-menu-group-border-radius: 15px;
-    --goa-side-menu-parent-color-bg-hover: var(--goa-color-info-background);
-    --goa-side-menu-sub-group-padding: var(--goa-space-none) var(--goa-space-none) var(--goa-space-none)
-        var(--goa-space-xl);
-    --goa-side-menu-child-color-bg-selected: var(--goa-color-greyscale-50);
-    --goa-side-menu-parent-color-bg-selected: var(--goa-color-greyscale-white);
+    /**
+     * Side menu: nothing. A real Alberta.ca account is this design system's
+     * own side menu, so the way to look like one is to stop overriding it.
+     *
+     * Sixteen --goa-side-menu-* tokens used to be set here and fourteen of
+     * them fought the system: a 15px pill radius where the system has none,
+     * the left accent bar on a child unset where the system rules one, a
+     * selected child on grey where the system tints it with the information
+     * colour and keeps the text in the default colour rather than turning it
+     * blue, a selected parent forced back to white, and paddings of 16px,
+     * 12px, 10px and 0 in place of the system's own. One of them,
+     * --goa-side-menu-parent-text-active, is not a token the system has at
+     * all, so it did nothing but look like it did.
+     */
     --goa-opacity-background-drawer: rgba(0, 0, 0, 0.7);
-    --goa-side-menu-color-bg-menu-item-hover: var(--goa-color-info-background);
-    --goa-side-menu-child-border-left: unset;
-    --goa-side-menu-child-border-left-hover: unset;
-    --goa-side-menu-child-border-left-selected: unset;
 }
 
 @media screen and (max-width: 1024px) {
     :root {
-        --goa-side-menu-group-border-radius: 15px;
-        --goa-side-menu-sub-group-padding: 8px 0 0 16px;
         --goa-accordion-shadow: none;
-        --goa-side-menu-parent-padding: 0px;
-        --goa-side-menu-group-padding: 10px 16px;
     }
 }
 
@@ -147,11 +139,12 @@ goa-table thead tr th:first-child {
   Side Menu
 ==================*/
 .uiam--side-menu {
-    width: 286px;
-    flex: 0 0 286px;
-    border-right: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
-    padding-right: var(--goa-space-l);
-    margin-left: var(--goa-space-xl);
+    /* The width and the right-hand rule are the component's own, as they are
+       on a real Alberta.ca account, rather than a 286px column with a gutter
+       of its own beside it. */
+    width: var(--goa-side-menu-width);
+    flex: 0 0 var(--goa-side-menu-width);
+    border-right: var(--goa-side-menu-border-right);
 }
 
 .uiam--side-menu.no-user {
