@@ -25,6 +25,14 @@
      * all against space-l. They are gone.
      */
 
+    /*
+     * One deviation, asked for: the text sits against the edges of its box
+     * with no space above, below or beside it. The system insets it by
+     * space-l. The icon's own column keeps its padding, so the bar still
+     * reads as a bar.
+     */
+    --goa-callout-l-content-padding: var(--goa-space-none);
+
     /*Container*/
 
     /*Table*/
