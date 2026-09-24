@@ -70,6 +70,14 @@ describe('AppSideMenu', () => {
         const wallet = screen.getByTestId('albertawalletlink');
         expect(wallet).toHaveTextContent('Alberta Wallet');
         expect(screen.queryByTestId('albertawalletsublabel')).not.toBeInTheDocument();
+        // And keeps its right padding, which only the wider entry gives up.
+        expect(wallet.className).not.toContain('has-second-name');
+    });
+
+    it('marks the entry that carries a second name, so it can take the width', () => {
+        renderMenu('/complaints/alberta-wallet');
+
+        expect(screen.getByTestId('inboxlink').className).toContain('has-second-name');
     });
 
     it('sets the second name beside the heading, on its baseline', () => {
@@ -79,12 +87,19 @@ describe('AppSideMenu', () => {
         );
         const entry = /\.uiam--side-menu--entry\s*\{([^}]*)\}/.exec(stylesheet);
         const name = /\.uiam--side-menu--entry-name\s*\{([^}]*)\}/.exec(stylesheet);
+        const wide = /\.uiam--side-menu--has-second-name\s*\{([^}]*)\}/.exec(stylesheet);
 
-        // Beside, not beneath: a column is what put it on its own line.
+        // Beside, not beneath: a column is what put it on its own line, and
+        // wrapping is what put it back there once the row was too tight.
         expect(entry?.[1]).not.toContain('flex-direction: column');
         expect(entry?.[1]).toContain('align-items: baseline');
-        // The icon still begins where every other entry's icon begins.
+        expect(entry?.[1]).toContain('flex-wrap: nowrap');
+        // The icon still begins where every other entry's icon begins, and
+        // does not shrink to make room.
         expect(name?.[1]).toContain('justify-content: flex-start');
+        expect(name?.[1]).toContain('flex: 0 0 auto');
+        // And the entry gives up its right padding so one line fits.
+        expect(wide?.[1]).toContain('padding-right: var(--goa-space-none)');
     });
 
     it('names the current page in the interactive blue, not the text colour', () => {

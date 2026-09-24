@@ -162,7 +162,11 @@ const AppSideMenu: React.FC<SideMenuProperties> = function ({ items, basePath })
                         to={to}
                         aria-current={isCurrent ? 'page' : undefined}
                         data-testid={menuItem.heading.replace(/ /g, '').toLocaleLowerCase() + 'link'}
-                        className={[styles['uiam--side-menu--sub-item'], isCurrent ? styles['current'] : '']
+                        className={[
+                            styles['uiam--side-menu--sub-item'],
+                            isCurrent ? styles['current'] : '',
+                            menuItem.subheading ? styles['uiam--side-menu--has-second-name'] : '',
+                        ]
                             .filter(Boolean)
                             .join(' ')}
                     >
@@ -181,7 +185,11 @@ const AppSideMenu: React.FC<SideMenuProperties> = function ({ items, basePath })
                         href={url.href}
                         rel="noopener noreferrer"
                         aria-current={isCurrent ? 'page' : undefined}
-                        className={[styles['uiam--side-menu--sub-item'], isCurrent ? styles['current'] : '']
+                        className={[
+                            styles['uiam--side-menu--sub-item'],
+                            isCurrent ? styles['current'] : '',
+                            menuItem.subheading ? styles['uiam--side-menu--has-second-name'] : '',
+                        ]
                             .filter(Boolean)
                             .join(' ')}
                         data-testid={menuItem.heading.replace(/ /g, '').toLocaleLowerCase() + 'link'}
