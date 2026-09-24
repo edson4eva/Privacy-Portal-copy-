@@ -4,38 +4,17 @@
        the value lives here and nothing states it at the point of use. */
     --pp-color-overlay: rgba(0, 0, 0, 0.5);
 
-    /** App Header*/
-    --goa-app-header-color-bg-nav-item-in-menu-current: unset;
-    --goa-app-header-color-bg-nav-item-in-menu-current-hover: unset;
-    /** Button **/
-    --goa-button-border-radius: 14px;
-    --goa-button-text: var(--goa-typography-heading-s);
-    --goa-button-height: 55px;
-    --goa-button-padding-lr: var(--goa-space-s);
-    --goa-button-padding-lr-compact: var(--goa-space-xs);
+    /*
+     * What follows is every token this app still sets on the design system,
+     * and each one is here because it was asked for. Everything else that
+     * used to be set here has gone: the app header, the button, the accordion
+     * and the container now look as the design system draws them, which is
+     * what design.alberta.ca publishes.
+     */
 
-    /*Accordion*/
-    --goa-accordion-divider: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);
-    --goa-accordion-color-bg-heading: var(--goa-color-greyscale-white);
-    --goa-accordion-color-bg-content: var(--goa-color-greyscale-white);
-    --goa-accordion-color-heading: var(--goa-color-interactive-default);
-    --goa-accordion-border: none;
-    --goa-accordion-border-radius: 15px;
-    --goa-accordion-padding-heading: var(--goa-space-m) 4px var(--goa-space-m) 20px;
-    --goa-accordion-heading-s: var(--goa-typography-heading-s);
-    --goa-accordion-heading-m: var(--goa-typography-heading-m);
-    --goa-accordion-padding-content-wide: 20px;
-    --goa-accordion-padding-content-narrow: 20px;
-    --goa-accordion-color-bg-heading-hover: var(--goa-color-info-background);
-    --goa-accordion-color-heading-hover: var(--goa-color-interactive-default);
-    --goa-accordion-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.25);
-
-    /*Callout*/
-    --goa-callout-l-text-size: var(--goa-typography-body-m);
+    /* Callout */
     --goa-callout-l-border-width: var(--goa-border-width-s);
     --goa-callout-border-radius: 15px;
-    --goa-callout-l-heading-size: var(--goa-typography-heading-m);
-    --goa-callout-l-content-gap: var(--goa-space-m);
 
     /* The app's callout is a rounded box outlined in the type's colour, with
        the icon in that colour too and no filled bar behind it.
@@ -73,18 +52,8 @@
     --goa-callout-warning-border-color: var(--goa-color-warning-dark);
     --goa-callout-success-border-color: var(--goa-color-success-default);
     --goa-callout-emergency-border-color: var(--goa-color-emergency-default);
-    --goa-callout-m-text-size: var(--goa-typography-body-m);
-    --goa-callout-m-border-width: var(--goa-border-width-none);
-    --goa-callout-m-heading-size: var(--goa-typography-heading-xs);
-    --goa-callout-m-content-gap: var(--goa-space-xs);
-    --goa-callout-m-content-padding: var(--goa-space-none);
-    --goa-callout-m-statusbar-padding: var(--goa-space-none) var(--goa-space-xs) var(--goa-space-none)
-        var(--goa-space-none);
 
     /*Container*/
-    --goa-container-border-radius: 15px;
-    --goa-container-border: var(--goa-border-width-s) solid var(--goa-color-brand-default);
-    --goa-container-padding: var(--goa-space-l);
 
     /*Table*/
     --goa-table-color-heading: var(--goa-color-text-default);
@@ -104,12 +73,10 @@
      * --goa-side-menu-parent-text-active, is not a token the system has at
      * all, so it did nothing but look like it did.
      */
-    --goa-opacity-background-drawer: rgba(0, 0, 0, 0.7);
 }
 
 @media screen and (max-width: 1024px) {
     :root {
-        --goa-accordion-shadow: none;
     }
 }
 
