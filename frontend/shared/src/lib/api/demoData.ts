@@ -1884,13 +1884,6 @@ export const DEMO_USER_MENU = {
         },
         { type: 'link', heading: 'Security settings', icon: 'settings', href: '/complaints/security-settings' },
         { type: 'link', heading: 'Account activity', icon: 'time', href: '/complaints/account-activity' },
-        {
-            type: 'link',
-            // The inbox is the Unified Messaging Service; the nav names both so
-            // a reader recognises whichever one they know it by.
-            heading: 'Inbox (Unified Messaging Service)',
-            iconSrc: inboxEnvelope,
-            href: '/complaints/inbox',
-        },
+        { type: 'link', heading: 'Inbox', iconSrc: inboxEnvelope, href: '/complaints/inbox' },
     ],
 };

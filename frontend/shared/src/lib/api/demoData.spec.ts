@@ -135,13 +135,6 @@ describe('demo data: the side menu', () => {
         expect(left.map((entry) => entry.heading)).not.toContain('Citizen-facing experience');
     });
 
-    it('names the Unified Messaging Service beside the inbox', () => {
-        const inbox = left.find((entry) => entry.heading?.startsWith('Inbox'));
-
-        expect(inbox?.heading).toBe('Inbox (Unified Messaging Service)');
-        expect(inbox?.href).toBe('/complaints/inbox');
-    });
-
     it('points it at the access log', () => {
         const entry = privacyPortal()?.items?.find((item) => item.heading === 'Citizen-facing experience');
 
