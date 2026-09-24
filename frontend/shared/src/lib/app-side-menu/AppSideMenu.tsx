@@ -51,23 +51,6 @@ const isCurrentPath = (linkPath: string, currentPath: string): boolean => {
 };
 
 /**
- * The entry's text: its heading, and beneath it the other name it goes by
- * where one is given.
- */
-const MenuLabel = ({ item }: { item: SideMenuLink }): JSX.Element => {
-    if (!item.subheading) {
-        return <>{item.heading}</>;
-    }
-
-    return (
-        <span className={styles['uiam--side-menu--label']}>
-            {item.heading}
-            <span className={styles['uiam--side-menu--sub-label']}>{item.subheading}</span>
-        </span>
-    );
-};
-
-/**
  * Renders whichever mark an entry carries: an image where one is supplied,
  * otherwise the named design system icon. Decorative either way, since the
  * entry states its own name in text.
@@ -78,6 +61,36 @@ const MenuIcon = ({ item }: { item: SideMenuLink }): JSX.Element | null => {
     }
 
     return item.icon ? <GoabIcon type={item.icon} /> : null;
+};
+
+/**
+ * The contents of a link: its icon and heading, and where the entry goes by a
+ * second name, that name centred on a line beneath both of them.
+ */
+const MenuContents = ({ item }: { item: SideMenuLink }): JSX.Element => {
+    if (!item.subheading) {
+        return (
+            <>
+                <MenuIcon item={item} />
+                {item.heading}
+            </>
+        );
+    }
+
+    return (
+        <span className={styles['uiam--side-menu--stacked']}>
+            <span className={styles['uiam--side-menu--stacked-row']}>
+                <MenuIcon item={item} />
+                {item.heading}
+            </span>
+            <span
+                className={styles['uiam--side-menu--sub-label']}
+                data-testid={`${item.heading.replace(/ /g, '').toLocaleLowerCase()}sublabel`}
+            >
+                {item.subheading}
+            </span>
+        </span>
+    );
 };
 
 const AppSideMenu: React.FC<SideMenuProperties> = function ({ items, basePath }) {
@@ -153,8 +166,7 @@ const AppSideMenu: React.FC<SideMenuProperties> = function ({ items, basePath })
                             .filter(Boolean)
                             .join(' ')}
                     >
-                        <MenuIcon item={menuItem} />
-                        <MenuLabel item={menuItem} />
+                        <MenuContents item={menuItem} />
                     </Link>
                 );
             } else {
@@ -174,7 +186,7 @@ const AppSideMenu: React.FC<SideMenuProperties> = function ({ items, basePath })
                             .join(' ')}
                         data-testid={menuItem.heading.replace(/ /g, '').toLocaleLowerCase() + 'link'}
                     >
-                        <MenuIcon item={menuItem} /> <MenuLabel item={menuItem} />
+                        <MenuContents item={menuItem} />
                     </a>
                 );
             }

@@ -55,14 +55,24 @@ goa-side-menu .uiam--side-menu--sub-item {
     }
 }
 
-/* An entry that goes by a second name stacks the two, the heading first. */
-.uiam--side-menu--label {
+/* An entry that goes by a second name stacks the two: the icon and heading on
+   the first line, that name centred beneath both of them. Centring the column
+   centres each line on the other, so the heading sits over the middle of the
+   longer name. */
+.uiam--side-menu--stacked {
     display: flex;
     flex-direction: column;
+    align-items: center;
     min-width: 0;
 }
 
+.uiam--side-menu--stacked-row {
+    display: flex;
+    align-items: center;
+}
+
 .uiam--side-menu--sub-label {
+    text-align: center;
     font-size: var(--goa-font-size-1);
     font-weight: var(--goa-font-weight-regular);
     color: var(--goa-color-emergency-dark);

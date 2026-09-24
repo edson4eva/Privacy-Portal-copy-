@@ -44,25 +44,30 @@ const renderMenu = (path: string) =>
     );
 
 describe('AppSideMenu', () => {
-    it('sets a second name on its own line beneath the heading', () => {
+    it('sets a second name on its own line beneath the icon and heading', () => {
         renderMenu('/complaints/alberta-wallet');
 
         const inbox = screen.getByTestId('inboxlink');
+        const subLabel = screen.getByTestId('inboxsublabel');
         expect(inbox).toHaveTextContent('Inbox');
-        expect(inbox).toHaveTextContent('(Unified Messaging Service)');
-        // Two lines, not one run of text: the heading first, the other name
-        // under it.
-        const stacked = inbox.querySelector('span > span');
-        expect(stacked).not.toBeNull();
-        expect(stacked).toHaveTextContent('(Unified Messaging Service)');
+        expect(subLabel).toHaveTextContent('(Unified Messaging Service)');
+
+        // The icon sits on the line above with the heading, not beside the
+        // stack, so the second name centres under both of them.
+        const stack = subLabel.parentElement;
+        expect(stack?.children).toHaveLength(2);
+        const firstLine = stack?.children[0];
+        expect(firstLine).toHaveTextContent('Inbox');
+        expect(firstLine?.querySelector('img')).not.toBeNull();
+        expect(stack?.children[1]).toBe(subLabel);
     });
 
-    it('adds no wrapper to an entry that goes by one name', () => {
+    it('adds no second line to an entry that goes by one name', () => {
         renderMenu('/complaints/alberta-wallet');
 
         const wallet = screen.getByTestId('albertawalletlink');
         expect(wallet).toHaveTextContent('Alberta Wallet');
-        expect(wallet.querySelector('span > span')).toBeNull();
+        expect(screen.queryByTestId('albertawalletsublabel')).not.toBeInTheDocument();
     });
 
     it('marks the link for the current page', () => {
