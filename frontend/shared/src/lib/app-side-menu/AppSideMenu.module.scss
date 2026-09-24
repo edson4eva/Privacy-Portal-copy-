@@ -120,8 +120,9 @@ goa-side-menu > .uiam--side-menu--sub-item.uiam--side-menu--has-second-name,
     white-space: nowrap;
     font-size: var(--goa-font-size-1);
     font-weight: var(--goa-font-weight-regular);
-    /* The palette's lightest blue, --goa-color-info-light, is #aac9e7: 1.7:1
-       against white, which no one can read. This is the lightest blue in the
-       palette that a reader can, at 5.1:1. */
-    color: var(--goa-color-interactive-default);
+    /* The design system's colour for secondary supporting text. It was the
+       interactive blue, which is the colour of a link rather than of a label,
+       and this is what the system names for text that supports the line it
+       sits beside. 5.7:1 against white, where the blue was 5.1:1. */
+    color: var(--goa-color-text-secondary);
 }
