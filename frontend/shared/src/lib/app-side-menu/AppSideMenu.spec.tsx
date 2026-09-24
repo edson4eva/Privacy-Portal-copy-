@@ -80,7 +80,7 @@ describe('AppSideMenu', () => {
         expect(screen.getByTestId('inboxlink').className).toContain('has-second-name');
     });
 
-    it('sets the second name beside the heading, on its baseline', () => {
+    it('sets the second name beside the heading and centred on it', () => {
         const stylesheet = readFileSync(join(__dirname, 'AppSideMenu.module.scss'), 'utf8').replace(
             /\/\*[\s\S]*?\*\//g,
             ''
@@ -92,7 +92,10 @@ describe('AppSideMenu', () => {
         // Beside, not beneath: a column is what put it on its own line, and
         // wrapping is what put it back there once the row was too tight.
         expect(entry?.[1]).not.toContain('flex-direction: column');
-        expect(entry?.[1]).toContain('align-items: baseline');
+        // Centred, not on the heading's baseline: a baseline sits under the
+        // letters, which put the smaller text low against the icon.
+        expect(entry?.[1]).toContain('align-items: center');
+        expect(entry?.[1]).not.toContain('align-items: baseline');
         expect(entry?.[1]).toContain('flex-wrap: nowrap');
         // The icon still begins where every other entry's icon begins, and
         // does not shrink to make room.

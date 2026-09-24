@@ -76,9 +76,12 @@ goa-side-menu .uiam--side-menu--sub-item goa-icon {
    the first line, that name centred beneath both of them. */
 .uiam--side-menu--entry {
     display: flex;
-    /* The second name sits beside the heading, sharing its baseline, and
-       stays there: wrapping is what put it on a line of its own. */
-    align-items: baseline;
+    /* The second name sits beside the heading and centred on it. Sharing the
+       heading's baseline put the smaller text low against a 24px icon, since
+       a baseline sits under the letters rather than through the middle of
+       them. Nothing wraps: wrapping is what used to put the name on a line of
+       its own. */
+    align-items: center;
     flex-wrap: nowrap;
     gap: var(--goa-space-2xs);
     width: 100%;
