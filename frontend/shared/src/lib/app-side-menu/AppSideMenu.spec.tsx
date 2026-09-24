@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
 import { AppSideMenu, SideMenuItem } from './AppSideMenu';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 jest.mock('@abgov/react-components', () => ({
     GoabIcon: ({ type }: { type: string }) => <i data-testid={`icon-${type}`} />,
@@ -68,6 +70,23 @@ describe('AppSideMenu', () => {
         const wallet = screen.getByTestId('albertawalletlink');
         expect(wallet).toHaveTextContent('Alberta Wallet');
         expect(screen.queryByTestId('albertawalletsublabel')).not.toBeInTheDocument();
+    });
+
+    it('names the current page in the interactive blue, not the text colour', () => {
+        // Comments go first: a check should read declarations, not the prose
+        // beside them, and the comment on this rule names the token it
+        // replaced.
+        const stylesheet = readFileSync(join(__dirname, 'AppSideMenu.module.scss'), 'utf8').replace(
+            /\/\*[\s\S]*?\*\//g,
+            ''
+        );
+        const rule = /\.uiam--side-menu--sub-item\.current\s*\{([^}]*)\}/.exec(stylesheet);
+
+        expect(rule).not.toBeNull();
+        expect(rule?.[1]).toContain('color: var(--goa-color-interactive-default)');
+        // This one resolves through text-default to #333333, which reads as
+        // black beside the other entries.
+        expect(rule?.[1]).not.toContain('--goa-side-menu-child-color-text-selected');
     });
 
     it('marks the link for the current page', () => {

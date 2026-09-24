@@ -37,7 +37,15 @@ goa-side-menu > .uiam--side-menu--sub-item {
     border-left: var(--goa-side-menu-sub-item-border-left-current);
     background: var(--goa-side-menu-sub-item-color-bg-current);
     font: var(--goa-side-menu-typography-item-current);
-    color: var(--goa-side-menu-child-color-text-selected);
+    /*
+     * The page you are on is named in the interactive blue, not in the text
+     * colour. --goa-side-menu-child-color-text-selected resolves through
+     * text-default to #333333, which reads as black beside the other
+     * entries; the rest of the app names the thing you are looking at in this
+     * blue, and a real Alberta.ca account sets its current section in blue
+     * too.
+     */
+    color: var(--goa-color-interactive-default);
 }
 
 .uiam--side-menu--sub-item:focus-visible {
