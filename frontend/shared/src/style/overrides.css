@@ -12,46 +12,18 @@
      * what design.alberta.ca publishes.
      */
 
-    /* Callout */
-    --goa-callout-l-border-width: var(--goa-border-width-s);
-    --goa-callout-border-radius: 15px;
-
-    /* The app's callout is a rounded box outlined in the type's colour, with
-       the icon in that colour too and no filled bar behind it.
-
-       These four said "none", which is a valid background *image* value but
-       not a valid background *colour*, so the browser threw the declaration
-       away and the bar kept the colour it has by default: a solid block of
-       exactly the colour the icon was then set to, which is why the icon
-       could not be seen on it. "transparent" is the value that means what
-       was meant here. */
-    --goa-callout-info-color-bg-statusbar: transparent;
-    --goa-callout-warning-color-bg-statusbar: transparent;
-    --goa-callout-success-color-bg-statusbar: transparent;
-    --goa-callout-emergency-color-bg-statusbar: transparent;
-    --goa-callout-info-icon-color: var(--goa-color-info-default);
-    --goa-callout-warning-icon-color: var(--goa-color-warning-dark);
-    --goa-callout-success-icon-color: var(--goa-color-success-default);
-    --goa-callout-emergency-icon-color: var(--goa-color-emergency-default);
-
-    /* Same again for the content area behind the text. */
-    --goa-callout-info-color-bg-content: transparent;
-    --goa-callout-warning-color-bg-content: transparent;
-    --goa-callout-success-color-bg-content: transparent;
-    --goa-callout-emergency-color-bg-content: transparent;
-
-    /* The text fills the outlined box: no padding on the content, and none on
-       the icon's column either, so nothing is inset from the border on any
-       side. The component lays the two out as flex children of the outline
-       (.icon then .content, stretched), so with both paddings at none the
-       only thing between the text and the left border is the icon glyph
-       itself. */
-    --goa-callout-l-statusbar-padding: var(--goa-space-none);
-    --goa-callout-l-content-padding: var(--goa-space-none);
-    --goa-callout-info-border-color: var(--goa-color-info-default);
-    --goa-callout-warning-border-color: var(--goa-color-warning-dark);
-    --goa-callout-success-border-color: var(--goa-color-success-default);
-    --goa-callout-emergency-border-color: var(--goa-color-emergency-default);
+    /*
+     * Callout: nothing. The design system draws it, and design.alberta.ca
+     * publishes what that looks like - a square, borderless box with a light
+     * grey body and a solid bar of the type's colour down the left, holding a
+     * white icon, the text inset by space-l.
+     *
+     * Twenty tokens used to be set here and every one of them fought that: a
+     * 15px radius against no radius, a 1px coloured outline against no
+     * border, a transparent bar and a transparent body against the bar and
+     * the grey, an icon in the type's colour against white, and no padding at
+     * all against space-l. They are gone.
+     */
 
     /*Container*/
 
