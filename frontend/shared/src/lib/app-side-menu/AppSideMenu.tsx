@@ -9,6 +9,12 @@ interface SideMenuLink {
     type: 'link';
     href: string;
     heading: string;
+    /**
+     * A second line beneath the heading, for an entry the reader may know by
+     * another name. Rendered smaller and set apart; the heading is still what
+     * the entry is called.
+     */
+    subheading?: string;
     icon?: GoabIconType;
     /** Image icon, for entries whose mark is not in the design system. */
     iconSrc?: string;
@@ -42,6 +48,23 @@ const isCurrentPath = (linkPath: string, currentPath: string): boolean => {
 
     const normalized = linkPath.replace(/\/+$/, '');
     return currentPath === normalized || currentPath.startsWith(`${normalized}/`);
+};
+
+/**
+ * The entry's text: its heading, and beneath it the other name it goes by
+ * where one is given.
+ */
+const MenuLabel = ({ item }: { item: SideMenuLink }): JSX.Element => {
+    if (!item.subheading) {
+        return <>{item.heading}</>;
+    }
+
+    return (
+        <span className={styles['uiam--side-menu--label']}>
+            {item.heading}
+            <span className={styles['uiam--side-menu--sub-label']}>{item.subheading}</span>
+        </span>
+    );
 };
 
 /**
@@ -131,7 +154,7 @@ const AppSideMenu: React.FC<SideMenuProperties> = function ({ items, basePath })
                             .join(' ')}
                     >
                         <MenuIcon item={menuItem} />
-                        {menuItem.heading}
+                        <MenuLabel item={menuItem} />
                     </Link>
                 );
             } else {
@@ -151,7 +174,7 @@ const AppSideMenu: React.FC<SideMenuProperties> = function ({ items, basePath })
                             .join(' ')}
                         data-testid={menuItem.heading.replace(/ /g, '').toLocaleLowerCase() + 'link'}
                     >
-                        <MenuIcon item={menuItem} /> {menuItem.heading}
+                        <MenuIcon item={menuItem} /> <MenuLabel item={menuItem} />
                     </a>
                 );
             }

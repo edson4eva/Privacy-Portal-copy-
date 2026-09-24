@@ -86,6 +86,7 @@ describe('demo data: the CRA income assessment', () => {
 interface MenuEntry {
     type: string;
     heading: string;
+    subheading?: string;
     href?: string;
     items?: MenuEntry[];
 }
@@ -133,6 +134,15 @@ describe('demo data: the side menu', () => {
 
     it('does not also leave it at the top level', () => {
         expect(left.map((entry) => entry.heading)).not.toContain('Citizen-facing experience');
+    });
+
+    it('gives the inbox its other name on a second line', () => {
+        const inbox = left.find((entry) => entry.heading === 'Inbox');
+
+        expect(inbox?.subheading).toBe('(Unified Messaging Service)');
+        // The heading stays Inbox, so the entry is still called that.
+        expect(inbox?.heading).toBe('Inbox');
+        expect(inbox?.href).toBe('/complaints/inbox');
     });
 
     it('points it at the access log', () => {

@@ -27,7 +27,13 @@ const items: SideMenuItem[] = [
     },
     { type: 'link', heading: 'Alberta Wallet', href: '/complaints/alberta-wallet' },
     { type: 'link', heading: 'Services accessed', href: '/account-history/' },
-    { type: 'link', heading: 'Inbox', iconSrc: 'envelope.svg', href: '#' },
+    {
+        type: 'link',
+        heading: 'Inbox',
+        subheading: '(Unified Messaging Service)',
+        iconSrc: 'envelope.svg',
+        href: '#',
+    },
 ];
 
 const renderMenu = (path: string) =>
@@ -38,6 +44,27 @@ const renderMenu = (path: string) =>
     );
 
 describe('AppSideMenu', () => {
+    it('sets a second name on its own line beneath the heading', () => {
+        renderMenu('/complaints/alberta-wallet');
+
+        const inbox = screen.getByTestId('inboxlink');
+        expect(inbox).toHaveTextContent('Inbox');
+        expect(inbox).toHaveTextContent('(Unified Messaging Service)');
+        // Two lines, not one run of text: the heading first, the other name
+        // under it.
+        const stacked = inbox.querySelector('span > span');
+        expect(stacked).not.toBeNull();
+        expect(stacked).toHaveTextContent('(Unified Messaging Service)');
+    });
+
+    it('adds no wrapper to an entry that goes by one name', () => {
+        renderMenu('/complaints/alberta-wallet');
+
+        const wallet = screen.getByTestId('albertawalletlink');
+        expect(wallet).toHaveTextContent('Alberta Wallet');
+        expect(wallet.querySelector('span > span')).toBeNull();
+    });
+
     it('marks the link for the current page', () => {
         renderMenu('/alberta-wallet');
 
