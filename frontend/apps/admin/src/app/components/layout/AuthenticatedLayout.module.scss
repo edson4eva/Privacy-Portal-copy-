@@ -20,10 +20,10 @@
   Side Menu
 ==================*/
 .side-menu {
-    /* The component states its own width and its own right-hand rule, and a
-       real Alberta.ca account is that width, so both come from it rather than
-       from a number chosen here. */
-    width: var(--goa-side-menu-width);
+    /* A space-xl wider than the design system's own 256px menu, so the inbox
+       entry's second name fits beside its heading. The arithmetic is in
+       shared/src/style/overrides.css, measured from the brand font. */
+    width: calc(var(--goa-side-menu-width) + var(--goa-space-xl));
     border-right: var(--goa-side-menu-border-right);
     display: block;
 }

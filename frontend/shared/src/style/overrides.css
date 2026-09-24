@@ -106,11 +106,20 @@ goa-table thead tr th:first-child {
   Side Menu
 ==================*/
 .uiam--side-menu {
-    /* The width and the right-hand rule are the component's own, as they are
-       on a real Alberta.ca account, rather than a 286px column with a gutter
-       of its own beside it. */
-    width: var(--goa-side-menu-width);
-    flex: 0 0 var(--goa-side-menu-width);
+    /*
+     * The design system's own menu is --goa-side-menu-width, 256px. This one
+     * is a space-xl wider, and the reason is measured rather than guessed.
+     *
+     * The inbox entry carries a second name beside its heading. Read out of
+     * the brand's own font file, "Inbox" is 40.6px at 18px and
+     * "(Unified Messaging Service)" is 139.6px at 12px; with the 24px icon
+     * and the 8px and 4px gaps that is 216px. A 256px menu leaves 224px
+     * inside a top level entry - an 8px margin, which is not enough to be
+     * sure of - and 192px inside an indented one, which is 24px short. At
+     * 288px both come out with room to spare.
+     */
+    width: calc(var(--goa-side-menu-width) + var(--goa-space-xl));
+    flex: 0 0 calc(var(--goa-side-menu-width) + var(--goa-space-xl));
     border-right: var(--goa-side-menu-border-right);
 }
 
