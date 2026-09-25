@@ -66,6 +66,34 @@
      */
     --goa-side-menu-child-color-text-selected: var(--goa-color-interactive-default);
 
+    /*
+     * Sign out in the account menu has to be readable.
+     *
+     * The component forces the colour of a link slotted into the header:
+     *
+     *     ::slotted(a.interactive) { color: ...text-link-item !important }
+     *
+     * which is the interactive blue. It also paints the current item in the
+     * menu with
+     *
+     *     background-color: ...bg-nav-item-in-menu-current !important
+     *
+     * and that token is the same interactive blue. Blue on blue: the menu
+     * showed a solid blue bar with the words invisible inside it.
+     *
+     * The text cannot be changed, because the !important on the slotted rule
+     * beats the token meant for it, so the background is what gives. It is
+     * transparent here, which leaves the blue underlined link on the panel's
+     * white, and the system's own light tint on hover.
+     *
+     * The app did have these two set, to `unset`. That worked by accident:
+     * `unset` is not a colour, so the declaration using it was invalid and
+     * the background fell back to none. They went out with the other header
+     * overrides in the conformance pass, and this is the valid version.
+     */
+    --goa-app-header-color-bg-nav-item-in-menu-current: transparent;
+    --goa-app-header-color-bg-nav-item-in-menu-current-hover: var(--goa-color-info-background);
+
     /**
      * Nothing else about the side menu is set here. A real Alberta.ca
      * account is this design system's own side menu, so the way to look like
