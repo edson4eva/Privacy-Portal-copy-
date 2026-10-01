@@ -177,19 +177,9 @@ describe('demo data: the side menu', () => {
         ]);
     });
 
-    it('lists the Letter of Authorization service beneath the inbox', () => {
-        const headings = left.map((entry) => entry.heading);
-        const inbox = headings.indexOf('Inbox');
-        const loa = headings.indexOf('Letter of Authorization (LOA) service');
-
-        expect(inbox).toBeGreaterThan(-1);
-        expect(loa).toBe(inbox + 1);
-    });
-
-    it('points that entry at the published reference', () => {
-        const entry = left.find((item) => item.heading?.startsWith('Letter of Authorization'));
-
-        expect(entry?.href).toBe('https://municipalaffairs.gov.ab.ca/documents/as/April2017-FAQ-LoA.pdf');
+    it('carries no Letter of Authorization entry in the menu', () => {
+        // It is a message in the inbox, not a place in the navigation.
+        expect(left.map((entry) => entry.heading)).not.toContain('Letter of Authorization (LOA) service');
     });
 
     it('carries no Business group', () => {

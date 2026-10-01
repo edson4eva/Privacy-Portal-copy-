@@ -1919,16 +1919,5 @@ export const DEMO_USER_MENU = {
             iconSrc: inboxEnvelope,
             href: '/complaints/inbox',
         },
-        {
-            type: 'link',
-            // The reference Edson supplied is the only thing behind this
-            // entry, so it is where the entry goes. Nothing here describes
-            // what a Letter of Authorization is: the document is a scanned
-            // PDF that could not be read, and a description would have been
-            // invented.
-            heading: 'Letter of Authorization (LOA) service',
-            icon: 'document-attach',
-            href: 'https://municipalaffairs.gov.ab.ca/documents/as/April2017-FAQ-LoA.pdf',
-        },
     ],
 };
