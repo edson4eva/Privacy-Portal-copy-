@@ -20,6 +20,21 @@ interface StaffAccess {
     reasonDetail?: string;
 }
 
+interface InboxMessage {
+    id: string;
+    programId: string;
+    subject: string;
+    from: string;
+    receivedAt: string;
+    attachment?: { name: string; meta: string };
+}
+
+interface InboxProgram {
+    id: string;
+    name: string;
+    colour: string;
+}
+
 interface WalletCard {
     id: string;
     serviceArea?: string;
@@ -114,6 +129,36 @@ describe('demo data: apprenticeship and industry training', () => {
         expect(credential?.serviceArea).toBe(AREA);
         expect(credential?.serviceUrl).toBe(LINK);
         expect(credential?.primaryLabel).toBe('MyTradesecrets client ID');
+    });
+});
+
+describe('demo data: the Letter of Authorization service', () => {
+    const inbox = () =>
+        getDemoResponse('/v1/inbox') as { inbox: { messages: InboxMessage[]; programs: InboxProgram[] } };
+
+    it('is a message in the inbox, from Municipal Affairs', () => {
+        const message = inbox().inbox.messages.find((m) => m.programId === 'letter-of-authorization');
+
+        expect(message).toBeDefined();
+        expect(message?.subject).toMatch(/Letter of Authorization \(LOA\) service/);
+        expect(message?.from).toBe('Municipal Affairs');
+    });
+
+    it('carries the published document rather than an account of it', () => {
+        const message = inbox().inbox.messages.find((m) => m.programId === 'letter-of-authorization');
+
+        expect(message?.attachment?.name).toMatch(/frequently asked questions/i);
+        // The PDF could not be read, so nothing in the message explains what a
+        // Letter of Authorization is or how one is obtained.
+        const body = JSON.stringify(message);
+        expect(body).not.toMatch(/eligib|apply|applicant|authorize[sd]? (?:a|the) /i);
+    });
+
+    it('has a programme of its own, coloured from a token', () => {
+        const programme = inbox().inbox.programs.find((p) => p.id === 'letter-of-authorization');
+
+        expect(programme?.name).toBe('Letter of Authorization');
+        expect(programme?.colour).toMatch(/^var\(--goa-/);
     });
 });
 

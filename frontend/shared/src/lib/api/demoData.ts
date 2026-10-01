@@ -711,9 +711,38 @@ const DEMO_INBOX_PROGRAMS = [
     { id: 'alberta-ca-account', name: 'Alberta.ca Account', colour: '#4a5568' },
     { id: 'alberta-wallet', name: 'Alberta Wallet', colour: '#0f7b3f' },
     { id: 'alberta-health-care', name: 'Alberta Health Care', colour: '#a8326e' },
+    {
+        id: 'letter-of-authorization',
+        name: 'Letter of Authorization',
+        // The dot is an inline style, so this can be a token rather than one
+        // more hand-picked colour beside the seven above.
+        colour: 'var(--goa-color-brand-default)',
+    },
 ];
 
 const DEMO_INBOX_MESSAGES = [
+    {
+        id: 'msg-loa',
+        programId: 'letter-of-authorization',
+        subject: 'The Letter of Authorization (LOA) service',
+        preview: 'The published frequently asked questions are attached.',
+        isUnread: true,
+        receivedAt: '2026-09-06T16:40:00.000Z',
+        from: 'Municipal Affairs',
+        greeting: 'Hello Demo,',
+        paragraphs: [
+            'Municipal Affairs publishes a frequently asked questions document for the Letter of Authorization service. It is attached to this message.',
+        ],
+        attachment: {
+            name: 'Letter of Authorization: frequently asked questions (PDF)',
+            meta: 'PDF, 269 KB - published April 2017',
+        },
+        help: {
+            name: 'Municipal Affairs',
+            lines: ['310-0000 toll free, then 780-427-2225', 'Monday to Friday, 8:15 am to 4:30 pm'],
+            contactLabel: 'Contact Municipal Affairs',
+        },
+    },
     {
         id: 'msg-1',
         programId: 'upcoming-renewals',
