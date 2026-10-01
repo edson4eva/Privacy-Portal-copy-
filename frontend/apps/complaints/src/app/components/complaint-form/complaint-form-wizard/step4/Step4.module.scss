@@ -41,18 +41,15 @@
 .section-heading-label {
     font: var(--goa-typography-heading-m);
     font-weight: var(--goa-font-weight-bold);
-    line-height: var(--goa-line-height-4);
 }
 .section-heading-value {
     font: var(--goa-typography-heading-m);
     font-weight: var(--goa-font-weight-regular);
-    line-height: var(--goa-line-height-4);
 }
 
 .heading-label {
     font: var(--goa-typography-heading-s);
     font-weight: var(--goa-font-weight-bold);
-    line-height: var(--goa-line-height-3);
 }
 
 .heading-value {
@@ -119,7 +116,6 @@
 .heading-label-value {
     font: var(--goa-typography-heading-s);
     font-weight: var(--goa-font-weight-regular);
-    line-height: var(--goa-line-height-3);
 }
 
 @media (max-width: 623px) {

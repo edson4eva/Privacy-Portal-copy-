@@ -124,6 +124,31 @@ describe('stylesheets follow the design system', () => {
         expect(offenders).toEqual([]);
     });
 
+    it('does not override the line height a typography token carries', () => {
+        /*
+         * A --goa-typography-* token is weight, size, line height and family
+         * in one. Setting line-height after it keeps the size and replaces
+         * the leading, and nothing warns you.
+         *
+         * That is how the inbox came to render a 48px subject on an 18px line
+         * box, with the two lines of a long subject printed over each other:
+         * the rule said `font: heading-xl` and then `line-height: 1.15`, a
+         * multiplier, which a conversion to tokens read as 1.15rem and
+         * snapped to 1.125rem. The sign-in heading had the same fault.
+         */
+        const offenders: string[] = [];
+        for (const sheet of sheets) {
+            const text = sheet.text.replace(/\/\*[\s\S]*?\*\//g, '');
+            for (const rule of text.matchAll(/\.[a-z0-9-]+\s*\{([^}]*)\}/g)) {
+                const body = rule[1];
+                if (/font:\s*var\(--goa-typography-/.test(body) && /\bline-height\s*:/.test(body)) {
+                    offenders.push(`${sheet.name}: ${body.replace(/\s+/g, ' ').trim().slice(0, 70)}`);
+                }
+            }
+        }
+        expect(offenders).toEqual([]);
+    });
+
     it('takes line height from tokens', () => {
         const offenders: string[] = [];
         for (const sheet of sheets) {
