@@ -722,16 +722,84 @@ const DEMO_INBOX_PROGRAMS = [
 
 const DEMO_INBOX_MESSAGES = [
     {
+        /*
+         * Summarised from the published frequently asked questions, which
+         * Edson transcribed because the PDF is encrypted against text
+         * extraction. Everything below comes from questions 1 to 6 of that
+         * document; nothing is added to it. The document covers linear
+         * property assessment for companies, which is why this message
+         * speaks of a company and its staff rather than of the account
+         * holder.
+         */
         id: 'msg-loa',
         programId: 'letter-of-authorization',
         subject: 'The Letter of Authorization (LOA) service',
-        preview: 'The published frequently asked questions are attached.',
+        preview: 'Authorize someone outside your company to discuss your property assessment information.',
         isUnread: true,
         receivedAt: '2026-09-06T16:40:00.000Z',
         from: 'Municipal Affairs',
         greeting: 'Hello Demo,',
         paragraphs: [
-            'Municipal Affairs publishes a frequently asked questions document for the Letter of Authorization service. It is attached to this message.',
+            "The Freedom of Information and Protection of Privacy Act requires the Assessment Services Branch to treat your company's information with confidentiality. Branch staff must therefore be sure they are only providing or discussing that information with representatives you have authorized, and a Letter of Authorization is how you authorize them.",
+        ],
+        sections: [
+            {
+                heading: 'When you need one',
+                paragraphs: [
+                    "Provide a Letter of Authorization whenever someone other than your company staff will be requesting or discussing your company's property assessment information. You and your own employees do not need the letter to discuss or request your own information, and no authorization form is needed for internal staff.",
+                    'Without one, Assessment Services Branch staff cannot discuss or release your linear property assessment information to anyone other than you or your own staff.',
+                    'This covers a Request for Information. Where a letter is on file for the current tax year, a copy of your RFI package is also forwarded to your authorized representative.',
+                ],
+            },
+            {
+                heading: 'What the letter must include',
+                bullets: [
+                    'Company letterhead, in its original form - do not copy the text into an email. A scanned copy of the original is acceptable',
+                    'The date',
+                    'The tax year the authorization applies to, the tax year running from January 1 to December 31',
+                    'The name of the company or agents who will represent you',
+                    'The registered name of the company that owns or operates the linear property, as it appears in the Corporate Registry',
+                    'A clear description of the responsibilities',
+                    'The name, title, signature and phone number of the officer or executive of the company that owns or operates the linear property',
+                ],
+                paragraphs: [
+                    'The assessment year is the year the assessment is based on; the tax year is the year the assessment and tax notices are issued to you. The 2016 assessment year corresponds to the 2017 tax year.',
+                ],
+            },
+            {
+                heading: 'Who can sign it',
+                paragraphs: [
+                    'An officer or executive with authority to sign for the company: a president, vice-president, controller, chairman, director of assessment or taxation, director of financial services, or a senior manager.',
+                ],
+            },
+            {
+                heading: "Describing the representative's responsibilities",
+                bullets: [
+                    "Providing information in the form and manner the designated linear property assessor requests about the company's linear property",
+                    "Requesting information and data the assessor holds about the company's linear property or its assessment",
+                    'Discussing any matters with the assessor regarding the linear property assessment',
+                    "Discussing with the assessor all matters related to the company's linear property assessment complaint filed with the Municipal Government Board under the Municipal Government Act",
+                ],
+            },
+            {
+                heading: 'Renewing it',
+                paragraphs: [
+                    'A letter is needed annually. Asset sales and industry amalgamations are becoming more frequent year over year, and the Assessment Services Branch needs acknowledgement that a current authorization is in place.',
+                    'A new letter is also needed when a company amalgamates with another, when it is bought or sold, and when the name of the representative changes.',
+                ],
+            },
+            {
+                heading: 'One letter can cover more than one company',
+                paragraphs: [
+                    'The branch asks for one letter for each company, but will accept several companies in a single letter provided each one is named in it - subsidiaries, for instance.',
+                ],
+            },
+            {
+                heading: 'Not the same as the Assessment Complaints Agent Authorization',
+                paragraphs: [
+                    'The two forms serve different purposes, so one does not stand in for the other. The Letter of Authorization covers someone outside your company staff requesting or discussing your assessment information with the Assessment Services Branch. The Assessment Complaints Agent Authorization is required by legislation, under section 51 of MRAC, when someone other than your company staff files a complaint on your behalf with the Municipal Government Board or represents your company at a complaint hearing.',
+                ],
+            },
         ],
         attachment: {
             name: 'Letter of Authorization: frequently asked questions (PDF)',

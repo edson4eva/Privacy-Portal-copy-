@@ -144,14 +144,38 @@ describe('demo data: the Letter of Authorization service', () => {
         expect(message?.from).toBe('Municipal Affairs');
     });
 
-    it('carries the published document rather than an account of it', () => {
+    it('summarises the published questions and keeps the document attached', () => {
         const message = inbox().inbox.messages.find((m) => m.programId === 'letter-of-authorization');
+        const body = JSON.stringify(message);
 
         expect(message?.attachment?.name).toMatch(/frequently asked questions/i);
-        // The PDF could not be read, so nothing in the message explains what a
-        // Letter of Authorization is or how one is obtained.
-        const body = JSON.stringify(message);
-        expect(body).not.toMatch(/eligib|apply|applicant|authorize[sd]? (?:a|the) /i);
+
+        // One assertion per question in the source, so a later edit cannot
+        // quietly drop or reword a point away from what the document says.
+        expect(body).toMatch(/Freedom of Information and Protection of Privacy Act/);
+        expect(body).toMatch(/cannot discuss or release your linear property assessment information/);
+        expect(body).toMatch(/Corporate Registry/);
+        expect(body).toMatch(/January 1 to December 31/);
+        expect(body).toMatch(/senior manager/i);
+        expect(body).toMatch(/designated linear property assessor/);
+        expect(body).toMatch(/annually/);
+        expect(body).toMatch(/amalgamates/);
+        expect(body).toMatch(/subsidiaries/);
+        expect(body).toMatch(/section 51 of MRAC/);
+        expect(body).toMatch(/2016 assessment year/);
+        expect(body).toMatch(/RFI package/);
+    });
+
+    it('states every requirement the letter must carry', () => {
+        const message = inbox().inbox.messages.find((m) => m.programId === 'letter-of-authorization');
+        const requirements = (
+            message as unknown as { sections?: { heading: string; bullets?: string[] }[] }
+        ).sections?.find((section) => section.heading === 'What the letter must include')?.bullets;
+
+        // Seven of them, as the source lists a through g.
+        expect(requirements).toHaveLength(7);
+        expect(requirements?.join(' | ')).toMatch(/letterhead/);
+        expect(requirements?.join(' | ')).toMatch(/signature/);
     });
 
     it('has a programme of its own, coloured from a token', () => {
