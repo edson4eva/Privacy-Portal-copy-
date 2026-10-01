@@ -1,5 +1,6 @@
 import {
     GoabButton,
+    GoabCallout,
     GoabCheckbox,
     GoabCircularProgress,
     GoabDropdown,
@@ -425,13 +426,10 @@ export function InboxPage(): React.ReactElement {
                     </section>
 
                     <aside className={styles['aside']}>
-                        <div className={styles['secure']}>
-                            <GoabIcon type="shield-checkmark" size="medium" />
-                            <p>
-                                This message was sent through your Alberta.ca Account. Government of Alberta programs
-                                will never ask for your password, PIN or banking details in a message.
-                            </p>
-                        </div>
+                        <GoabCallout type="success" size="large">
+                            This message was sent through your Alberta.ca Account. Government of Alberta programs will
+                            never ask for your password, PIN or banking details in a message.
+                        </GoabCallout>
 
                         {alsoFromProgram.length > 0 && (
                             <div className={styles['panel']} data-testid="panel-program-history">

@@ -4,6 +4,9 @@ import { MemoryRouter } from 'react-router-dom';
 import ServiceActivityPage from './ServiceActivityPage';
 
 jest.mock('@abgov/react-components', () => ({
+    GoabCallout: ({ type, children }: { type: string; children: React.ReactNode }) => (
+        <aside data-testid={`callout-${type}`}>{children}</aside>
+    ),
     GoabCircularProgress: ({ visible }: { visible: boolean }) => <div data-testid="spinner">{String(visible)}</div>,
     GoabDropdown: ({
         value,

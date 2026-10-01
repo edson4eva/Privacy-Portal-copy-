@@ -499,15 +499,6 @@
     gap: var(--goa-space-l);
 }
 
-.secure {
-    display: flex;
-    gap: var(--goa-space-s);
-    align-items: flex-start;
-    background: var(--goa-color-info-background);
-    border: var(--goa-border-width-s) solid var(--goa-color-info-light);
-    padding: var(--goa-space-m) var(--goa-space-l);
-}
-
 .panel {
     background: var(--goa-color-greyscale-white);
     border: var(--goa-border-width-s) solid var(--goa-color-greyscale-200);

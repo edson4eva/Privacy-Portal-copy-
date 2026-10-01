@@ -4,6 +4,9 @@ import { Link, MemoryRouter, Route, Routes } from 'react-router-dom';
 import InboxPage from './InboxPage';
 
 jest.mock('@abgov/react-components', () => ({
+    GoabCallout: ({ type, children }: { type: string; children: React.ReactNode }) => (
+        <aside data-testid={`callout-${type}`}>{children}</aside>
+    ),
     GoabButton: ({
         children,
         onClick,

@@ -1,4 +1,5 @@
 import {
+    GoabCallout,
     GoabCircularProgress,
     GoabDropdown,
     GoabDropdownItem,
@@ -128,12 +129,11 @@ export function ServiceActivityPage({ isPreview }: { isPreview: boolean }): Reac
             </p>
             <PpSpacer vSpacing="m" />
 
-            <div className={styles['availability']} data-testid="availability-notice">
-                <GoabIcon type="information-circle" size="small" />
-                <p>
+            <div data-testid="availability-notice">
+                <GoabCallout type="information" size="large">
                     Activity records are only available for participating services and activities recorded after{' '}
                     {activity?.availableFrom ? formatDay(activity.availableFrom) : 'the service began recording them'}.
-                </p>
+                </GoabCallout>
             </div>
 
             <PpSpacer vSpacing="l" />
