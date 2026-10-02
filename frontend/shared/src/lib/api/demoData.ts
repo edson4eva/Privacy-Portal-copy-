@@ -737,7 +737,7 @@ const DEMO_INBOX_MESSAGES = [
         preview: 'Authorize someone outside your company to discuss your property assessment information.',
         isUnread: true,
         receivedAt: '2026-09-06T16:40:00.000Z',
-        from: 'Municipal Affairs',
+        from: 'Service Alberta and Red Tape Reduction',
         greeting: 'Hello Demo,',
         paragraphs: [
             "The Freedom of Information and Protection of Privacy Act requires the Assessment Services Branch to treat your company's information with confidentiality. Branch staff must therefore be sure they are only providing or discussing that information with representatives you have authorized, and a Letter of Authorization is how you authorize them.",
@@ -806,9 +806,13 @@ const DEMO_INBOX_MESSAGES = [
             meta: 'PDF, 269 KB - published April 2017',
         },
         help: {
-            name: 'Municipal Affairs',
-            lines: ['310-0000 toll free, then 780-427-2225', 'Monday to Friday, 8:15 am to 4:30 pm'],
-            contactLabel: 'Contact Municipal Affairs',
+            name: 'Service Alberta and Red Tape Reduction',
+            // The direct number that was here belonged to the other ministry.
+            // There is no verified direct line for this one, so only
+            // 310-0000 - the government's own access number, used by the
+            // other messages too - is given.
+            lines: ['310-0000 toll free', 'Monday to Friday, 8:15 am to 4:30 pm'],
+            contactLabel: 'Contact Service Alberta and Red Tape Reduction',
         },
     },
     {

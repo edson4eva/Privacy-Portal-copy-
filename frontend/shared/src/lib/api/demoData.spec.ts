@@ -136,12 +136,12 @@ describe('demo data: the Letter of Authorization service', () => {
     const inbox = () =>
         getDemoResponse('/v1/inbox') as { inbox: { messages: InboxMessage[]; programs: InboxProgram[] } };
 
-    it('is a message in the inbox, from Municipal Affairs', () => {
+    it('is a message in the inbox, from Service Alberta and Red Tape Reduction', () => {
         const message = inbox().inbox.messages.find((m) => m.programId === 'letter-of-authorization');
 
         expect(message).toBeDefined();
         expect(message?.subject).toMatch(/Letter of Authorization \(LOA\) service/);
-        expect(message?.from).toBe('Municipal Affairs');
+        expect(message?.from).toBe('Service Alberta and Red Tape Reduction');
     });
 
     it('summarises the published questions and keeps the document attached', () => {
