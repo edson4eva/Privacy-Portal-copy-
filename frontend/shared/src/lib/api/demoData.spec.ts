@@ -132,7 +132,7 @@ describe('demo data: apprenticeship and industry training', () => {
     });
 });
 
-describe('demo data: the Letter of Authorization service', () => {
+describe('demo data: the Letter of Authority service', () => {
     const inbox = () =>
         getDemoResponse('/v1/inbox') as { inbox: { messages: InboxMessage[]; programs: InboxProgram[] } };
 
@@ -140,48 +140,49 @@ describe('demo data: the Letter of Authorization service', () => {
         const message = inbox().inbox.messages.find((m) => m.programId === 'letter-of-authorization');
 
         expect(message).toBeDefined();
-        expect(message?.subject).toMatch(/Letter of Authorization \(LOA\) service/);
+
         expect(message?.from).toBe('Service Alberta and Red Tape Reduction');
     });
 
-    it('summarises the published questions and keeps the document attached', () => {
+    it('reflects the Letter of Authority template it was taken from', () => {
         const message = inbox().inbox.messages.find((m) => m.programId === 'letter-of-authorization');
         const body = JSON.stringify(message);
 
-        expect(message?.attachment?.name).toMatch(/frequently asked questions/i);
+        expect(message?.subject).toMatch(/Letter of Authority \(LOA\)/);
 
-        // One assertion per question in the source, so a later edit cannot
-        // quietly drop or reword a point away from what the document says.
-        expect(body).toMatch(/Freedom of Information and Protection of Privacy Act/);
-        expect(body).toMatch(/cannot discuss or release your linear property assessment information/);
-        expect(body).toMatch(/Corporate Registry/);
-        expect(body).toMatch(/January 1 to December 31/);
-        expect(body).toMatch(/senior manager/i);
-        expect(body).toMatch(/designated linear property assessor/);
-        expect(body).toMatch(/annually/);
-        expect(body).toMatch(/amalgamates/);
-        expect(body).toMatch(/subsidiaries/);
-        expect(body).toMatch(/section 51 of MRAC/);
-        expect(body).toMatch(/2016 assessment year/);
-        expect(body).toMatch(/RFI package/);
+        // One assertion per clause of the template, so a later edit cannot
+        // drift away from the document it came from.
+        expect(body).toMatch(/business negotiations/);
+        expect(body).toMatch(/approving goods/);
+        expect(body).toMatch(/disputes and claims/);
+        expect(body).toMatch(/Attending meetings/);
+        expect(body).toMatch(/bind the principal to any obligation beyond/);
+        expect(body).toMatch(/bankruptcy, insolvency, breach of agreement/);
+        expect(body).toMatch(/passport/);
+        expect(body).toMatch(/stamp and signature/);
     });
 
-    it('states every requirement the letter must carry', () => {
+    it('states the five matters the representative may handle', () => {
         const message = inbox().inbox.messages.find((m) => m.programId === 'letter-of-authorization');
-        const requirements = (
-            message as unknown as { sections?: { heading: string; bullets?: string[] }[] }
-        ).sections?.find((section) => section.heading === 'What the letter must include')?.bullets;
+        const matters = (message as unknown as { sections?: { heading: string; bullets?: string[] }[] }).sections?.find(
+            (section) => section.heading === 'What the letter authorizes'
+        )?.bullets;
 
-        // Seven of them, as the source lists a through g.
-        expect(requirements).toHaveLength(7);
-        expect(requirements?.join(' | ')).toMatch(/letterhead/);
-        expect(requirements?.join(' | ')).toMatch(/signature/);
+        expect(matters).toHaveLength(5);
+    });
+
+    it('carries nothing from the property assessment FAQ it replaced', () => {
+        const body = JSON.stringify(inbox().inbox.messages.find((m) => m.programId === 'letter-of-authorization'));
+
+        // A different document: that one was about who may discuss a company's
+        // linear property assessment with the Assessment Services Branch.
+        expect(body).not.toMatch(/Assessment Services Branch|linear property|MRAC|Corporate Registry/);
     });
 
     it('has a programme of its own, coloured from a token', () => {
         const programme = inbox().inbox.programs.find((p) => p.id === 'letter-of-authorization');
 
-        expect(programme?.name).toBe('Letter of Authorization');
+        expect(programme?.name).toBe('Letter of Authority');
         expect(programme?.colour).toMatch(/^var\(--goa-/);
     });
 });
