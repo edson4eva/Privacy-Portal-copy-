@@ -69,6 +69,68 @@ is exactly `true`, so dev, syst, uat and prod builds are unaffected. When on:
 Nothing submitted in a sandbox build is saved anywhere. It should not be put in
 front of anyone who might take it for the real service.
 
+## What the demonstration contains
+
+Twelve pages, reached from the left navigation, listed with their routes in the
+repository's root README. Two are worth describing here.
+
+The **citizen-facing experience** at `/account-history/transparency` is an
+access log: who in government looked at the holder's personal information,
+what they saw, and the reason they gave for looking. Its fields follow "Access
+to Citizen Personal Information - Audit and Disclosure Log, Field Reference"
+(19 September 2026) - the five of its Part 1 in the table, the Part 2
+inventory on each record. Its categories are the topics Alberta.ca groups its
+services under, taken verbatim from the published services inventory, and
+every access is filed under one of them. No individual who accessed the
+information is named, in full or as initials: an access identifies a position,
+a position ID and a program area, and a review identifies the body that
+carried it out.
+
+The **Alberta Wallet** at `/complaints/alberta-wallet` groups its cards under
+the same service topics. Each card opens the website of the service it belongs
+to, in a new tab.
+
+## Design system
+
+Colours, spacing, type, borders and radii come from the design system's own
+tokens. Four specs enforce that rather than leaving it to memory:
+
+- `shared/src/style/designSystemConformance.spec.ts` refuses a literal colour,
+  a raw font weight or size, a hand-set line height, a colour property set to
+  `none`, and overriding the line height a `--goa-typography-*` token carries
+- `shared/src/style/designTokens.spec.ts` refuses a reference to a `--goa-*`
+  token nothing defines
+- `shared/src/lib/style/palette.spec.ts` keeps the few hard-coded colours - for
+  attributes a CSS variable cannot reach - matching the tokens they mirror
+- `shared/src/lib/app-header/accountMenu.spec.ts` keeps the account menu from
+  painting a link the colour of its own text
+
+All four read `@abgov/web-components/index.css`, not `@abgov/design-tokens`,
+because that is the stylesheet the apps import and the two do not always agree.
+
+`shared/src/style/overrides.css` lists every token this deployment still sets
+for itself, each with its reason. Two are deliberate departures: the side menu
+is one `space-xl` wider than the design system's 256px, so the inbox entry's
+second name fits beside its heading, and the callout's text is not inset.
+
+## Upgrading the design system
+
+The `design-system-2` branch moves the four `@abgov` packages to their 2.x
+line. It compiles, passes, and serves every route. It is parked:
+`@abgov/design-tokens` 2.12.8 puts greyscale-black at `#000000` where
+design.alberta.ca publishes `#333333`, info-default at `#0077ad` against
+`#004a8f`, and doubles the radius scale. Merging it would move this deployment
+away from the published design system. Revisit when the site publishes those
+values.
+
+## What cannot be checked here
+
+There is no browser in the sandbox. Chromium is installed but refuses to start
+outside a snap cgroup, so anything visual is verified as compiled CSS, as
+served HTTP, or by measuring text from the brand font's own metrics - not by
+looking at it. Whoever is reviewing a change to layout or type is the only one
+who can see it.
+
 ## What is not deployed
 
 The six .NET services under `backend/`, and with them all business logic,
