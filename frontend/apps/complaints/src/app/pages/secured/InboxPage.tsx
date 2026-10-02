@@ -46,7 +46,7 @@ interface InboxMessage {
     actions?: { label: string; kind: 'primary' | 'secondary' }[];
     attachment?: { name: string; meta: string };
     relatedLinks?: string[];
-    help?: { name: string; lines: string[]; contactLabel: string };
+    help?: { name: string; lines: string[]; contactLabel: string; contactHref?: string };
 }
 
 interface Inbox {
@@ -473,7 +473,20 @@ export function InboxPage(): React.ReactElement {
                                         </span>
                                     ))}
                                 </p>
-                                <p className={styles['panel-note']}>{message.help.contactLabel}</p>
+                                <p className={styles['panel-note']}>
+                                    {message.help.contactHref ? (
+                                        <a
+                                            href={message.help.contactHref}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            data-testid="help-contact-link"
+                                        >
+                                            {message.help.contactLabel}
+                                        </a>
+                                    ) : (
+                                        message.help.contactLabel
+                                    )}
+                                </p>
                             </div>
                         )}
                     </aside>

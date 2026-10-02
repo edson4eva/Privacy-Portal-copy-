@@ -144,22 +144,39 @@ describe('demo data: the Letter of Authority service', () => {
         expect(message?.from).toBe('Service Alberta and Red Tape Reduction');
     });
 
-    it('reflects the Letter of Authority template it was taken from', () => {
+    it('authorises motor vehicle matters, and keeps the template clauses', () => {
         const message = inbox().inbox.messages.find((m) => m.programId === 'letter-of-authorization');
         const body = JSON.stringify(message);
 
-        expect(message?.subject).toMatch(/Letter of Authority \(LOA\)/);
+        expect(message?.subject).toMatch(/Letter of Authority \(LOA\) service for motor vehicles/);
 
-        // One assertion per clause of the template, so a later edit cannot
-        // drift away from the document it came from.
-        expect(body).toMatch(/business negotiations/);
-        expect(body).toMatch(/approving goods/);
-        expect(body).toMatch(/disputes and claims/);
-        expect(body).toMatch(/Attending meetings/);
-        expect(body).toMatch(/bind the principal to any obligation beyond/);
-        expect(body).toMatch(/bankruptcy, insolvency, breach of agreement/);
-        expect(body).toMatch(/passport/);
-        expect(body).toMatch(/stamp and signature/);
+        // The matters, which are the vehicle part.
+        expect(body).toMatch(/Registering a vehicle/);
+        expect(body).toMatch(/Transferring a registration/);
+        expect(body).toMatch(/vehicle inspection/);
+        expect(body).toMatch(/registration and plate details/);
+        expect(body).toMatch(/registry agent/);
+
+        // The clauses, which are the template's.
+        expect(body).toMatch(/bind you to any obligation beyond/);
+        expect(body).toMatch(/commences on a stated date/);
+        expect(body).toMatch(/terminate it on written notice/);
+        expect(body).toMatch(/photo identification/);
+        expect(body).toMatch(/confirm directly that it is valid/);
+        expect(body).toMatch(/your signature and the date/);
+    });
+
+    it('does not reach into the driver record, which is not a vehicle matter', () => {
+        const body = JSON.stringify(inbox().inbox.messages.find((m) => m.programId === 'letter-of-authorization'));
+
+        expect(body).toMatch(/does not authorize them to deal with your driver record/);
+    });
+
+    it('points its contact label at the ministry page', () => {
+        const message = inbox().inbox.messages.find((m) => m.programId === 'letter-of-authorization');
+        const help = (message as unknown as { help?: { contactHref?: string } }).help;
+
+        expect(help?.contactHref).toBe('https://www.alberta.ca/service-alberta');
     });
 
     it('states the five matters the representative may handle', () => {

@@ -723,70 +723,72 @@ const DEMO_INBOX_PROGRAMS = [
 const DEMO_INBOX_MESSAGES = [
     {
         /*
-         * Taken from the Letter of Authority template Edson supplied as an
-         * image, and nothing else. Its five authorised matters, the scope,
-         * term and termination clauses, the identification to attach and the
-         * signature block are all that document's.
+         * A Letter of Authority for motor vehicle matters.
          *
-         * It replaced a summary of Municipal Affairs' frequently asked
-         * questions about Letters of Authorization for linear property
-         * assessment. The two are different documents: that one governs who
-         * may discuss a company's assessment with the Assessment Services
-         * Branch, this one is a principal authorising a named representative
-         * to act commercially. The earlier summary is in the history if it is
-         * wanted back.
+         * The clauses are the supplied template's: the scope that stops the
+         * representative binding the principal, the term, the ways it ends,
+         * the identification to attach, how a recipient confirms it, and how
+         * it is signed. Those are quoted in substance.
+         *
+         * The matters it authorises are vehicle matters rather than the
+         * template's generic commercial ones, which is what Edson asked for.
+         * They follow what the services inventory lists under Licensing and
+         * owning a vehicle - registering and inspecting vehicles, buying used
+         * and importing - and what the registry records this demo already
+         * holds: licence status, registration and plate. They are demo
+         * content, not a published list of permitted authorities.
          */
         id: 'msg-loa',
         programId: 'letter-of-authorization',
-        subject: 'The Letter of Authority (LOA) service',
-        preview: 'Authorize a named representative to act on your behalf, and what the letter has to say.',
+        subject: 'The Letter of Authority (LOA) service for motor vehicles',
+        preview: 'Authorize a named representative to deal with the registry on your vehicles.',
         isUnread: true,
         receivedAt: '2026-09-06T16:40:00.000Z',
         from: 'Service Alberta and Red Tape Reduction',
         greeting: 'Hello Demo,',
         paragraphs: [
-            'A Letter of Authority is how a principal authorizes a named representative to act on their behalf. It is written on company letterhead, dated, and signed by the principal, and it states plainly which matters the representative may handle and for how long.',
+            'A Letter of Authority is how you authorize a named representative to deal with a registry agent on your behalf about your vehicles. It is written on letterhead, dated, and signed by you, and it states plainly which matters the representative may handle and for how long.',
         ],
         sections: [
             {
                 heading: 'What the letter authorizes',
                 bullets: [
-                    'Conducting business negotiations on behalf of the principal',
-                    'Examining and approving goods on behalf of the principal',
-                    'Resolving disputes and claims on behalf of the principal',
-                    'Attending meetings on behalf of the principal',
-                    'Executing and delivering the documents needed to carry out the purposes of the agreement',
+                    'Registering a vehicle and renewing a registration on your behalf',
+                    'Transferring a registration when a vehicle is bought or sold',
+                    'Arranging a vehicle inspection and submitting the results',
+                    'Requesting records held about your vehicles, including registration and plate details',
+                    'Attending a registry agent and signing the documents those matters require',
                 ],
             },
             {
                 heading: 'Scope of authority',
                 paragraphs: [
-                    'The representative does not have the authority to bind the principal to any obligation beyond what the letter states.',
+                    'The representative does not have the authority to bind you to any obligation beyond what the letter states. It does not authorize them to deal with your driver record, which is about you rather than your vehicles.',
                 ],
             },
             {
                 heading: 'Term and termination',
                 paragraphs: [
                     'The letter commences on a stated date and continues in full force until a stated end date, unless it is terminated earlier under its own terms.',
-                    'Either party may terminate it on written notice to the other, the notice period being set in the letter. It also terminates automatically on bankruptcy, insolvency, breach of agreement, or the completion or cancellation of the project.',
+                    'Either party may terminate it on written notice to the other, the notice period being set in the letter. It also ends automatically once the matter it was given for is complete or cancelled.',
                 ],
             },
             {
                 heading: 'What to attach',
                 paragraphs: [
-                    'The principal takes full responsibility for the authority given, and attaches identification to support it - a company identification document and a passport, for instance.',
+                    'You take full responsibility for the authority you have given, and attach identification to support it - a piece of government-issued photo identification, for instance, along with the registration document for the vehicle concerned.',
                 ],
             },
             {
-                heading: 'How a recipient checks it',
+                heading: 'How a registry agent checks it',
                 paragraphs: [
-                    "The letter gives the principal's own telephone number and official email address, so anyone receiving it can confirm directly that it is valid.",
+                    'The letter gives your own telephone number and email address, so the agent receiving it can confirm directly that it is valid before acting on it.',
                 ],
             },
             {
                 heading: 'How it is signed',
                 paragraphs: [
-                    "It closes with the principal's name, their position, and their stamp and signature, above the company name and address at the head of the letter.",
+                    'It closes with your name, your signature and the date, above your name and address at the head of the letter. Where a company owns the vehicles, it is signed by an officer or executive with authority to sign for the company.',
                 ],
             },
         ],
@@ -794,6 +796,7 @@ const DEMO_INBOX_MESSAGES = [
             name: 'Service Alberta and Red Tape Reduction',
             lines: ['310-0000 toll free', 'Monday to Friday, 8:15 am to 4:30 pm'],
             contactLabel: 'Contact Service Alberta and Red Tape Reduction',
+            contactHref: 'https://www.alberta.ca/service-alberta',
         },
     },
     {

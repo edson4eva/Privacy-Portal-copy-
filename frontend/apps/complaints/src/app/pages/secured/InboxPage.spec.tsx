@@ -123,7 +123,12 @@ const messages = [
         actions: [{ label: 'Add to wallet', kind: 'primary' }],
         attachment: { name: 'Licence summary (PDF)', meta: 'PDF, 12 KB' },
         relatedLinks: ['About Alberta Wallet'],
-        help: { name: 'Wallet Support', lines: ['310-0000'], contactLabel: 'Contact support' },
+        help: {
+            name: 'Wallet Support',
+            lines: ['310-0000'],
+            contactLabel: 'Contact support',
+            contactHref: 'https://www.alberta.ca/service-alberta',
+        },
     },
 ];
 
@@ -281,6 +286,21 @@ describe('InboxPage', () => {
         expect(screen.getByTestId('previous-message')).toBeDisabled();
         fireEvent.click(screen.getByTestId('next-message'));
         expect(screen.getByText('Your digital licence is ready')).toBeInTheDocument();
+    });
+
+    it('links the contact label where the message gives a destination', async () => {
+        mockGet.mockResolvedValue(payload);
+        renderPage();
+
+        await waitFor(() => expect(screen.getByTestId('row-msg-3')).toBeInTheDocument());
+        fireEvent.click(screen.getByTestId('row-msg-3'));
+
+        const link = screen.getByTestId('help-contact-link');
+        expect(link).toHaveAttribute('href', 'https://www.alberta.ca/service-alberta');
+        expect(link).toHaveAttribute('target', '_blank');
+        // Leaving the portal must not hand the opener to the other site.
+        expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+        expect(link).toHaveTextContent('Contact support');
     });
 
     it('says where a program action is completed instead of pretending to do it', async () => {
