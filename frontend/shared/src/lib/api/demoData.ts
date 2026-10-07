@@ -713,7 +713,7 @@ const DEMO_INBOX_PROGRAMS = [
     { id: 'alberta-health-care', name: 'Alberta Health Care', colour: '#a8326e' },
     {
         id: 'letter-of-authorization',
-        name: 'Letter of Authority',
+        name: 'Letter of Authorization',
         // The dot is an inline style, so this can be a token rather than one
         // more hand-picked colour beside the seven above.
         colour: 'var(--goa-color-brand-default)',
@@ -723,7 +723,7 @@ const DEMO_INBOX_PROGRAMS = [
 const DEMO_INBOX_MESSAGES = [
     {
         /*
-         * A Letter of Authority for motor vehicle matters.
+         * A Letter of Authorization for motor vehicle matters.
          *
          * The clauses are the supplied template's: the scope that stops the
          * representative binding the principal, the term, the ways it ends,
@@ -740,14 +740,14 @@ const DEMO_INBOX_MESSAGES = [
          */
         id: 'msg-loa',
         programId: 'letter-of-authorization',
-        subject: 'The Letter of Authority (LOA) service for motor vehicles',
+        subject: 'The Letter of Authorization (LOA) service for motor vehicles',
         preview: 'Authorize a named representative to deal with the registry on your vehicles.',
         isUnread: true,
         receivedAt: '2026-09-06T16:40:00.000Z',
         from: 'Service Alberta and Red Tape Reduction',
         greeting: 'Hello Demo,',
         paragraphs: [
-            'A Letter of Authority is how you authorize a named representative to deal with a registry agent on your behalf about your vehicles. It is written on letterhead, dated, and signed by you, and it states plainly which matters the representative may handle and for how long.',
+            'A Letter of Authorization is how you authorize a named representative to deal with a registry agent on your behalf about your vehicles. It is written on letterhead, dated, and signed by you, and it states plainly which matters the representative may handle and for how long.',
         ],
         sections: [
             {

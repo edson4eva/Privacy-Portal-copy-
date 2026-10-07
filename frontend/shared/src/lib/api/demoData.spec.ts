@@ -132,7 +132,7 @@ describe('demo data: apprenticeship and industry training', () => {
     });
 });
 
-describe('demo data: the Letter of Authority service', () => {
+describe('demo data: the Letter of Authorization service', () => {
     const inbox = () =>
         getDemoResponse('/v1/inbox') as { inbox: { messages: InboxMessage[]; programs: InboxProgram[] } };
 
@@ -148,7 +148,7 @@ describe('demo data: the Letter of Authority service', () => {
         const message = inbox().inbox.messages.find((m) => m.programId === 'letter-of-authorization');
         const body = JSON.stringify(message);
 
-        expect(message?.subject).toMatch(/Letter of Authority \(LOA\) service for motor vehicles/);
+        expect(message?.subject).toMatch(/Letter of Authorization \(LOA\) service for motor vehicles/);
 
         // The matters, which are the vehicle part.
         expect(body).toMatch(/Registering a vehicle/);
@@ -199,7 +199,7 @@ describe('demo data: the Letter of Authority service', () => {
     it('has a programme of its own, coloured from a token', () => {
         const programme = inbox().inbox.programs.find((p) => p.id === 'letter-of-authorization');
 
-        expect(programme?.name).toBe('Letter of Authority');
+        expect(programme?.name).toBe('Letter of Authorization');
         expect(programme?.colour).toMatch(/^var\(--goa-/);
     });
 });
